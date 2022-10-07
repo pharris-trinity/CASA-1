@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import logo from "./Images/cyberTexasLogo.png";
 import "./stylesLogin.css";
+import Views from "./Views";
+import { BrowserRouter} from "react-router-dom";
+
 
 
 
 // App() is a function to store and handle the user's data
+
 function App() {
   // React States
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  
 
   // User Login info
   const database = [
@@ -27,6 +32,8 @@ function App() {
     pass: "invalid password"
   };
 
+
+
   const handleSubmit = (event) => {
     //Prevent page reload
     event.preventDefault();
@@ -36,6 +43,7 @@ function App() {
     // Find user login info
     const userData = database.find((user) => user.username === uname.value);
 
+
     // Compare user info
     if (userData) {
       if (userData.password !== pass.value) {
@@ -43,6 +51,7 @@ function App() {
         setErrorMessages({ name: "pass", message: errors.pass });
       } else {
         setIsSubmitted(true);
+       
       }
     } else {
       // Username not found
@@ -77,19 +86,30 @@ function App() {
         <div className="button-container">
           <input type="submit" />
         </div>
+        
       </form>
     </div>
   );
 
   // This Is the Webpage Layout from the Title to the log in.
+  // The isSubmitted is a if else statement of sorts and changes to the correct answer.
+
+  // Here is what I was planning to insert in <div> so that I could have the access to the different pages.
+  //<BrowserRouter>
+  //        <Views />
+  //      </BrowserRouter>
   return (
+    
+
     <div className="app">
       <div className="login-form">
       <img src={logo} className="photo" centerImage="center" alt="This the main logo"/>
-        <div className="title">Sign In</div>
+        <div className="title">Sign In</div> 
         {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        
       </div>
     </div>
+
   );
 }
 
