@@ -9,7 +9,7 @@
   "version": "1.0.0",
   "main": "Server/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cd Frontend && npm run test",
     "start": "concurrently \"npm run frontend\" \"npm run server\" ",
     "server": "cd Server && nodemon server.js",
     "frontend": "cd Frontend && npm run start",
