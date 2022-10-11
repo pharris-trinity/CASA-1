@@ -13,28 +13,28 @@ app.use(express.static("../Frontend/build"))
 
 let environment = process.env
 
-// Server Setup and Verification Steps
-  const uri = "mongodb+srv://" + environment.USER_NAME + ":" + environment.USER_PASSWORD + "@casa-primary.mfffrek.mongodb.net/" + environment.DATABASE + "?retryWrites=true&w=majority"
-  try {
-    mongoose.connect(uri);
-  } catch (error) {
-    console.log(error)
-  }
+// Database Setup and Verification Steps
+    const uri = "mongodb+srv://" + environment.USER_NAME + ":" + environment.USER_PASSWORD + "@casa-primary.mfffrek.mongodb.net/" + environment.DATABASE + "?retryWrites=true&w=majority"
+    try {
+      mongoose.connect(uri);
+    } catch (error) {
+      console.log(error)
+    }
 
-  serverConnection = 404
-  mongoose.connection.on('connected', () => {
-    console.log("Connected to " + environment.DATABASE + " database.");
-    serverConnection = 201
-  })
+    serverConnection = 404
+    mongoose.connection.on('connected', () => {
+      console.log("Connected to " + environment.DATABASE + " database.");
+      serverConnection = 201
+    })
 
-  mongoose.connection.on('error', function (err) {
-    serverConnection = 501
-    //Failed
-  })
+    mongoose.connection.on('error', function (err) {
+      serverConnection = 501
+      //Failed
+    })
 
-  app.get('/api/database', async (req, res) => {
-    res.end().status(serverConnection);
-  })
+    app.get('/api/database', async (req, res) => {
+      res.end().status(serverConnection);
+    })
 //===================================
 
 app.get("/api", (request, response) => {
