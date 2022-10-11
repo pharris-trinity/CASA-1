@@ -1,23 +1,20 @@
-const { countReset } = require("console");
 const express = require("express");
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 const path = require("path");
 const app = express();
+require('dotenv').config({path: "../.env"});
 
 //Variables for Mongoose Data Structures
-  const User = require('./Database/User.js');
-  const Quiz = require('./Database/Quiz.js');
-  const Question = require('./Database/Question.js');
+  const User = require('../Database/User.js');
+  const {Quiz, Question} = require('../Database/Quiz.js');
 //=====================================
 
 app.use(express.static("../Frontend/build"))
 
 let environment = process.env
-let database = "casa-primary"
 
 // Server Setup and Verification Steps
-  const uri = "mongodb+srv://" + environment.USER_NAME + ":" + environment.USER_PASSWORD + "@" + database + ".mfffrek.mongodb.net/?retryWrites=true&w=majority"
-
+  const uri = "mongodb+srv://" + environment.USER_NAME + ":" + environment.USER_PASSWORD + "@casa-primary.mfffrek.mongodb.net/" + environment.DATABASE + "?retryWrites=true&w=majority"
   try {
     mongoose.connect(uri);
   } catch (error) {
@@ -26,7 +23,7 @@ let database = "casa-primary"
 
   serverConnection = 404
   mongoose.connection.on('connected', () => {
-    console.log("Connected to " + database + " database.");
+    console.log("Connected to " + environment.DATABASE + " database.");
     serverConnection = 201
   })
 
@@ -43,6 +40,10 @@ let database = "casa-primary"
 app.get("/api", (request, response) => {
     response.json({message:"Test"});
 });
+
+app.get("/api/create_user", (req, res) => {
+    response.json({message:"Create User Test"})
+})
 
 app.get('*', (request, response) => {
   response.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));

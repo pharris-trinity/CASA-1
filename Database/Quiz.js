@@ -1,7 +1,24 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const Question = require("./Question")
+const QuestionSchema = new Schema({
+    value: {
+        type: Number,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    answers: {
+        type: [String],
+        required: true
+    },
+    correctAnswer: {
+        type: Number,
+        required: true
+    }
+});
 
 const QuizSchema = new Schema({
     score: {
@@ -9,7 +26,7 @@ const QuizSchema = new Schema({
         required: true
     },
     questions: {
-        type: [Question],
+        type: [QuestionSchema],
         required: true
     },
     correctAnswers: {
@@ -34,5 +51,10 @@ const QuizSchema = new Schema({
     }
 })
 
+
+const Question = mongoose.model('Question', QuestionSchema);
 const Quiz = mongoose.model('Quiz', QuizSchema);
-module.exports = Quiz;
+module.exports = {
+    Quiz,
+    Question
+};
