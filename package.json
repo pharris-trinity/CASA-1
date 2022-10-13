@@ -14,12 +14,13 @@
   "version": "1.0.0",
   "main": "Server/server.js",
   "scripts": {
-    "test": "cd Frontend && npm run test",
+    "test": "concurrently \"mocha\" \"cd Frontend && npm run test\"",
     "start": "concurrently \"npm run frontend\" \"npm run server\" ",
     "server": "cd Server && nodemon server.js",
     "frontend": "cd Frontend && npm run start",
     "build": "cd Frontend && npm install && npm run build",
-    "install": "cd Frontend && npm install"
+    "install": "cd Frontend && npm install",
+    "strictest": "mocha"
   },
   "engines": {
     "node": "v8.19.2"
@@ -35,5 +36,9 @@
     "url": "https://github.com/TheNameIsGav/CASA/issues"
   },
   "homepage": "https://github.com/TheNameIsGav/CASA#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "supertest": "^6.3.0",
+    "mocha": "^10.0.0"
+  }
 }

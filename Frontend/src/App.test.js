@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import App from './App';
+import App from './components/App/App';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('true is truthy and false is falsy', () => {
   test('true is truthy', () => {
@@ -15,7 +16,7 @@ describe('true is truthy and false is falsy', () => {
 
 describe('Testing App.js', () => {
   test('renders App component', () => {
-    render(<App />);
+    render(<BrowserRouter><App /></BrowserRouter>);
   });
 });
 

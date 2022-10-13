@@ -44,7 +44,7 @@ let environment = process.env
 //===================================
 
 app.get("/api", (req, res) => {
-    res.json({message:"Test"});
+    res.send("ok").status(200);
 });
 
 saltRounds = 12
@@ -106,9 +106,14 @@ saltRounds = 12
 
 
   app.get('/api/display_user/:id', async(req, res) => {
-  
-    var user =  await User.findById(req.params.id).exec();
-    res.send(JSON.stringify(user));
+    var user = await User.findById(req.params.id).exec();
+
+    if (user == undefined){
+      res.status(500);
+    } else {
+      res.send(JSON.stringify(user)).status(200);
+    }
+    
   });
 //====================================
 
@@ -119,6 +124,8 @@ app.get('*', (req, res) => {
 //https://www.freecodecamp.org/news/how-to-create-a-react-app-with-a-node-backend-the-complete-guide/
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
+server = app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
+
+module.exports = server;
