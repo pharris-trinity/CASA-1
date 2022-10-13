@@ -1,6 +1,8 @@
 import React , { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { useLocalStorage } from './useLocalStorage';
+import { useLocalStorage } from '../useLocalStorage';
+import './accCreate.css'
+import logo from "../../Resources/cyberTexasLogo.png";
 
 function CreateAccount() {
 
@@ -31,19 +33,22 @@ function CreateAccount() {
             body: JSON.stringify(postData)
         };
 
-
-        fetch('/api/create_user', requestOptions).then(
-            res => res.text()).then(text => {
-                if(text.toLowerCase() === "found previously existing user"){
-                    alert("Username or email already exists in the database, please login")
-                    return;
-                } else {
-                    var modText = text.substring(1, text.length-1)
-                    setUserID(modText)
-                    //continueRedirect(e, modText)
+        try {
+            fetch('/api/create_user', requestOptions).then(
+                res => res.text()).then(text => {
+                    if(text.toLowerCase() === "found previously existing user"){
+                        alert("Username or email already exists in the database, please login")
+                        return;
+                    } else {
+                        var modText = text.substring(1, text.length-1)
+                        setUserID(modText)
+                        continueRedirect(e, modText)
+                    }
                 }
-            }
-        )
+            ) 
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const continueRedirect = (e, text) => {
@@ -54,9 +59,9 @@ function CreateAccount() {
 
                     const userVal = JSON.parse(text)
                     console.log(userVal)
-                    navigate('/profile', {replace: true, state:{userVal}})
+                    navigate('/about', {replace: true, state:{userVal}})
                 } catch (error) {
-                    
+                    alert("Something went wrong")
                 }
             }
         )
@@ -68,8 +73,7 @@ function CreateAccount() {
 
     return (                  
         <>
-        <div id='buttons'>
-        </div>
+        <img src={logo} id="logo" centerImage="center" align="left" alt=""/>
         <div className='form'>
             <form onSubmit={submitHandler}>
                 <div className="form-inner">

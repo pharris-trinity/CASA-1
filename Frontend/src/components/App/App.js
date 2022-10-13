@@ -1,8 +1,9 @@
-import './css/App.css';
-import Login from "./components/Login";
-import About from "./components/About";
-import DevPage from "./components/DevPage";
-import CreateUser from "./components/CreateUser";
+import './App.css';
+import Login from "../Login/Login";
+import About from "../About/About";
+import DevPage from "../DevPage/DevPage";
+import CreateUser from "../CreateUser/CreateUser";
+import NotFound from "../NotFound/NotFound";
 // eslint-disable-next-line
 import { Routes, Route, Link } from "react-router-dom";
 import * as React from "react";
@@ -18,10 +19,11 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="*" element={<Login/>} />
+        <Route path="*" element={<NotFound/>} />
         <Route path="about" element={<About/>} />
         <Route path="dev" element={<DevPage/>} />
         <Route path="createuser" element={<CreateUser/>} />
+        <Route path="login" element={<Login/>} />
       </Routes>
     </div>
   );

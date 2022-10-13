@@ -10,8 +10,8 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    id: {
-        type: Schema.Types.ObjectId, ref: 'User',
+    email: {
+        type: String,
         required: true
     },
     userType: {

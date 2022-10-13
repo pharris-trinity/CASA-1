@@ -1,8 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require('body-parser');
 const path = require("path");
 const app = express();
 const bcrypt = require('bcrypt')
+var cors = require('cors')
 require('dotenv').config({path: "../.env"});
 
 //Variables for Mongoose Data Structures
@@ -11,6 +13,9 @@ require('dotenv').config({path: "../.env"});
 //=====================================
 
 app.use(express.static("../Frontend/build"))
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(cors())
 
 let environment = process.env
 
@@ -45,6 +50,7 @@ app.get("/api", (req, res) => {
 saltRounds = 12
 //User related functions
   app.post('/api/create_user', async (req, res) => {
+
     const {username, password, email} = req.body;
 
     var potentialUsers = await User.find({$or:[{username:username}, {email:email}]}).exec();
@@ -60,8 +66,8 @@ saltRounds = 12
         
           var user = new User({
             username: username,
+            email: email,
             password : hash,
-            email: email
           })
     
           user.save(function (err, user){
@@ -101,7 +107,7 @@ saltRounds = 12
 
   app.get('/api/display_user/:id', async(req, res) => {
   
-    var user =  await User.findById(req.params.id).populate('friends reviews wishlist library suggested').exec();
+    var user =  await User.findById(req.params.id).exec();
     res.send(JSON.stringify(user));
   });
 //====================================

@@ -18,12 +18,6 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
   }
 
-  /* The Class name for photo height and size */
-  .photo {
-    height: 200px;
-    width: 500px;
-  }
-
   /*The Alignment of Pictures and Inserts*/
   .center{
     text-align: center;
@@ -34,3 +28,9 @@
     width: 100%;
   }
   
+  
+  #logo {
+    float: left;
+    width: 300px;
+    padding: 10px;
+  }
