@@ -9,7 +9,8 @@ Originally written by Gabriel Manners, Larry Green, Amanda Choi, Linh Nguyen
     - This project was compiled on npm version 8.19.2, but latter versions should also work. 
 2. After cloning the repo into a location of your choice, navigate to the root directory of the folder in terminal "\CASA"
 3. Run `npm install` to install all the required dependencies
-4. Use `npm start` to run the application. 
+4. Setup a `.env` file as described in the other [information](#information)
+5. Use `npm start` to run the application. 
     - Verify that it works by navigating to [localhost:3000](localhost:3000) in your web browser. 
 
 <br>  
@@ -35,6 +36,8 @@ Originally written by Gabriel Manners, Larry Green, Amanda Choi, Linh Nguyen
 6. `install`: Installs all dependencies for both React and Server packages
 
 <br>
+
+# Information
 
 ---
 

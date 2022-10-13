@@ -1,22 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-import React from "react";
+import './css/App.css';
+import Login from "./components/Login";
+import About from "./components/About";
+import DevPage from "./components/DevPage";
+// eslint-disable-next-line
+import { Routes, Route, Link } from "react-router-dom";
+import * as React from "react";
+import {useEffect} from 'react';
+
 
 function App() {
-  const [data, setData] = React.useState(null);
 
-  React.useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
+  useEffect(() => {
+    document.title = "CASA - Cyberware Texas"
   }, []);
+
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{!data ? "Loading..." : data}</p>
-      </header>
+      <Routes>
+        <Route path="*" element={<Login/>} />
+        <Route path="about" element={<About/>} />
+        <Route path="dev" element={<DevPage/>} />
+      </Routes>
     </div>
   );
 }
