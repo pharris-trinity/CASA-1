@@ -1,5 +1,5 @@
 const supertest = require("supertest");
-const app = require("../server/server.js");
+const app = require("../Server/server.js");
 const chai = require('chai')
 const expect = chai.expect;
 
