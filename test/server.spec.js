@@ -1,7 +1,7 @@
 const supertest = require("supertest");
-const assert = require('assert');
 const app = require("../server/server");
-const { request } = require("http");
+const chai = require('chai')
+const expect = chai.expect;
 
 describe("GET /api", function() {
   it("it should has status code 200", function(done) {
@@ -27,11 +27,16 @@ describe("GET /api/database", function() {
   });
 });
 
-// describe("GET /api/display_user/63485f2047c6ed25ef61bd7a", function() {
-  
-//   it("it should have status code 200", (done) => {
-//     const res = supertest(app).get("/api/display_user/63485f2047c6ed25ef61bd7a").send()
-//     expect(res.status).toStrictEqual(200);
-//     done();  
-//   });
-// });
+describe("GET /api/display_user/63485f2047c6ed25ef61bd7a", function() {
+  it("it should have status code 200 and username 'a'", () => {
+    let result;
+    supertest(app).get("/api/display_user/63485f2047c6ed25ef61bd7a")
+                .send()
+                .end((err, res) => {
+                  result = res.body
+                  expect(res.status).to.eq('200')
+                  expect(res.body.username).to.eq('a')
+                  done()
+                })
+  });
+});

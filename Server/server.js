@@ -18,9 +18,10 @@ app.use(bodyParser.json());
 app.use(cors())
 
 let environment = process.env
+let database = environment.DATABASE || "test";
 
 // Database Setup and Verification Steps
-    const uri = "mongodb+srv://" + environment.USER_NAME + ":" + environment.USER_PASSWORD + "@casa-primary.mfffrek.mongodb.net/" + environment.DATABASE + "?retryWrites=true&w=majority"
+    const uri = "mongodb+srv://" + environment.USER_NAME + ":" + environment.USER_PASSWORD + "@casa-primary.mfffrek.mongodb.net/" + database + "?retryWrites=true&w=majority"
     try {
       mongoose.connect(uri);
     } catch (error) {
@@ -29,7 +30,8 @@ let environment = process.env
 
     serverConnection = 404
     mongoose.connection.on('connected', () => {
-      console.log("Connected to " + environment.DATABASE + " database.");
+      
+      console.log("Connected to " + database + " database.");
       serverConnection = 201
     })
 
