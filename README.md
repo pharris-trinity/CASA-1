@@ -1,16 +1,15 @@
 # CASA Project for Cyberware Texas
 
-Originally written by Gabriel Manners, Larry Green, Amanda Choi, Linh Nguyen
-
 <br>
 
 # Initial Installation
 1. Download and install the latest version of Node from [here](https://nodejs.org/en/download/).
     - This project was compiled on npm version 8.19.2, but latter versions should also work. 
-2. After cloning the repo into a location of your choice, navigate to the root directory of the folder in terminal "\CASA"
+2. After cloning the repo into a location of your choice, navigate to the root directory of the folder in terminal "./CASA"
 3. Run `npm install` to install all the required dependencies
-4. Use `npm start` to run the application. 
-    - Verify that it works by navigating to [localhost:3000](localhost:3000) in your web browser. 
+4. Setup a `.env` file as described in the other [information](#information)
+5. Use `npm start` to run the application. 
+    - Verify that it works by navigating to [localhost:3000](localhost:3000) in your web browser. Note, this should automatically open
 
 <br>  
 
@@ -27,19 +26,44 @@ Originally written by Gabriel Manners, Larry Green, Amanda Choi, Linh Nguyen
 <br>
 
 ## All Scripts
-1. `test`: Attempts to run tests if they're configured
-2. `start`: Concurrently runs both the server and the frontend scripts. Mostly for deployment purposes
-3. `server`: Navigates into the server directory and runs the server using 'nodemon'
-4. `frontend`: Navigates into the frontne directory and runs the default react run script
-5. `build`: Runs the react build for production
-6. `install`: Installs all dependencies for both React and Server packages
+1. `test`: Runs server-side tests
+2. `frontendTest`: Runs React.js tests for frontend
+3. `start`: Concurrently runs both the server and the frontend scripts. Mostly for deployment purposes
+4. `server`: Navigates into the server directory and runs the server using 'nodemon'
+5. `frontend`: Navigates into the frontne directory and runs the default react run script
+6. `build`: Runs the react build for production
+7. `install`: Installs all dependencies for both React and Server packages
 
 <br>
+
+# Specific Documentation
+1. Server-side documentation is located in SERVER.md inside of the Server Folder
+2.  Frontend documentation is located in the FRONTEND.md inside of the Frontend Folder
+3. Database documentation is located in the DATABASE.md inside of the Database Folder
+
+<br>
+
+# Information
+
+### Env File Setup
+An environment file (.env) is useful for setting up credientials and secrets without having to push them to the remote where they could be seen by others. This repository is configured to ignore .env files.
+1. Create file within the root directory named `.env`
+2. Inside this file, there are two required fields. 
+3. Firstly, create the `USER_NAME` field. (`USER_NAME=<username>`)
+4. Secondly, on a new line, create the `USER_PASSWORD` field. (`USER_PASSWORD=<password>`)
+5. Finally, add optional vars using the syntax `VAR_NAME=<var_value>`
+    1. `DATABASE`: The database the server will use. Default is `test`
+    2. `PORT`: The port the server will run on. Default is `3001`
+
+### Useful Links
+1. Server Testing Tutorial: [Testing Node.js API with Mocha and Chai](https://medium.com/@ebenwoodward/testing-a-node-js-with-mocha-and-chai-11288460eaf8)
+2. Useful Markdown Formatting: [Basic Syntax | Markdown Guide](https://www.markdownguide.org/basic-syntax/)
 
 ---
 
-
 <br>
+
+**Originally written by Gabriel Manners, Larry Green, Amanda Choi, Linh Nguyen as part of Trinity University's Senior Software Project - Fall 2022**
 
 ### Copyright 2022 CYBERWARE TEXAS
 

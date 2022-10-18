@@ -1,0 +1,36 @@
+/*This document helps create the stylistic display and images for the website*/
+.app {
+    font-family: sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    height: 100vh;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+    background-color: #147bb2;;
+  }
+  
+  /*Style of the password and usernames*/
+  input[type="text"],
+  input[type="password"] {
+    height: 25px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  /*The Alignment of Pictures and Inserts*/
+  .center{
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 100%;
+  }
+  
+  
+  #logo {
+    float: left;
+    width: 300px;
+    padding: 10px;
+  }
