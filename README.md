@@ -48,7 +48,7 @@
 ### Env File Setup
 An environment file (.env) is useful for setting up credientials and secrets without having to push them to the remote where they could be seen by others. This repository is configured to ignore .env files.
 1. Create file within the root directory named `.env`
-2. Inside this file, there are two required fields. 
+2. Inside this file, there are two required fields, the username and password. This information will be given to you by the Database administrator
 3. Firstly, create the `USER_NAME` field. (`USER_NAME=<username>`)
 4. Secondly, on a new line, create the `USER_PASSWORD` field. (`USER_PASSWORD=<password>`)
 5. Finally, add optional vars using the syntax `VAR_NAME=<var_value>`
