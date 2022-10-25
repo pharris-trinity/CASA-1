@@ -21,6 +21,21 @@ const QuestionSchema = new Schema({
 });
 
 const QuizSchema = new Schema({
+    questions: {
+        type: [QuestionSchema],
+        required: true
+    },
+    answers: {
+        type: [Number],
+        required: true
+    },
+    authorID: {
+        type: Schema.Types.ObjectId, ref: 'authorID',
+        required: true
+    }
+})
+
+const TakenQuizSchema = new Schema({
     score: {
         type: Number,
         required: true
@@ -38,7 +53,7 @@ const QuizSchema = new Schema({
         required: true
     },
     testTakerID: {
-        type: Number,
+        type: Schema.Types.ObjectId,
         required: true
     },
     timeStarted: {
@@ -51,10 +66,11 @@ const QuizSchema = new Schema({
     }
 })
 
-
 const Question = mongoose.model('Question', QuestionSchema);
+const TakenQuiz = mongoose.model('TakenQuiz', TakenQuizSchema);
 const Quiz = mongoose.model('Quiz', QuizSchema);
 module.exports = {
     Quiz,
+    TakenQuiz,
     Question
 };
