@@ -8,8 +8,8 @@ var cors = require('cors')
 require('dotenv').config({path: "../.env"});
 
 //Variables for Mongoose Data Structures
-  const User = require('../Database/User.js');
-  const {Quiz, Question} = require('../Database/Quiz.js');
+  var {User, Coach, Admin, Student, Mentor} = require('../Database/User');
+  var {Quiz, TakenQuiz, Question} = require('../Database/Quiz.js');
 //=====================================
 
 app.use(express.static("../Frontend/build"))
@@ -107,7 +107,7 @@ saltRounds = 12
   });
 
 
-  app.get('/api/display_user/:id', async(req, res) => {
+  app.get('/api/display_user', async(req, res) => {
     var user = await User.findById(req.params.id).exec();
 
     if (user == undefined){
@@ -118,6 +118,38 @@ saltRounds = 12
     
   });
 //====================================
+
+//Assessment Functionality
+
+  app.post('/api/assessment/add_quiz', async(req, res) => {
+
+  });
+
+  app.get('/api/assessment/get_quiz', async(req, res) => {
+
+  });
+
+  app.get('/api/assessment/find_quizzes_by_author', async(req, res) => {
+
+  });
+
+//========================
+
+//Team Functionality
+
+  app.get('/api/teams/get_coaches_teams', async(req, res) => {
+
+  });
+
+//=================
+
+//Admin Functionality
+
+  app.post('/api/dev/create_user', async(req, res) => {
+
+  });
+
+//====================
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
