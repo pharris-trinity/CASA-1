@@ -19,12 +19,19 @@ app.use(cors())
 
 let environment = process.env
 let database = environment.DATABASE || "test";
+let username = environment.USER_NAME
+let password = environment.USER_PASSWORD
+
+// username = "admin"
+// password = "admin"
 
 // Database Setup and Verification Steps
-    const uri = "mongodb+srv://" + environment.USER_NAME + ":" + environment.USER_PASSWORD + "@casa-primary.mfffrek.mongodb.net/" + database + "?retryWrites=true&w=majority"
+    const uri = "mongodb+srv://" + username + ":" + password + "@casa-primary.mfffrek.mongodb.net/" + database + "?retryWrites=true&w=majority"
+    console.log("Connecting to " + uri)
     try {
       mongoose.connect(uri);
     } catch (error) {
+      console.log("Found an error")
       console.log(error)
     }
 
@@ -51,7 +58,7 @@ app.get("/api", (req, res) => {
 
 saltRounds = 12
 //User related functions
-  app.post('/api/create_user', async (req, res) => {
+  app.post('/api/user/create_user', async (req, res) => {
 
     const {username, password, email} = req.body;
 
@@ -84,7 +91,7 @@ saltRounds = 12
 
   });
 
-  app.post("/api/login", async (req, res) => {
+  app.post("/api/user/login", async (req, res) => {
 
       const {username, password} = req.body;
 
@@ -107,7 +114,7 @@ saltRounds = 12
   });
 
 
-  app.get('/api/display_user', async(req, res) => {
+  app.get('/api/user/fetch_user', async(req, res) => {
     var user = await User.findById(req.params.id).exec();
 
     if (user == undefined){
@@ -117,39 +124,112 @@ saltRounds = 12
     }
     
   });
+
+  app.get('/api/user/modify_user_profile', async(req, res) => {
+
+  })
 //====================================
 
-//Assessment Functionality
+//Coach Functionality
 
-  app.post('/api/assessment/add_quiz', async(req, res) => {
-
-  });
-
-  app.get('/api/assessment/get_quiz', async(req, res) => {
-
-  });
-
-  app.get('/api/assessment/find_quizzes_by_author', async(req, res) => {
-
-  });
-
-//========================
-
-//Team Functionality
-
-  app.get('/api/teams/get_coaches_teams', async(req, res) => {
+  app.get('/api/coach/get_coaches_teams', async(req, res) => {
 
   });
 
 //=================
 
-//Admin Functionality
+//Dev Functionality
 
   app.post('/api/dev/create_user', async(req, res) => {
 
   });
 
+  app.post('/api/dev/create_assessment', async(req, res) => {
+
+  })
+
+  app.post('/api/dev/create_admin', async(req, res) => {
+
+  })
+
+  app.get('/api/dev/simpleGet', async(req, res) => {
+    res.status(200).send("OK")
+  })
+
 //====================
+
+//Admin Functionality
+  const Validation = require('../Database/ValidationCode')
+
+  function generateValidationCode(){
+    var ret = ""
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var specialCharacters = '!@#$%^&*()'
+    for(var i = 0; i < 8; i++){
+      ret += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    for(var i = 0; i < 4; i++){
+      ret += specialCharacters.charAt(Math.floor(Math.random() * specialCharacters.length));
+    }
+
+    ret = ret.split('').sort(function(){return 0.5-Math.random()}).join('');
+
+    return ret;
+  }
+
+  app.get('/api/admin/generate_coach_validation_code', async(req, res) => {
+
+    
+    var ret = generateValidationCode();
+    
+    res.send(ret).status(200)
+  })
+
+  app.get('/api/admin/generate_mentor_validation_code', async(req, res) => {
+    var ret = generateValidationCode();
+  })
+
+  app.get('/api/admin/activate_user_account', async(req, res) => {
+
+  })
+
+  app.get('/api/admin/deactivate_user_account', async(req, res) => {
+
+  })
+
+  app.get('/api/admin/create_notification', async(req, res) => {
+
+  })
+
+  app.post('/api/admin/register_team', async(req, res) => {
+    
+  })
+
+//===================
+
+//Student Functionality
+
+//===================
+
+//Mentor
+
+//===================
+
+//Assessment Functionality
+
+app.post('/api/assessment/add_assessment', async(req, res) => {
+
+});
+
+app.get('/api/assessment/get_assessment', async(req, res) => {
+
+});
+
+app.get('/api/assessment/find_assessments_by_author', async(req, res) => {
+
+});
+
+//========================
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));

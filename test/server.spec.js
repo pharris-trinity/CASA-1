@@ -27,10 +27,10 @@ describe("GET /api/database", function() {
   });
 });
 
-describe("GET /api/display_user/63485f2047c6ed25ef61bd7a", function() {
+describe("GET /api/user/display_user/63485f2047c6ed25ef61bd7a", function() {
   it("it should have status code 200 and username 'a'", () => {
     let result;
-    supertest(app).get("/api/display_user/63485f2047c6ed25ef61bd7a")
+    supertest(app).get("/api/user/display_user/63485f2047c6ed25ef61bd7a")
                 .send()
                 .end((err, res) => {
                   result = res.body
