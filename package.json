@@ -23,7 +23,7 @@
     "install": "cd Frontend && npm install"
   },
   "engines": {
-    "node": "v16.14.2",
+    "node": "16.14.2",
     "npm": "8.19.2"
   },
   "repository": {
