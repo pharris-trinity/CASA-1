@@ -22,8 +22,8 @@ exports.User = mongoose.model('User');
 
 const Mentor = User.discriminator('Mentor', new mongoose.Schema({
         madeQuizzes: {type:[Quiz.schema], required: false},
-        teams: {type:[Schema.Types.ObjectID], required: false},
-        specialty: {type: String, required: false}
+        speciality: {type: String, required: false},
+        teams: {type:[Schema.Types.ObjectID], required: false}
     }),
 );
 

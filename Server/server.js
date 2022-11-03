@@ -8,7 +8,7 @@ var cors = require('cors')
 require('dotenv').config({path: "../.env"});
 
 //Variables for Mongoose Data Structures
-  var {User, Coach, Admin, Student, Mentor} = require('../Database/User');
+  var {User, Coach, Admin, Student, Mentor} = require('../Database/User.js');
   var {Quiz, TakenQuiz, Question} = require('../Database/Quiz.js');
 //=====================================
 
@@ -21,9 +21,6 @@ let environment = process.env
 let database = environment.DATABASE || "test";
 let username = environment.USER_NAME
 let password = environment.USER_PASSWORD
-
-// username = "admin"
-// password = "admin"
 
 // Database Setup and Verification Steps
     const uri = "mongodb+srv://" + username + ":" + password + "@casa-primary.mfffrek.mongodb.net/" + database + "?retryWrites=true&w=majority"
@@ -58,6 +55,7 @@ app.get("/api", (req, res) => {
 
 saltRounds = 12
 //User related functions
+  //Deprecated
   app.post('/api/user/create_user', async (req, res) => {
 
     const {username, password, email} = req.body;
@@ -132,6 +130,37 @@ saltRounds = 12
 
 //Coach Functionality
 
+app.post('/api/coach/create_coach', async(req, res) => {
+  const {username, password, email, madeQuizzes, school, teams} = req.body;
+
+  var potentialUsers = await Coach.find({$or:[{username:username}, {email:email}]}).exec();
+
+  if(potentialUsers.length != 0){
+    console.log("Email or username already appears in database");
+    res.send("Found previously existing user").status(201);
+  } else {
+    bcrypt.hash(password, saltRounds, (err, hash) => {
+      
+      var coach = new Coach({
+        username: username,
+        email: email,
+        password : hash,
+        madeQuizzes: madeQuizzes,
+        teams: teams,
+        school: school
+      })
+
+      coach.save(function (err, user){
+        if (err) {
+          res.end().status(401);
+          return console.error(err);
+        }
+      });
+      res.send(coach._id).status(201)
+    });
+  }
+});
+
   app.get('/api/coach/get_coaches_teams', async(req, res) => {
 
   });
@@ -141,25 +170,22 @@ saltRounds = 12
 //Dev Functionality
 
   app.post('/api/dev/create_user', async(req, res) => {
-
+    
   });
 
   app.post('/api/dev/create_assessment', async(req, res) => {
 
-  })
-
-  app.post('/api/dev/create_admin', async(req, res) => {
-
-  })
+  });
 
   app.get('/api/dev/simpleGet', async(req, res) => {
     res.status(200).send("OK")
-  })
+  });
 
 //====================
 
 //Admin Functionality
   const Validation = require('../Database/ValidationCode')
+  const Team = require('../Database/Team.js')
 
   function generateValidationCode(){
     var ret = ""
@@ -181,37 +207,112 @@ saltRounds = 12
 
     
     var ret = generateValidationCode();
+
+    var code = new Validation({
+      value: ret,
+      validationType: true
+    })
+
+    code.save(function (err, user){
+      if (err) {
+        res.end().status(401);
+        return console.error(err)
+      }
+    });
     
     res.send(ret).status(200)
   })
 
   app.get('/api/admin/generate_mentor_validation_code', async(req, res) => {
     var ret = generateValidationCode();
+
+    var code = new Validation({
+      value: ret,
+      validationType: false
+    })
+
+    code.save(function (err, user){
+      if (err) {
+        res.end().status(401);
+        return console.error(err)
+      }
+    });
+
+    res.send(ret).status(200)
   })
 
   app.get('/api/admin/activate_user_account', async(req, res) => {
 
-  })
+  });
 
   app.get('/api/admin/deactivate_user_account', async(req, res) => {
 
-  })
+  });
 
   app.get('/api/admin/create_notification', async(req, res) => {
 
-  })
+  });
 
   app.post('/api/admin/register_team', async(req, res) => {
-    
-  })
+    const { national_id, name, coach } = req.body;
+
+    var team = new Team({
+      national_id: national_id,
+      name: name,
+      coach: coach
+    })
+
+    team.save(function (err, user) {
+      if(err) {
+        res.end().status(401);
+        return console.error(err)
+      }
+    });
+
+    res.send("Successfully registered team").status(200)
+  }); 
 
 //===================
 
 //Student Functionality
 
+  app.get('/api/coach/create_student', async(req, res) => {
+
+  });
+
 //===================
 
 //Mentor
+  app.post('/api/mentor/create_mentor', async(req, res) => {
+    const {username, password, email, madeQuizzes, teams, speciality} = req.body;
+
+    var potentialUsers = await Mentor.find({$or:[{username:username}, {email:email}]}).exec();
+
+    if(potentialUsers.length != 0){
+      console.log("Email or username already appears in database");
+      res.send("Found previously existing user").status(201);
+    } else {
+      bcrypt.hash(password, saltRounds, (err, hash) => {
+        
+        var mentor = new Mentor({
+          username: username,
+          email: email,
+          password : hash,
+          madeQuizzes: madeQuizzes,
+          speciality: speciality,
+          teams: teams
+        });
+  
+        mentor.save(function (err, user){
+          if (err) {
+            res.end().status(401);
+            return console.error(err);
+          }
+        });
+        res.send(mentor._id).status(201)
+      });
+    }
+  });
 
 //===================
 
