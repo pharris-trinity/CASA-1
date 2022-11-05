@@ -23,7 +23,7 @@ exports.User = mongoose.model('User');
 const Mentor = User.discriminator('Mentor', new mongoose.Schema({
         madeQuizzes: {type:[Quiz.schema], required: false},
         speciality: {type: String, required: false},
-        teams: {type:[Schema.Types.ObjectID], required: false}
+        teams: {type:[Number], required: false}
     }),
 );
 
@@ -32,7 +32,7 @@ exports.Mentor = mongoose.model('Mentor')
 const Coach = User.discriminator('Coach', new mongoose.Schema({
         madeQuizzes: {type:[Quiz.schema], required: false},
         school: {type: String, required: false},
-        teams: {type:[Schema.Types.ObjectId], required: false}
+        teams: {type:[Number], required: false}
     }),
 );
 
@@ -42,7 +42,7 @@ const Student = User.discriminator('Student', new mongoose.Schema({
         takenQuizzes: {type:[TakenQuiz.schema], required: false},
         school: {type: String, required: false},
         //QUESTION: Should students be part of multiple teams
-        team: {type:Schema.Types.ObjectId, required: false}
+        team: {Number, required: false}
     }),
 );
 

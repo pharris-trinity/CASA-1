@@ -21,9 +21,9 @@ var testCoach = {
 }
 
 var testTeam = {
-    national_id: -1,
+    national_id: 0,
     name: "Test School",
-    coach: mongoose.Types.ObjectId("6363ed2585c79bc7963b0b34")
+    coach: mongoose.Types.ObjectId("636687111b78a1a27eaf49d5")
 }
 
 async function simpleGET() {
@@ -90,6 +90,7 @@ async function create_team(){
 }
 
 //simpleGET()
-// coach_creation()
-// mentor_creation()
+//coach_creation()
+//mentor_creation()
 create_team()
+//test_update_model()

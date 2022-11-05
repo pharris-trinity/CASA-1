@@ -60,7 +60,7 @@ URL Stem: `/api/admin/<value>`
 5. Create and Distribute Notification - `value: create_notification`
     * Currently Not Working. 
 6. Register a new Team - `value: register_team`
-    * Currently Not Working. 
+    * Takes in a national_id, name, and coach_id in the json object, and creates a new team that gets assigned to the coach
 
 <br>
 

@@ -161,7 +161,20 @@ app.post('/api/coach/create_coach', async(req, res) => {
   }
 });
 
-  app.get('/api/coach/get_coaches_teams', async(req, res) => {
+  app.post('/api/coach/get_coaches_teams', async(req, res) => {
+    const { userID } = req.body;
+
+    await User.find(
+      {"_id": userID}
+    ).exec().then(user => {
+      if(!user) {return res.send("ID not found").status(401);}
+      else {
+        var teamsIDS = user.teams;
+        console.log(teamsIDS);
+      }
+    })
+
+    return res.status(201);
 
   });
 
@@ -256,20 +269,44 @@ app.post('/api/coach/create_coach', async(req, res) => {
   app.post('/api/admin/register_team', async(req, res) => {
     const { national_id, name, coach } = req.body;
 
+      // app.post('/api/dev/update_coach', async(req, res) => {
+      //   const { id } = req.body;
+      //   const doc = await User.findById(id);
+      //   doc.school = "Test"
+      //   doc.save()
+      //   res.send("Done")
+      // })
+
     var team = new Team({
       national_id: national_id,
       name: name,
       coach: coach
     })
 
-    team.save(function (err, user) {
-      if(err) {
-        res.end().status(401);
-        return console.error(err)
-      }
-    });
+    //See if coach exists
+    const c = await User.findById(coach);
+    if(!c){
+      return res.send("Coach does not exist").status(401)
+    }
+    var teamsArr = c.teams
+
+    //See if team exists
+    const t = await Team.findOne({"national_id": national_id});
+    if(t){
+      return res.send("Team already exists").status(401)
+    }
+    team.save()
+
+    if(teamsArr == undefined){
+      teamsArr = [national_id]
+    } else {
+      teamsArr.push(national_id)
+    }
+    c.teams = teamsArr;
+    c.save()
 
     res.send("Successfully registered team").status(200)
+    
   }); 
 
 //===================
