@@ -8,7 +8,8 @@ var testMentor = {
     password: "test_mentor_password",
     madeQuizzes: [],
     teams: [],
-    speciality: "Windows Systems"
+    speciality: "Windows Systems",
+    validationCode: "Y#^fNWG!&W5K"
 }
 
 var testCoach = {
@@ -17,7 +18,14 @@ var testCoach = {
     password: "test_coach_password",
     madeQuizzes: [],
     school: "Test School",
-    teams: []
+    teams: [],
+    validationCode: "C#BW@(PFMGT)"
+}
+
+var testStudent = {
+    username: "test student",
+    email: "test_student@email.com",
+    password: "test_student_password"
 }
 
 var testTeam = {
@@ -89,8 +97,22 @@ async function create_team(){
     response.text().then(text => console.log(text));
 }
 
+async function create_student() {
+    const response = await fetch(url + 'student/create_student', {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(testStudent)
+    });
+
+    console.log(response.status)
+    response.text().then(text=>console.log(text));
+}
+
 //simpleGET()
 //coach_creation()
+create_student()
 //mentor_creation()
-create_team()
+//create_team()
 //test_update_model()

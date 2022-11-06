@@ -58,35 +58,35 @@ saltRounds = 12
   //Deprecated
   app.post('/api/user/create_user', async (req, res) => {
 
-    const {username, password, email} = req.body;
+    // const {username, password, email} = req.body;
 
-    var potentialUsers = await User.find({$or:[{username:username}, {email:email}]}).exec();
+    // var potentialUsers = await User.find({$or:[{username:username}, {email:email}]}).exec();
 
-    if(potentialUsers.length != 0){
-      console.log("Email or username already appears in database");
-      res.send("Found previously existing user").status(201);
-    } else {
+    // if(potentialUsers.length != 0){
+    //   console.log("Email or username already appears in database");
+    //   res.send("Found previously existing user").status(201);
+    // } else {
   
-      //Make new user
-      //Hash password, then save new account
-      bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+    //   //Make new user
+    //   //Hash password, then save new account
+    //   bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
         
-          var user = new User({
-            username: username,
-            email: email,
-            password : hash,
-          })
+    //       var user = new User({
+    //         username: username,
+    //         email: email,
+    //         password : hash,
+    //       })
     
-          user.save(function (err, user){
-            if (err) {
-              res.end().status(401);
-              return console.error(err);
-            }
-          });
-          res.send(user._id).status(201)
-      });
-    }
-
+    //       user.save(function (err, user){
+    //         if (err) {
+    //           res.end().status(401);
+    //           return console.error(err);
+    //         }
+    //       });
+    //       res.send(user._id).status(201)
+    //   });
+    // }
+    return res.send("Method Deprecated - Please use one of the type-specific user creation methods").status(401)
   });
 
   app.post("/api/user/login", async (req, res) => {
@@ -131,14 +131,27 @@ saltRounds = 12
 //Coach Functionality
 
 app.post('/api/coach/create_coach', async(req, res) => {
-  const {username, password, email, madeQuizzes, school, teams} = req.body;
+  const {username, password, email, madeQuizzes, school, teams, validationCode} = req.body;
 
   var potentialUsers = await Coach.find({$or:[{username:username}, {email:email}]}).exec();
 
   if(potentialUsers.length != 0){
     console.log("Email or username already appears in database");
-    res.send("Found previously existing user").status(201);
+    return res.send("Found previously existing user").status(201);
   } else {
+
+    const code = await Validation.findOne({"value": validationCode});
+    if(!code){
+      return res.send("Validation Code provided does not exist").status(401)
+    } else {
+      if(!code.validationType) {
+        return res.send("Validation Code provided does not authorize a coach's registration").status(401)
+      } else {
+        await Validation.deleteOne({"value": validationCode})
+      }
+    }
+
+
     bcrypt.hash(password, saltRounds, (err, hash) => {
       
       var coach = new Coach({
@@ -269,14 +282,6 @@ app.post('/api/coach/create_coach', async(req, res) => {
   app.post('/api/admin/register_team', async(req, res) => {
     const { national_id, name, coach } = req.body;
 
-      // app.post('/api/dev/update_coach', async(req, res) => {
-      //   const { id } = req.body;
-      //   const doc = await User.findById(id);
-      //   doc.school = "Test"
-      //   doc.save()
-      //   res.send("Done")
-      // })
-
     var team = new Team({
       national_id: national_id,
       name: name,
@@ -313,15 +318,42 @@ app.post('/api/coach/create_coach', async(req, res) => {
 
 //Student Functionality
 
-  app.get('/api/coach/create_student', async(req, res) => {
+  app.post('/api/student/create_student', async(req, res) => {
+    const {username, password, email} = req.body;
 
+    var potentialUsers = await Student.find({$or:[{username:username}, {email:email}]}).exec();
+
+    if(potentialUsers.length != 0){
+      console.log("Email or username already appears in database");
+      res.send("Found previously existing user").status(201);
+    } else {
+  
+      //Make new user
+      //Hash password, then save new account
+      bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+        
+          var student = new Student({
+            username: username,
+            email: email,
+            password : hash,
+          })
+    
+          student.save(function (err, user){
+            if (err) {
+              res.end().status(401);
+              return console.error(err);
+            }
+          });
+          res.send(student._id).status(201)
+      });
+    }
   });
 
 //===================
 
 //Mentor
   app.post('/api/mentor/create_mentor', async(req, res) => {
-    const {username, password, email, madeQuizzes, teams, speciality} = req.body;
+    const {username, password, email, madeQuizzes, teams, speciality, validationCode} = req.body;
 
     var potentialUsers = await Mentor.find({$or:[{username:username}, {email:email}]}).exec();
 
@@ -329,6 +361,19 @@ app.post('/api/coach/create_coach', async(req, res) => {
       console.log("Email or username already appears in database");
       res.send("Found previously existing user").status(201);
     } else {
+
+      const code = await Validation.findOne({"value": validationCode});
+      if(!code){
+        return res.send("Validation Code provided does not exist").status(401)
+      } else {
+        if(code.validationType) {
+          return res.send("Validation Code provided does not authorize a coach's registration").status(401)
+        } else {
+          await Validation.deleteOne({"value": validationCode})
+        }
+      }
+
+
       bcrypt.hash(password, saltRounds, (err, hash) => {
         
         var mentor = new Mentor({
