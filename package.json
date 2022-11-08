@@ -15,7 +15,7 @@
   "version": "1.0.0",
   "main": "Server/server.js",
   "scripts": {
-    "test": "mocha --exit -r dotenv/config",
+    "test": "mocha --exit -r dotenv/config --timeout 10000",
     "frontendTest": "cd Frontend && npm run test",
     "start": "concurrently \"npm run frontend\" \"npm run server\" ",
     "server": "cd Server && nodemon server.js",
