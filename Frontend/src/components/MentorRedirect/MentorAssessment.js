@@ -1,9 +1,15 @@
 import React, {useState} from 'react';
+import { useNavigate } from "react-router-dom";
+import Header from '../Mentor/Header';
+import '../MentorRedirect/MentorTeams.css';
 import '../Mentor/PageLayout.css'
 
 
 // This is the basic page where the user will take a mock quiz.
 function MentorAssessment() {
+
+	let navigate = useNavigate();
+
 	const questions = [
 		{
 			questionText: 'What is the name of the database that contains a the master list of usernames and password hashes on a Windows system?',
@@ -68,11 +74,74 @@ function MentorAssessment() {
 			setShowScore(true);
 		}
 	};
+
+	function teamsButton(){
+		navigate('/mentorteams', {replace: true})   
+	}
+  
+	// To navigate to the mentor quiz page.
+	function createQuiz(){
+		navigate('/mentorquiz', {replace: true})
+		
+	}
+	// To navigate to the mentor assessment page
+	function createAssessment(){
+	  navigate('/mentorassessment', {replace: true})
+		
+	}
+  
+	// Same thing
+	function editQuiz(){
+		navigate('/mentorquiz', {replace: true})
+		
+	}
+  
+	function editAssessment(){
+		navigate('/mentorassessment', {replace: true})
+		
+	}
+
+	function logOut(){
+		navigate('/login', {replace: true})
+	  }
+
     
 	return (
         
 		<div className='app'> 
-			<div className="banner-container">
+
+<Header />
+            <div className='button'>
+              <button onClick={teamsButton}>
+                  Teams
+              </button>
+
+              <button onClick={createQuiz}>
+              Create Quiz
+              </button>
+            
+              <button onClick={createAssessment}>
+                Create Assessment
+              </button>
+  
+              <button onClick={editQuiz}>
+                Edit Quiz
+              </button>
+  
+              <button onClick={editAssessment}>
+                Edit Assessment
+              </button> 
+
+              <button>
+                Profile
+              </button>
+
+              <button onClick={logOut}>
+                Logout
+              </button>
+    
+            </div>
+			
 				<div className='text'>
 			{showScore ? (
 				<div className='score-section'>
@@ -96,7 +165,7 @@ function MentorAssessment() {
 			)}
 			</div>
 		</div>
-		</div>
+		
 	);
 }
 

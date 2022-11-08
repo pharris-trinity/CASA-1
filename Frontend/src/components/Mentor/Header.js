@@ -1,17 +1,12 @@
 // A working page for a header for the mentor. 
-import React from "react";
-import "./PageLayout.css";
+import React from 'react';
+import logo from './cyberTexasLogo.png';
 
-export default function Header() {
+const Header = () => {
 return (
-    <header className="Header">
-        <nav className="Nav">
-            <a herf="/" >Home</a>
-            <a herf="/" >Home</a>
-            <a herf="/" >Home</a>
-            <a herf="/" >Home</a>
-            <button>Logout</button>
-        </nav>
+    <header>
+        <img src={logo} alt="CyberTexasLogo" height="70" />
     </header>
     );
-}
+};
+export default Header;

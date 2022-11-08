@@ -4,6 +4,8 @@ import '../MentorRedirect/MentorTeams'
 import '../MentorRedirect/MentorQuiz'
 import '../MentorRedirect/MentorAssessment'
 import { useNavigate } from "react-router-dom";
+import Header from './Header';
+import '../Mentor/PageLayout.css';
 
 
 
@@ -11,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 function Mentor() {
 
   let navigate = useNavigate();
+
 
   // To the Mentor team page
   function teamsButton(){
@@ -40,6 +43,11 @@ function Mentor() {
       navigate('/mentorassessment', {replace: true})
       
   }
+
+  function logOut(){
+    navigate('/login', {replace: true})
+  }
+
   
 //<div class="body"> 
 
@@ -49,40 +57,57 @@ return (
 
 <h2> Mentor Page </h2>
 <div></div>
-<div className="banner-container">
 
-    <button onClick={teamsButton}>
-      Teams
-    </button>
+
+<div className='banner-container'>
+<div className='header'>
+<Header /></div>
+
+    <div className="button ">
+      <button onClick={teamsButton}>
+        Teams
+      </button> 
+    </div> 
 
     <div></div>
 
-    <button onClick={createQuiz}>
-      Create Quiz
-    </button>
+    <div className="button ">
+      <button onClick={createQuiz}>
+        Create Quiz
+      </button> 
+    </div> 
 
     <div></div>
 
+    <div className="button ">
     <button onClick={createAssessment}>
       Create Assessment
     </button>
+    </div>
 
     <div></div>
-
+    <div className="button ">
     <button onClick={editQuiz}>
       Edit Quiz
     </button>
+    </div>
 
     <div></div>
 
+    <div className="button ">
     <button onClick={editAssessment}>
       Edit Assessment
     </button> 
-    
+    </div>
+
+    <div className="button ">
+    <button onClick={logOut}>
+      Logout
+    </button> 
+    </div>
  </div>
+</div>
 
-
-</div> 
 
 
 
