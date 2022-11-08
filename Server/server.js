@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(cors())
 
 let environment = process.env
-let database = environment.DATABASE || "test";
+let database = environment.DATABASE || "devops";
 let username = environment.USER_NAME
 let password = environment.USER_PASSWORD
 
@@ -99,12 +99,12 @@ saltRounds = 12
         {username: username}
       ).exec().then(user => {
         if(!user) {
-          return res.status(401).send("Username not found");
+          return res.status(404).send("Username not found");
         } else {
           bcrypt.compare(req.body.password, user.password, (error, result) => {
             
             if(result) {
-              res.status(201).send(JSON.stringify(user));
+              res.status(201).send(user);
             } else {
               res.status(401).send("Password mismatch");
             }
@@ -120,7 +120,7 @@ saltRounds = 12
     if (user == undefined){
       res.sendStatus(500);
     } else {
-      res.status(200).send(JSON.stringify(user));
+      res.status(200).send(user);
     }
     
   });
@@ -139,20 +139,23 @@ app.post('/api/coach/create_coach', async(req, res) => {
 
   if(potentialUsers.length != 0){
     console.log("Email or username already appears in database");
-    return res.status(201).send("Found previously existing user");
+    return res.status(100).send("Found previously existing user");
   } else {
 
     const code = await Validation.findOne({"value": validationCode});
     if(!code){
-      return res.status(401).send("Validation Code provided does not exist")
+      return res.status(404).send("Validation Code provided does not exist")
     } else {
       if(!code.validationType) {
         return res.status(401).send("Validation Code provided does not authorize a coach's registration")
       } else {
-        await Validation.deleteOne({"value": validationCode})
+        Validation.deleteOne({"value": validationCode}).then( () => {
+          console.log("Code Deleted")
+        }).catch((err) => {
+          console.log(err)
+        })
       }
     }
-
 
     bcrypt.hash(password, saltRounds, (err, hash) => {
       
@@ -171,7 +174,9 @@ app.post('/api/coach/create_coach', async(req, res) => {
           return console.error(err);
         }
       });
-      res.status(201).send(JSON.stringify(coach))
+      
+
+      return res.status(201).send(coach)
     });
   }
 });
@@ -212,7 +217,7 @@ app.post('/api/coach/create_coach', async(req, res) => {
 //====================
 
 //Admin Functionality
-  const Validation = require('../Database/ValidationCode')
+  const Validation = require('../Database/ValidationCode.js')
   const Team = require('../Database/Team.js')
 
   function generateValidationCode(){
@@ -266,6 +271,16 @@ app.post('/api/coach/create_coach', async(req, res) => {
     });
 
     res.status(201).send(code)
+  })
+
+  app.post('/api/admin/check_code_existence', async(req, res) => {
+    const { validationCode } = req.body
+    const code = await Validation.findOne({"value": validationCode});
+    if(!code){
+      return res.sendStatus(404)
+    } else {
+      return res.sendStatus(200)
+    }
   })
 
   app.get('/api/admin/activate_user_account', async(req, res) => {
@@ -345,7 +360,7 @@ app.post('/api/coach/create_coach', async(req, res) => {
               return console.error(err);
             }
           });
-          res.status(201).send(JSON.stringify(student))
+          res.status(201).send(student)
       });
     }
   });
@@ -373,7 +388,6 @@ app.post('/api/coach/create_coach', async(req, res) => {
           await Validation.deleteOne({"value": validationCode})
         }
       }
-
 
       bcrypt.hash(password, saltRounds, (err, hash) => {
         
