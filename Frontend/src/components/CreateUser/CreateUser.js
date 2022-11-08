@@ -34,7 +34,7 @@ function CreateAccount() {
         };
 
         try {
-            fetch('/api/create_user', requestOptions).then(
+            fetch('/api/user/create_user', requestOptions).then(
                 res => res.text()).then(text => {
                     if(text.toLowerCase() === "found previously existing user"){
                         alert("Username or email already exists in the database, please login")
@@ -53,7 +53,7 @@ function CreateAccount() {
 
     const continueRedirect = (e, text) => {
         
-        fetch('/api/display_user/' + text).then(
+        fetch('/api/user/display_user/' + text).then(
             res => res.text()).then(text => {
                 try {
 

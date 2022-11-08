@@ -25,10 +25,6 @@ const QuizSchema = new Schema({
         type: [QuestionSchema],
         required: true
     },
-    answers: {
-        type: [Number],
-        required: true
-    },
     authorID: {
         type: Schema.Types.ObjectId, ref: 'authorID',
         required: true
@@ -44,11 +40,15 @@ const TakenQuizSchema = new Schema({
         type: [QuestionSchema],
         required: true
     },
-    correctAnswers: {
+    answers: {
         type: [Number],
         required: true
     },
-    incorrectAnswers: {
+    correctQuestions: {
+        type: [Number],
+        required: true
+    },
+    incorrectQuestions: {
         type: [Number],
         required: true
     },

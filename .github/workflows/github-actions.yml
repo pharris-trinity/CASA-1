@@ -2,7 +2,7 @@ name: GitHub Actions
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [pull_request]
 jobs:
-  Explore-GitHub-Actions:
+  Run-Main-Tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:

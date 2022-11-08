@@ -8,14 +8,15 @@
     "express": "^4.18.1",
     "http-proxy-middleware": "^2.0.6",
     "mongoose": "^6.6.5",
+    "node-fetch": "^3.2.10",
     "nodemon": "^2.0.20"
   },
   "name": "casa",
   "version": "1.0.0",
   "main": "Server/server.js",
   "scripts": {
-    "test": "mocha --exit",
-    "frontendTest" : "cd Frontend && npm run test",
+    "test": "mocha --exit -r dotenv/config --timeout 10000",
+    "frontendTest": "cd Frontend && npm run test",
     "start": "concurrently \"npm run frontend\" \"npm run server\" ",
     "server": "cd Server && nodemon server.js",
     "frontend": "cd Frontend && npm run start",
@@ -23,7 +24,8 @@
     "install": "cd Frontend && npm install"
   },
   "engines": {
-    "node": "v8.19.2"
+    "node": "16.14.2",
+    "npm": "8.19.2"
   },
   "repository": {
     "type": "git",
