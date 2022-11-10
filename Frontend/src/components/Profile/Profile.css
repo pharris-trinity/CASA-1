@@ -1,0 +1,10 @@
+.left {
+
+    width: 900px;
+    height: 500px;
+    background: orange;
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+
+}

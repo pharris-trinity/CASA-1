@@ -2,12 +2,12 @@
   font-family: sans-serif;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: top;
   flex-direction: column;
   gap: 20px;
   height: 100vh;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  background-color: #147bb2;
+  background-color: white;
 }
 
 input[type="text"],
@@ -19,18 +19,15 @@ input[type="password"] {
 /*.App {
   text-align: center;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -41,11 +38,9 @@ input[type="password"] {
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
 .App-link {
   color: #61dafb;
 }
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
