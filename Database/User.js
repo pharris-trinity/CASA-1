@@ -12,6 +12,7 @@ const baseOptions = {
 
 const User = mongoose.model('User', mongoose.Schema({
         username: {type: String, required: true},
+        displayname: {type: String, required: true},
         password: {type: String, required: true},
         email: {type: String, required: true}
         }, baseOptions,
@@ -22,6 +23,7 @@ exports.User = mongoose.model('User');
 
 const Mentor = User.discriminator('Mentor', new mongoose.Schema({
         madeQuizzes: {type:[Quiz.schema], required: false},
+        remote: {type: Boolean, required: false},
         speciality: {type: String, required: false},
         teams: {type:[Number], required: false}
     }),
