@@ -44,6 +44,8 @@ exports.Coach = mongoose.model('Coach')
 const Student = User.discriminator('Student', new mongoose.Schema({
         takenQuizzes: {type:[TakenQuiz.schema], required: false},
         school: {type: String, required: false},
+        tier: {type: Number, required: false},
+        gradelevel: {type: Number, required: false},
         //QUESTION: Should students be part of multiple teams
         team: {Number, required: false}
     }),
