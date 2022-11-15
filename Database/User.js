@@ -23,7 +23,8 @@ exports.User = mongoose.model('User');
 
 const Mentor = User.discriminator('Mentor', new mongoose.Schema({
         madeQuizzes: {type:[Quiz.schema], required: false},
-        remote: {type: Boolean, required: false},
+        remote: {type: Boolean, required: true},
+        zipcode: {type: Number, required: false},
         speciality: {type: String, required: false},
         teams: {type:[Number], required: false}
     }),
