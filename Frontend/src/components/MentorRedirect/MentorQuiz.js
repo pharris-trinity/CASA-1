@@ -115,6 +115,12 @@ function MentorQuiz() {
         <input onChange={(e) => setInputData(e.target.value)} />
         <button onClick={addUserName}>User Info Entry</button> </div>
 
+        <output>{mainArray.map(item => {
+          return <li>{item[counter]}</li>;
+        })}</output>
+        
+     
+
 </div></div>
     );
 }

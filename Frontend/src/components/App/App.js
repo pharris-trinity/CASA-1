@@ -15,6 +15,9 @@ import TeacherTeams from "../TeacherRedirect/TeacherTeam";
 import TeacherQuiz from "../TeacherRedirect/TeacherQuiz";
 import TeacherAssessment from "../TeacherRedirect/TeacherAssessment";
 
+import MentorTable from "../TableMentor/MentorTable";
+
+
 // eslint-disable-next-line
 import { Routes, Route, Link } from "react-router-dom";
 import * as React from "react";
@@ -43,6 +46,7 @@ function App() {
         <Route path="teacherteam" element={<TeacherTeams/>} />
         <Route path="teacherquiz" element={<TeacherQuiz/>} />
         <Route path="teacherassessment" element={<TeacherAssessment/>} />
+        <Route path="mentortable" element={<MentorTable/>} />
       </Routes>
     </div>
   );
