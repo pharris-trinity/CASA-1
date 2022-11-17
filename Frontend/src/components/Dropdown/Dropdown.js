@@ -13,6 +13,13 @@ const Dropdown = () => {
         setstate(false);
 
     }
+    const [state1, setstate1] = useState(false);
+    const showDrorpdown1 = ()=>{
+        setstate1(true);
+    }
+    const hideDrorpdown1 = ()=>{
+        setstate1(false);
+    }
 
     const [isMenu, setisMenu] = useState(false);
     const [isResponsiveclose, setResponsiveclose] = useState(false);
@@ -33,20 +40,22 @@ const Dropdown = () => {
                 </div> 
                 <li  className="menu-item" >
                     <NavLink exact activeClassName='is-active' onClick={toggleClass} to={`/`}> Home </NavLink> 
+                    <NavLink onClick={toggleClass} activeClassName='is-active' to={`/Profile`}> Profile </NavLink> 
                 </li>
-                <li className="menu-item " ><NavLink onClick={toggleClass} activeClassName='is-active' to={`/Profile`}> Profile </NavLink> </li>
+{/*                <li className="menu-item " >
+                    <NavLink onClick={toggleClass} activeClassName='is-active' to={`/Profile`}> Profile </NavLink> 
+    </li>*/}
                 <div className = "dropdown-menu" onMouseEnter={showDrorpdown} onMouseLeave = {hideDrorpdown}>
                     Teams
                     {state ?(<ul className = "dropdown-list" onMouseEnter={showDrorpdown}>
                         <li> <NavLink onClick={toggleClass} activeClassName='is-active'  to={`/ViewTeams`}> ViewTeams </NavLink> </li>
-                        {/*<li><NavLink onClick={toggleClass} activeClassName='is-active' to={`/TeamStats`}> TeamStats </NavLink> </li>*/}
-                        <li><NavLink onClick={toggleClass} activeClassName='is-active' to={`/FindMentor`}> FindMentor </NavLink> </li>
+                        <li> <NavLink onClick={toggleClass} activeClassName='is-active' to={`/FindMentor`}> FindMentor </NavLink> </li>
                     </ul>):
                     null}
                  </div>
-                 <div className = "dropdown-menu" onMouseEnter={showDrorpdown} onMouseLeave = {hideDrorpdown}>
+                 <div className = "dropdown-menu1" onMouseEnter={showDrorpdown1} onMouseLeave = {hideDrorpdown1}>
                     AssessTest
-                    {state ?(<ul className = "dropdown-list" onMouseEnter={showDrorpdown}>
+                    {state1 ?(<ul className = "dropdown-list1" onMouseEnter={showDrorpdown1}>
                         <li> <NavLink onClick={toggleClass} activeClassName='is-active'  to={`/AssessTest`}> AssessTest </NavLink> </li>
                         <li><NavLink onClick={toggleClass} activeClassName='is-active' to={`/ViewScores`}> ViewScores </NavLink> </li>
                     </ul>):
