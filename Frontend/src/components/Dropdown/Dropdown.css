@@ -1,7 +1,12 @@
+/* possible nav bar shades of purple from darkest to lightest
+    #927dec
+    #aea0ed
+*/
+
 .dropdown {
     width: 100%;
     height: 50px;
-    background-color: #785ef0;
+    background-color: #aea0ed;
 
 }
 
@@ -15,13 +20,14 @@
     color: black;
 }
 
-.dropdown .container .menu-item {
-    text-align: center;
-    color:orange;
+.dropdown-menu:hover{
+    color:black;
+    background: white;
+    
 }
 
+
 .dropdown-menu{
-   
     text-align: center;
     color:black;
     background: white;
@@ -39,7 +45,7 @@
     width: 7rem;
     text-align: center;
     color:black;
-    background: #785ef0;
+    background: #aea0ed;
     position: relative;
     cursor:pointer;
 }
@@ -87,7 +93,7 @@
     width: 7rem;
     text-align: center;
     color:black;
-    background: #785ef0;
+    background: #aea0ed;
     position: relative;
     cursor:pointer;
 }

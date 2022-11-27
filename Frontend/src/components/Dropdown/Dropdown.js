@@ -3,6 +3,8 @@ import {NavLink} from 'react-router-dom';
 
 import './Dropdown.css';
 import logo from '../img/logo.png';
+import profileimg from '../img/profileimg.png';
+
 
 const Dropdown = () => {
     const [state, setstate] = useState(false);
@@ -32,19 +34,14 @@ const Dropdown = () => {
     return (
         <div className = "dropdown">
             <div className = "container"> 
-                    {/* Add Logo  */}
-                    <div className="header__middle__logo">
+                {/*Cyber Texas Logo: links back to home page*/}
+                <div className="header__middle__logo">
                     <NavLink exact activeClassName='is-active' to="/">
                         <img src={logo} alt="logo" /> 
                     </NavLink>
                 </div> 
-                <li  className="menu-item" >
-                    <NavLink exact activeClassName='is-active' onClick={toggleClass} to={`/`}> Home </NavLink> 
-                    <NavLink onClick={toggleClass} activeClassName='is-active' to={`/Profile`}> Profile </NavLink> 
-                </li>
-{/*                <li className="menu-item " >
-                    <NavLink onClick={toggleClass} activeClassName='is-active' to={`/Profile`}> Profile </NavLink> 
-    </li>*/}
+
+                {/* Drop down for Team page: includes links to View Teams & Find Mentor pages */}
                 <div className = "dropdown-menu" onMouseEnter={showDrorpdown} onMouseLeave = {hideDrorpdown}>
                     Teams
                     {state ?(<ul className = "dropdown-list" onMouseEnter={showDrorpdown}>
@@ -53,7 +50,9 @@ const Dropdown = () => {
                     </ul>):
                     null}
                  </div>
-                 <div className = "dropdown-menu1" onMouseEnter={showDrorpdown1} onMouseLeave = {hideDrorpdown1}>
+
+                {/* Drop down for Assess/Test page: includes links to Assess/Test & View Scores pages */}
+                <div className = "dropdown-menu1" onMouseEnter={showDrorpdown1} onMouseLeave = {hideDrorpdown1}>
                     AssessTest
                     {state1 ?(<ul className = "dropdown-list1" onMouseEnter={showDrorpdown1}>
                         <li> <NavLink onClick={toggleClass} activeClassName='is-active'  to={`/AssessTest`}> AssessTest </NavLink> </li>
@@ -61,6 +60,14 @@ const Dropdown = () => {
                     </ul>):
                     null}
                  </div>
+
+                {/*Profile Logo: links back to profile page*/}
+                <div className="profile___header__middle__logo">
+                    <NavLink exact activeClassName='is-active' to="Profile">
+                        <img src={profileimg} alt="profileimg" /> 
+                    </NavLink>
+                </div> 
+
 
             
             
