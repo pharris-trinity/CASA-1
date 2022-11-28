@@ -29,7 +29,7 @@ function Login() {
           body: JSON.stringify(postData)
       };
       
-      fetch('/api/login', requestOptions).then(
+      fetch('/api/user/login', requestOptions).then(
         res => res.text()).then(text => {
             if(text === "Username not found"){
                 setErrorMessages({name: "user", message:error.user})
@@ -49,7 +49,7 @@ function Login() {
     var modText = incText.substring(1, incText.length-1)
 
 
-    fetch('/api/display_user/' + modText).then(
+    fetch('/api/user/display_user/' + modText).then(
         res => res.text()).then(text => {
             try {
                 const userVal = JSON.parse(text)

@@ -48,7 +48,7 @@
 ### Env File Setup
 An environment file (.env) is useful for setting up credientials and secrets without having to push them to the remote where they could be seen by others. This repository is configured to ignore .env files.
 1. Create file within the root directory named `.env`
-2. Inside this file, there are two required fields. 
+2. Inside this file, there are two required fields, the username and password. This information will be given to you by the Database administrator
 3. Firstly, create the `USER_NAME` field. (`USER_NAME=<username>`)
 4. Secondly, on a new line, create the `USER_PASSWORD` field. (`USER_PASSWORD=<password>`)
 5. Finally, add optional vars using the syntax `VAR_NAME=<var_value>`
@@ -58,6 +58,12 @@ An environment file (.env) is useful for setting up credientials and secrets wit
 ### Useful Links
 1. Server Testing Tutorial: [Testing Node.js API with Mocha and Chai](https://medium.com/@ebenwoodward/testing-a-node-js-with-mocha-and-chai-11288460eaf8)
 2. Useful Markdown Formatting: [Basic Syntax | Markdown Guide](https://www.markdownguide.org/basic-syntax/)
+3. Color Palette: In an effort to be an accessible website, our color palette uses a variety of hues that are designed to still be visible to people with all forms of colorblindness. In order of bluest to redest: 
+    1. <span style="color: #648FFF">#648FFF</span>
+    2. <span style="color: #785EF0">#785EF0</span>
+    3. <span style="color: #DC267F">#DC267F</span>
+    4. <span style="color: #FE6100">#FE6100</span>
+    5. <span style="color: #FFB000">#FFB000</span>
 
 ---
 
