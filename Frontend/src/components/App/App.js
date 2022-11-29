@@ -30,12 +30,7 @@ function App() {
 
   return (
     <div className="App">
-      {/*<Navbarmenu />   
-         <Mentor/>
-
-*/}
-   <Dropdown />
-
+      <Dropdown />
 
       <Routes basename = "/">
    

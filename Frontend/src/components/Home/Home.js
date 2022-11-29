@@ -6,9 +6,6 @@ const Home = () => {
             <div className = "top">
                 <div className = "toptext"> 
                     
-                    
-                    Welcome to CASA for Coaches
-
                 </div> 
                 
             </div>
