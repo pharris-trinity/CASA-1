@@ -1,12 +1,11 @@
 import React from 'react';
 import FilterTable from '../TableMentor/FilterTable';
+import Tables from '../TableMentor/table'
 
 function Table() {
 
   return (
     <div className="App">
-
-      <h3>Basic Table using <code>react-table</code></h3>
 
       <FilterTable />
 
@@ -15,3 +14,5 @@ function Table() {
 }
 
 export default Table;
+
+//<h3>Basic Table using <code>react-table</code></h3>

@@ -104,9 +104,9 @@ saltRounds = 12
           bcrypt.compare(req.body.password, user.password, (error, result) => {
             
             if(result) {
-              res.status(201).send(user);
+              return res.status(201).send(user);
             } else {
-              res.status(401).send("Password mismatch");
+              return res.status(401).send("Password mismatch");
             }
           });
         }
@@ -118,9 +118,9 @@ saltRounds = 12
     var user = await User.findById(id).exec();
 
     if (user == undefined){
-      res.sendStatus(500);
+      return res.sendStatus(500);
     } else {
-      res.status(200).send(user);
+      return res.status(200).send(user);
     }
     
   });
@@ -133,7 +133,7 @@ saltRounds = 12
 //Coach Functionality
 
 app.post('/api/coach/create_coach', async(req, res) => {
-  const {username, password, email, madeQuizzes, school, teams, validationCode} = req.body;
+  const {username, displayname, password, email, madeQuizzes, school, teams, validationCode} = req.body;
 
   var potentialUsers = await Coach.find({$or:[{username:username}, {email:email}]}).exec();
 
@@ -161,6 +161,7 @@ app.post('/api/coach/create_coach', async(req, res) => {
       
       var coach = new Coach({
         username: username,
+        displayname: displayname,
         email: email,
         password : hash,
         madeQuizzes: madeQuizzes,
@@ -190,12 +191,9 @@ app.post('/api/coach/create_coach', async(req, res) => {
       if(!user) {return res.status(401).send("ID not found");}
       else {
         var teamsIDS = user.teams;
-        console.log(teamsIDS);
+        return res.send(teamsIDS).status(201);
       }
     })
-
-    return res.sendStatus(201);
-
   });
 
 //=================
@@ -296,11 +294,14 @@ app.post('/api/coach/create_coach', async(req, res) => {
   });
 
   app.post('/api/admin/register_team', async(req, res) => {
-    const { national_id, name, coach } = req.body;
+    const { national_id, name, school, district, rotc, coach } = req.body;
 
     var team = new Team({
       national_id: national_id,
       name: name,
+      school: school,
+      district: district,
+      rotc: rotc,
       coach: coach
     })
 
@@ -326,22 +327,110 @@ app.post('/api/coach/create_coach', async(req, res) => {
     c.teams = teamsArr;
     c.save()
 
-    res.status(200).send("Successfully registered team")
+    return res.status(200).send("Successfully registered team")
     
   }); 
+
+  app.post('/api/mentor/get_mentors_teams', async(req, res) => {
+    const { userID } = req.body;
+
+    await User.find(
+      {"_id": userID}
+    ).exec().then(user => {
+      if(!user) {return res.status(401).send("ID not found");}
+      else {
+        var teamsIDS = user.teams;
+        return res.send(teamsIDS).status(201);
+      }
+    })
+  });
+
+  app.get('/api/collections', (req,res,next)=>{
+    mongoose.connection.db.listCollections().toArray().then(collection => {
+        const dataArr = []; 
+        
+        collection.forEach(el => dataArr.push(el.name));
+          for (let i = 0; i < dataArr.length; i++)
+          {
+            console.log("Collection: " + dataArr[i]);
+            if (dataArr[i] == "teams")
+            mongoose.connection.db.listCollections({name : ''})
+            
+              
+          }
+        res.status(200).json({ status: 'success', data: { dataArr } })
+    });
+})
+
+app.post('/api/team/get_team', async(req, res) => {
+  const { teamID } = req.body;
+  const team = await Team.findOne({"national_id": teamID});
+  console.log(team)
+  if(!team){
+    return res.sendStatus(404)
+  } else {
+    return res.status(200).send(team);
+  }
+  
+})
+
+app.get('/api/stored', async (req, res) => {
+  try {
+    const ads = await Teams.find({"national_id": teamID});
+
+    return res.status(200).json({
+      success: true,
+      count: ads.length,
+      data: ads
+      });
+    } catch(err) {
+      console.log(err);
+    res.status(500).json({ error: 'server error' });
+    }
+
+
+  /*console.log(req.body);
+  mongoose.connection.db.collection('quotes').then(req.body, (err, data) => {
+      if(err) return console.log(err);
+      res.send(('saved to db: ' + data));
+      res.status(200).json({ status: 'success', data: { data } })
+  })*/
+});
+
+app.post('/api/get-data', function(req, res, next) {
+    
+  
+  mongoose.connection.db.collection('teams').find({}).toArray().then(collection => {
+    
+    
+    res.status(200).json({ collection})
+});
+  
+});
+
+app.post('/api/get-MentorData', function(req, res, next) {
+    
+  
+  mongoose.connection.db.collection('users').find({username: "test mentor"}).toArray().then(collection => {
+    
+    console.log("Here's mentors: " + collection);
+    res.status(200).json({ collection})
+});
+  
+});
 
 //===================
 
 //Student Functionality
 
   app.post('/api/student/create_student', async(req, res) => {
-    const {username, password, email} = req.body;
+    const {username, displayname, password, email} = req.body;
 
     var potentialUsers = await Student.find({$or:[{username:username}, {email:email}]}).exec();
 
     if(potentialUsers.length != 0){
       console.log("Email or username already appears in database");
-      res.status(201).send("Found previously existing user");
+      res.status(302).send("Found previously existing user");
     } else {
   
       //Make new user
@@ -350,14 +439,14 @@ app.post('/api/coach/create_coach', async(req, res) => {
         
           var student = new Student({
             username: username,
+            displayname: displayname,
             email: email,
             password : hash,
           })
     
           student.save(function (err, user){
             if (err) {
-              res.status(401).end();
-              return console.error(err);
+              return res.status(401).end();
             }
           });
           res.status(201).send(student)
@@ -369,13 +458,13 @@ app.post('/api/coach/create_coach', async(req, res) => {
 
 //Mentor
   app.post('/api/mentor/create_mentor', async(req, res) => {
-    const {username, password, email, madeQuizzes, teams, speciality, validationCode} = req.body;
+    const {username, displayname, remote, zipcode, password, email, madeQuizzes, teams, speciality, validationCode} = req.body;
 
     var potentialUsers = await Mentor.find({$or:[{username:username}, {email:email}]}).exec();
 
     if(potentialUsers.length != 0){
       console.log("Email or username already appears in database");
-      res.status(201).send("Found previously existing user");
+      res.status(301).send("Found previously existing user");
     } else {
 
       const code = await Validation.findOne({"value": validationCode});
@@ -393,7 +482,10 @@ app.post('/api/coach/create_coach', async(req, res) => {
         
         var mentor = new Mentor({
           username: username,
+          displayname: displayname,
           email: email,
+          remote: remote,
+          zipcode: zipcode,
           password : hash,
           madeQuizzes: madeQuizzes,
           speciality: speciality,
@@ -402,8 +494,7 @@ app.post('/api/coach/create_coach', async(req, res) => {
   
         mentor.save(function (err, user){
           if (err) {
-            res.status(401).end();
-            return console.error(err);
+            return res.status(401).end();
           }
         });
         res.status(201).send(JSON.stringify(mentor))

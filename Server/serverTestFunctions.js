@@ -2,28 +2,33 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 const url = "http://localhost:3001/api/"
 const mongoose = require("mongoose")
 
-var testMentor = {
-    username: "test mentor 2",
-    email: "test_mentor2@email.com",
-    password: "test_mentor_password",
-    madeQuizzes: [],
-    teams: [],
-    speciality: "Windows Systems",
-    validationCode: "Y#^fNWG!&W5K"
-}
+// var testMentor = {
+//     username: "test mentor",
+//     displayname: "Test Mentor",
+//     email: "test_mentor@email.com",
+//     password: "test_mentor_password",
+//     remote: false,
+//     zipcode: 78212,
+//     madeQuizzes: [],
+//     teams: [],
+//     speciality: "Windows Systems",
+//     validationCode: "b#NIO(E*(7Pq"
+// }
 
-var testCoach = {
-    username: "test coach",
-    email: "test_coach@email.com",
-    password: "test_coach_password",
-    madeQuizzes: [],
-    school: "Test School",
-    teams: [],
-    validationCode: "C#BW@(PFMGT)"
-}
+// var testCoach = {
+//     username: "test coach",
+//     displayname: "Test Coach",
+//     email: "test_coach@email.com",
+//     password: "test_coach_password",
+//     madeQuizzes: [],
+//     school: "Test School",
+//     teams: [],
+//     validationCode: "(H9qPA&T$k#R"
+// }
 
 var testStudent = {
     username: "test student",
+    displayname: "Test Student",
     email: "test_student@email.com",
     password: "test_student_password"
 }
@@ -31,7 +36,10 @@ var testStudent = {
 var testTeam = {
     national_id: 0,
     name: "Test School",
-    coach: mongoose.Types.ObjectId("636687111b78a1a27eaf49d5")
+    school: "Trinity University",
+    district: "Private University",
+    rotc: false,
+    coach: mongoose.Types.ObjectId("6373bf8650c5263f57ff20ab")
 }
 
 async function simpleGET() {
@@ -97,6 +105,7 @@ async function create_team(){
     response.text().then(text => console.log(text));
 }
 
+
 async function create_student() {
     const response = await fetch(url + 'student/create_student', {
         method: 'POST', 
@@ -111,8 +120,10 @@ async function create_student() {
 }
 
 //simpleGET()
+//coach_validation()
 //coach_creation()
-create_student()
+//mentor_validation()
+//create_student()
 //mentor_creation()
-//create_team()
+create_team()
 //test_update_model()

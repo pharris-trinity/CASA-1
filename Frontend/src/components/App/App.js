@@ -9,6 +9,8 @@ import Mentor from "../Mentor/Mentor";
 import MentorTeams from "../MentorRedirect/MentorTeams";
 import MentorQuiz from "../MentorRedirect/MentorQuiz";
 import MentorAssessment from "../MentorRedirect/MentorAssessment";
+import Mentorteamdisplay from "../TableMentor/MentorTable";
+import MentorHome from "../Mentor/MentorHomePage";
 
 import Teacher from "../Teacher/Teacher";
 import TeacherTeams from "../TeacherRedirect/TeacherTeam";
@@ -47,6 +49,8 @@ function App() {
         <Route path="teacherquiz" element={<TeacherQuiz/>} />
         <Route path="teacherassessment" element={<TeacherAssessment/>} />
         <Route path="mentortable" element={<MentorTable/>} />
+        <Route path="mentortabledisplay" element={<Mentorteamdisplay/>} />
+        <Route path="mentorHome" element={<MentorHome/>} />
       </Routes>
     </div>
   );

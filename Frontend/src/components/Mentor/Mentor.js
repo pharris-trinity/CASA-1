@@ -5,7 +5,9 @@ import '../MentorRedirect/MentorQuiz'
 import '../MentorRedirect/MentorAssessment'
 import { useNavigate } from "react-router-dom";
 import Header from './Header';
+import Footer from './Footer';
 import '../Mentor/PageLayout.css';
+import Navbar from '../Mentor/NavBarMentor';
 
 
 
@@ -17,11 +19,21 @@ function Mentor() {
 
   // To the Mentor team page
   function teamsButton(){
-      navigate('/mentorteams', {replace: true})
+      //navigate('/mentorteams', {replace: true})
+      navigate('/mentortabledisplay', {replace: true})
+
       
       
   }
 
+  function HomeButton(){
+    //navigate('/mentorteams', {replace: true})
+    navigate('/mentorHome', {replace: true})
+
+    
+    
+}
+/*
   // To navigate to the mentor quiz page.
   function createQuiz(){
       navigate('/mentorquiz', {replace: true})
@@ -48,65 +60,35 @@ function Mentor() {
     navigate('/login', {replace: true})
   }
 
-  
+  */
 //<div class="body"> 
 
 return (
 <div>
 
 
-<h2> Mentor Page </h2>
-<div></div>
-
-
-<div className='banner-container'>
-<div className='header'>
-<Header /></div>
-
-    <div className="button ">
+      
+      
+      
+  
+       <Navbar/>
+   
       <button onClick={teamsButton}>
         Teams
       </button> 
-    </div> 
 
-    <div></div>
-
-    <div className="button ">
-      <button onClick={createQuiz}>
-        Create Quiz
+      <button onClick={HomeButton}>
+        Home Page
       </button> 
-    </div> 
 
-    <div></div>
+       
+         
+    
+    
+</div>  
+    
+ 
 
-    <div className="button ">
-    <button onClick={createAssessment}>
-      Create Assessment
-    </button>
-    </div>
-
-    <div></div>
-    <div className="button ">
-    <button onClick={editQuiz}>
-      Edit Quiz
-    </button>
-    </div>
-
-    <div></div>
-
-    <div className="button ">
-    <button onClick={editAssessment}>
-      Edit Assessment
-    </button> 
-    </div>
-
-    <div className="button ">
-    <button onClick={logOut}>
-      Logout
-    </button> 
-    </div>
- </div>
-</div>
 
 
 
