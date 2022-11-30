@@ -439,8 +439,6 @@ app.get('/', (req, res) => {
 //https://www.freecodecamp.org/news/how-to-create-a-react-app-with-a-node-backend-the-complete-guide/
 const PORT = process.env.PORT || 3001;
 
-//app.use("/studapi",require("../Database/studRoute/studRoutes"));
-
 app.on('ready', function() { 
   app.listen(PORT, function(){ 
       console.log(`Server listing on ${PORT}`); 
