@@ -15,7 +15,7 @@ require('dotenv').config({path: "../.env"});
 app.use(express.static("../Frontend/build"))
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(cors())
+app.use(cors());
 
 let environment = process.env
 let database = environment.DATABASE || "devops";
