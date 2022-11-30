@@ -15,7 +15,7 @@ require('dotenv').config({path: "../.env"});
 app.use(express.static("../Frontend/build"))
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors())
 
 let environment = process.env
 let database = environment.DATABASE || "devops";
@@ -56,6 +56,22 @@ app.get("/api", (req, res) => {
 });
 
 saltRounds = 12
+
+
+
+app.post('/api/getfleech', function(req, res, next) {
+    
+  mongoose.connection.db.collection('users').find({username: "fleech"}).toArray().then(collection => {  
+    console.log("check student: " + collection);
+    res.status(200).json({ collection})
+  });
+});
+
+
+
+
+
+
 //User related functions
   //Deprecated
   app.post('/api/user/create_user', async (req, res) => {

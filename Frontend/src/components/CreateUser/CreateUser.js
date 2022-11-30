@@ -52,7 +52,7 @@ function CreateAccount() {
             console.log(error)
         }
     }
-
+/*
     const continueRedirect = (e, text) => {
         e.preventDefault()
         fetch('/api/user/display_user/' + text).then(
@@ -68,7 +68,7 @@ function CreateAccount() {
             }
         )
     }
-
+*/
     const loginRedirect = (e) => {
         e.preventDefault()
         navigate('/login', {replace: true})
