@@ -1,0 +1,113 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+/*nav bar css below*/
+.studnav {
+    background-color: #785EF0;
+    color: white;
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+    align-items: stretch;
+    position: fixed;
+    top: 0px;
+    gap: 72rem;
+    padding: 0 1rem;
+}
+
+.CASA-hometitle {
+    font-size: 2rem;
+}
+
+.studnav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.studnav a {
+    color: inherit;
+    text-decoration: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: .25rem;
+}
+/*
+.studnav li.active {
+    background-color: #DC267F;
+}
+
+.studnav li.hover {
+    background-color: #DC267F;
+} */
+
+/* main page css below*/
+.maincontainer {
+    margin-top: 5rem;
+    position: fixed;
+    top: 5rem;
+    width: 80%;
+    height: 50%;
+}
+
+.mainrow {
+    margin-top: 1rem;
+    display: flex;
+    width: auto;
+    list-style:none;
+}
+
+.maincol1 {
+    flex: 80%;
+    padding: 50px;
+    background-color: white;
+    width: auto;
+}
+
+.maincol1 ul{
+    list-style: none;
+}
+
+.maincol1 li {
+    margin-bottom: 10px;
+}
+/*
+.maincol2 {
+    flex: 80%;
+    padding: 50px;
+    background-color: white;
+    width: auto;
+    list-style: none;
+}
+*/
+/*profile page css below*/
+.profilecontainer {
+    margin-top: 5rem;
+    position: fixed;
+    top: 5rem;
+    width: 80%;
+    height: 50%;
+}
+
+.studentAttributes {
+    margin-top: 1rem;
+    display: flex;
+    background-color: white;
+}
+.studentAttributes ul {
+    list-style: none;
+    margin-left: 1rem;
+}
+
+.studentAttributes li { 
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}

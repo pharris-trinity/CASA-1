@@ -26,7 +26,7 @@ function CreateAccount() {
             return;
         }
 
-        var postData = {username: user, email: email, password: password}
+        var postData = {username: user, displayname: "Temp Student", email: email, password: password}
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -34,7 +34,7 @@ function CreateAccount() {
         };
 
         try {
-            fetch('/api/user/create_user', requestOptions).then(
+            fetch('/api/student/create_user', requestOptions).then(
                 res => res.text()).then(text => {
                     if(text.toLowerCase() === "found previously existing user"){
                         alert("Username or email already exists in the database, please login")
