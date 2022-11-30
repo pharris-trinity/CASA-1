@@ -63,6 +63,7 @@ function Login() {
   }
 
   const accountCreation = (e) => {
+    e.preventDefault()
       navigate('/createuser', {replace: true})
   }
 

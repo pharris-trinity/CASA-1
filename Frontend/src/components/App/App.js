@@ -26,7 +26,23 @@ function App() {
 
   useEffect(() => {
     document.title = "CASA - Cyberware Texas"
+
+    callBackendAPI()
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+
   }, []);
+
+  async function callBackendAPI(){
+    const response = await fetch('/api');
+    const body = await response.text();
+
+    if (response.status !== 202) {
+      throw Error(body.message) 
+    }
+    return body;
+  };
+  
 
   return (
     <div className="App">

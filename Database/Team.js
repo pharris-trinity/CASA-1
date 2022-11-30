@@ -10,6 +10,18 @@ const TeamSchema = new Schema({
         type: String,
         required: true
     },
+    school: {
+        type: String,
+        required: true
+    },
+    district: {
+        type: String,
+        required: true
+    },
+    rotc: {
+        type: Boolean,
+        required: true
+    },
     mentor: {
         type: Schema.Types.ObjectId, ref: 'Mentor',
         required: false
