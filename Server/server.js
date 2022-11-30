@@ -366,6 +366,16 @@ app.post('/api/coach/create_coach', async(req, res) => {
     }
   });
 
+  //get specifically floyd leech's information //testing
+  app.post('/api/getfleech', function(req, res, next) {
+    
+    mongoose.connection.db.collection('users').find({username: "fleech"}).toArray().then(collection => {  
+      console.log("check student: " + collection);
+      res.status(200).json({ collection})
+    });
+  });
+
+
 //===================
 
 //Mentor
