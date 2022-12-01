@@ -88,8 +88,12 @@ URL Stem: `/api/mentor/<value>`
 URL Stem: `/api/assessments/<value>`
 
 1. Add Assessment - `value: add_assessment`
-    * Currently Not Working. 
-2. Get Assessment - `value: get_assessment`
-    * Currently Not Working. 
-3. Find Assessments - `value: find_assessment_by_author`
-    * Currently Not Working. 
+    * Creates a new assessment. Requires a list of question objects and an author id (ObjectID). Add's all of those questions to the database. Returns `401` if saving any objects failed, and `200` if successfully created. 
+2. Find Assessment - `value: find_assessment`
+    * Gets a quiz based on a the quizzes ObjectID. Requires an ObjectID, returns `404` if not found, and `200` if successfully found. 
+3. Find Assessments - `value: find_assessments_by_author`
+    *  Finds all quizzes created by a single author. Requires an ObjectID of a coach or mentor. Returns `404` if passed a nonexistant ID, `500` if passed a student ID, otherwise `200` and a list (possibly empty) of quiz ObjectIDs
+4. Find Taken Quizzes - `value: find_taken_quizzes`
+    * Finds all quizzes that have been taken by a student. Requires an ObjectId of a student. Returns `404` if passed an invalid ID, `500` if the user given by the ObjectID is not a student, otherwise `200` and a list (possibly empty) of quiz ObjectIDS
+5. Take Quiz - `value: take_quiz`
+    * Takes in a score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, and timeFinished and creates a new taken quiz. Adds this quiz to the student whose ID matches the testTakerID. Returns `404` if passed an invalid ID, `500` if the ID is not a student, and `200` if saved successfully. 

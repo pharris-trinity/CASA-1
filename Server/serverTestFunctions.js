@@ -15,6 +15,81 @@ const mongoose = require("mongoose")
 //     validationCode: "b#NIO(E*(7Pq"
 // }
 
+var testQuiz = {
+    questions: [{
+        answers: [
+          "general",
+          "view",
+          "search",
+          "security"
+        ],
+        description: "Which tab under File Explorer Options will allow you to define a system-wide setting which will always display hidden files?",
+        correctAnswer: 1,
+        value: 5
+      },{
+        answers: [
+          "hashcat",
+          "john the ripper",
+          "hydra",
+          "mimikatz"
+        ],
+        description: "What is the name of the program most often used to extract credentials from the LSASS.EXE process?",
+        correctAnswer: 3,
+        value: 10
+      },{
+        answers: [
+          "SAM database/file",
+          "passwd database/file",
+          "shadow database/file",
+          "ntdis.dis"
+        ],
+        description: "What is the name of the database that contains a the master list of usernames and password hashes on a Windows system?",
+        correctAnswer: 0,
+        value: 5
+      },{
+        answers: [
+          "Control Panel --> User Accounts",
+          "Control Panel --> System and Security",
+          "Local Security Policy",
+          "Computer Management"
+        ],
+        description: "Where can you enable the setting that will force users to use complex passwords?",
+        correctAnswer: 2,
+        value: 5
+      },{
+        answers: [
+          "Delete the .exe from c:/Program Files",
+          "Utilize 'Add or Remove Programs'",
+          "Utilize 'Programs and Features'",
+          "Disable Internet Explorer via a GPO"
+        ],
+        description: "What is the best method for removing Internet Explorer from a Windows machine?",
+        correctAnswer: 2,
+        value: 5
+      },{
+        answers: [
+          "convert",
+          "chkdsk",
+          "format",
+          "diskpart"
+        ],
+        description: "What cmd sequence allows you to upgrade a FAT32 filesystem?",
+        correctAnswer: 0,
+        value: 5
+      },{
+        answers: [
+          "run a powershell command",
+          "utilize the remote desktop client",
+          "execute a terminal command",
+          "update a user password"
+        ],
+        description: "You see that a user has been using mstsc.exe. What was the user attempting to do?",
+        correctAnswer: 1,
+        value: 5
+      }],
+    author_id: "6373bf8650c5263f57ff20ab"
+}
+
 var testCoach = {
     username: "test coach",
     displayname: "Test Coach",
@@ -191,6 +266,39 @@ async function test_student_remove_from_team() {
     response.text().then(text => console.log(text))
 }
 
+async function add_assessment(){
+    const response = await fetch(url + 'assessment/add_assessment', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body:JSON.stringify(testQuiz)
+    })
+
+    console.log(response.status)
+    response.text().then(text => console.log(text))
+}
+
+async function find_assessment(){
+    const response = await fetch(url + 'assessment/find_assessment', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body:JSON.stringify({id: "6389022d45594b220566e893"})
+    })
+
+    console.log(response.status)
+    response.text().then(text => console.log(text))
+}
+
+async function find_assessments_by_author(){
+    const response = await fetch(url + 'assessment/find_assessments_by_author', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body:JSON.stringify({author_id: "6373bf8650c5263f57ff20ab"})
+    })
+    console.log(response.status)
+    response.text().then(text => console.log(text))
+}
+
+
 //simpleGET()
 //coach_validation()
 //coach_creation()
@@ -202,4 +310,7 @@ async function test_student_remove_from_team() {
 //test_login()
 //test_update_model()
 //test_add_student_to_team()
-test_student_remove_from_team()
+//test_student_remove_from_team()
+//add_assessment()
+//find_assessment()
+find_assessments_by_author()

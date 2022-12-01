@@ -632,16 +632,122 @@ app.post('/api/get-MentorData', function(req, res, next) {
 //Assessment Functionality
 
 app.post('/api/assessment/add_assessment', async (req, res) => {
+    const {questions, author_id} = req.body;
+    var final_questions = []
+
+    var author = await User.findOne({"_id": author_id})
+    if(!author){
+      return res.status(404).send("Author not found")
+    }
+    if(author.usertype == "Student"){
+      return res.status(500).send("Students cannot make quizzes")
+    }
+
+    for(question in questions){
+      const {value, description, answers, correctAnswer} = questions[question]  
+    
+      
+      var new_question = new Question({
+        value: value,
+        description: description,
+        answers: answers,
+        correctAnswer: correctAnswer
+      })
+
+      new_question.save(function (err, user){
+        if (err) {
+          res.status(401).end();
+          return console.error(err)
+        }
+      });
+      final_questions.push(new_question)
+    }
+
+    var new_quiz = new Quiz({
+      questions: final_questions,
+      authorID: author_id
+    });
+    let tmp = await new_quiz.save()
+    author.madeQuizzes.push(tmp)
+    author.save() 
+    return res.status(200).send(new_quiz);
+});
+
+app.post('/api/assessment/find_assessment', async(req, res) => {
+  const { id } = req.body;
+  var quiz = await Quiz.findOne({"_id": id})
+  if(!quiz){
+    return res.status(404).send("No quiz found matching that ID")
+  }
+
+  return res.status(200).send(quiz)
+});
+
+app.post('/api/assessment/find_assessments_by_author', async(req, res) => {
+  const { author_id } = req.body;
+  var author = await User.findOne({"_id": author_id})
+  if(!author){
+    return res.status(404).send("No author found matching that ID")
+  }
+
+  if(author.usertype == "Student"){
+    return res.status(500).send("Students cannot author quizzes")
+  }
+
+  var quizzes = author.madeQuizzes
+
+  return res.status(200).send(quizzes)
 
 });
 
-app.get('/api/assessment/get_assessment', async(req, res) => {
+app.post('/api/assessment/find_taken_quizzes', async(req, res) => {
+  const {taker_id} = req.body;
 
-});
+  var taker = await User.findOne({"_id": taker_id})
+  if(!taker){
+    return res.status(404).send("User does not exist")
+  }
+  if(taker.usertype != "Student"){
+    return res.status(500).send("Only students can take quizzes")
+  }
 
-app.get('/api/assessment/find_assessments_by_author', async(req, res) => {
+  var quizzes = taker.takenQuizzes
+  return res.status(200).send(quizzes)
+})
 
-});
+app.post('/api/assessment/take_quiz', async(req, res) => {
+  const {score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished } = req.body;
+
+  var user = await User.findOne({"_id": testTakerID})
+  if(!user){
+    return res.status(404).send("User not found")
+  }
+  if(user.usertype != "Student"){
+    return res.status(500).send("User is not a student")
+  }
+
+  var takenQuiz = new TakenQuiz({
+    score: score,
+    questions: questions,
+    answers: answers,
+    correctQuestions: correctQuestions,
+    incorrectQuestions: incorrectQuestions,
+    testTakerID: testTakerID,
+    timeStarted: timeStarted,
+    timeFinished: timeFinished
+  })
+
+  var id;
+  let tmp = await takenQuiz.save();
+
+  var quizzes = []
+  quizzes = user.takenQuizzes;
+  quizzes.push(tmp._id)
+
+  user.save()
+
+  return res.status(200).send("Took quiz successfully")
+})
 
 //========================
 
