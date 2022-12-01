@@ -56,7 +56,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="*" element={<NotFound/>} />
+        <Route path="*" element={<Login/>} />
         <Route path="about" element={<About/>} />
         <Route path="dev" element={<DevPage/>} />
         <Route path="createuser" element={<CreateUser/>} />

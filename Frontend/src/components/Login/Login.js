@@ -59,13 +59,13 @@ function Login() {
                 const userVal = JSON.parse(text)
                 //console.log(userVal.displayname);
                 if(userVal.usertype === "Student"){
-                
+                    navigate('/stud/main', {replace: true, state:userVal})
                 } 
                 if(userVal.usertype === "Mentor"){
-                    
+                    navigate('/mentor', {replace: true, state:userVal})
                 } 
                 if(userVal.usertype === "Coach"){
-                    
+                    navigate('/teacher', {replace: true, state:userVal})                    
                 } 
                 //navigate('/about', {replace: true, state:{userVal}})
                 //Figure out what to do with this information from userVal
