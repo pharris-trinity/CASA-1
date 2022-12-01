@@ -15,36 +15,10 @@ export default function StudentProfilePage() {
         
     }; 
     
-    <div className="profilecontainer">
-        <h1>Profile</h1>
-        <div className="studentAttributes">
-            <ul>
-                {currStud.map(stud =>
-                <div>
-                    <li className="studentName">
-                        <p>Name: {stud.displayname}</p>
-                    </li>
-                    <li className="studentGrade">
-                        <p>School: {stud.school} </p>
-                    </li>
-                    <li className="studentSchool">
-                        <p>Grade: {stud.gradelevel}</p>
-                    </li>
-                    <li className="studentTier">
-                        <p>Tier: {stud.tier}</p>
-                    </li>
-                    <li className="studentTeamID">
-                        <p>TeamID: {stud.team}</p>
-                    </li>
-                </div>
-                )}
-            </ul>
-        </div>
-    </div>
     */
     const [currStud, setStud] = useState([])
     useEffect(() => {
-        var fieldData = ['username','school','tier','gradelevel','team']
+        var fieldData = ['username','school','tier','gradelevel','team'] //payload
         const requestOptions ={
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -53,7 +27,7 @@ export default function StudentProfilePage() {
         fetch('/api/getfleech', requestOptions).then(res => res.json()).then(
             data => {
                 setStud(data.collection)
-                //console.log("Values in data collection:" + data.collection) -> object Object
+                console.log("Values in data collection:" + data.collection) // object Object
                 if(data.collection == null) {console.log(Error)}
             })
         },[]);
@@ -106,5 +80,4 @@ export default function StudentProfilePage() {
     </>
     ); 
     
-    //<h1>Profile</h1>;
 }

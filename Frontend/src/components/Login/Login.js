@@ -59,7 +59,7 @@ function Login() {
                 const userVal = JSON.parse(text)
                 //console.log(userVal.displayname);
                 if(userVal.usertype === "Student"){
-
+                
                 } 
                 if(userVal.usertype === "Mentor"){
                     

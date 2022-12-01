@@ -34,25 +34,27 @@ function CreateAccount() {
         };
 
         try {
-            fetch('/api/student/create_user', requestOptions).then(
+            fetch('/api/student/create_student', requestOptions).then(
                 res => res.text()).then(text => {
                     if(text.toLowerCase() === "found previously existing user"){
                         alert("Username or email already exists in the database, please login")
                         return;
                     } else {
-                        var modText = text.substring(1, text.length-1)
-                        setUserID(modText)
-                        continueRedirect(e, modText)
+                        console.log(text)
+                        //TODO REDIRECT TO STUDENT PAGE
+                        // var modText = text.substring(1, text.length-1)
+                        // setUserID(modText)
+                        // continueRedirect(e, modText)
                     }
                 }
             ) 
-        } catch (error) {
+        }  catch (error) {
             console.log(error)
         }
     }
 
     const continueRedirect = (e, text) => {
-        
+        e.preventDefault()
         fetch('/api/user/display_user/' + text).then(
             res => res.text()).then(text => {
                 try {
@@ -68,6 +70,7 @@ function CreateAccount() {
     }
 
     const loginRedirect = (e) => {
+        e.preventDefault()
         navigate('/login', {replace: true})
     }
 

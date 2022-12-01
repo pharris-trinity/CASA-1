@@ -8,6 +8,8 @@ import StudMainPage from '../StudentPage/StudMainPage';
 import StudProfilePage from '../StudentPage/StudProfilePage';
 import StudentTakeAssessPage from '../StudentPage/StudTakeAssessPage';
 import StudentViewAssessPage from '../StudentPage/StudViewAssessPage';
+import Quiz1Test from '../StudentPage/Quiz1Test';
+import Quiz2Test from '../StudentPage/Quiz2Test';
 // eslint-disable-next-line
 import { Routes, Route, Link } from "react-router-dom";
 import * as React from "react";
@@ -48,6 +50,8 @@ function App() {
         <Route path="stud/profile" element={<StudProfilePage/>} />
         <Route path="stud/takeassess" element={<StudentTakeAssessPage/>} />
         <Route path="stud/viewassess" element={<StudentViewAssessPage/>} />
+        <Route path="stud/takeassess/quiz1" element={<Quiz1Test/>} />
+        <Route path="stud/takeassess/quiz2" element={<Quiz2Test/>} />
       </Routes>
     </div>
   );

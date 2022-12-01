@@ -1,5 +1,5 @@
 import React from "react"
-import { ReactDOM } from "react-dom/client"
+//import { ReactDOM } from "react-dom/client"
 import "./stylesStud.css"
 import StudNavbar from "./StudNavbar"
 
@@ -33,6 +33,5 @@ export default function StudentMainPage() {
     
     </>
         
-    //</Body>
     );
 }

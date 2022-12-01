@@ -111,3 +111,107 @@ body {
     margin-top: 1rem;
     margin-bottom: 2rem;
 }
+
+/*take assessment page css below*/
+.takeassesscontainer {
+    margin-top: 5rem;
+    position: fixed;
+    top: 5rem;
+    width: 80%;
+    height: 50%;
+}
+
+.studquizlist {
+    margin-top: 1rem;
+    display: flex;
+    background-color: white;
+}
+
+.studquizlist ul {
+    list-style: none;
+    margin-left: 1rem;
+}
+
+.studquizlist li { 
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+/*take assessment page css below*/
+.viewassesscontainer {
+    margin-top: 5rem;
+    position: fixed;
+    top: 5rem;
+    width: 80%;
+    height: 50%;
+}
+
+.takenquizlist {
+    width:80%;
+    height:auto;
+    margin-top: 1rem;
+    display: flex;
+    background-color: white;
+}
+
+.takenquizlist ul {
+    list-style: none;
+    margin-left: 1rem;
+}
+
+.takenquizlist li { 
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+/*test quiz 1 css page below*/
+.quizcontainer {
+    margin-top: 5rem;
+    position: fixed;
+    top: 5rem;
+    width: 80%;
+    height: 50%;
+}
+.quizheader {
+    margin: auto;
+    text-align: center;
+}
+.questionbox {
+    margin: 0 auto;
+    width: 80%; 
+    height: auto;
+    background-color: lightgray;
+    padding: 16px;
+    border-radius: 16px;
+    color: black;
+  }
+  
+  .questionbox ul {
+    list-style: none;
+  }
+  
+  .questionbox li {
+    margin-top: 8px;
+    background-color: white;
+    padding: 16px;
+    border: 3px solid white;
+    border-radius: 20px;
+    font-size: 20px;
+  }
+
+  .finalScore {
+    /* Center the div  */
+    margin: 0 auto;
+  
+    /* Dimensions  */
+    width: 80%; /* Can be in percentage also. */
+    height: 50%;
+    margin-top: 64px;
+  
+    /* Visual  */
+    background-color: white;
+    padding: 16px;
+    border-radius: 16px;
+    color: black;
+  }
+/*test quiz 2 css page below*/
