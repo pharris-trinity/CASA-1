@@ -52,7 +52,7 @@ let password = environment.USER_PASSWORD
 //===================================
 
 app.get("/api", (req, res) => {
-    res.status(202).send("ok");
+    res.status(202).send("in correct server");
 });
 
 saltRounds = 12

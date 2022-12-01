@@ -1,11 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import TableMentor from './TableMentor'
+import Navbar from '../Mentor/NavBarMentor';
 
 function MentorTable() {
   let navigate = useNavigate();
 
   const keys =  ["displayname","email","zipcode","speciality"]
+  const [query, setQuery] = useState("")
+  const [elements, setElements] = useState([])
+
+  const mentorArr = (val) => {
+    const team = []
+    // Individual Values
+    console.log("Val: " + val)
+}
+
+  const visit = (obj, fn) => {
+    const values = Object.values(obj)
+
+    values.forEach(val => 
+        val && typeof val === "object" ? visit(val, fn) : fn(val))
+        // This provides the whole array
+        console.log("Values in visit: " + values)
+  }
 
   useEffect(() => {
       var postData = ['displayname', 'email', 'zipcode', 'speciality']
@@ -26,11 +44,15 @@ function MentorTable() {
           })
   }, []);
 
+  function homebutton(){
+    navigate('/mentorHome', {replace: true})
+  }
+
   return (
     <div className="App">
             <h1> Mentor Table </h1>
             <Navbar/>
-            <button onClick={teamsButton}>
+            <button onClick={homebutton}>
                 Home
             </button> 
             <input
@@ -43,7 +65,7 @@ function MentorTable() {
             {<TableMentor data={(elements)} />}
 
             <button onClick={() => {
-                visit(elements, teamArr)
+                visit(elements, mentorArr)
             }}>click here</button>
 
       </div>

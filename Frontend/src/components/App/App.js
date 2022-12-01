@@ -40,9 +40,6 @@ import ViewScores from '../ViewScores/ViewScores';
 import Dropdown from '../Dropdown/Dropdown';
 import TeamDropdown from '../TeamDropdown/TeamDropdown';
 
-
-import MentorAssessment from "../AssessTest/MentorAssessment";
-
 //import Profile from
 //Routes, Route, Link
 function App() {
