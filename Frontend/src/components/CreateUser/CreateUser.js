@@ -26,7 +26,7 @@ function CreateAccount() {
             return;
         }
 
-        var postData = {username: user, email: email, password: password}
+        var postData = {username: user, displayname: "Temp Student", email: email, password: password}
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -48,7 +48,7 @@ function CreateAccount() {
                     }
                 }
             ) 
-        } catch (error) {
+        }  catch (error) {
             console.log(error)
         }
     }

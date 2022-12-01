@@ -122,7 +122,6 @@ saltRounds = 12
     } else {
       return res.status(200).send(user);
     }
-    
   });
 
   app.get('/api/user/modify_user_profile', async(req, res) => {
@@ -454,6 +453,52 @@ app.post('/api/get-MentorData', function(req, res, next) {
     }
   });
 
+  //get specifically floyd leech's information //testing, replace later with actual user
+  app.post('/api/getfleech', function(req, res, next) {
+    
+    mongoose.connection.db.collection('users').find({username: "fleech"}).toArray().then(collection => {  
+      //console.log("check student: " + collection);
+      res.status(200).json({ collection})
+    });
+  });
+
+  //search for team based on national id
+  app.post('/api/teamsearch/:teamid', async(req,res)=>{
+    const teamnum = Number(req.params.teamid); //convert string from url into a number
+    const team = await Team.find({national_id: teamnum})
+    //console.log(team)
+    if(!team){
+      console.log("no team was found")
+      return res.sendStatus(404)
+    } else {
+      return res.status(200).send(team);
+    }
+  })
+
+  //search for coach based on coach's object id to get madequizzes field: WIP status, may delete
+  //currently objid for assessment field is janky, needs to have a create api
+  app.post('/api/coachsearch/:oid', async(req,res)=>{
+    const coach = await User.findById(req.params.oid); //findById(id)
+    //console.log(coach)
+    if(!coach){
+      console.log("no coach was found")
+      return res.sendStatus(404)
+    } else {
+      return res.status(200).send(coach);
+    }
+  })
+
+  //get all quizzes by authorid (will work once createquiz api is made?)
+  app.post('/api/quizsearch/:aoid',async(req,res)=>{
+    //const quizzes = await Quiz.find(req.params.aoid); //findById(id)
+    //console.log(quizzes)
+    mongoose.connection.db.collection('quizzes').find({authorId: req.params.aoid}).toArray().then(collection => {  
+      //console.log("check student: " + collection);
+      res.status(200).json({ collection})
+    });
+  })
+
+
 //===================
 
 //Mentor
@@ -506,7 +551,7 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
 //Assessment Functionality
 
-app.post('/api/assessment/add_assessment', async(req, res) => {
+app.post('/api/assessment/add_assessment', async (req, res) => {
 
 });
 

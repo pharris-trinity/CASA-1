@@ -4,6 +4,12 @@ import About from "../About/About";
 import DevPage from "../DevPage/DevPage";
 import CreateUser from "../CreateUser/CreateUser";
 import NotFound from "../NotFound/NotFound";
+import StudMainPage from '../StudentPage/StudMainPage';
+import StudProfilePage from '../StudentPage/StudProfilePage';
+import StudentTakeAssessPage from '../StudentPage/StudTakeAssessPage';
+import StudentViewAssessPage from '../StudentPage/StudViewAssessPage';
+import Quiz1Test from '../StudentPage/Quiz1Test';
+import Quiz2Test from '../StudentPage/Quiz2Test';
 
 import Mentor from "../Mentor/Mentor";
 import MentorTeams from "../MentorRedirect/MentorTeams";
@@ -18,7 +24,6 @@ import TeacherQuiz from "../TeacherRedirect/TeacherQuiz";
 import TeacherAssessment from "../TeacherRedirect/TeacherAssessment";
 
 import MentorTable from "../TableMentor/MentorTable";
-
 
 // eslint-disable-next-line
 import { Routes, Route, Link } from "react-router-dom";
@@ -56,6 +61,12 @@ function App() {
         <Route path="dev" element={<DevPage/>} />
         <Route path="createuser" element={<CreateUser/>} />
         <Route path="login" element={<Login/>} />
+        <Route path="stud/main" element={<StudMainPage/>} />
+        <Route path="stud/profile" element={<StudProfilePage/>} />
+        <Route path="stud/takeassess" element={<StudentTakeAssessPage/>} />
+        <Route path="stud/viewassess" element={<StudentViewAssessPage/>} />
+        <Route path="stud/takeassess/quiz1" element={<Quiz1Test/>} />
+        <Route path="stud/takeassess/quiz2" element={<Quiz2Test/>} />
         <Route path="mentor" element={<Mentor/>} />
         <Route path="mentorteams" element={<MentorTeams/>} />
         <Route path="mentorquiz" element={<MentorQuiz/>} />
