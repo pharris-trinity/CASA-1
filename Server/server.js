@@ -56,22 +56,6 @@ app.get("/api", (req, res) => {
 });
 
 saltRounds = 12
-
-
-
-app.post('/api/getfleech', function(req, res, next) {
-    
-  mongoose.connection.db.collection('users').find({username: "fleech"}).toArray().then(collection => {  
-    console.log("check student: " + collection);
-    res.status(200).json({ collection})
-  });
-});
-
-
-
-
-
-
 //User related functions
   //Deprecated
   app.post('/api/user/create_user', async (req, res) => {
@@ -107,13 +91,6 @@ app.post('/api/getfleech', function(req, res, next) {
     return res.status(401).send("Method Deprecated - Please use one of the type-specific user creation methods")
   });
 
-  app.post('/api/get-data', function(req, res, next) {
-    mongoose.connection.db.collection('teams').find({active: true}).toArray().then(collection => {
-      res.status(200).json({ collection})
-  });
-    
-  });
-
   app.post("/api/user/login", async (req, res) => {
 
       const {username, password} = req.body;
@@ -136,19 +113,6 @@ app.post('/api/getfleech', function(req, res, next) {
       });
   });
 
-
-/*  
-  app.post('/api/user/get_teams', async(req, res) => {
-    const {id} } = req.body;
-    var user = await User.findById(id).exec();
-    if (user == undefined){
-      return res.sendStatus(500);
-    } else {
-    
-    }
-  });
-*/
-
   app.post('/api/user/fetch_user', async(req, res) => {
     const {id} = req.body
     var user = await User.findById(id).exec();
@@ -160,8 +124,6 @@ app.post('/api/getfleech', function(req, res, next) {
     }
     
   });
-
-
 
   app.get('/api/user/modify_user_profile', async(req, res) => {
 
@@ -368,6 +330,94 @@ app.post('/api/coach/create_coach', async(req, res) => {
     return res.status(200).send("Successfully registered team")
     
   }); 
+
+  app.post('/api/mentor/get_mentors_teams', async(req, res) => {
+    const { userID } = req.body;
+
+    await User.find(
+      {"_id": userID}
+    ).exec().then(user => {
+      if(!user) {return res.status(401).send("ID not found");}
+      else {
+        var teamsIDS = user.teams;
+        return res.send(teamsIDS).status(201);
+      }
+    })
+  });
+
+  app.get('/api/collections', (req,res,next)=>{
+    mongoose.connection.db.listCollections().toArray().then(collection => {
+        const dataArr = []; 
+        
+        collection.forEach(el => dataArr.push(el.name));
+          for (let i = 0; i < dataArr.length; i++)
+          {
+            console.log("Collection: " + dataArr[i]);
+            if (dataArr[i] == "teams")
+            mongoose.connection.db.listCollections({name : ''})
+            
+              
+          }
+        res.status(200).json({ status: 'success', data: { dataArr } })
+    });
+})
+
+app.post('/api/team/get_team', async(req, res) => {
+  const { teamID } = req.body;
+  const team = await Team.findOne({"national_id": teamID});
+  console.log(team)
+  if(!team){
+    return res.sendStatus(404)
+  } else {
+    return res.status(200).send(team);
+  }
+  
+})
+
+app.get('/api/stored', async (req, res) => {
+  try {
+    const ads = await Teams.find({"national_id": teamID});
+
+    return res.status(200).json({
+      success: true,
+      count: ads.length,
+      data: ads
+      });
+    } catch(err) {
+      console.log(err);
+    res.status(500).json({ error: 'server error' });
+    }
+
+
+  /*console.log(req.body);
+  mongoose.connection.db.collection('quotes').then(req.body, (err, data) => {
+      if(err) return console.log(err);
+      res.send(('saved to db: ' + data));
+      res.status(200).json({ status: 'success', data: { data } })
+  })*/
+});
+
+app.post('/api/get-data', function(req, res, next) {
+    
+  
+  mongoose.connection.db.collection('teams').find({active: true}).toArray().then(collection => {
+    
+    
+    res.status(200).json({ collection})
+});
+  
+});
+
+app.post('/api/get-MentorData', function(req, res, next) {
+    
+  
+  mongoose.connection.db.collection('users').find({username: "test mentor"}).toArray().then(collection => {
+    
+    console.log("Here's mentors: " + collection);
+    res.status(200).json({ collection})
+});
+  
+});
 
 //===================
 
