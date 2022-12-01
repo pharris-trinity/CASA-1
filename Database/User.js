@@ -12,6 +12,7 @@ const baseOptions = {
 
 const User = mongoose.model('User', mongoose.Schema({
         username: {type: String, required: true},
+        displayname: {type: String, required: true},
         password: {type: String, required: true},
         email: {type: String, required: true}
         }, baseOptions,
@@ -22,8 +23,10 @@ exports.User = mongoose.model('User');
 
 const Mentor = User.discriminator('Mentor', new mongoose.Schema({
         madeQuizzes: {type:[Quiz.schema], required: false},
-        teams: {type:[Schema.Types.ObjectID], required: false},
-        specialty: {type: String, required: false}
+        remote: {type: Boolean, required: true},
+        zipcode: {type: Number, required: false},
+        speciality: {type: String, required: false},
+        teams: {type:[Number], required: false}
     }),
 );
 
@@ -32,7 +35,7 @@ exports.Mentor = mongoose.model('Mentor')
 const Coach = User.discriminator('Coach', new mongoose.Schema({
         madeQuizzes: {type:[Quiz.schema], required: false},
         school: {type: String, required: false},
-        teams: {type:[Schema.Types.ObjectId], required: false}
+        teams: {type:[Number], required: false}
     }),
 );
 
@@ -41,8 +44,10 @@ exports.Coach = mongoose.model('Coach')
 const Student = User.discriminator('Student', new mongoose.Schema({
         takenQuizzes: {type:[TakenQuiz.schema], required: false},
         school: {type: String, required: false},
+        tier: {type: Number, required: false},
+        gradelevel: {type: Number, required: false},
         //QUESTION: Should students be part of multiple teams
-        team: {type:Schema.Types.ObjectId, required: false}
+        team: {Number, required: false}
     }),
 );
 

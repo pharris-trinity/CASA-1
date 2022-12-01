@@ -29,7 +29,7 @@ function Login() {
           body: JSON.stringify(postData)
       };
       
-      fetch('/api/login', requestOptions).then(
+      fetch('/api/user/login', requestOptions).then(
         res => res.text()).then(text => {
             if(text === "Username not found"){
                 setErrorMessages({name: "user", message:error.user})
@@ -46,16 +46,31 @@ function Login() {
   const fetchUserAccount = (e, incText) => {
     e.preventDefault()
 
-    var modText = incText.substring(1, incText.length-1)
+    var postData = { id: JSON.parse(incText)._id}
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(postData)
+    };
 
-
-    fetch('/api/display_user/' + modText).then(
+    fetch('/api/user/fetch_user', requestOptions).then(
         res => res.text()).then(text => {
             try {
                 const userVal = JSON.parse(text)
-                navigate('/about', {replace: true, state:{userVal}})
+                //console.log(userVal.displayname);
+                if(userVal.usertype === "Student"){
+                    navigate('/stud/main', {replace: true, state:userVal})
+                } 
+                if(userVal.usertype === "Mentor"){
+                    navigate('/mentor', {replace: true, state:userVal})
+                } 
+                if(userVal.usertype === "Coach"){
+                    navigate('/teacher', {replace: true, state:userVal})                    
+                } 
+                //navigate('/about', {replace: true, state:{userVal}})
+                //Figure out what to do with this information from userVal
             } catch (error) {
-                
+
             }
         }
     )
@@ -63,6 +78,7 @@ function Login() {
   }
 
   const accountCreation = (e) => {
+    e.preventDefault()
       navigate('/createuser', {replace: true})
   }
 
