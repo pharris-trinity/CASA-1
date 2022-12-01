@@ -1,31 +1,42 @@
-* {
-    box-sizing: border-box;
-}
-
-body {
-    
-    margin: 0;
-}
-
-.profilecontainer {
-    margin-top: .05rem;
-    position: fixed;
-    top: 5rem;
-    width: 80%;
-    height: 50%;
-}
-
-.Attributes {
-    margin-top: 1rem;
+.app-container {
     display: flex;
-    background-color: white;
-}
-.Attributes ul {
-    list-style: none;
-    margin-left: 1rem;
-}
-
-.Attributes li { 
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-}
+    flex-direction: column;
+    gap: 10px;
+    padding: 1rem;
+    font-size: 30px;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  th,
+  td {
+    border: 1px solid #ffffff;
+    text-align: left;
+    padding: 8px;
+    font-size: 25px;
+  }
+  
+  th {
+    background-color: rgb(117, 201, 250);
+  }
+  
+  td {
+    background-color: rgb(205, 235, 253);
+  }
+  
+  form {
+    display: flex;
+    gap: 5px;
+  }
+  
+  form td:last-child {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  form * {
+    font-size: 25px;
+  }

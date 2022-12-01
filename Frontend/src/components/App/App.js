@@ -5,7 +5,8 @@ import DevPage from "../DevPage/DevPage";
 import CreateUser from "../CreateUser/CreateUser";
 import NotFound from "../NotFound/NotFound";
 
-import TableMentor from "../TableMentor/TableMentor";
+import Mentorteamdisplay from "../TableMentor/MentorTable";
+import MentorTable from "../TableMentor/MentorTable";
 
 // eslint-disable-next-line
 import { Routes, Route, Link } from "react-router-dom";
@@ -14,10 +15,14 @@ import {useEffect} from 'react';
 import Home from '../Home/Home';
 import Profile from '../Profile/Profile';
 import ViewTeams from '../ViewTeams/ViewTeams';
+import ViewTeams2 from '../ViewTeams/ViewTeams2';
+
 import TeamStats from '../TeamStats/TeamStats';
 import AssessTest from '../AssessTest/AssessTest';
 import ViewScores from '../ViewScores/ViewScores';
 import Dropdown from '../Dropdown/Dropdown';
+import TeamDropdown from '../TeamDropdown/TeamDropdown';
+
 
 import MentorAssessment from "../AssessTest/MentorAssessment";
 
@@ -56,12 +61,17 @@ function App() {
         <Route path="createuser" element={<CreateUser/>} />
         <Route path="login" element={<Login/>} />
 
+        <Route path="TeamDropdown" element={<TeamDropdown/>} />
 
           <Route exact path="/" element ={<Home/>}/>
           <Route path="Profile" element={<Profile/>} />
-          <Route path="TableMentor" element={<TableMentor/>} />
+          <Route path="mentortable" element={<MentorTable/>} />
+        <Route path="mentortabledisplay" element={<Mentorteamdisplay/>} />
+
 
           <Route path="ViewTeams" element={<ViewTeams/>} />
+          <Route path="ViewTeams2" element={<ViewTeams2/>} />
+
           <Route path="TeamStats" element={<TeamStats/>} />
           <Route path="AssessTest" element={<AssessTest/>} />
           <Route path="ViewScores" element={<ViewScores/>} />

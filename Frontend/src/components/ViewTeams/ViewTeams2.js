@@ -5,7 +5,7 @@ import data from "./mock-data.json";
 import ReadOnlyRow from "./ReadOnlyRow";
 import EditableRow from "./EditableRow";
 
-const ViewTeams = () => {
+const ViewTeams2 = () => {
   const [contacts, setContacts] = useState(data);
   const [addFormData, setAddFormData] = useState({
     fullName: "",
@@ -99,10 +99,10 @@ const ViewTeams = () => {
   return (
     <div className="app-container">
     <div>
-            National ID: 0
+            National ID: 1
     </div>
     <div>
-            Name: Test School
+            Name: TestSchool
     </div>
 
       <form onSubmit={handleEditFormSubmit}>
@@ -150,4 +150,4 @@ const ViewTeams = () => {
   );
 };
 
-export default ViewTeams;
+export default ViewTeams2;
