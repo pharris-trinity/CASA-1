@@ -118,11 +118,39 @@ async function create_student() {
     response.text().then(text=>console.log(text));
 }
 
+async function fetch_student() {
+    const response = await fetch(url + 'user/fetch_user', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id:"6373bea2d933d6a203138d12"})
+    })
+
+    console.log(response.status)
+    response.text().then(text => console.log(text))
+}
+
+async function test_login() {
+    const response = await fetch(url + 'user/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({username: "test student", password: "test_student_password"})
+    })
+
+    console.log(response.status)
+    response.text().then(text => console.log(text))
+}
+
 //simpleGET()
 //coach_validation()
 //coach_creation()
 //mentor_validation()
 //create_student()
 //mentor_creation()
-create_team()
+//create_team()
+//fetch_student()
+test_login()
 //test_update_model()
