@@ -55,8 +55,7 @@ const Dropdown = () => {
                 <div className = "dropdown-menu1" onMouseEnter={showDrorpdown1} onMouseLeave = {hideDrorpdown1}>
                     AssessTest
                     {state1 ?(<ul className = "dropdown-list1" onMouseEnter={showDrorpdown1}>
-                        <li> <NavLink onClick={toggleClass} activeClassName='is-active'  to={`/AssessTest`}> AssessTest </NavLink> </li>
-                        <li><NavLink onClick={toggleClass} activeClassName='is-active' to={`/ViewScores`}> ViewScores </NavLink> </li>
+                        <li> <NavLink onClick={toggleClass} activeClassName='is-active'  to={`/AssessTest`}> Make Assess/Test </NavLink> </li>
                     </ul>):
                     null}
                  </div>
