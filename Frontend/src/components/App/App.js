@@ -39,6 +39,7 @@ import AssessTest from '../AssessTest/AssessTest';
 import ViewScores from '../ViewScores/ViewScores';
 import Dropdown from '../Dropdown/Dropdown';
 import TeamDropdown from '../TeamDropdown/TeamDropdown';
+import Admin from '../Admin/Admin';
 
 //import Profile from
 //Routes, Route, Link
@@ -99,6 +100,7 @@ function App() {
         <Route path="TeamStats" element={<TeamStats/>} />
         <Route path="AssessTest" element={<AssessTest/>} />
         <Route path="ViewScores" element={<ViewScores/>} />
+        <Route path="admin/homepage" element={<Admin/>} />
       </Routes>
     </div>
   );

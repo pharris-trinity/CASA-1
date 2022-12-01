@@ -284,6 +284,37 @@ app.post('/api/coach/create_coach', async(req, res) => {
 
   });
 
+  app.post('/api/admin/create_admin', async(req, res) => {
+    const {username, displayname, password, email} = req.body;
+
+    var potentialUsers = await Admin.find({$or:[{username:username}, {email:email}]}).exec();
+
+    if(potentialUsers.length != 0){
+      console.log("Email or username already appears in database");
+      res.status(302).send("Found previously existing user");
+    } else {
+  
+      //Make new user
+      //Hash password, then save new account
+      bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+        
+          var admin = new Admin({
+            username: username,
+            displayname: displayname,
+            email: email,
+            password : hash
+          })
+
+          admin.save(function (err, user){
+            if (err) {
+              return res.status(401).end();
+            }
+          });
+          res.status(201).send(admin)
+      });
+    }
+  })
+
   app.get('/api/admin/deactivate_user_account', async(req, res) => {
 
   });

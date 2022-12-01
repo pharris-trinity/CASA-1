@@ -101,6 +101,13 @@ var testCoach = {
     validationCode: "A^*zIh#^ZuOI"
 }
 
+var admin = {
+    username: "admin",
+    displayname: "admin",
+    email: "admin@admin.com",
+    password: "admin"
+}
+
 var testStudent = {
     username: "test student",
     displayname: "Test Student",
@@ -298,6 +305,16 @@ async function find_assessments_by_author(){
     response.text().then(text => console.log(text))
 }
 
+async function create_admin(){
+    const response = await fetch(url + 'admin/create_admin', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body:JSON.stringify(admin)
+    })
+    console.log(response.status)
+    response.text().then(text => console.log(text))
+}
+
 
 //simpleGET()
 //coach_validation()
@@ -313,4 +330,5 @@ async function find_assessments_by_author(){
 //test_student_remove_from_team()
 //add_assessment()
 //find_assessment()
-find_assessments_by_author()
+//find_assessments_by_author()
+create_admin()

@@ -1,0 +1,32 @@
+/*use . and the class name to refer to aspects inside the class*/
+.admin #field_generator{
+    margin: auto;
+    padding: 10px;
+}
+
+.adminPage{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.admin #text{
+    text-align: center;
+}
+
+.admin button{
+    width: 100%;
+}
+
+.admin{
+    height: 90vh;
+    width: 40vw;
+    align-self: center;
+}
+
+.header{
+    height: 10vh;
+    width: 100vw;
+    margin: 0;
+}
