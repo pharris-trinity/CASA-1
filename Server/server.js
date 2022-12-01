@@ -309,7 +309,15 @@ app.post('/api/coach/create_coach', async(req, res) => {
     if(!c){
       return res.status(401).send("Coach does not exist")
     }
+
     var teamsArr = c.teams
+    if(teamsArr == undefined){
+      teamsArr = [national_id]
+    } else if (teamsArr.includes(national_id)){
+      return res.status(201).send("Coach already owns this team")
+    } else {
+      teamsArr.push(national_id)
+    }
 
     //See if team exists
     const t = await Team.findOne({"national_id": national_id});
@@ -318,11 +326,6 @@ app.post('/api/coach/create_coach', async(req, res) => {
     }
     team.save()
 
-    if(teamsArr == undefined){
-      teamsArr = [national_id]
-    } else {
-      teamsArr.push(national_id)
-    }
     c.teams = teamsArr;
     c.save()
 
@@ -371,6 +374,80 @@ app.post('/api/team/get_team', async(req, res) => {
     return res.status(200).send(team);
   }
   
+})
+
+app.post('/api/team/add_student_to_team', async(req, res) => {
+  //Takes in a team ID and a student ID and updates the team and the student
+  const {team_id, student_id} = req.body
+
+  const team = await Team.findOne({"national_id": team_id})
+  const user = await User.findOne({"_id": student_id})
+
+  if(!team){
+    return res.status(501).send("No team found that matches that ID")
+  }
+
+  if(!user){
+    return res.status(502).send("No user found that matches that ID")
+  }
+
+  if(user.team != -1){
+    return res.status(503).send("User already has a team registered to them")
+  }
+
+  if(user.team == team_id){
+    return res.status(201).send("User is already registered to this team")
+  }
+
+  var members = team.members
+  if(members != undefined){
+    members.push(student_id)
+  }
+  team.members = members
+  team.save()
+
+  user.team = team_id
+  user.save()
+  //Save the updated user and team
+
+  return res.status(200).send("Updated user and team successfully")
+})
+
+app.post('/api/team/remove_student_from_team', async(req, res) => {
+  //Takes in a team ID and a student ID and if the student is in the team then it removes the student from the team
+  const {team_id, student_id} = req.body
+
+  const team = await Team.findOne({"national_id": team_id})
+  const user = await User.findOne({"_id": student_id})
+
+  if(!team){
+    return res.status(501).send("No team found that matches that ID")
+  }
+
+  if(!user){
+    return res.status(502).send("No user found that matches that ID")
+  }
+
+  if(user.team == -1){
+    return res.status(503).send("User has no team registered to them")
+  }
+
+  if(user.team != team_id){
+    return res.status(201).send("User is not in that team")
+  }
+
+  var members = team.members
+  if(members != undefined){
+    members.remove(student_id)
+  }
+  team.members = members
+  team.save()
+
+  user.team = -1
+  user.save()
+
+  return res.status(200).send("Removed user from team")
+
 })
 
 app.get('/api/stored', async (req, res) => {
@@ -425,6 +502,8 @@ app.post('/api/get-MentorData', function(req, res, next) {
   app.post('/api/student/create_student', async(req, res) => {
     const {username, displayname, password, email} = req.body;
 
+    const team = -1;
+
     var potentialUsers = await Student.find({$or:[{username:username}, {email:email}]}).exec();
 
     if(potentialUsers.length != 0){
@@ -441,8 +520,9 @@ app.post('/api/get-MentorData', function(req, res, next) {
             displayname: displayname,
             email: email,
             password : hash,
+            team: team
           })
-    
+
           student.save(function (err, user){
             if (err) {
               return res.status(401).end();

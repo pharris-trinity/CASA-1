@@ -159,13 +159,47 @@ async function test_login() {
     response.text().then(text => console.log(text))
 }
 
+async function test_add_student_to_team() {
+    const response = await fetch(url + 'team/add_student_to_team', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+            team_id: 0,
+            student_id: "6388debea135c8a0c52a3458"
+        })
+    })
+
+    console.log(response.status)
+    response.text().then(text => console.log(text))
+}
+
+async function test_student_remove_from_team() {
+    const response = await fetch(url + 'team/remove_student_from_team', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+            team_id:0,
+            student_id:"6388debea135c8a0c52a3458"
+        })
+    })
+
+    console.log(response.status)
+    response.text().then(text => console.log(text))
+}
+
 //simpleGET()
 //coach_validation()
 //coach_creation()
 //mentor_validation()
 //create_student()
 //mentor_creation()
-create_team()
+//create_team()
 //fetch_student()
 //test_login()
 //test_update_model()
+//test_add_student_to_team()
+test_student_remove_from_team()
