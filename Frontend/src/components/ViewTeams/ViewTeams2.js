@@ -113,7 +113,10 @@ const ViewTeams2 = () => {
               <th>Actions</th>
             </tr>
           </thead>
+          
           <tbody>
+          
+
             {contacts.map((contact) => (
               <Fragment>
                 {editContactId === contact.id ? (
@@ -132,6 +135,7 @@ const ViewTeams2 = () => {
               </Fragment>
             ))}
           </tbody>
+          
         </table>
       </form>
 

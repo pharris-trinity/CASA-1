@@ -35,13 +35,10 @@ const DisplayTable = ({data}) => {
                         </thead>
 
                          <tbody>
-                            {filter.map(item => (
-                                <tr key={item.displayname}>
-                                    <td>{item.email}</td>
-                                    <td>{item.zipcode}</td>
-                                    <td>{item.speciality}</td>
-                                </tr>
-                            ))}
+                                    <td>mentor test </td>
+                                    <td> mentortest@gmail.com</td>
+                                    <td>00000</td>
+                                    <td>Windows</td>
                         </tbody>
                 </table>
             </div>
