@@ -1,8 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState}from 'react';
+
 
 const DisplayTable = ({data}) => {
+    const [text, setText] = useState('')
+    const [select, setSelect] = useState('')
+    const keys =  ["name", "school"]
+    const filter = data.filter((item) => keys.some((key)=>item[key].toLowerCase().includes(text.toLowerCase())))
     return (
             <div>
+           <div className='flex justify-between my-8'>
+                <div>
+                    <label htmlFor="">Search By Brand</label>
+                    <input onChange={(e) => setText(e.target.value)} type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
+                </div>
+                <div>
+                    <label htmlFor="">Category</label>
+                    <select onChange={e => setSelect(e.target.value)} class="select select-bordered w-full max-w-xs">
+                        <option disabled selected>Select Category</option>
+                        <option>Region</option>
+                        <option>Linux</option>
+                        <option>Windows</option>
+                        <option>MacOs</option>
+                    </select>
+                </div>
+            </div>
                 <table>
                         <thead>
                             <tr>
@@ -11,11 +32,12 @@ const DisplayTable = ({data}) => {
                                 <th>School</th>
                                 <th>District</th>
                                 <th>Coach</th>
+                                <th>Region</th>
                             </tr>
                         </thead>
 
                          <tbody>
-                            {data.map(item => (
+                            {filter.map(item => (
                                 <tr key={item.national_id}>
                                     <td>{item.national_id}</td>
                                     <td>{item.name}</td>
@@ -34,77 +56,3 @@ const DisplayTable = ({data}) => {
 export default  DisplayTable
 
 
-/*    const teamArr = (val) => {
-        // Individual Values
-        console.log("Val: " + val)
-    }
-<button onClick={() => {
-                                visit(elements, teamArr)
-                            }}>click here</button>
-let tb_data = this.state.list.map((item)=>{
-            return (
-              <tr key={item.national_id}>
-                <td>{item.national_id}</td>
-                <td>{item.name}</td>
-                <td>{item.school}</td>
-                <td>{item.district}</td>
-                <td>{item.rotc}</td>
-                <td>{item.active}</td>
-              </tr>
-            )
-            })
-const Table = ({data}) => {
-    return(
-        <table> 
-            <tbody>
-                <tr>
-                    <th>School Name</th>
-                    <th>Coach</th>
-                    <th>District</th>
-                    <th>ROTC</th>
-                    <th>Remote</th>
-                    <th>Zipcode</th>
-                </tr>
-            </tbody>
-        </table>
-    );
-};
-
-export default Table;*/
-
-/*
-
-<table> 
-            <tbody>
-                <tr>
-                    <th>School Name</th>
-                    <th>Coach</th>
-                    <th>District</th>
-                    <th>ROTC</th>
-                    <th>Remote</th>
-                    <th>Zipcode</th>
-                </tr>
-                {data.map((item)=> (
-                <tr key={item.national_id}>
-                    <td>{item.school_Name}</td>
-                    <td>{item.coach}</td>
-                    <td>{item.district}</td>
-                    <td>{item.rotc}</td>
-                    <td>{item.remote}</td>
-                    <td>{item.zipcode}</td>
-                </tr>
-                ))}
-            </tbody>
-        </table>
-    );
-*//*
-                {data.map((item)=> (
-                <tr key={item.national_id}>
-                    <td>{item.school_Name}</td>
-                    <td>{item.coach}</td>
-                    <td>{item.district}</td>
-                    <td>{item.rotc}</td>
-                    <td>{item.remote}</td>
-                    <td>{item.zipcode}</td>
-                </tr>
-                ))}*/

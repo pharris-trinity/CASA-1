@@ -42,6 +42,19 @@ var testTeam = {
     coach: mongoose.Types.ObjectId("6373bf8650c5263f57ff20ab")
 }
 
+var testMentor = {
+     username: "test mentor",
+     displayname: "Test Mentor",
+     email: "test_mentor@email.com",
+     password: "test_mentor_password",
+     remote: false,
+     zipcode: 78212,
+     madeQuizzes: [],
+     teams: [],
+     speciality: "Windows Systems",
+     validationCode: "b#NIO(E*(7Pq"
+}
+
 async function simpleGET() {
 
     const response = await fetch(url + 'dev/simpleGET');
@@ -122,7 +135,7 @@ async function create_student() {
 //simpleGET()
 //coach_validation()
 //coach_creation()
-//mentor_validation()
+mentor_validation()
 //create_student()
 //mentor_creation()
 create_team()
