@@ -330,6 +330,94 @@ app.post('/api/coach/create_coach', async(req, res) => {
     
   }); 
 
+  app.post('/api/mentor/get_mentors_teams', async(req, res) => {
+    const { userID } = req.body;
+
+    await User.find(
+      {"_id": userID}
+    ).exec().then(user => {
+      if(!user) {return res.status(401).send("ID not found");}
+      else {
+        var teamsIDS = user.teams;
+        return res.send(teamsIDS).status(201);
+      }
+    })
+  });
+
+  app.get('/api/collections', (req,res,next)=>{
+    mongoose.connection.db.listCollections().toArray().then(collection => {
+        const dataArr = []; 
+        
+        collection.forEach(el => dataArr.push(el.name));
+          for (let i = 0; i < dataArr.length; i++)
+          {
+            console.log("Collection: " + dataArr[i]);
+            if (dataArr[i] == "teams")
+            mongoose.connection.db.listCollections({name : ''})
+            
+              
+          }
+        res.status(200).json({ status: 'success', data: { dataArr } })
+    });
+})
+
+app.post('/api/team/get_team', async(req, res) => {
+  const { teamID } = req.body;
+  const team = await Team.findOne({"national_id": teamID});
+  console.log(team)
+  if(!team){
+    return res.sendStatus(404)
+  } else {
+    return res.status(200).send(team);
+  }
+  
+})
+
+app.get('/api/stored', async (req, res) => {
+  try {
+    const ads = await Teams.find({"national_id": teamID});
+
+    return res.status(200).json({
+      success: true,
+      count: ads.length,
+      data: ads
+      });
+    } catch(err) {
+      console.log(err);
+    res.status(500).json({ error: 'server error' });
+    }
+
+
+  /*console.log(req.body);
+  mongoose.connection.db.collection('quotes').then(req.body, (err, data) => {
+      if(err) return console.log(err);
+      res.send(('saved to db: ' + data));
+      res.status(200).json({ status: 'success', data: { data } })
+  })*/
+});
+
+app.post('/api/get-data', function(req, res, next) {
+    
+  
+  mongoose.connection.db.collection('teams').find({active: true}).toArray().then(collection => {
+    
+    
+    res.status(200).json({ collection})
+});
+  
+});
+
+app.post('/api/get-MentorData', function(req, res, next) {
+    
+  
+  mongoose.connection.db.collection('users').find({username: "test mentor"}).toArray().then(collection => {
+    
+    console.log("Here's mentors: " + collection);
+    res.status(200).json({ collection})
+});
+  
+});
+
 //===================
 
 //Student Functionality
