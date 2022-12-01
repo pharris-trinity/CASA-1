@@ -29,8 +29,22 @@ import MentorTable from "../TableMentor/MentorTable";
 import { Routes, Route, Link } from "react-router-dom";
 import * as React from "react";
 import {useEffect} from 'react';
+import Home from '../Home/Home';
+import Profile from '../Profile/Profile';
+import ViewTeams from '../ViewTeams/ViewTeams';
+import ViewTeams2 from '../ViewTeams/ViewTeams2';
+
+import TeamStats from '../TeamStats/TeamStats';
+import AssessTest from '../AssessTest/AssessTest';
+import ViewScores from '../ViewScores/ViewScores';
+import Dropdown from '../Dropdown/Dropdown';
+import TeamDropdown from '../TeamDropdown/TeamDropdown';
 
 
+import MentorAssessment from "../AssessTest/MentorAssessment";
+
+//import Profile from
+//Routes, Route, Link
 function App() {
 
   useEffect(() => {
@@ -78,44 +92,19 @@ function App() {
         <Route path="mentortable" element={<MentorTable/>} />
         <Route path="mentortabledisplay" element={<Mentorteamdisplay/>} />
         <Route path="mentorHome" element={<MentorHome/>} />
+        <Route path="TeamDropdown" element={<TeamDropdown/>} />
+        <Route exact path="/" element ={<Login/>}/>
+        <Route path="Profile" element={<Profile/>} />
+        <Route path="mentortable" element={<MentorTable/>} />
+        <Route path="mentortabledisplay" element={<Mentorteamdisplay/>} />
+        <Route path="ViewTeams" element={<ViewTeams/>} />
+        <Route path="ViewTeams2" element={<ViewTeams2/>} />
+        <Route path="TeamStats" element={<TeamStats/>} />
+        <Route path="AssessTest" element={<AssessTest/>} />
+        <Route path="ViewScores" element={<ViewScores/>} />
       </Routes>
     </div>
   );
 }
 
 export default App;
-
-
-/*
-
-
-  componentDidMount() {
-    this.callBackendAPI()
-      .then(res => this.setState({ data: res.express }))
-      .catch(err => console.log(err));
-  }
-    // fetching the GET route from the Express server which matches the GET route from server.js
-  callBackendAPI = async () => {
-    const response = await fetch('/express_backend');
-    const body = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(body.message) 
-    }
-    return body;
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">{this.state.data}</p>
-      </div>
-    );
-  }
-}
-
-*/

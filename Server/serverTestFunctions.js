@@ -43,17 +43,18 @@ var testTeam = {
 }
 
 var testMentor = {
-     username: "test mentor",
-     displayname: "Test Mentor",
-     email: "test_mentor@email.com",
-     password: "test_mentor_password",
-     remote: false,
-     zipcode: 78212,
-     madeQuizzes: [],
-     teams: [],
-     speciality: "Windows Systems",
-     validationCode: "b#NIO(E*(7Pq"
+    username: "test mentor",
+    displayname: "Test Mentor",
+    email: "test_mentor@email.com",
+    password: "test_mentor_password",
+    remote: false,
+    zipcode: 78212,
+    madeQuizzes: [],
+    teams: [],
+    speciality: "Windows Systems",
+    validationCode: "b#NIO(E*(7Pq"
 }
+
 
 async function simpleGET() {
 
