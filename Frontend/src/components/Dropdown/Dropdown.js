@@ -46,7 +46,7 @@ const Dropdown = () => {
                     Teams
                     {state ?(<ul className = "dropdown-list" onMouseEnter={showDrorpdown}>
                         <li> <NavLink onClick={toggleClass} activeClassName='is-active'  to={`/ViewTeams`}> ViewTeams </NavLink> </li>
-                        <li> <NavLink onClick={toggleClass} activeClassName='is-active' to={`/FindMentor`}> FindMentor </NavLink> </li>
+                        <li> <NavLink onClick={toggleClass} activeClassName='is-active' to={`/TableMentor`}> TableMentor </NavLink> </li>
                     </ul>):
                     null}
                  </div>

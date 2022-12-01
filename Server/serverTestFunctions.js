@@ -42,6 +42,20 @@ var testTeam = {
     coach: mongoose.Types.ObjectId("6373bf8650c5263f57ff20ab")
 }
 
+var testMentor = {
+    username: "test mentor",
+    displayname: "Test Mentor",
+    email: "test_mentor@email.com",
+    password: "test_mentor_password",
+    remote: false,
+    zipcode: 78212,
+    madeQuizzes: [],
+    teams: [],
+    speciality: "Windows Systems",
+    validationCode: "b#NIO(E*(7Pq"
+}
+
+
 async function simpleGET() {
 
     const response = await fetch(url + 'dev/simpleGET');

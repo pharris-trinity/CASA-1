@@ -107,6 +107,13 @@ app.post('/api/getfleech', function(req, res, next) {
     return res.status(401).send("Method Deprecated - Please use one of the type-specific user creation methods")
   });
 
+  app.post('/api/get-data', function(req, res, next) {
+    mongoose.connection.db.collection('teams').find({active: true}).toArray().then(collection => {
+      res.status(200).json({ collection})
+  });
+    
+  });
+
   app.post("/api/user/login", async (req, res) => {
 
       const {username, password} = req.body;
@@ -129,6 +136,19 @@ app.post('/api/getfleech', function(req, res, next) {
       });
   });
 
+
+/*  
+  app.post('/api/user/get_teams', async(req, res) => {
+    const {id} } = req.body;
+    var user = await User.findById(id).exec();
+    if (user == undefined){
+      return res.sendStatus(500);
+    } else {
+    
+    }
+  });
+*/
+
   app.post('/api/user/fetch_user', async(req, res) => {
     const {id} = req.body
     var user = await User.findById(id).exec();
@@ -140,6 +160,8 @@ app.post('/api/getfleech', function(req, res, next) {
     }
     
   });
+
+
 
   app.get('/api/user/modify_user_profile', async(req, res) => {
 
