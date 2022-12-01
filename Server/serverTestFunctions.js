@@ -15,16 +15,16 @@ const mongoose = require("mongoose")
 //     validationCode: "b#NIO(E*(7Pq"
 // }
 
-// var testCoach = {
-//     username: "test coach",
-//     displayname: "Test Coach",
-//     email: "test_coach@email.com",
-//     password: "test_coach_password",
-//     madeQuizzes: [],
-//     school: "Test School",
-//     teams: [],
-//     validationCode: "(H9qPA&T$k#R"
-// }
+var testCoach = {
+    username: "test coach",
+    displayname: "Test Coach",
+    email: "test_coach@email.com",
+    password: "test_coach_password",
+    madeQuizzes: [],
+    school: "Test School",
+    teams: [],
+    validationCode: "A^*zIh#^ZuOI"
+}
 
 var testStudent = {
     username: "test student",
@@ -39,7 +39,7 @@ var testTeam = {
     school: "Trinity University",
     district: "Private University",
     rotc: false,
-    coach: mongoose.Types.ObjectId("6373bf8650c5263f57ff20ab")
+    coach: mongoose.Types.ObjectId("6388cb2de5b7cfa8787bf80f")
 }
 
 var testMentor = {
@@ -52,7 +52,7 @@ var testMentor = {
     madeQuizzes: [],
     teams: [],
     speciality: "Windows Systems",
-    validationCode: "b#NIO(E*(7Pq"
+    validationCode: "nA$rEm(&*XoY"
 }
 
 
@@ -162,10 +162,10 @@ async function test_login() {
 //simpleGET()
 //coach_validation()
 //coach_creation()
-mentor_validation()
+//mentor_validation()
 //create_student()
 //mentor_creation()
-//create_team()
+create_team()
 //fetch_student()
-test_login()
+//test_login()
 //test_update_model()
