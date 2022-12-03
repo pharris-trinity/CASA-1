@@ -85,6 +85,11 @@ function Login() {
       navigate('/createuser', {replace: true})
   }
 
+  const mentorAccountCreation = (e) => {
+    e.preventDefault()
+      navigate('/createMentor', {replace: true})
+  }
+
   // Generate JSX code for error message
   const renderErrorMessage = (name) =>
     name === errorMessages.name && (

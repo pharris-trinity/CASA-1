@@ -506,8 +506,7 @@ app.get('/api/stored', async (req, res) => {
 
 app.post('/api/get-data', function(req, res, next) {
     
-  
-  mongoose.connection.db.collection('teams').find({active: true}).toArray().then(collection => {
+  mongoose.connection.db.collection('teams').find({}).toArray().then(collection => {
     
     
     res.status(200).json({ collection})

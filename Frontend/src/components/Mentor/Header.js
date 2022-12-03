@@ -7,11 +7,11 @@ import logo from './cyberTexasLogo.png';
 const Header = () => {
 return (
        <nav>
-        <NavLink exact activeClassName="active" to="/">
-            Home  
+        <NavLink exact activeClassName="active" to="/mentor">
+            Home |
         </NavLink>
-        <NavLink activeClassName="active" to="/mentor">
-            Mentor Home 
+        <NavLink activeClassName="active" to="/mentorHome">
+            Mentor Home |
         </NavLink>
         <NavLink activeClassName="active" to="/mentorTable">
             Table 

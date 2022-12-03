@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import "./TableStyle.css";
 
+
 const DisplayTable = ({data}) => {
     const [text, setText] = useState('')
     const [select, setSelect] = useState('')
     const keys =  ["name", "school"]
     const filter = data.filter((item) => keys.some((key)=>item[key].toLowerCase().includes(text.toLowerCase())))
+    //const filteredProducts = data.filter(d => d.district.toLowerCase() === select.toLowerCase())
     return (
             <div>
            <div className='flex justify-between my-8'>
@@ -16,29 +18,38 @@ const DisplayTable = ({data}) => {
                 <div>
                     <label htmlFor="">Category</label>
                     <select onChange={e => setSelect(e.target.value)} class="select select-bordered w-full max-w-xs">
-                        <option disabled selected>Select Category</option>
+                        <option selected>All</option>
                         <option>Region</option>
                         <option>Linux</option>
                         <option>Windows</option>
                         <option>MacOs</option>
+                        <option>District</option>
                     </select>
                 </div>
             </div>
                 <table>
                         <thead>
                             <tr>
+                                <th>National ID</th>
                                 <th>Name</th>
-                                <th>Email</th>
+                                <th>School</th>
+                                <th>District</th>
+                                <th>Coach</th>
                                 <th>Region</th>
-                                <th>Speciality</th>
                             </tr>
                         </thead>
 
                          <tbody>
-                                    <td>mentor test </td>
-                                    <td> mentortest@gmail.com</td>
-                                    <td>00000</td>
-                                    <td>Windows</td>
+                            {
+                                filter.map(item => (
+                                    <tr key={item.national_id}>
+                                        <td>{item.national_id}</td>
+                                        <td>{item.name}</td>
+                                        <td>{item.school}</td>
+                                        <td>{item.district}</td>
+                                        <td>{item.coach}</td>
+                                    </tr>
+                            ))}
                         </tbody>
                 </table>
             </div>
