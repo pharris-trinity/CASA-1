@@ -407,12 +407,17 @@ app.post('/api/team/get_team', async(req, res) => {
   
 })
 
+app.get('/api/filter_students', async(req, res) => {
+  let users = Student.find({});
+  return res.status(200).send(users);
+})
+
 app.post('/api/team/add_student_to_team', async(req, res) => {
   //Takes in a team ID and a student ID and updates the team and the student
   const {team_id, student_id} = req.body
 
   const team = await Team.findOne({"national_id": team_id})
-  const user = await User.findOne({"_id": student_id})
+  const user = await User.findOne({"username": student_id})
 
   if(!team){
     return res.status(501).send("No team found that matches that ID")

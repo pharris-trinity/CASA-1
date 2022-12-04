@@ -1,157 +1,149 @@
-import React, { useState, Fragment } from "react";
-import { nanoid } from "nanoid";
-import "./ViewTeams.css";
-import data from "./mock-data.json";
-import ReadOnlyRow from "./ReadOnlyRow";
-import EditableRow from "./EditableRow";
+import React, { useState } from "react"
+import "./teamstyles.css"
 
-const ViewTeams2 = () => {
-  const [contacts, setContacts] = useState(data);
-  const [addFormData, setAddFormData] = useState({
-    fullName: "",
-  });
 
-  const [editFormData, setEditFormData] = useState({
-    fullName: "",
-  });
+export default function ViewTeams2(){
 
-  const [editContactId, setEditContactId] = useState(null);
+    //var userVal; 
+    var postData;
+    const[data, setData] = useState (null);
+    const[data1, setData1] = useState (null);
+    const[data2, setData2] = useState (null);
+    const[data3, setData3] = useState (null);
 
-  const handleAddFormChange = (event) => {
-    event.preventDefault();
+    // error messages for incorrect inputs
+    const [errorMessages, setErrorMessages] = useState({});
+    const error = {
+        team: "Team not found",
+        user: "Invalid student", 
+        user2: "student already in another team",
+        user3: "student already in team",
+        removeuser2: "student not registered in a team", 
+        removeuser3: "student not registered in this team"
+      }
 
-    const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
+    //fetchUserAccount finds the team data to display
+    //takes input of teamID and displays that team 
+    const fetchUserAccount = (e, incText) => {
+        e.preventDefault()
+        postData = { teamID: incText}
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(postData)
+        };
+        fetch('/api/team/get_team', requestOptions).then(
+                res => res.text()).then(text => {
+                try {
+                    const userVal = JSON.parse(text);
+                    console.log(userVal.members);
+                    setData(userVal.name);
+                    setData1(userVal.school);
+                    setData2(userVal.national_id);
+                    setData3(userVal.members);
 
-    const newFormData = { ...addFormData };
-    newFormData[fieldName] = fieldValue;
+                    //navigate('/about', {replace: true, state:{userVal}})
+                    //Figure out what to do with this information from userVal
+                } catch (error) {
 
-    setAddFormData(newFormData);
-  };
+                }
+            }
+        );
 
-  const handleEditFormChange = (event) => {
-    event.preventDefault();
+    }; 
 
-    const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
+    //addStudentAccount takes in a team and a student username input and adds that student to that team or returns an error
+    const addStudentAccount = (e, incText1, incText2) => {
+          e.preventDefault()
+          var teamData = { team_id: incText1}
+          var studData = { student_id: incText2}
 
-    const newFormData = { ...editFormData };
-    newFormData[fieldName] = fieldValue;
-
-    setEditFormData(newFormData);
-  };
-
-  const handleAddFormSubmit = (event) => {
-    event.preventDefault();
-
-    const newContact = {
-      id: nanoid(),
-      fullName: addFormData.fullName,
-    };
-
-    const newContacts = [...contacts, newContact];
-    setContacts(newContacts);
-  };
-
-  const handleEditFormSubmit = (event) => {
-    event.preventDefault();
-
-    const editedContact = {
-      id: editContactId,
-      fullName: editFormData.fullName,
-    };
-
-    const newContacts = [...contacts];
-
-    const index = contacts.findIndex((contact) => contact.id === editContactId);
-
-    newContacts[index] = editedContact;
-
-    setContacts(newContacts);
-    setEditContactId(null);
-  };
-
-  const handleEditClick = (event, contact) => {
-    event.preventDefault();
-    setEditContactId(contact.id);
-
-    const formValues = {
-      fullName: contact.fullName,
-    };
-
-    setEditFormData(formValues);
-  };
-
-  const handleCancelClick = () => {
-    setEditContactId(null);
-  };
-
-  const handleDeleteClick = (contactId) => {
-    const newContacts = [...contacts];
-
-    const index = contacts.findIndex((contact) => contact.id === contactId);
-
-    newContacts.splice(index, 1);
-
-    setContacts(newContacts);
-  };
-
-  return (
-    <div className="app-container">
-    <div>
-            National ID: 1
-    </div>
-    <div>
-            Name: TestSchool
-    </div>
-
-      <form onSubmit={handleEditFormSubmit}>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+          const requestOptions = {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify(postData)
+          };
           
-          <tbody>
-          
+          fetch('/api/team/add_student_to_team', requestOptions).then(
+                  res => res.text()).then(text => {
+                  if (text == "No team found that matches that ID") {
+                    setErrorMessages({name: "team", messgae:error.team})
+                  }
+                  else if (text == "No user found that matches that ID"){
+                    setErrorMessages({name: "user", messgae:error.user})
+                  }
+                  else if (text == "User already has a team registered to them"){
+                    setErrorMessages({name: "user2", messgae:error.user2})
+                  }
+                  else if (text == "User is already registered to this team"){
+                    setErrorMessages({name: "user3", messgae:error.user3})
+                  }
+                  else {
+                    console.log("success");
+                    fetchUserAccount(e, text);
+                  }
+              }
+          );
+      }; 
 
-            {contacts.map((contact) => (
-              <Fragment>
-                {editContactId === contact.id ? (
-                  <EditableRow
-                    editFormData={editFormData}
-                    handleEditFormChange={handleEditFormChange}
-                    handleCancelClick={handleCancelClick}
-                  />
-                ) : (
-                  <ReadOnlyRow
-                    contact={contact}
-                    handleEditClick={handleEditClick}
-                    handleDeleteClick={handleDeleteClick}
-                  />
-                )}
-              </Fragment>
-            ))}
-          </tbody>
-          
-        </table>
-      </form>
 
-      <h2>Add a Student</h2>
-      <form onSubmit={handleAddFormSubmit}>
-        <input
-          type="text"
-          name="fullName"
-          required="required"
-          placeholder="Enter a name..."
-          onChange={handleAddFormChange}
-        />
-        <button type="submit">Add</button>
-      </form>
-    </div>
-  );
-};
+    //removeStudentAccounts takes in a team and a student username inptut and removes that student from that team or returns an error
+    const removeStudentAccount = (e, incText3, incText4) => {
+            e.preventDefault()
+            var teamData = { team_id: incText3}
+            var studData = { student_id: incText4}
+  
+            const requestOptions = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(postData)
+            };
+            
+            fetch('/api/team/remove_student_from_team', requestOptions).then(
+                    res => res.text()).then(text => {
+                    if (text == "No team found that matches that ID") {
+                      setErrorMessages({name: "team", messgae:error.team})
+                    }
+                    else if (text == "No user found that matches that ID"){
+                      setErrorMessages({name: "user", messgae:error.user})
+                    }
+                    else if (text == "User has no team registered to them"){
+                      setErrorMessages({name: "removeuser2", messgae:error.user2})
+                    }
+                    else if (text == "User is not in that team"){
+                      setErrorMessages({name: "removeuser3", messgae:error.user3})
+                    }
+                    else {
+                      console.log("success");
+                      fetchUserAccount(e, text);
+                    }
+                }
+            );
+    }; 
 
-export default ViewTeams2;
+
+     
+
+    const renderErrorMessage = (name) =>
+        name === errorMessages.name && (
+            <div className="error">{errorMessages.message}</div>
+    );
+    
+    const [title, setTitle] = useState('');
+    
+
+    return(
+        <div className="App">
+            <h1>Profile</h1>
+            <button onClick={fetchUserAccount}>
+            Display
+            </button>
+            <p>Team Name: {data}</p>
+            <p>School: {data1}</p>
+            <p>National Id: {data2}</p>
+            <p>Members: {data3}</p>
+
+        </div>
+    );
+    
+}
