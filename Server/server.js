@@ -378,22 +378,6 @@ app.post('/api/coach/create_coach', async(req, res) => {
     })
   });
 
-  app.get('/api/collections', (req,res,next)=>{
-    mongoose.connection.db.listCollections().toArray().then(collection => {
-        const dataArr = []; 
-        
-        collection.forEach(el => dataArr.push(el.name));
-          for (let i = 0; i < dataArr.length; i++)
-          {
-            console.log("Collection: " + dataArr[i]);
-            if (dataArr[i] == "teams")
-            mongoose.connection.db.listCollections({name : ''})
-            
-              
-          }
-        res.status(200).json({ status: 'success', data: { dataArr } })
-    });
-})
 
 app.post('/api/team/get_team', async(req, res) => {
   const { teamID } = req.body;
@@ -494,26 +478,18 @@ app.get('/api/stored', async (req, res) => {
       console.log(err);
     res.status(500).json({ error: 'server error' });
     }
-
-
-  /*console.log(req.body);
-  mongoose.connection.db.collection('quotes').then(req.body, (err, data) => {
-      if(err) return console.log(err);
-      res.send(('saved to db: ' + data));
-      res.status(200).json({ status: 'success', data: { data } })
-  })*/
 });
 
+// This API is able to pull json data from MongoDB
 app.post('/api/get-data', function(req, res, next) {
     
   mongoose.connection.db.collection('teams').find({}).toArray().then(collection => {
-    
     
     res.status(200).json({ collection})
 });
   
 });
-
+// This API is able to pull a certian mentor information
 app.post('/api/get-MentorData', function(req, res, next) {
     
   

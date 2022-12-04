@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import { useNavigate } from 'react-router-dom';
 import TableMentor from './TableMentor'
-import Header from '../Mentor/Header'
+import MentorNavBar from "../Mentor/NavBarMentor";
+import "./stylesMentor.css"
 
 function MentorTable() {
 
-  let navigate = useNavigate();
 
   const [elements, setElements] = useState([])
 
@@ -27,22 +26,13 @@ function MentorTable() {
             })
     },[]);
 
-  function homebutton(){
-    navigate('/mentorHome', {replace: true})
-  }
 
   return (
-    <div className="App">
-            <h1> Mentor Table </h1>
-            <Header/>
-            <button onClick={homebutton}>
-                HomePage
-            </button> 
+    <>
 
+  <MentorNavBar />
             {<TableMentor data={(elements)} />}
-
-
-      </div>
+ </>
   );
 }
 
