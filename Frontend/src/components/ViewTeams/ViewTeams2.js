@@ -24,8 +24,7 @@ export default function ViewTeams2(){
 
     //fetchUserAccount finds the team data to display
     //takes input of teamID and displays that team 
-    const fetchUserAccount = (e, incText) => {
-        e.preventDefault()
+    const fetchUserAccount = (incText) => {
         postData = { teamID: incText}
         const requestOptions = {
             method: 'POST',
@@ -53,8 +52,7 @@ export default function ViewTeams2(){
     }; 
 
     //addStudentAccount takes in a team and a student username input and adds that student to that team or returns an error
-    const addStudentAccount = (e, incText1, incText2) => {
-          e.preventDefault()
+    const addStudentAccount = (incText1, incText2) => {
           var teamData = { team_id: incText1}
           var studData = { student_id: incText2}
 
@@ -80,7 +78,6 @@ export default function ViewTeams2(){
                   }
                   else {
                     console.log("success");
-                    fetchUserAccount(e, text);
                   }
               }
           );
@@ -88,8 +85,7 @@ export default function ViewTeams2(){
 
 
     //removeStudentAccounts takes in a team and a student username inptut and removes that student from that team or returns an error
-    const removeStudentAccount = (e, incText3, incText4) => {
-            e.preventDefault()
+    const removeStudentAccount = (incText3, incText4) => {
             var teamData = { team_id: incText3}
             var studData = { student_id: incText4}
   
@@ -115,7 +111,6 @@ export default function ViewTeams2(){
                     }
                     else {
                       console.log("success");
-                      fetchUserAccount(e, text);
                     }
                 }
             );
@@ -131,18 +126,25 @@ export default function ViewTeams2(){
     
     const [title, setTitle] = useState('');
     
+    const [input, setInput] = useState('');
+  
+    const [studInput, setstudInput] = useState('');
+    const [studInput1, setstudInput1] = useState('');
+
 
     return(
         <div className="App">
             <h1>Profile</h1>
-            <button onClick={fetchUserAccount}>
-            Display
-            </button>
+            <input value={input} placeholder="enter team id" onChange={ev => setInput(ev.target.value)}/> 
+            <button onClick={()=>fetchUserAccount(input)}>Get Team</button>
             <p>Team Name: {data}</p>
             <p>School: {data1}</p>
             <p>National Id: {data2}</p>
             <p>Members: {data3}</p>
-
+            <input value={studInput} placeholder="enter student" onChange={ev1 => setstudInput(ev1.target.value)}/> 
+            <button onClick={()=>addStudentAccount(input, studInput)}>Add Student to Team</button>
+            <input value={studInput1} placeholder="enter student" onChange={ev1 => setstudInput1(ev1.target.value)}/> 
+            <button onClick={()=>removeStudentAccount(input, studInput1)}>Remove Student to Team</button>
         </div>
     );
     
