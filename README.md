@@ -72,6 +72,8 @@ An environment file (.env) is useful for setting up credientials and secrets wit
     * Key files: Quiz.js, server.js, StudentTakeAssessmentContent.js
 2. Implement Login Persistence
     * Key files: All Frontend files requiring a full refresh instead of an overlay. (Login.js is the beginning)
+3. Implement Semi-automatic pulling of data from National Database to enable Cybertexas to setup teams for new seasons easier
+    * Key files: server.js, Admin.js
 
 <br>
 
