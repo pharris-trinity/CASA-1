@@ -19,7 +19,7 @@ export default function StudentMainPage() {
                     <h2>Assessments</h2>
                     <ul>
                         <li className="takeAssess">
-                            <a href="/stud/takeassess">Take Assessment</a>
+                            <a href="/stud/takeassess">Take Assessments</a>
                         </li>
                         <li className="viewAssess">
                             <a href="/stud/viewassess">View Assessments</a>

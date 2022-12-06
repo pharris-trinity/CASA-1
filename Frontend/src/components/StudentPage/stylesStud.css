@@ -40,14 +40,6 @@ body {
     align-items: center;
     padding: .25rem;
 }
-/*
-.studnav li.active {
-    background-color: #DC267F;
-}
-
-.studnav li.hover {
-    background-color: #DC267F;
-} */
 
 /* main page css below*/
 .maincontainer {
@@ -64,7 +56,6 @@ body {
     width: auto;
     list-style:none;
 }
-
 .maincol1 {
     flex: 80%;
     padding: 50px;
@@ -72,13 +63,25 @@ body {
     width: auto;
 }
 
-.maincol1 ul{
-    list-style: none;
-}
-
 .maincol1 li {
     margin-bottom: 10px;
 }
+
+.assessmentsSection ul {
+    list-style: none;
+}
+
+.assessmentsSection li {
+    color: black;
+    float: none;
+}
+.assessmentsSection a {
+    color: black;
+    display: inline-block;
+    text-decoration: underline;
+    font-size: larger;
+}
+
 /*
 .maincol2 {
     flex: 80%;
@@ -105,6 +108,7 @@ body {
 .studentAttributes ul {
     list-style: none;
     margin-left: 1rem;
+    display: grid;
 }
 
 .studentAttributes li { 
@@ -119,22 +123,36 @@ body {
     top: 5rem;
     width: 80%;
     height: 50%;
+    padding: 0;
 }
 
 .studquizlist {
     margin-top: 1rem;
     display: flex;
     background-color: white;
+    overflow: auto;
+    
 }
 
 .studquizlist ul {
     list-style: none;
     margin-left: 1rem;
+    padding: 0;
+    overflow: auto;
+    margin: 1rem;
 }
 
 .studquizlist li { 
     margin-top: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 20px;
+    display: inline;
+    float: none;
+    font-size: larger;
+}
+
+.studquizlist a {
+    color: black;
+    text-decoration: underline;
 }
 
 /*take assessment page css below*/
