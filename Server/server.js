@@ -113,6 +113,22 @@ saltRounds = 12
       });
   });
 
+  app.post("/api/user/fetchUsername", async (req, res) => {
+
+    const {username} = req.body;
+
+    await User.findOne(
+      {username: username}
+    ).exec().then(user => {
+      if(!user) {
+        return res.status(404).send("Username not found");
+      } else {
+        return res.status(200).send(username);
+      }
+    });
+});
+
+
   app.post('/api/user/fetch_user', async(req, res) => {
     const {id} = req.body
     var user = await User.findById(id).exec();
@@ -530,6 +546,7 @@ app.post('/api/get-MentorData', function(req, res, next) {
 });
   
 });
+
 
 //===================
 

@@ -11,7 +11,7 @@ export default function Profile(){
     const[data2, setData2] = useState (null);
     const[data3, setData3] = useState (null);
 
-    const fetchUserAccount = (e) => {
+    const fetchUserAccount = (e, incText) => {
     //useEffect (() => {
         //e.preventDefault()
 
