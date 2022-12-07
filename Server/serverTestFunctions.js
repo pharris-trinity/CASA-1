@@ -116,11 +116,11 @@ var testStudent = {
 }
 
 var testTeam = {
-    national_id: 0,
-    name: "Test School",
-    school: "Trinity University",
-    district: "Private University",
-    rotc: false,
+    national_id: 4,
+    name: "Coding Agents",
+    school: "Boerne High School",
+    district: "BISD",
+    rotc: true,
     coach: mongoose.Types.ObjectId("6388cb2de5b7cfa8787bf80f")
 }
 
@@ -322,7 +322,7 @@ async function create_admin(){
 //mentor_validation()
 //create_student()
 //mentor_creation()
-//create_team()
+create_team()
 //fetch_student()
 //test_login()
 //test_update_model()
@@ -331,4 +331,4 @@ async function create_admin(){
 //add_assessment()
 //find_assessment()
 //find_assessments_by_author()
-create_admin()
+//create_admin()
