@@ -15,9 +15,8 @@ export default function MentorNavbar() {
                 <a href="/mentorTable">Team Tables</a>
             </li>
             <li>
-                <a href="/login">Logout</a>
+                <a href="mentorprofile">Mentor Profile</a>
             </li>
-        </ul>
-        
+        </ul>   
     </nav>);
 }

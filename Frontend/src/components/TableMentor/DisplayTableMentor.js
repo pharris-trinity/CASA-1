@@ -12,7 +12,7 @@ const DisplayTable = ({data}) => {
             <div>
            <div className='flex justify-between my-8'>
                 <div>
-                    <label htmlFor="">Search By Brand</label>
+                    <label htmlFor="">Search By School and Team Name</label>
                     <input onChange={(e) => setText(e.target.value)} type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
                 </div>
                 <div>
@@ -20,25 +20,19 @@ const DisplayTable = ({data}) => {
                     <select onChange={e => setSelect(e.target.value)} class="select select-bordered w-full max-w-xs">
                         <option selected>All</option>
                         <option>Region</option>
-                        <option>Linux</option>
-                        <option>Windows</option>
-                        <option>MacOs</option>
-                        <option>District</option>
                     </select>
                 </div>
             </div>
-                <table>
+                <table> <div className="myComponent">
                         <thead>
                             <tr>
                                 <th>National ID</th>
-                                <th>Name</th>
+                                <th>Team Name</th>
                                 <th>School</th>
                                 <th>District</th>
-                                <th>Coach</th>
-                                <th>Region</th>
                             </tr>
                         </thead>
-
+                        
                          <tbody>
                             {
                                 filter.map(item => (
@@ -47,11 +41,10 @@ const DisplayTable = ({data}) => {
                                         <td>{item.name}</td>
                                         <td>{item.school}</td>
                                         <td>{item.district}</td>
-                                        <td>{item.coach}</td>
                                     </tr>
                             ))}
                         </tbody>
-                </table>
+                </div></table>
             </div>
         )
 }

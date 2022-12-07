@@ -11,12 +11,9 @@ import StudentViewAssessPage from '../StudentPage/StudViewAssessPage';
 import Quiz1Test from '../StudentPage/Quiz1Test';
 import Quiz2Test from '../StudentPage/Quiz2Test';
 
-import Mentor from "../Mentor/Mentor";
-import MentorTeams from "../MentorRedirect/MentorTeams";
-import MentorQuiz from "../MentorRedirect/MentorQuiz";
-import MentorAssessment from "../MentorRedirect/MentorAssessment";
 import Mentorteamdisplay from "../TableMentor/MentorTable";
 import MentorHome from "../Mentor/MentorHomePage";
+import MentorProfile from "../Mentor/MentorProfile"
 
 import Teacher from "../Teacher/Teacher";
 import TeacherTeams from "../TeacherRedirect/TeacherTeam";
@@ -79,15 +76,12 @@ function App() {
         <Route path="stud/viewassess" element={<StudentViewAssessPage/>} />
         <Route path="stud/takeassess/quiz1" element={<Quiz1Test/>} />
         <Route path="stud/takeassess/quiz2" element={<Quiz2Test/>} />
-        <Route path="mentor" element={<Mentor/>} />
-        <Route path="mentorteams" element={<MentorTeams/>} />
-        <Route path="mentorquiz" element={<MentorQuiz/>} />
-        <Route path="mentorassessment" element={<MentorAssessment/>} />
         <Route path="teacher" element={<Teacher/>} />
         <Route path="teacherteam" element={<TeacherTeams/>} />
         <Route path="teacherquiz" element={<TeacherQuiz/>} />
         <Route path="teacherassessment" element={<TeacherAssessment/>} />
         <Route path="mentortable" element={<MentorTable/>} />
+        <Route path="mentorprofile" element={<MentorProfile/>} />
         <Route path="mentortabledisplay" element={<Mentorteamdisplay/>} />
         <Route path="mentorHome" element={<MentorHome/>} />
         <Route path="TeamDropdown" element={<TeamDropdown/>} />
