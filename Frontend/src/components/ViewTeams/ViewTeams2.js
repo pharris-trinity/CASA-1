@@ -64,7 +64,7 @@ export default function ViewTeams2(){
 
     //getAllStudents gets all student accounts so addStudentAccount and removeStudentAccount can find a specific student 
     const getAllStudents = (e) => {
-      e.preventDefault();
+    if (e && e.preventDefault) { e.preventDefault(); }
       const requestOptions = {
         method: 'GET',
         headers: {'Content-Type': 'application/json'},
