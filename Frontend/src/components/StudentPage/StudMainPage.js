@@ -16,7 +16,6 @@ export default function StudentMainPage() {
     console.log(fixeduser)
     
     return (
-    //<Body studnavbar>
     <>
     <StudNavbar />
     

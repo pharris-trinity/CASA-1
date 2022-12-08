@@ -342,7 +342,7 @@ async function create_admin(){
 //mentor_validation()
 //create_student()
 //mentor_creation()
-create_team()
+//create_team()
 //fetch_student()
 //test_login()
 //test_update_model()

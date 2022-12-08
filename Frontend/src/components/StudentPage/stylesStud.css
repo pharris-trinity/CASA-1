@@ -104,6 +104,7 @@ body {
     margin-top: 1rem;
     display: flex;
     background-color: white;
+    font-size: x-large;
 }
 .studentAttributes ul {
     list-style: none;
@@ -215,6 +216,7 @@ body {
     border: 3px solid white;
     border-radius: 20px;
     font-size: 20px;
+    float: inherit;
   }
 
   .finalScore {
@@ -223,7 +225,7 @@ body {
   
     /* Dimensions  */
     width: 80%; /* Can be in percentage also. */
-    height: 50%;
+    height: 70%;
     margin-top: 64px;
   
     /* Visual  */
@@ -231,5 +233,9 @@ body {
     padding: 16px;
     border-radius: 16px;
     color: black;
+  }
+
+  .printscore {
+    font-size: x-large;
   }
 /*test quiz 2 css page below*/
