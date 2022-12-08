@@ -545,27 +545,18 @@ app.get('/api/stored', async (req, res) => {
       console.log(err);
     res.status(500).json({ error: 'server error' });
     }
-
-
-  /*console.log(req.body);
-  mongoose.connection.db.collection('quotes').then(req.body, (err, data) => {
-      if(err) return console.log(err);
-      res.send(('saved to db: ' + data));
-      res.status(200).json({ status: 'success', data: { data } })
-  })*/
 });
 
+// This API is able to pull json data from MongoDB
 app.post('/api/get-data', function(req, res, next) {
     
-  
-  mongoose.connection.db.collection('teams').find({active: true}).toArray().then(collection => {
+  mongoose.connection.db.collection('teams').find({}).toArray().then(collection => {
     
-    
-    res.status(200).json({ collection})
+    res.status(200).json({collection})
 });
   
 });
-
+// This API is able to pull a certian mentor information
 app.post('/api/get-MentorData', function(req, res, next) {
     
   
@@ -616,10 +607,10 @@ app.post('/api/get-MentorData', function(req, res, next) {
     }
   });
 
-  //get specifically floyd leech's information //testing, replace later with actual user
-  app.post('/api/getfleech', function(req, res, next) {
-    
-    mongoose.connection.db.collection('users').find({username: "fleech"}).toArray().then(collection => {  
+  //get specifically the student from student's username, put into collection for displaying profile
+  app.post('/api/studentsearch/:studusername', function(req, res, next) {
+    //const studentobjid = Number(req.params.studid) //convert string from url to a number
+    mongoose.connection.db.collection('users').find({username: req.params.studusername}).toArray().then(collection => {  
       //console.log("check student: " + collection);
       res.status(200).json({ collection})
     });
@@ -653,14 +644,35 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
   //get all quizzes by authorid (will work once createquiz api is made?)
   app.post('/api/quizsearch/:aoid',async(req,res)=>{
-    //const quizzes = await Quiz.find(req.params.aoid); //findById(id)
+    const quizzes = await Quiz.find({authorID: req.params.aoid}); //findById(id)
     //console.log(quizzes)
-    mongoose.connection.db.collection('quizzes').find({authorId: req.params.aoid}).toArray().then(collection => {  
-      //console.log("check student: " + collection);
-      res.status(200).json({ collection})
-    });
+    if(!quizzes){
+      console.log("no quiz was found")
+      return res.sendStatus(404)
+    } else {
+      return res.status(200).send(quizzes);
+    }
+    /*mongoose.connection.db.collection('quizzes').find({authorID: req.params.aoid}).toArray().then(collection => {  
+      //console.log("check quiz: " + collection);
+      res.status(200).json({collection})
+    }); */
   })
 
+  //get the one quiz by object id and send it
+  app.post('/api/quizsearch/oneq/:qid',async(req,res)=>{
+    const onequiz = await Quiz.find({_id: req.params.qid}); //findById(id)
+    //console.log(onequiz);
+    if(!onequiz){
+      console.log("no quiz was found")
+      return res.sendStatus(404)
+    } else {
+      return res.status(200).send(onequiz);
+    }
+    /*mongoose.connection.db.collection('quizzes').find({authorID: req.params.aoid}).toArray().then(collection => {  
+      //console.log("check quiz: " + collection);
+      res.status(200).json({collection})
+    }); */
+  })
 
 //===================
 

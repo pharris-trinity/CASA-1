@@ -65,9 +65,20 @@ An environment file (.env) is useful for setting up credientials and secrets wit
     4. <span style="color: #FE6100">#FE6100</span>
     5. <span style="color: #FFB000">#FFB000</span>
 
----
+<br>
+
+### To Dos
+1. Implement Quiz Names
+    * Key files: Quiz.js, server.js, StudentTakeAssessmentContent.js
+2. Implement Login Persistence
+    * Key files: All Frontend files requiring a full refresh instead of an overlay. (Login.js is the beginning)
+3. Implement Semi-automatic pulling of data from National Database to enable Cybertexas to setup teams for new seasons easier
+    * Key files: server.js, Admin.js
 
 <br>
+
+---
+
 
 **Originally written by Gabriel Manners, Larry Green, Amanda Choi, Linh Nguyen as part of Trinity University's Senior Software Project - Fall 2022**
 
