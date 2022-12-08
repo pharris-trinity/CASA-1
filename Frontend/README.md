@@ -39,6 +39,39 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
+## Mentor-Related Information
+
+**App.js**
+With imports from the mentor table, mentor profile, and mentor homepage. 
+
+**Mentor Folder**
+Button.css - A .css file with the global Button function. This is can be used or removed.
+
+cyberTexasLogo.png - A picture of the CyberTexas logo.
+
+MentorHomePage.js - A script that holds the Mentor homepage.
+
+MentorProfile.js - A script that displays the contents of a specific mentor user from a Fetch API function.
+
+MentorProfileContent- A script that houses a function the accepts json data and maps it by the Mentor's username, email, specialty, and name.
+
+NavBarMentor.js - A script that works as the navbar specifically for mentors to their profile, list of teams coaches are actively looking for, the home page, and a logout button as the CASA logo in the left-top corner.
+
+stylesMentor.css - This houses all the frontend design across the sites.
+
+
+**TableMentor Folder**
+DisplayTableMentor.js - A script that houses a function the accepts json data and maps it by the avalable team's national ID, Team Name, School, District - Much more can be added to this fuction and data as well
+
+MentorTable.js - This file has a useState and Fetch API function and Navbar.
+
+stylesMentor.css - This houses all the frontend design across the sites.
+
+TableStyles.css - This houses all the frontend design for tables.
+
+
+
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).

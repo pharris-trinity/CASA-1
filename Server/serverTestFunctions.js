@@ -136,11 +136,11 @@ var testStudent = {
 }
 
 var testTeam = {
-    national_id: 15,
-    name: "Watchmen",
-    school: "Judson HS",
-    district: "JISD",
-    rotc: false,
+    national_id: 4,
+    name: "Coding Agents",
+    school: "Boerne High School",
+    district: "BISD",
+    rotc: true,
     coach: mongoose.Types.ObjectId("6388cb2de5b7cfa8787bf80f")
 }
 

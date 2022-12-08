@@ -62,7 +62,7 @@ function Login() {
                     navigate('/stud/main', {replace: true, state:userVal})
                 } 
                 if(userVal.usertype === "Mentor"){
-                    navigate('/mentor', {replace: true, state:userVal})
+                    navigate('/mentorHome', {replace: true, state:userVal})
                 } 
                 if(userVal.usertype === "Coach"){
                     navigate('/teacher', {replace: true, state:userVal})                    
@@ -83,6 +83,11 @@ function Login() {
   const accountCreation = (e) => {
     e.preventDefault()
       navigate('/createuser', {replace: true})
+  }
+
+  const mentorAccountCreation = (e) => {
+    e.preventDefault()
+      navigate('/createMentor', {replace: true})
   }
 
   // Generate JSX code for error message
