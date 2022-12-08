@@ -24,6 +24,7 @@ import TeacherQuiz from "../TeacherRedirect/TeacherQuiz";
 import TeacherAssessment from "../TeacherRedirect/TeacherAssessment";
 
 import MentorTable from "../TableMentor/MentorTable";
+import TableMentor from "../TableMentor/TableMentor";
 
 // eslint-disable-next-line
 import { Routes, Route, Link } from "react-router-dom";
@@ -40,6 +41,8 @@ import ViewScores from '../ViewScores/ViewScores';
 import Dropdown from '../Dropdown/Dropdown';
 import TeamDropdown from '../TeamDropdown/TeamDropdown';
 import Admin from '../Admin/Admin';
+import CoachTable from '../CoachTable/CoachTable';
+
 
 //import Profile from
 //Routes, Route, Link
@@ -92,8 +95,8 @@ function App() {
         <Route path="mentorHome" element={<MentorHome/>} />
         <Route path="TeamDropdown" element={<TeamDropdown/>} />
         <Route exact path="/" element ={<Login/>}/>
-        <Route path="Profile" element={<Profile/>} />
-        <Route path="mentortable" element={<MentorTable/>} />
+        <Route path="profile" element={<Profile/>} />
+        <Route path="coachtable" element={<TableMentor/>} />
         <Route path="mentortabledisplay" element={<Mentorteamdisplay/>} />
         <Route path="ViewTeams" element={<ViewTeams/>} />
         <Route path="ViewTeams2" element={<ViewTeams2/>} />
@@ -101,6 +104,7 @@ function App() {
         <Route path="AssessTest" element={<AssessTest/>} />
         <Route path="ViewScores" element={<ViewScores/>} />
         <Route path="admin/homepage" element={<Admin/>} />
+
       </Routes>
     </div>
   );

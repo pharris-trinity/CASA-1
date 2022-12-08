@@ -2,9 +2,14 @@ import React, { useState } from "react"
 import "./teamstyles.css"
 import {useLocalStorage} from '../useLocalStorage'
 import { json } from "body-parser";
+import { useNavigate } from "react-router-dom";
 
 export default function ViewTeams2(){
-
+  let navigate = useNavigate();
+  
+  function homeButton(){
+    navigate('/teacher', {replace: true})
+  }
     //var userVal; 
     var postData;
     var allStudents;
@@ -12,6 +17,7 @@ export default function ViewTeams2(){
     const[data1, setData1] = useState (null);
     const[data2, setData2] = useState (null);
     const[data3, setData3] = useState (null);
+    const[joinList, setJoinList] = useState([]);
 
     // error messages for incorrect inputs
     const [errorMessages, setErrorMessages] = useState({});
@@ -41,41 +47,32 @@ export default function ViewTeams2(){
                 res => res.text()).then(text => {
                 try {
                     const userVal = JSON.parse(text);
-                    console.log(userVal.members);
+                    //console.log(userVal.members);
                     setData(userVal.name);
                     setData1(userVal.school);
                     setData2(userVal.national_id);
                     setData3(userVal.members);
+                    
                 } catch (error) {
 
                 }
             }
         );
 
-    }; 
+    };
+
+    //const[joinList, setJoinList] = useState([]);
 
 
-    //getAllStudents gets all student accounts so addStudentAccount and removeStudentAccount can find a specific student 
-    const getAllStudents = (incText5) => {
-      //if (e && e.preventDefault) {e.preventDefault();}
-      const requestOptions = {
-        method: 'GET',
-        headers: {'Content-Type': 'application/json'},
-      };
-      fetch ('/api/filter_students', requestOptions).then(res => res.text()).then(text => {
-        allStudents = JSON.parse(text);
-        console.log(allStudents.length);
-        var tmp = 0;
-        while (tmp < allStudents.length){
-          //console.log(allStudents[tmp]._id);
-          console.log(allStudents[tmp]);
-          if (allStudents[tmp].displayname == incText5){
-            addStudentAccount(0, allStudents[tmp].displayname);
-          }
-          tmp++;
-        }
-      });
+    const addForDisplay = (inputID) => {
+      //var tmp = {id: inputID}
+      setJoinList(prev => [...prev, inputID]);
     }
+    const removeForDisplay = (inputID) => {
+      //setFruits(prev => prev.filter(fruit => fruit !== elementToRemove ))
+      setJoinList(prev => prev.filter(joinList => joinList !== inputID));
+    }
+
 
     //addStudentAccount takes in a team and a student username input and adds that student to that team or returns an error
     const addStudentAccount = (inputTeamID, inputStudentID) => {
@@ -85,6 +82,8 @@ export default function ViewTeams2(){
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify(tmpData)
           };
+          //console.log(tmpData.student_id);
+
           fetch('/api/team/add_student_to_team', requestOptions).then(
                   res => res.text()).then(text => {
                   if (text === "No team found that matches that ID"){
@@ -100,11 +99,13 @@ export default function ViewTeams2(){
                     setErrorMessages ({name: "user3", message:error.user3})
                   }
                   else{
-                    setErrorMessages ({name: "addsuccess", message:error.addsuccess})
+                    setJoinList(prev => [...prev, tmpData.student_id])
+                    console.log(setJoinList);
                   }
                 }
           );
     }; 
+    //const[joinList, setJoinList] = useState([]);
 
 
     //removeStudentAccounts takes in a team and a student username inptut and removes that student from that team or returns an error
@@ -137,16 +138,11 @@ export default function ViewTeams2(){
             );
     }; 
 
-
-     
-
     const renderErrorMessage = (name) =>
         name === errorMessages.name && (
             <div className="error">{errorMessages.message}</div>
     );
-    
-    const [title, setTitle] = useState('');
-    
+        
     const [input, setInput] = useState('');
   
     const [studInput, setstudInput] = useState('');
@@ -155,17 +151,17 @@ export default function ViewTeams2(){
     
     return(
         <div className="App">
-            <h1>Profile</h1>
+            <h1>Teams</h1>
             <input value={input} placeholder="enter team id" onChange={ev => setInput(ev.target.value)}/> 
             <button onClick={()=>fetchUserAccount(input)}>Get Team</button>
             <p>Team Name: {data}</p>
             <p>School: {data1}</p>
             <p>National Id: {data2}</p>
-            <p>Members: {data3}</p>
+            <p>Members: {joinList}</p>
             
             <div className="form-group">
               <input value={studInput} placeholder="enter student display name" onChange={ev1 => setstudInput(ev1.target.value)}/>
-              <button onClick={()=>addStudentAccount(input, studInput)}>Add Student to Team</button> 
+              <button onClick={()=>{addStudentAccount(input, studInput); addForDisplay(studInput);}}>Add Student to Team</button> 
               {renderErrorMessage("team")}
               {renderErrorMessage("user")}
               {renderErrorMessage("user2")}
@@ -175,7 +171,7 @@ export default function ViewTeams2(){
             </div>
             <div className="form-group">
               <input value={studInput1} placeholder="enter student display name" onChange={ev1 => setstudInput1(ev1.target.value)}/> 
-              <button onClick={()=>removeStudentAccount(input, studInput1)}>Remove Student to Team</button>
+              <button onClick={()=>{removeStudentAccount(input, studInput1); removeForDisplay(studInput1);}}>Remove Student to Team</button>
               {renderErrorMessage("removeteam")}
               {renderErrorMessage("removeuser")}
               {renderErrorMessage("removeuser2")}
@@ -184,6 +180,10 @@ export default function ViewTeams2(){
 
 
             </div>
+            <button onClick={homeButton}>
+            Home
+            </button>
+
         </div>
     );
     
