@@ -80,14 +80,11 @@ function App() {
         <Route path="stud/viewassess" element={<StudentViewAssessPage/>} />
         <Route path="stud/takeassess/quiz1" element={<Quiz1Test/>} />
         <Route path="stud/takeassess/quiz2" element={<Quiz2Test/>} />
-<<<<<<< ln3branch
         <Route path="stud/takeassess/quizcontent" element={<QuizContent/>} />
         <Route path="mentor" element={<Mentor/>} />
         <Route path="mentorteams" element={<MentorTeams/>} />
         <Route path="mentorquiz" element={<MentorQuiz/>} />
         <Route path="mentorassessment" element={<MentorAssessment/>} />
-=======
->>>>>>> develop
         <Route path="teacher" element={<Teacher/>} />
         <Route path="teacherteam" element={<TeacherTeams/>} />
         <Route path="teacherquiz" element={<TeacherQuiz/>} />
