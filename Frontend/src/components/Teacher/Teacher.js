@@ -6,6 +6,8 @@ import '../Mentor/PageLayout.css'
 import '../TeacherRedirect/TeacherAssessment';
 import '../TeacherRedirect/TeacherQuiz'
 import '../TeacherRedirect/TeacherTeam'
+import '../Profile/Profile'
+
 import { useNavigate } from "react-router-dom";
 
 
@@ -14,67 +16,52 @@ function Teacher() {
   let navigate = useNavigate();
 
   function teamsButton(){
-      navigate('/teacherteam', {replace: true})
-      
-      
+      navigate('/ViewTeams', {replace: true})  
   }
 
-
-  function createQuiz(){
-      navigate('/teacherquiz', {replace: true})
-      
+  function coachProfile(){
+    navigate('/profile', {replace: true})
+  }
+  
+  function homeButton(){
+    navigate('/teacher', {replace: true})
+  }
+  function coachTableButton(){
+    navigate('/coachtable', {replace: true})
   }
 
-  function createAssessment(){
-    navigate('/teacherassessment', {replace: true})
-      
-  }
-
-  function editQuiz(){
-      navigate('/teacherquiz', {replace: true})
-      
-  }
-
-  function editAssessment(){
-      navigate('/teacherassessment', {replace: true})
-      
-  }
   
 
 
 return (
-<div>
-<div class="body"> 
-    <h2> Teacher Page </h2>
-    <div></div>
-        <button onClick={teamsButton}>
-        Team
-        </button>
-
+  <div>
+    <div class="body"> 
+        <h2> CASA for Coaches</h2>
         <div></div>
+            <button onClick={homeButton}>
+            Home
+            </button>
+            
+            <div></div>
 
-        <button onClick={createQuiz}>
-        Create Quiz
-        </button>
+            <button onClick={teamsButton}>
+            Team
+            </button>
 
-        <div></div>
+            <div></div>
 
-        <button onClick={createAssessment}>
-        Create Assessment
-        </button>
+            <button onClick={coachProfile}>
+            Profile
+            </button>
 
-        <div></div>
+            <div></div>
 
-        <button onClick={editQuiz}>
-        Edit Quiz
-        </button>
+            <button onClick={coachTableButton}>
+            Table of Mentors
+            </button>
 
-        <div></div>
 
-        <button onClick={editAssessment}>
-        Edit Assessment
-        </button>
-</div>
+    </div>
   </div> 
   );
 }
