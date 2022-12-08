@@ -3,25 +3,6 @@ import "./stylesStud.css"
 import StudNavbar from "./StudNavbar"
 
 export default function StudentTakeAssessPage() {
-    /*const [currStud, setStud] = useState([])
-    useEffect(() => {
-        var fieldData = ['username','school','tier','gradelevel','team'] //payload
-        const requestOptions ={
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(fieldData)
-        };
-        fetch('/api/getfleech', requestOptions).then(res => res.json()).then(
-            data => {
-                setStud(data.collection)
-                console.log("Values in data collection:" + data.collection) // object Object
-                if(data.collection == null) {console.log(Error)}
-        })
-    },[]); 
-    return(
-     {<StudProfileContent data={(currStud)}/>}
-    );
-    */
     
     const [coachOID, setCoachOID] = useState("")
     const coachquizzes=[];

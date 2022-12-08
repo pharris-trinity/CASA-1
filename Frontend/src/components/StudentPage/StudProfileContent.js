@@ -6,21 +6,20 @@ const ProfileContent = ({data}) => {
         <h1>Profile</h1>
         <div className="studentAttributes">
                 {data.map(item => (
-
                         <ul>
-                            <li className="studentName">
+                            <li key={item.displayname} className="studentName">
                                 <p>Name: {item.displayname}</p>
                             </li>
-                            <li className="studentGrade">
+                            <li key={item.school} className="studentGrade">
                                 <p>School: {item.school} </p>
                             </li>
-                            <li className="studentSchool">
+                            <li key={item.grade} className="studentSchool">
                                 <p>Grade: {item.gradelevel}</p>
                             </li>
-                            <li className="studentTier">
+                            <li key={item.tier} className="studentTier">
                                 <p>Tier: {item.tier}</p>
                             </li>
-                            <li className="studentTeamID">
+                            <li key={item.team} className="studentTeamID">
                                 <p>TeamID: {item.team}</p>
                             </li> 
                         </ul> 
