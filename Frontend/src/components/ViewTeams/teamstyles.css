@@ -1,0 +1,22 @@
+.profilecontainer {
+    margin-top: 5rem;
+    position: fixed;
+    top: 5rem;
+    width: 80%;
+    height: 50%;
+}
+
+.Attributes {
+    margin-top: 1rem;
+    display: flex;
+    background-color: white;
+}
+.Attributes ul {
+    list-style: none;
+    margin-left: 1rem;
+}
+
+.Attributes li { 
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}

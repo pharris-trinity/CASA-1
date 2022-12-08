@@ -8,8 +8,10 @@
 
 :root {
   --primary-blue: #648fff;
-  --primary-puruple: #785ef0;
-
+  --primary-purple: #785ef0;
+  --primary-red: #DC267F;
+  --primary-orange: #FE6100;
+  --primary-yellow: #FFB000;
 }
 
 .blue {

@@ -10,13 +10,11 @@ import StudentTakeAssessPage from '../StudentPage/StudTakeAssessPage';
 import StudentViewAssessPage from '../StudentPage/StudViewAssessPage';
 import Quiz1Test from '../StudentPage/Quiz1Test';
 import Quiz2Test from '../StudentPage/Quiz2Test';
+import QuizContent from '../StudentPage/QuizContent';
 
-import Mentor from "../Mentor/Mentor";
-import MentorTeams from "../MentorRedirect/MentorTeams";
-import MentorQuiz from "../MentorRedirect/MentorQuiz";
-import MentorAssessment from "../MentorRedirect/MentorAssessment";
 import Mentorteamdisplay from "../TableMentor/MentorTable";
 import MentorHome from "../Mentor/MentorHomePage";
+import MentorProfile from "../Mentor/MentorProfile"
 
 import Teacher from "../Teacher/Teacher";
 import TeacherTeams from "../TeacherRedirect/TeacherTeam";
@@ -24,6 +22,7 @@ import TeacherQuiz from "../TeacherRedirect/TeacherQuiz";
 import TeacherAssessment from "../TeacherRedirect/TeacherAssessment";
 
 import MentorTable from "../TableMentor/MentorTable";
+import TableMentor from "../TableMentor/TableMentor";
 
 // eslint-disable-next-line
 import { Routes, Route, Link } from "react-router-dom";
@@ -39,6 +38,9 @@ import AssessTest from '../AssessTest/AssessTest';
 import ViewScores from '../ViewScores/ViewScores';
 import Dropdown from '../Dropdown/Dropdown';
 import TeamDropdown from '../TeamDropdown/TeamDropdown';
+import Admin from '../Admin/Admin';
+import CoachTable from '../CoachTable/CoachTable';
+
 
 //import Profile from
 //Routes, Route, Link
@@ -78,27 +80,27 @@ function App() {
         <Route path="stud/viewassess" element={<StudentViewAssessPage/>} />
         <Route path="stud/takeassess/quiz1" element={<Quiz1Test/>} />
         <Route path="stud/takeassess/quiz2" element={<Quiz2Test/>} />
-        <Route path="mentor" element={<Mentor/>} />
-        <Route path="mentorteams" element={<MentorTeams/>} />
-        <Route path="mentorquiz" element={<MentorQuiz/>} />
-        <Route path="mentorassessment" element={<MentorAssessment/>} />
+        <Route path="stud/takeassess/quizcontent" element={<QuizContent/>} />
         <Route path="teacher" element={<Teacher/>} />
         <Route path="teacherteam" element={<TeacherTeams/>} />
         <Route path="teacherquiz" element={<TeacherQuiz/>} />
         <Route path="teacherassessment" element={<TeacherAssessment/>} />
         <Route path="mentortable" element={<MentorTable/>} />
+        <Route path="mentorprofile" element={<MentorProfile/>} />
         <Route path="mentortabledisplay" element={<Mentorteamdisplay/>} />
         <Route path="mentorHome" element={<MentorHome/>} />
         <Route path="TeamDropdown" element={<TeamDropdown/>} />
         <Route exact path="/" element ={<Login/>}/>
-        <Route path="Profile" element={<Profile/>} />
-        <Route path="mentortable" element={<MentorTable/>} />
+        <Route path="profile" element={<Profile/>} />
+        <Route path="coachtable" element={<TableMentor/>} />
         <Route path="mentortabledisplay" element={<Mentorteamdisplay/>} />
         <Route path="ViewTeams" element={<ViewTeams/>} />
         <Route path="ViewTeams2" element={<ViewTeams2/>} />
         <Route path="TeamStats" element={<TeamStats/>} />
         <Route path="AssessTest" element={<AssessTest/>} />
         <Route path="ViewScores" element={<ViewScores/>} />
+        <Route path="admin/homepage" element={<Admin/>} />
+
       </Routes>
     </div>
   );
