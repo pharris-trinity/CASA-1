@@ -539,10 +539,10 @@ app.post('/api/get-MentorData', function(req, res, next) {
     }
   });
 
-  //get specifically floyd leech's information //testing, replace later with actual user
-  app.post('/api/getfleech', function(req, res, next) {
-    
-    mongoose.connection.db.collection('users').find({username: "fleech"}).toArray().then(collection => {  
+  //get specifically the student from student's username, put into collection for displaying profile
+  app.post('/api/studentsearch/:studusername', function(req, res, next) {
+    //const studentobjid = Number(req.params.studid) //convert string from url to a number
+    mongoose.connection.db.collection('users').find({username: req.params.studusername}).toArray().then(collection => {  
       //console.log("check student: " + collection);
       res.status(200).json({ collection})
     });

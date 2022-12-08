@@ -5,6 +5,16 @@ import StudNavbar from "./StudNavbar"
 
 
 export default function StudentMainPage() {
+    //local storage has current user information; parse it right by adding curly braces and get your json object
+    const curruser = JSON.parse(localStorage.getItem("userID"));
+    const curlyuser = "{" + curruser + "}";
+    const fixeduser = JSON.parse(curlyuser); //get fields by using fixeduser.username, etc.
+    console.log(fixeduser.username)
+    console.log(fixeduser._id)
+    console.log(typeof fixeduser._id)
+    console.log(typeof fixeduser.username)
+    console.log(fixeduser)
+    
     return (
     //<Body studnavbar>
     <>
@@ -19,7 +29,7 @@ export default function StudentMainPage() {
                     <h2>Assessments</h2>
                     <ul>
                         <li className="takeAssess">
-                            <a href="/stud/takeassess">Take Assessment</a>
+                            <a href="/stud/takeassess">Take Assessments</a>
                         </li>
                         <li className="viewAssess">
                             <a href="/stud/viewassess">View Assessments</a>

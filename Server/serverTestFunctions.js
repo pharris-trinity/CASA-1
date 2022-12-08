@@ -18,6 +18,26 @@ const mongoose = require("mongoose")
 var testQuiz = {
     questions: [{
         answers: [
+          "gpupdate /result",
+          "gpupdate /force",
+          "gpupdate /all",
+          "gpupdate /recurse"
+        ],
+        description: "What command would type for make sure all of the group policy settings are current on a doman client?",
+        correctAnswer: 1,
+        value: 5
+      },{
+        answers: [
+          "HTTPS",
+          "HTTPSec",
+          "FTPS",
+          "SNMP"
+        ],
+        description: "Which protocol allows you to visit a website securely?",
+        correctAnswer: 3,
+        value: 10
+      },{
+        answers: [
           "general",
           "view",
           "search",
@@ -28,14 +48,14 @@ var testQuiz = {
         value: 5
       },{
         answers: [
-          "hashcat",
-          "john the ripper",
-          "hydra",
-          "mimikatz"
+          "HTTPS",
+          "HTTPSec",
+          "FTPS",
+          "SNMP"
         ],
         description: "What is the name of the program most often used to extract credentials from the LSASS.EXE process?",
-        correctAnswer: 3,
-        value: 10
+        correctAnswer: 0,
+        value: 5
       },{
         answers: [
           "SAM database/file",
@@ -87,7 +107,7 @@ var testQuiz = {
         correctAnswer: 1,
         value: 5
       }],
-    author_id: "6373bf8650c5263f57ff20ab"
+    author_id: "6388cb2de5b7cfa8787bf80f"
 }
 
 var testCoach = {
@@ -107,12 +127,12 @@ var admin = {
     email: "admin@admin.com",
     password: "admin"
 }
-
+// fleech, jleech, lkingscholar have same password as their uname
 var testStudent = {
-    username: "test student",
-    displayname: "Test Student",
-    email: "test_student@email.com",
-    password: "test_student_password"
+    username: "lkingscholar",
+    displayname: "Leona Kingscholar",
+    email: "lkingscholar@gmail.com",
+    password: "lkingscholar"
 }
 
 var testTeam = {
