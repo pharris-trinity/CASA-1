@@ -4,18 +4,7 @@ import "./stylesStud.css"
 import StudProfileContent from "./StudProfileContent"
 
 export default function StudentProfilePage() {
-    /* 
     
-    <form onSubmit={this.handleSubmit}>
-    </form>
-    const handleSubmit = (event) => {
-        //Prevent page reload
-        event.preventDefault();
-  
-        
-    }; 
-    
-    */
    //local storage has current user information; parse it right by adding curly braces and get your json object
     const curruser = JSON.parse(localStorage.getItem("userID"));
     const curlyuser = "{" + curruser + "}";
@@ -26,6 +15,7 @@ export default function StudentProfilePage() {
     const studentsearchurl= '/api/studentsearch/';
     const finishedurl = studentsearchurl+studentusername;
 
+    
     const [currStud, setStud] = useState([])
     useEffect(() => {
         var fieldData = ['username','school','tier','gradelevel','team'] //payload

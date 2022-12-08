@@ -10,6 +10,7 @@ import StudentTakeAssessPage from '../StudentPage/StudTakeAssessPage';
 import StudentViewAssessPage from '../StudentPage/StudViewAssessPage';
 import Quiz1Test from '../StudentPage/Quiz1Test';
 import Quiz2Test from '../StudentPage/Quiz2Test';
+import QuizContent from '../StudentPage/QuizContent';
 
 import Mentorteamdisplay from "../TableMentor/MentorTable";
 import MentorHome from "../Mentor/MentorHomePage";
@@ -76,6 +77,14 @@ function App() {
         <Route path="stud/viewassess" element={<StudentViewAssessPage/>} />
         <Route path="stud/takeassess/quiz1" element={<Quiz1Test/>} />
         <Route path="stud/takeassess/quiz2" element={<Quiz2Test/>} />
+<<<<<<< ln3branch
+        <Route path="stud/takeassess/quizcontent" element={<QuizContent/>} />
+        <Route path="mentor" element={<Mentor/>} />
+        <Route path="mentorteams" element={<MentorTeams/>} />
+        <Route path="mentorquiz" element={<MentorQuiz/>} />
+        <Route path="mentorassessment" element={<MentorAssessment/>} />
+=======
+>>>>>>> develop
         <Route path="teacher" element={<Teacher/>} />
         <Route path="teacherteam" element={<TeacherTeams/>} />
         <Route path="teacherquiz" element={<TeacherQuiz/>} />
