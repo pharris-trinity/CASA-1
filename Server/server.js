@@ -433,7 +433,7 @@ app.post('/api/team/add_student_to_team', async(req, res) => {
   const {team_id, student_id} = req.body
 
   const team = await Team.findOne({"national_id": team_id})
-  const user = await User.findOne({"_id": student_id})
+  const user = await User.findOne({"displayname": student_id})
 
   if(!team){
     return res.status(501).send("No team found that matches that ID")
@@ -470,7 +470,7 @@ app.post('/api/team/remove_student_from_team', async(req, res) => {
   const {team_id, student_id} = req.body
 
   const team = await Team.findOne({"national_id": team_id})
-  const user = await User.findOne({"_id": student_id})
+  const user = await User.findOne({"displayname": student_id})
 
   if(!team){
     return res.status(501).send("No team found that matches that ID")
