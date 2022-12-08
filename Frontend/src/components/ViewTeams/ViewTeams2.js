@@ -9,10 +9,13 @@ export default function ViewTeams2(){
 
     //var userVal; 
     var postData;
+    var allStudents;
     const[data, setData] = useState (null);
     const[data1, setData1] = useState (null);
     const[data2, setData2] = useState (null);
     const[data3, setData3] = useState (null);
+
+    const[data4, setData4] = useState(null);
 
     const [userID, setUserID] = useLocalStorage("userID", "");
 
@@ -50,7 +53,7 @@ export default function ViewTeams2(){
                     setData1(userVal.school);
                     setData2(userVal.national_id);
                     setData3(userVal.members);
-
+ 
                     //navigate('/about', {replace: true, state:{userVal}})
                     //Figure out what to do with this information from userVal
                 } catch (error) {
@@ -63,54 +66,48 @@ export default function ViewTeams2(){
 
 
     //getAllStudents gets all student accounts so addStudentAccount and removeStudentAccount can find a specific student 
-    const getAllStudents = (e) => {
-    if (e && e.preventDefault) { e.preventDefault(); }
+    const getAllStudents = (incText5) => {
+      //if (e && e.preventDefault) {e.preventDefault();}
       const requestOptions = {
         method: 'GET',
         headers: {'Content-Type': 'application/json'},
       };
       fetch ('/api/filter_students', requestOptions).then(res => res.text()).then(text => {
-        const userVals = JSON.parse(text);
+        allStudents = JSON.parse(text);
+        console.log(allStudents.length);
+        var tmp = 0;
+        while (tmp < allStudents.length){
+          //console.log(allStudents[tmp]._id);
+          console.log(allStudents[tmp]);
+          if (allStudents[tmp].displayname == incText5){
+            addStudentAccount(0, allStudents[tmp]._id);
+          }
+          tmp++;
+        }
       });
     }
+//    const[data4, setData4] = useState(null);
+//const userVal = JSON.parse(text);
+//console.log(userVal.members);
+//setData(userVal.name);
 
     //addStudentAccount takes in a team and a student username input and adds that student to that team or returns an error
     const addStudentAccount = (inputTeamID, inputStudentID) => {
-          var teamData = { team_id: inputTeamID}
-          var studData = { student_id: inputStudentID}
-
+          //var teamData = { team_id: inputTeamID}
+          //var studData = { student_id: inputStudentID}
+          var tmpData = {team_id: inputTeamID, student_id: inputStudentID}
           const requestOptions = {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify(postData)
+              body: JSON.stringify(tmpData)
           };
-          //const userVal = JSON.parse(postData);
-          //console.log(userVal);
           fetch('/api/team/add_student_to_team', requestOptions).then(
                   res => res.text()).then(text => {
-                    console.log("add student is fetched")
-                  /*if (text == "No team found that matches that ID") {
-                    setErrorMessages({name: "team", messgae:error.team})
-                  }
-                  else if (text == "No user found that matches that ID"){
-                    setErrorMessages({name: "user", messgae:error.user})
-                  }
-                  else if (text == "User already has a team registered to them"){
-                    setErrorMessages({name: "user2", messgae:error.user2})
-                  }
-                  else if (text == "User is already registered to this team"){
-                    setErrorMessages({name: "user3", messgae:error.user3})
-                  }*/
-                  if (text == "No team found that matches that ID" || text == "No user found that matches that ID" || text == "User already has a team registered to them" ||text == "User is already registered to this team") {
-                    setErrorMessages({name: "addError", message:error.addError})
-                  }
-                  else {
-                    console.log("success");
-                  }
+                  console.log(text);
+                  //console.log("working")
               }
           );
-          console.log("is the error here");
-      }; 
+    }; 
 
 
     //removeStudentAccounts takes in a team and a student username inptut and removes that student from that team or returns an error
@@ -163,12 +160,15 @@ export default function ViewTeams2(){
     const [studInput, setstudInput] = useState('');
     const [studInput1, setstudInput1] = useState('');
 
-
+    
     return(
         <div className="App">
             <h1>Profile</h1>
-            <button onClick={()=>getAllStudents()}>Test Get All Students</button>
-
+            <button onClick={()=>getAllStudents()}>Get All Students</button>
+            <div className="form-group">
+              <input value={studInput} placeholder="enter student" onChange={ev1 => setstudInput(ev1.target.value)}/>
+              <button onClick={()=>getAllStudents(studInput)}>Add Student to Team</button> 
+            </div>
             <input value={input} placeholder="enter team id" onChange={ev => setInput(ev.target.value)}/> 
             <button onClick={()=>fetchUserAccount(input)}>Get Team</button>
             <p>Team Name: {data}</p>

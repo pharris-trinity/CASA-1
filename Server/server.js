@@ -424,7 +424,7 @@ app.post('/api/team/get_team', async(req, res) => {
 })
 
 app.get('/api/filter_students', async(req, res) => {
-  let users = Student.find({});
+  let users = await Student.find({});
   return res.status(200).send(users);
 })
 
