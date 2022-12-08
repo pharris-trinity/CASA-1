@@ -4,6 +4,17 @@
     gap: 10px;
     padding: 1rem;
   }
+
+.center-col {
+    flex: 1;
+    background: #aaa;
+  }
+
+.myComponent {
+  display: block;
+  height: 400px;
+  overflow-y: scroll;
+};
   
   table {
     border-collapse: collapse;
