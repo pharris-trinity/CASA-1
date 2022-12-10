@@ -81,10 +81,6 @@ function App() {
         <Route path="stud/takeassess/quiz1" element={<Quiz1Test/>} />
         <Route path="stud/takeassess/quiz2" element={<Quiz2Test/>} />
         <Route path="stud/takeassess/quizcontent" element={<QuizContent/>} />
-        <Route path="mentor" element={<Mentor/>} />
-        <Route path="mentorteams" element={<MentorTeams/>} />
-        <Route path="mentorquiz" element={<MentorQuiz/>} />
-        <Route path="mentorassessment" element={<MentorAssessment/>} />
         <Route path="teacher" element={<Teacher/>} />
         <Route path="teacherteam" element={<TeacherTeams/>} />
         <Route path="teacherquiz" element={<TeacherQuiz/>} />

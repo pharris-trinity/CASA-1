@@ -125,7 +125,6 @@ export default function ViewTeams2(){
     //addStudentAccount takes in a team and a student username input and adds that student to that team or returns an error
     const addStudentAccount = (inputTeamID, inputStudentID) => {
           var tmpData = {team_id: inputTeamID, student_id: inputStudentID}
-          //console.log(inputTeamID);
           const requestOptions = {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
@@ -156,9 +155,6 @@ export default function ViewTeams2(){
     }; 
     //const[joinList, setJoinList] = useState([]);
 
-    const clearArray = (arr) => {
-        
-    }
 
     //removeStudentAccounts takes in a team and a student username inptut and removes that student from that team or returns an error
     const removeStudentAccount = (incText3, incText4) => {
@@ -191,7 +187,6 @@ export default function ViewTeams2(){
             );
     }; 
 
-
     const renderErrorMessage = (name) =>
         name === errorMessages.name && (
             <div className="error">{errorMessages.message}</div>
@@ -202,20 +197,7 @@ export default function ViewTeams2(){
     const [studInput, setstudInput] = useState('');
     const [studInput1, setstudInput1] = useState('');
 
-    //546573742053747564656e74
-    //     
-    /*
-
-const names = ["whale", "squid", "turtle", "coral", "starfish"];
-
-const NamesList = () => (
-  <div>
-    <ul>{names.map(name => <li key={name}> {name} </li>)}</ul>
-  </div>
-);
-    */       
-
-    return(
+return(
         <div className="App">
             <h1>Teams</h1>
             <input value={input} placeholder="enter team id" onChange={ev => setInput(ev.target.value)}/> 
