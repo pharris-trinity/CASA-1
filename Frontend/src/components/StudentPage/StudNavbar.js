@@ -1,6 +1,6 @@
 import React from  "react"
 import "./stylesStud.css"
-
+/*the navbar for all the student accounts*/
 export default function StudNavbar() {
     return (
     <nav className="studnav">

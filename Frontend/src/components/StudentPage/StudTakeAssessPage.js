@@ -2,6 +2,11 @@ import React, {useEffect, useState} from  "react"
 import "./stylesStud.css"
 import StudNavbar from "./StudNavbar"
 import QuizzesList from "./StudTakeAssessContent";
+/* the page where the takeassess lives for students; you get the specific coachid & find all the
+quizzes under their authorid and pass it to StudTakeAssessContent to render the quizlist
+the links all lead to quizcontent but the id is passed into localstorage to get the specific quiz*/
+/*note that the teamnumber is needed to render the page, so you can change it to specifically coach*/
+
 
 export default function StudentTakeAssessPage() {
     
@@ -10,9 +15,6 @@ export default function StudentTakeAssessPage() {
     const curlyuser = "{" + curruser + "}";
     const fixeduser = JSON.parse(curlyuser); //get fields by using fixeduser.username, etc. 
     const teamnumstr = fixeduser.team.toString();
-
-    /*const [studTeamNum, setStudTeamNum] = useState("");
-    setStudTeamNum(teamnumstr);*/
     
     const [coachOID, setCoachOID] = useState("");
     const coachquizzes=[];
@@ -21,8 +23,6 @@ export default function StudentTakeAssessPage() {
     const coachsearchurl= '/api/coachsearch/';
     const quizsearchurl= '/api/quizsearch/';
     const [qlist, setQuizlist] = useState([]);
-    
-    
     
     useEffect(function getcoachid() {
             if(teamnumstr != null){

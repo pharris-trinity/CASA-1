@@ -1,5 +1,5 @@
 import React from 'react';
-
+/*pass the data information for the profile content to be displayed in StudProfilePage*/
 const ProfileContent = ({data}) => {
     return(
         <div className="profilecontainer">

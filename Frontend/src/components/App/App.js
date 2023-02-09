@@ -9,7 +9,6 @@ import StudProfilePage from '../StudentPage/StudProfilePage';
 import StudentTakeAssessPage from '../StudentPage/StudTakeAssessPage';
 import StudentViewAssessPage from '../StudentPage/StudViewAssessPage';
 import Quiz1Test from '../StudentPage/Quiz1Test';
-import Quiz2Test from '../StudentPage/Quiz2Test';
 import QuizContent from '../StudentPage/QuizContent';
 
 import Mentorteamdisplay from "../TableMentor/MentorTable";
@@ -79,7 +78,6 @@ function App() {
         <Route path="stud/takeassess" element={<StudentTakeAssessPage/>} />
         <Route path="stud/viewassess" element={<StudentViewAssessPage/>} />
         <Route path="stud/takeassess/quiz1" element={<Quiz1Test/>} />
-        <Route path="stud/takeassess/quiz2" element={<Quiz2Test/>} />
         <Route path="stud/takeassess/quizcontent" element={<QuizContent/>} />
         <Route path="teacher" element={<Teacher/>} />
         <Route path="teacherteam" element={<TeacherTeams/>} />

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from  "react"
-
+/* where the list of quiz links are made to choose from based on the data sent from authorid (coach) */
 var quizobjid=""; 
 const QuizzesList = ({data}) => {
     //data.map(item=> console.log(item));

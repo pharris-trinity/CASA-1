@@ -3,6 +3,9 @@ import StudNavbar from "./StudNavbar"
 import "./stylesStud.css"
 import StudProfileContent from "./StudProfileContent"
 
+/* where the student profile page lives; get the local storage user information & send to StudProfileContent
+to render the info*/
+
 export default function StudentProfilePage() {
     
    //local storage has current user information; parse it right by adding curly braces and get your json object
