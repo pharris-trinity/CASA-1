@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from  "react"
+import React, {Fragment, useEffect, useState} from  "react"
 import "./stylesStud.css"
 import StudNavbar from "./StudNavbar"
 import QuizzesList from "./StudTakeAssessContent";
@@ -24,20 +24,28 @@ export default function StudentTakeAssessPage() {
     const quizsearchurl= '/api/quizsearch/';
     const [quizlist, setQuizlist] = useState([]);
 
-    useEffect(function pullQuiz() {
+    const pullQuiz = async () => {
         //e.preventDefault();
+        try {
+            const requestOptions = {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'}
+            };
+            const response = await fetch('/api/quizsearch', requestOptions);
+            const jsonData = await response.json();
 
-        const requestOptions = {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'}
-        };
-        fetch('/api/quizsearch', requestOptions).then(res => res.json()).then(
-            data => {
-                data.map(item => setQuizlist(item))
-                console.log(data);
-            }
-        )
-    })
+            setQuizlist(jsonData);
+
+        } catch (error) {
+            
+        }
+    }
+
+    useEffect(() => {
+        pullQuiz();
+    }, []);
+    
+    console.log(quizlist);
     
     /*
     useEffect(function getcoachid() {
@@ -95,11 +103,10 @@ export default function StudentTakeAssessPage() {
     //console.log("check the" + qlist);
     
     //{<QuizzesList data={(currquizzes)}/>}
+    //{<QuizzesList data={(quizlist)}/>}
     return(
     <>
-    <StudNavbar/>
-    {<QuizzesList data={(quizlist)}/>}
-    
+        <StudNavbar/>
     </>
     );
 }
