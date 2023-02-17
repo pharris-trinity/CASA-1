@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
-export default function ViewTeams2(){
+export default function CoachTable(){
   let navigate = useNavigate();
   
   function homeButton(){

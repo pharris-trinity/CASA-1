@@ -2,8 +2,8 @@ import React , {useState} from 'react';
 import {NavLink} from 'react-router-dom';
 
 import './Dropdown.css';
-import logo from '../img/logo.png';
-import profileimg from '../img/profileimg.png';
+import logo from '../../Resources/logo.png';
+import profileimg from '../../Resources/profileimg.png';
 
 
 const Dropdown = () => {

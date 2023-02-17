@@ -3,15 +3,12 @@ import React from 'react';
 //import Button from './MentorButton';
 import '../Mentor/Button.css'
 import '../Mentor/PageLayout.css'
-import '../TeacherRedirect/TeacherAssessment';
-import '../TeacherRedirect/TeacherQuiz'
-import '../TeacherRedirect/TeacherTeam'
 import '../Profile/Profile'
 
 import { useNavigate } from "react-router-dom";
 
 
-function Teacher() {
+function CoachHome() {
 
   let navigate = useNavigate();
 
@@ -66,4 +63,4 @@ return (
   );
 }
   
-export default Teacher;
+export default CoachHome;
