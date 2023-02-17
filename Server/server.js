@@ -651,10 +651,6 @@ app.post('/api/get-MentorData', function(req, res, next) {
     } else {
       return res.status(200).send(quizzes);
     }
-    /*mongoose.connection.db.collection('quizzes').find({authorID: req.params.aoid}).toArray().then(collection => {  
-      //console.log("check quiz: " + collection);
-      res.status(200).json({collection})
-    }); */
   })
 
   //get all quizzes by authorid (will work once createquiz api is made?)

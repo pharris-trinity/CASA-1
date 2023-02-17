@@ -47,63 +47,6 @@ export default function StudentTakeAssessPage() {
     
     console.log(quizlist);
     
-    /*
-    useEffect(function getcoachid() {
-            if(teamnumstr != null){
-                var fieldData = ['national_id'] //payload
-                const requestOptions ={
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(fieldData)
-                };
-                fetch(finishedteamurl, requestOptions).then(res => res.json()).then(
-                data => {
-                //data.map(item=> setCoachOID(item.coach))
-                data.map(item=> setCoachOID(item.coach))
-                console.log("data is:" + data)
-                //console.log("item is " + item.coach)
-                //entire json line info about the team
-            })
-        }
-    }, []);
-    //console.log("coachID " + coachOID);
-
-    useEffect(function getqids() {
-        if(coachOID!="") {
-            //console.log(coachOID)
-            var fieldData1 = ['questions','authorID'] //payload
-            const requestOptions = {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(fieldData1)
-            };
-            const newurl1 = quizsearchurl.concat(coachOID); 
-            //console.log("the new url is " + newurl1);
-            fetch(newurl1, requestOptions).then(res => res.json()).then(
-                data => {
-                    //console.log(data);
-                    var quizlist=[];
-                    data.map(item=> quizlist.push(item._id)) //all quiz ids!!
-                    setQuizlist(quizlist);
-                    //console.log("check qidlist state " + qlist);
-                    
-                    // if(data == null || data.length == 0) {
-                    //     console.log(Error);
-                    // }
-                    // else{
-                    //     console.log(data);
-                    // }
-
-                })
-        }
-    });
-    */
-    //qlist is an array of quiz object ids by coach
-    //console.log(qlist[0]);
-    //console.log("check the" + qlist);
-    
-    //{<QuizzesList data={(currquizzes)}/>}
-    //{<QuizzesList data={(quizlist)}/>}
     return(
     <>
         <StudNavbar/>
