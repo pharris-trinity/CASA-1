@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import "./teamstyles.css"
+import "./MentorTeamStyles.css"
 import {useLocalStorage} from '../useLocalStorage'
 import { json } from "body-parser";
 

@@ -3,7 +3,7 @@ import React from 'react';
 //import Button from './MentorButton';
 import '../Mentor/Button.css'
 import '../Mentor/PageLayout.css'
-import '../Profile/Profile'
+import '../Coach/CoachProfile'
 
 import { useNavigate } from "react-router-dom";
 
@@ -20,6 +20,7 @@ function CoachHome() {
     navigate('/profile', {replace: true})
   }
   
+  //this doesn't work anymore since we removed the /teacher route
   function homeButton(){
     navigate('/teacher', {replace: true})
   }

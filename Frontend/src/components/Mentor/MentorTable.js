@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import TableMentor from './DisplayTableMentor'
-import MentorNavBar from "../Mentor/NavBarMentor";
-import "./stylesMentor.css"
+import MentorNavBar from "./NavBarMentor";
+import "./stylesMentor2.css"
 
 function MentorTable() {
 
