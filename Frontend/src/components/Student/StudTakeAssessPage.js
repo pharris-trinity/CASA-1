@@ -24,6 +24,7 @@ export default function StudentTakeAssessPage() {
     const coachsearchurl= '/api/coachsearch/';
     const quizsearchurl= '/api/quizsearch/';
     const [quizlist, setQuizlist] = useState([]);
+    const [quiz, setQuiz] = useState([]);
 
     const pullQuiz = async () => {
         //e.preventDefault();
@@ -36,6 +37,23 @@ export default function StudentTakeAssessPage() {
             const jsonData = await response.json();
 
             setQuizlist(jsonData);
+
+        } catch (error) {
+            
+        }
+    }
+
+    const pullOneQuiz = async (target) => {
+        //e.preventDefault();
+        try {
+            const requestOptions = {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'}
+            };
+            const response = await fetch('/api/quizsearch/oneq/' + target, requestOptions);
+            const jsonData = await response.json();
+
+            setQuiz(jsonData);
 
         } catch (error) {
             
@@ -60,11 +78,46 @@ export default function StudentTakeAssessPage() {
     //console.log("Here's tempArray!", tempArray[0]);
     //console.log("This is what quizArray has: ", quizArray);
     //console.log(quizArray);
+    
+    //console.log(quizlist);
+
+    
+    useEffect(() => {
+        pullOneQuiz('63ea96646b905a49c50b2693');
+    }, []);
+
+    console.log(quiz);
+    //const item = quizlist[0];
+
+    /*
+        <div>
+            {quizlist.map(item => (
+                <ul>
+                    <li>{item.questions.map(i => (
+                        <h1>
+                            <li>{i.value}</li>
+                        </h1>
+                    ))}</li>
+                </ul>
+            ))}
+        </div>
+        <StudNavbar/>
+        <div>
+            {item.map(i => (
+                <ul>
+                    <li>{item.questions}</li>
+                </ul>
+            ))}
+        </div>
+    */
 
     return(
-    <>
-        <StudNavbar/>
-        <Quiz quizData ={tempArray}/>
-    </>
+        <div>
+            {quizlist.map(item => (
+                <ul>
+                    <li>{item._id}</li>
+                </ul>
+            ))}
+        </div>
     );
 }
