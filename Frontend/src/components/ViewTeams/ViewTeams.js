@@ -10,7 +10,12 @@ export default function ViewTeams2(){
   function homeButton(){
     navigate('/teacher', {replace: true})
   }
-    //var userVal; 
+
+    const curruser = JSON.parse(localStorage.getItem("userID"));
+    const curlyuser = "{" + curruser + "}";
+    const fixeduser = JSON.parse(curlyuser);
+    const coachID = fixeduser._id; 
+
     var postData;
     var allStudents;
     const[data, setData] = useState (null);
@@ -24,7 +29,7 @@ export default function ViewTeams2(){
     const error = {
         team: "ERROR: Team Not Found",
         user: "ERROR: Invalid Student, Student Name Does Not Exist", 
-        user2: "ERROR: Student Is Already In Another Team",
+        user2: "ERROR: Student Is Already In A Team",
         user3: "ERROR:Student Is Already In This Team",
         addsuccess: "Student Successfully Added To Team",
         removeteam: "ERROR: Team Not Found",
@@ -37,24 +42,16 @@ export default function ViewTeams2(){
 
     //getAllStudents gets all student accounts so addStudentAccount and removeStudentAccount can find a specific student 
     const getAllStudents = (incText5) => {
-      //if (e && e.preventDefault) {e.preventDefault();}
-      //console.log(incText5);
       const requestOptions = {
         method: 'GET',
         headers: {'Content-Type': 'application/json'},
       };
       fetch ('/api/filter_students', requestOptions).then(res => res.text()).then(text => {
         allStudents = JSON.parse(text);
-        //console.log(allStudents.length);
         var tmp = 0;
         while (tmp < allStudents.length){
-          //console.log(allStudents[tmp]._id);
-          //console.log(allStudents[tmp]);
           if (allStudents[tmp]._id == incText5){
-            //console.log("match");
-            //console.log(allStudents[tmp].displayname);
             addForDisplay(allStudents[tmp].displayname);
-            //addStudentAccount(0, allStudents[tmp]._id);
           }
           tmp++;
         }
@@ -74,28 +71,24 @@ export default function ViewTeams2(){
                 res => res.text()).then(text => {
                 try {
                     const userVal = JSON.parse(text);
-                    //console.log(userVal.members);
-                    setData(userVal.name);
-                    setData1(userVal.school);
-                    setData2(userVal.national_id);
-                    setData3(userVal.members);
-                    //console.log(userVal.members[0]);
-                    var tmp = 0;
-                    console.log(userVal.members.length);
-                    while (tmp < userVal.members.length){
-                      console.log(userVal.members[tmp]);
-                      getAllStudents(userVal.members[tmp]);
-                      //console.log(allStudents[tmp]);
-                      //if (allStudents[tmp]._id == incText5){
-                        //console.log("match");
-                        //console.log(allStudents[tmp].displayname);
-                        //addForDisplay(allStudents[tmp].displayname);
-                        //addStudentAccount(0, allStudents[tmp]._id);
-                      //}
-                      tmp++;
+                    if (userVal.coach != coachID){
+                      setErrorMessages ({name: "team", message:error.team})
+
                     }
+                    else {
+                      console.log(userVal.coach)
+                      setData(userVal.name);
+                      setData1(userVal.school);
+                      setData2(userVal.national_id);
+                      setData3(userVal.members);
+                      var tmp = 0;
+                      while (tmp < userVal.members.length){
+                        getAllStudents(userVal.members[tmp]);
+                        tmp++;
+                      }
+                    }
+                    
             
-                    //fetchUserDisplayname(userVal.members[0]);
                 } catch (error) {
 
                 }
@@ -104,15 +97,11 @@ export default function ViewTeams2(){
 
     };
 
-    //const[joinList, setJoinList] = useState([]);
-
 
     const addForDisplay = (inputID) => {
-      //var tmp = {id: inputID}
       setJoinList(prev => [...prev, inputID]);
     }
     const removeForDisplay = (inputID) => {
-      //setFruits(prev => prev.filter(fruit => fruit !== elementToRemove ))
       setJoinList(prev => prev.filter(joinList => joinList !== inputID));
     }
 
@@ -130,8 +119,6 @@ export default function ViewTeams2(){
               headers: {'Content-Type': 'application/json'},
               body: JSON.stringify(tmpData)
           };
-          //console.log(tmpData.student_id);
-
           fetch('/api/team/add_student_to_team', requestOptions).then(
                   res => res.text()).then(text => {
                   if (text === "No team found that matches that ID"){
@@ -153,8 +140,6 @@ export default function ViewTeams2(){
                 }
           );
     }; 
-    //const[joinList, setJoinList] = useState([]);
-
 
     //removeStudentAccounts takes in a team and a student username inptut and removes that student from that team or returns an error
     const removeStudentAccount = (incText3, incText4) => {
@@ -199,6 +184,10 @@ export default function ViewTeams2(){
 
 return(
         <div className="App">
+          
+            <button onClick={homeButton}>
+              Home
+            </button>
             <h1>Teams</h1>
             <input value={input} placeholder="enter team id" onChange={ev => setInput(ev.target.value)}/> 
             <button onClick={()=>{removeProduct(); fetchUserAccount(input);}}>Get Team</button>
@@ -209,7 +198,7 @@ return(
             <div>
 
             </div>
-            <button onClick={()=>getAllStudents('6386376fd6b139afca5d08bf')}>Get Team</button>
+
             <div className="form-group">
               <input value={studInput} placeholder="enter student display name" onChange={ev1 => setstudInput(ev1.target.value)}/>
               <button onClick={()=>{addStudentAccount(input, studInput)}}>Add Student to Team</button> 
@@ -231,9 +220,6 @@ return(
 
 
             </div>
-            <button onClick={homeButton}>
-            Home
-            </button>
 
         </div>
     );
