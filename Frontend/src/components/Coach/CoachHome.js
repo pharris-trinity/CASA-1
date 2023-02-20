@@ -3,15 +3,12 @@ import React from 'react';
 //import Button from './MentorButton';
 import '../Mentor/Button.css'
 import '../Mentor/PageLayout.css'
-import '../TeacherRedirect/TeacherAssessment';
-import '../TeacherRedirect/TeacherQuiz'
-import '../TeacherRedirect/TeacherTeam'
-import '../Profile/Profile'
+import '../Coach/CoachProfile'
 
 import { useNavigate } from "react-router-dom";
 
 
-function Teacher() {
+function CoachHome() {
 
   let navigate = useNavigate();
 
@@ -23,6 +20,7 @@ function Teacher() {
     navigate('/profile', {replace: true})
   }
   
+  //this doesn't work anymore since we removed the /teacher route
   function homeButton(){
     navigate('/teacher', {replace: true})
   }
@@ -66,4 +64,4 @@ return (
   );
 }
   
-export default Teacher;
+export default CoachHome;

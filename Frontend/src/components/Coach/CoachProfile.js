@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 //import "./stylesCoach.css"
 import CoachProfileContent from "./CoachProfileContent"
 
-export default function StudentProfilePage() {
+export default function CoachProfile() {
    //local storage has current user information; parse it right by adding curly braces and get your json object
     const curruser = JSON.parse(localStorage.getItem("userID"));
     const curlyuser = "{" + curruser + "}";

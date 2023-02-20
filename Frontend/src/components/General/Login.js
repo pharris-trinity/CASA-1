@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Resources/cyberTexasLogo.png";
 import './stylesLogin.css'
-import {useLocalStorage} from '../useLocalStorage'
+import {useLocalStorage} from './useLocalStorage'
 
 function Login() {
 
