@@ -1,6 +1,6 @@
 import React , { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { useLocalStorage } from '../useLocalStorage';
+import { useLocalStorage } from './useLocalStorage';
 import './accCreate.css'
 import logo from "../../Resources/cyberTexasLogo.png";
 

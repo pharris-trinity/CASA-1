@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import "./MentorTeamStyles.css"
-import {useLocalStorage} from '../useLocalStorage'
+import {useLocalStorage} from '../General/useLocalStorage'
 import { json } from "body-parser";
 
 
