@@ -64,60 +64,22 @@ export default function StudentTakeAssessPage() {
         pullQuiz();
     }, []);
 
-    var tempArray = [];
-    //const quizArray = quizlist;
-    quizlist.forEach(function(obj) {
-        console.log(obj.questions);
-        tempArray.push(obj.questions);
-    });
 
-    //var testString = JSON.values(quizlist);
-    console.log("heres the type of quizlist: ", typeof quizlist);
-    //console.log("attempt of quizlist[0]", testString);
-    //console.log("This is what quizlist has in it", quizlist);
-    //console.log("Here's tempArray!", tempArray[0]);
-    //console.log("This is what quizArray has: ", quizArray);
-    //console.log(quizArray);
-    
-    //console.log(quizlist);
-
-    
+    const i = 0;
     useEffect(() => {
         pullOneQuiz('63ea96646b905a49c50b2693');
     }, []);
 
-    console.log(quiz);
-    //const item = quizlist[0];
-
-    /*
-        <div>
-            {quizlist.map(item => (
-                <ul>
-                    <li>{item.questions.map(i => (
-                        <h1>
-                            <li>{i.value}</li>
-                        </h1>
-                    ))}</li>
-                </ul>
-            ))}
-        </div>
-        <StudNavbar/>
-        <div>
-            {item.map(i => (
-                <ul>
-                    <li>{item.questions}</li>
-                </ul>
-            ))}
-        </div>
-    */
 
     return(
         <div>
-            {quizlist.map(item => (
-                <ul>
-                    <li>{item._id}</li>
+            <Quiz quizData = {quiz}/>
+            {/*quiz.map(item => (
+                <ul key="Items List">
+                    {console.log("Here is item.questions[0]", item.questions[i].description)}
+                    <li>{item.questions[i].answers[0]}</li>
                 </ul>
-            ))}
+            ))*/}
         </div>
     );
 }
