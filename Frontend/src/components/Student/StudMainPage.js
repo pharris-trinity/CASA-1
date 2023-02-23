@@ -14,7 +14,8 @@ export default function StudentMainPage() {
     console.log(typeof fixeduser._id)
     console.log(typeof fixeduser.username)
     console.log(fixeduser)
-    
+
+
     return (
     <>
     <StudNavbar />
