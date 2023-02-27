@@ -16,18 +16,34 @@ function Quiz(props) {
         setQuestionArray(...tempArray);
     }
 
+    const prev = () => {
+        if(i-1 >= 0){
+            setI(i-1);
+        }
+    }
+
+    const next = (arraySize) => {
+        if(i+1 < arraySize){
+            setI(i+1);
+        }
+    }
+
     useEffect(() => {
         pullOutQuestions();
-        setI(0);
+        //setI(3);
     }, [props.quizData]);
 
-    console.log("questionArray", questionArray);
+    useEffect(() => {
+        setI(0);
+    }, [questionArray])
 
-    //console.log("Questions after use effect", questions);
+    //console.log("questionArray", questionArray);
 
     return (
         <div>
             {questionArray && questionArray[i]}
+            <button onClick={() => prev()}>prev</button>
+            <button onClick={() => next(questionArray.length)}>next</button>
             <Navigation/>
         </div>
     );
