@@ -1,7 +1,9 @@
 import React from  "react"
 import "./stylesStud.css"
+import LogoutButton from './../General/LogoutButton'
 /*the navbar for all the student accounts*/
 export default function StudNavbar() {
+
     return (
     <nav className="studnav">
         <div className="CASAhome">
@@ -14,9 +16,12 @@ export default function StudNavbar() {
             <li>
                 <a href="/stud/profile">Profile</a>
             </li>
-            <li>
-                <a href="/login">Logout</a>
-            </li>
+            <div>
+                <LogoutButton/>            
+            </div>
+
+
+
         </ul>
         
     </nav>);
