@@ -5,46 +5,52 @@ import "./quiz.css"
 
 function Quiz(props) {
     const[questionArray, setQuestionArray] = useState([]);
-    const[i, setI] = useState(0);
+    const[questionIndex, setQuestionIndex] = useState(0);
 
 
     const pullOutQuestions = () => {
         const tempArray = (props.quizData.map(item => 
-            item.questions.map(secondItem => <Question questionData = {secondItem}/>)
+            item.questions.map(secondItem => <Question questionData = {secondItem} selectedAnswer = {0}/>)
         ));
         
         setQuestionArray(...tempArray);
     }
 
     const prev = () => {
-        if(i-1 >= 0){
-            setI(i-1);
+        //console.log("Previous function!", questionIndex);
+        if(questionIndex-1 >= 0){
+            setQuestionIndex(questionIndex-1);
         }
+        //console.log("After Previous!", questionIndex);
     }
 
     const next = (arraySize) => {
-        if(i+1 < arraySize){
-            setI(i+1);
+        //console.log("Next Function!", questionIndex);
+        //console.log("array size in next", arraySize);
+        if(questionIndex+1 < arraySize){
+            setQuestionIndex(questionIndex+1);
+            //console.log("After Next!", questionIndex);
         }
+        
     }
 
     useEffect(() => {
         pullOutQuestions();
-        //setI(3);
+        //setQuestionIndex(3);
     }, [props.quizData]);
-
+    
     useEffect(() => {
-        setI(0);
+        setQuestionIndex(0);
     }, [questionArray])
 
     //console.log("questionArray", questionArray);
 
     return (
         <div>
-            {questionArray && questionArray[i]}
-            <button onClick={() => prev()}>prev</button>
-            <button onClick={() => next(questionArray.length)}>next</button>
-            <Navigation/>
+            {questionArray && questionArray[questionIndex]}
+
+            {questionArray && <Navigation questionArrayLength = {questionArray.length} 
+                nextQuestion = {() => next(questionArray.length)} prevQuestion = {() => prev()}/>}
         </div>
     );
 }
