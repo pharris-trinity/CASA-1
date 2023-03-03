@@ -1,18 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef, useImperativeHandle, useRef } from "react";
 
 
-function Answer(props) {
+const Answer = forwardRef((props, ref) => {
+
+    const[selected,setSelected] = useState(false);
+
+    useImperativeHandle(ref, () => ({
+        toggleSelection(bool) {
+            //this.setState(state => ({ isDisplayed: !state.isDisplayed }));
+            console.log("Bool and AnswerText", bool, props.answerText)
+            setSelected(bool);
+        },
+    }))
+
     useEffect(() => {
-        console.log("answer text: ", props.answerText);
-        console.log("isSelected: ", props.isSelected);
-    }, [props.isSelected]);
-    console.log("answer text: ", props.answerText);
-    console.log("isSelected: ", props.isSelected);
+        console.log("selected of _ is _ :", props.answerText, selected);
+    }, [selected])
+
     return (
         <div>
-            <p onClick={() => props.selection(props.answerText)}>{props.answerText}</p>
+            <p onClick={() => {
+                props.selection(props.answerText);
+                //toggleSelection();
+                }}>
+            {props.answerText}</p>
         </div>
     );
-}
+})
 
 export default Answer;

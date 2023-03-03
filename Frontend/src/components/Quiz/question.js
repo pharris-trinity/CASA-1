@@ -1,26 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
 import Answer from "./answer.js";
 
 function Question(props) {
     
     const [answers, setAnswers] = useState([]);
     const [selectedAnswer, setSelectedAnswer] = useState("");
+    const answerComponentRef = useRef();
 
     const chooseAnswer = (option) => {
         setSelectedAnswer(option);
-        //go through the answers, for the one that matches the new option set isSelected to be true else isSelected = false
-        answers.map((item) => {
-            if(item.answerText == option) {
-                item.isSelected = true;
-            }
-            else {
-                item.isSelected = false;
-            }
-        })
+    }
+
+    const checkIfSelected = (option) => {
+        console.log("currentAnsweris : ", selectedAnswer);
+        console.log("option is : ", option);
+        console.log("checkIfSelected is being called", selectedAnswer == option);
+        console.log("\n");
+        
+        return selectedAnswer == option;
     }
 
     const makeAnswerComponents = () => {
-        const tempArray = (props.questionData.answers.map((item) => <Answer isSelected = {false} selection = {(e) => chooseAnswer(e)} answerText = {item}/>));
+        answerComponentRef;
+        const tempArray = (props.questionData.answers.map((item) => <Answer answerText = {item} selection = {(e) => chooseAnswer(e)} ref = {answerComponentRef}/>));
         
         setAnswers(tempArray);
         //console.log("answers array type", typeof tempArray);
@@ -33,12 +35,17 @@ function Question(props) {
 
     //console.log("index: ", props.questionData.answers.indexOf("search"));
     useEffect(() => {
+
         makeAnswerComponents();
     }, [props.questionData])
 
     useEffect(() => {
         console.log("you selected: ", selectedAnswer);
         console.log("selected answer: ", props.questionData.answers.indexOf(selectedAnswer));
+        props.questionData.answers.map((item) => {
+            //console.log(answerComponentRef.current);
+            answerComponentRef.current.toggleSelection();
+        })
     }, [selectedAnswer])
 
     return (
