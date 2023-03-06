@@ -55,6 +55,18 @@ function Quiz(props) {
         setAnswersArray(tempArray);
     }
 
+    const scoring = () => {
+        //console.log("in scoring")
+        var numCorrect = 0;
+        for(let i = 0; i < correctAnswersArray.length; i++){
+            if(answersArray[i] == correctAnswersArray[i]){
+                numCorrect += 1;
+            }
+        }
+        console.log("Here's your score! ", (numCorrect/answersArray.length)*100)
+        return (numCorrect/answersArray.length)*100
+    }
+
     useEffect(() => {
         var count = 0;
         const countVariable = (props.quizData.map(item => 
@@ -118,7 +130,7 @@ function Quiz(props) {
             <Navigation questions = {questionCount} 
                 nextQuestion = {() => next(questionCount)} prevQuestion = {() => prev()}/>
 
-            <button onClick={console.log("submit")}>submit</button>
+            <button onClick={() => scoring()}>submit</button>
         </div>
     );
 }
