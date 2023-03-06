@@ -4,17 +4,18 @@ import Question from "./question.js";
 import "./quiz.css"
 
 function Quiz(props) {
-    const[questionArray, setQuestionArray] = useState([]);
+    // const[questionArray, setQuestionArray] = useState([]);
     const[questionIndex, setQuestionIndex] = useState(0);
+    const[questionCount, setQuestionCount] = useState(0);
 
 
-    const pullOutQuestions = () => {
-        const tempArray = (props.quizData.map(item => 
-            item.questions.map(secondItem => <Question questionData = {secondItem} selectedAnswer = {0}/>)
-        ));
+    // const pullOutQuestions = () => {
+    //     const tempArray = (props.quizData.map(item => 
+    //         item.questions.map(secondItem => <Question questionData = {secondItem} selectedAnswer = {0}/>)
+    //     ));
         
-        setQuestionArray(...tempArray);
-    }
+    //     setQuestionArray(...tempArray);
+    // }
 
     const prev = () => {
         //console.log("Previous function!", questionIndex);
@@ -35,23 +36,34 @@ function Quiz(props) {
     }
 
     useEffect(() => {
-        pullOutQuestions();
-        //setQuestionIndex(3);
+        var count = 0;
+        const countVariable = (props.quizData.map(item => 
+            item.questions.map(secondItem => count++)
+            ));
+        setQuestionCount(count);
     }, [props.quizData]);
 
     useEffect(() => {
-        setQuestionIndex(0);
-        console.log("This is the quiz's question array: ", questionArray);
-    }, [questionArray])
+        console.log("Count variable is:", questionCount);
+    }, [questionCount]);
 
-    //console.log("questionArray", questionArray);
+    // useEffect(() => {
+    //     pullOutQuestions();
+    //     //setQuestionIndex(3);
+    // }, [props.quizData]);
+
+    // useEffect(() => {
+    //     setQuestionIndex(0);
+    //     console.log("This is the quiz's question array: ", questionArray);
+    // }, [questionArray])
 
     return (
         <div>
-            {questionArray && questionArray[questionIndex] }
+            {props.quizData.map(item => item.questions.map(
+                secondItem => <Question key = {item._id} questionData = {secondItem}/>)[questionIndex])}
 
-            {questionArray && <Navigation questionArrayLength = {questionArray.length} 
-                nextQuestion = {() => next(questionArray.length)} prevQuestion = {() => prev()}/>}
+            <Navigation questions = {questionCount} 
+                nextQuestion = {() => next(questionCount)} prevQuestion = {() => prev()}/>
         </div>
     );
 }

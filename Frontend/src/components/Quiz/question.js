@@ -34,6 +34,7 @@ function Question(props) {
     //console.log("index: ", props.questionData.answers.indexOf("search"));
     useEffect(() => {
         //makeAnswerComponents();
+        setSelectedAnswer("");
     }, [props.questionData])
 
     useEffect(() => {
