@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
+import React, { useState, useEffect } from "react";
 import Answer from "./answer.js";
 
 function Question(props) {
     
     const [answers, setAnswers] = useState([]);
     const [selectedAnswer, setSelectedAnswer] = useState("");
-    const answerComponentRef = useRef();
 
     const chooseAnswer = (option) => {
         setSelectedAnswer(option);
@@ -50,7 +49,7 @@ function Question(props) {
         <div>
             <p>{props.questionData.description}</p>
             {/*answers*/}
-            {props.questionData.answers.map((item) => <Answer onClick = {console.log(props.questionData.answers.indexOf(selectedAnswer))} answerText = {item} selection = {(e) => chooseAnswer(e)} ref = {answerComponentRef}/>)}
+            {props.questionData.answers.map((item) => <Answer onClick = {console.log(props.questionData.answers.indexOf(selectedAnswer))} currentSelected = {selectedAnswer} answerText = {item} selection = {(e) => chooseAnswer(e)}/>)}
             {/*answers && console.log("index : ", answers)*/}
 
         </div>

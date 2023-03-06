@@ -1,31 +1,40 @@
-import React, { useState, useEffect, forwardRef, useImperativeHandle, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import './answer.css'
 
 
-const Answer = forwardRef((props, ref) => {
+function Answer(props) {
 
-    const[selected,setSelected] = useState(false);
-
-    useImperativeHandle(ref, () => ({
-        toggleSelection(bool) {
-            //this.setState(state => ({ isDisplayed: !state.isDisplayed }));
-            console.log("Bool and AnswerText", bool, props.answerText)
-            setSelected(bool);
-        },
-    }))
+    const [isSelected, setIsSelected] = useState(false);
+    
+    console.log("Current selected answer in answer component", props.currentSelected);
 
     useEffect(() => {
-        console.log("selected of _ is _ :", props.answerText, selected);
-    }, [selected])
+        setIsSelected(props.currentSelected == props.answerText);
+    }, [props.currentSelected])
+
+    useEffect(() => {
+        console.log("checking toggle selection in:", props.answerText, isSelected);
+    }, [isSelected])
+
+    useEffect(() => {
+        console.log("checking toggle selection in:", props.answerText, isSelected);
+    }, [])
 
     return (
         <div>
-            <p onClick={() => {
-                props.selection(props.answerText);
-                //toggleSelection();
-                }}>
-            {props.answerText}</p>
+            {isSelected 
+                ? <p className="selected-question-box" onClick={() => {
+                    props.selection(props.answerText);
+                    }}>
+                {props.answerText}</p>
+            
+                : <p className="questionbox" onClick={() => {
+                    props.selection(props.answerText);
+                    }}>
+                {props.answerText}</p>
+            }
         </div>
     );
-})
+}
 
 export default Answer;

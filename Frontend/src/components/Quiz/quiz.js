@@ -38,16 +38,17 @@ function Quiz(props) {
         pullOutQuestions();
         //setQuestionIndex(3);
     }, [props.quizData]);
-    
+
     useEffect(() => {
         setQuestionIndex(0);
+        console.log("This is the quiz's question array: ", questionArray);
     }, [questionArray])
 
     //console.log("questionArray", questionArray);
 
     return (
         <div>
-            {questionArray && questionArray[questionIndex]}
+            {questionArray && questionArray[questionIndex] }
 
             {questionArray && <Navigation questionArrayLength = {questionArray.length} 
                 nextQuestion = {() => next(questionArray.length)} prevQuestion = {() => prev()}/>}
