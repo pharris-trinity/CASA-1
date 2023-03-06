@@ -426,7 +426,7 @@ app.post('/api/getusername', async(req, res)=> {
   const {studid} = req.body;
   const stud = await User.findOne({"_id": studid});
   if (!stud){
-    return res.sendStatus(404);
+    return res.sendStatus(504);
   }
   else{
     return res.status(200).send(stud.displayname);
@@ -457,13 +457,24 @@ app.get('/api/filter_mentors', async(req, res) => {
   return res.status(200).send(users);
 })
 
+app.post('/api/coach/coachseestudentprofile', async(req, res) => {
+  const { displayID } = req.body;
+  const user = await User.find({"_id": displayID})     
+  if(!user){
+    return res.sendStatus(404)
+  } else {
+    return res.status(200).send(user); 
+  }      
+})
+
+
 
 app.post('/api/team/add_student_to_team', async(req, res) => {
   //Takes in a team ID and a student ID and updates the team and the student
   const {team_id, student_id} = req.body
 
   const team = await Team.findOne({"national_id": team_id})
-  const user = await User.findOne({"displayname": student_id})
+  const user = await User.findOne({"_id": student_id})
 
   if(!team){
     return res.status(501).send("No team found that matches that ID")
@@ -500,7 +511,7 @@ app.post('/api/team/remove_student_from_team', async(req, res) => {
   const {team_id, student_id} = req.body
 
   const team = await Team.findOne({"national_id": team_id})
-  const user = await User.findOne({"displayname": student_id})
+  const user = await User.findOne({"_id": student_id})
 
   if(!team){
     return res.status(501).send("No team found that matches that ID")
