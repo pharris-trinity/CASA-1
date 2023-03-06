@@ -4,18 +4,22 @@ import Question from "./question.js";
 import "./quiz.css"
 
 function Quiz(props) {
-    // const[questionArray, setQuestionArray] = useState([]);
+    const[correctAnswersArray, setCorrectAnswersArray] = useState([]);
     const[questionIndex, setQuestionIndex] = useState(0);
     const[questionCount, setQuestionCount] = useState(0);
+    const[answersArray, setAnswersArray] = useState([]);
 
 
-    // const pullOutQuestions = () => {
-    //     const tempArray = (props.quizData.map(item => 
-    //         item.questions.map(secondItem => <Question questionData = {secondItem} selectedAnswer = {0}/>)
-    //     ));
+    const pullOutQuestions = () => {
+        // const tempArray = (props.quizData.map(item => 
+        //     item.questions.map(secondItem => <Question questionData = {secondItem} selectedAnswer = {0}/>)
+        // ));
         
-    //     setQuestionArray(...tempArray);
-    // }
+        const tempArray = (props.quizData.map(item => 
+            item.questions.map(secondItem => secondItem.correctAnswer)))
+
+        setCorrectAnswersArray(...tempArray);
+    }
 
     const prev = () => {
         //console.log("Previous function!", questionIndex);
@@ -35,17 +39,50 @@ function Quiz(props) {
         
     }
 
+    const makeSaveForAnswers = (arraySize) => {
+        console.log("array: ", arraySize)
+        //const arraySize = array.length
+        var tempArray = new Array(arraySize).fill(-1);
+        console.log(tempArray);
+        setAnswersArray(tempArray);
+    }
+
+    const changeAnswer = (newAnswer, originalArray, changeIndex) => {
+        //console.log("ran: ", newAnswer);
+        var tempArray = [...originalArray];
+        tempArray[changeIndex] = newAnswer;
+        //console.log("tempArray: ", tempArray)
+        setAnswersArray(tempArray);
+    }
+
     useEffect(() => {
         var count = 0;
         const countVariable = (props.quizData.map(item => 
             item.questions.map(secondItem => count++)
             ));
         setQuestionCount(count);
+        pullOutQuestions();
     }, [props.quizData]);
+    
+    useEffect(() => {
+        setQuestionIndex(0);
+        console.log("correctAnswersArray: ", correctAnswersArray);
+        // if(questionArray){
+        //     const input = questionArray
+        //     makeSaveForAnswers(input);
+        // }
+    }, [correctAnswersArray])
 
     useEffect(() => {
         console.log("Count variable is:", questionCount);
+        if(questionCount){
+            makeSaveForAnswers(questionCount);
+        }
     }, [questionCount]);
+
+    useEffect(() => {
+        console.log("answersArray: ", answersArray);
+    }, [answersArray]);
 
     // useEffect(() => {
     //     pullOutQuestions();
@@ -57,13 +94,31 @@ function Quiz(props) {
     //     console.log("This is the quiz's question array: ", questionArray);
     // }, [questionArray])
 
-    return (
-        <div>
-            {props.quizData.map(item => item.questions.map(
+    /*
+        {props.quizData.map(item => item.questions.map(
                 secondItem => <Question key = {item._id} questionData = {secondItem}/>)[questionIndex])}
 
             <Navigation questions = {questionCount} 
                 nextQuestion = {() => next(questionCount)} prevQuestion = {() => prev()}/>
+    */
+
+    return (
+        <div>
+
+            {/*questionArray && <Question questionData = {questionArray[questionIndex]} selectedAnswer = {0}/>*/}
+
+            {/*questionArray && <Navigation questionArrayLength = {questionArray.length} 
+                nextQuestion = {() => next(questionArray.length)} prevQuestion = {() => prev()}/>*/}
+
+            {/*questionArray && makeSaveForAnswers(questionArray.length)*/}
+
+            {props.quizData.map(item => item.questions.map(
+                secondItem => <Question key = {item._id} questionData = {secondItem} questionIndex = {questionIndex} updateAnswer = {(e) => changeAnswer(e, answersArray, questionIndex)}/>)[questionIndex])}
+
+            <Navigation questions = {questionCount} 
+                nextQuestion = {() => next(questionCount)} prevQuestion = {() => prev()}/>
+
+            <button onClick={console.log("submit")}>submit</button>
         </div>
     );
 }

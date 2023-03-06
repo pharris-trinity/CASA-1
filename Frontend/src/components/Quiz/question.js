@@ -5,6 +5,7 @@ function Question(props) {
     
     const [answers, setAnswers] = useState([]);
     const [selectedAnswer, setSelectedAnswer] = useState("");
+    const [description, setDescription] = useState("");
 
     const chooseAnswer = (option) => {
         setSelectedAnswer(option);
@@ -35,6 +36,7 @@ function Question(props) {
     useEffect(() => {
         //makeAnswerComponents();
         setSelectedAnswer("");
+        console.log("question index: ", props.questionIndex);
     }, [props.questionData])
 
     useEffect(() => {
@@ -46,13 +48,17 @@ function Question(props) {
         // })
     }, [selectedAnswer])
 
+    /*
+        <p>{props.questionData && props.questionData.description}</p>
+            {props.questionData && props.questionData.answers.map((item) => <Answer onClick = {console.log(props.questionData.answers.indexOf(selectedAnswer))} answerText = {item} selection = {(e) => chooseAnswer(e)} ref = {answerComponentRef}/>)}
+    */
+
     return (
         <div>
-            <p>{props.questionData.description}</p>
+            <p>{props.questionData && props.questionData.description}</p>
             {/*answers*/}
-            {props.questionData.answers.map((item) => <Answer onClick = {console.log(props.questionData.answers.indexOf(selectedAnswer))} currentSelected = {selectedAnswer} answerText = {item} selection = {(e) => chooseAnswer(e)}/>)}
+            {props.questionData && props.questionData.answers.map((item) => <Answer updateAnswer = {(e) => props.updateAnswer(props.questionData.answers.indexOf(e))} currentSelected = {selectedAnswer} answerText = {item} selection = {(e) => chooseAnswer(e)}/>)}
             {/*answers && console.log("index : ", answers)*/}
-
         </div>
     );
 }
