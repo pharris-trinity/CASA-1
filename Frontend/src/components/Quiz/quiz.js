@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Navigation from "./navigation.js";
+import QuizNavigation from "./quizNavigation.js";
 import Question from "./question.js";
 import "./quiz.css"
+
+/*
+This component is main controller for taking a quiz. It is passed a quiz that's been pulled from the database,
+and renders a question component for each question in the quiz.
+*/
 
 function Quiz(props) {
     const[correctAnswersArray, setCorrectAnswersArray] = useState([]);
@@ -9,54 +14,41 @@ function Quiz(props) {
     const[questionCount, setQuestionCount] = useState(0);
     const[answersArray, setAnswersArray] = useState([]);
 
-
-    const pullOutQuestions = () => {
-        // const tempArray = (props.quizData.map(item => 
-        //     item.questions.map(secondItem => <Question questionData = {secondItem} selectedAnswer = {0}/>)
-        // ));
-        
-        const tempArray = (props.quizData.map(item => 
-            item.questions.map(secondItem => secondItem.correctAnswer)))
-
+    //pulls out the correct answer for each quesiton and constructs an array to hold them
+    const extractCorrectAnswers = () => {
+        const tempArray = (props.quizData.map(quiz => 
+            quiz.questions.map(question => question.correctAnswer)))
         setCorrectAnswersArray(...tempArray);
     }
 
-    const prev = () => {
-        //console.log("Previous function!", questionIndex);
+    //changes which question is being rendered -> passed to the Navigation component
+    const prevQuestion = () => {
         if(questionIndex-1 >= 0){
             setQuestionIndex(questionIndex-1);
         }
-        //console.log("After Previous!", questionIndex);
     }
-
-    const next = (arraySize) => {
-        //console.log("Next Function!", questionIndex);
-        //console.log("array size in next", arraySize);
+    const nextQuestion = (arraySize) => {
         if(questionIndex+1 < arraySize){
             setQuestionIndex(questionIndex+1);
-            //console.log("After Next!", questionIndex);
         }
         
     }
 
-    const makeSaveForAnswers = (arraySize) => {
-        console.log("array: ", arraySize)
-        //const arraySize = array.length
+    //constructs an array to hold the user's selected answer for each question
+    const constructAnswerArray = (arraySize) => {
         var tempArray = new Array(arraySize).fill(-1);
-        console.log(tempArray);
         setAnswersArray(tempArray);
     }
 
+    //updates the answersArray based on a user's selected answer for a question
     const changeAnswer = (newAnswer, originalArray, changeIndex) => {
-        //console.log("ran: ", newAnswer);
         var tempArray = [...originalArray];
         tempArray[changeIndex] = newAnswer;
-        //console.log("tempArray: ", tempArray)
         setAnswersArray(tempArray);
     }
 
-    const scoring = () => {
-        //console.log("in scoring")
+    //provides a score for the quiz based on how many answers in the answersArray match the correctAnswersArray
+    const gradeQuiz = () => {
         var numCorrect = 0;
         for(let i = 0; i < correctAnswersArray.length; i++){
             if(answersArray[i] == correctAnswersArray[i]){
@@ -67,7 +59,8 @@ function Quiz(props) {
         return (numCorrect/answersArray.length)*100
     }
 
-    const checkIfCompleted = () => {
+    //checks to make sure an answer has been selected for each quiz question
+    const checkIfQuizCompleted = () => {
         if(answersArray){
             if(answersArray.includes(-1)){
                 return true
@@ -78,69 +71,32 @@ function Quiz(props) {
         }
     }
 
+    /*code that runs when the quiz is initially passed to this component (mostly stores information in useStates)*/
     useEffect(() => {
         var count = 0;
-        const countVariable = (props.quizData.map(item => 
-            item.questions.map(secondItem => count++)
-            ));
+        props.quizData.map(quiz => 
+            quiz.questions.map((question) => count++));
         setQuestionCount(count);
-        pullOutQuestions();
+        extractCorrectAnswers();
     }, [props.quizData]);
-    
-    useEffect(() => {
-        setQuestionIndex(0);
-        console.log("correctAnswersArray: ", correctAnswersArray);
-        // if(questionArray){
-        //     const input = questionArray
-        //     makeSaveForAnswers(input);
-        // }
-    }, [correctAnswersArray])
 
+    //additional setup once we calculate how many questions are in the quiz 
     useEffect(() => {
         console.log("Count variable is:", questionCount);
         if(questionCount){
-            makeSaveForAnswers(questionCount);
+            constructAnswerArray(questionCount);
         }
     }, [questionCount]);
 
-    useEffect(() => {
-        console.log("answersArray: ", answersArray);
-    }, [answersArray]);
-
-    // useEffect(() => {
-    //     pullOutQuestions();
-    //     //setQuestionIndex(3);
-    // }, [props.quizData]);
-
-    // useEffect(() => {
-    //     setQuestionIndex(0);
-    //     console.log("This is the quiz's question array: ", questionArray);
-    // }, [questionArray])
-
-    /*
-        {props.quizData.map(item => item.questions.map(
-                secondItem => <Question key = {item._id} questionData = {secondItem}/>)[questionIndex])}
-
-            <Navigation questions = {questionCount} 
-                nextQuestion = {() => next(questionCount)} prevQuestion = {() => prev()}/>
-    */
-
     return (
         <div>
+            {/* Makes a Question component for each question in the quiz, and passes necessary information to the question components */}
+            {props.quizData.map(quiz => quiz.questions.map(
+                question => <Question key = {quiz._id} questionData = {question} questionIndex = {questionIndex} updateAnswer = {(e) => changeAnswer(e, answersArray, questionIndex)} selected = {answersArray[questionIndex]}/>)[questionIndex])}
 
-            {/*questionArray && <Question questionData = {questionArray[questionIndex]} selectedAnswer = {0}/>*/}
+            <QuizNavigation questions = {questionCount} next = {() => nextQuestion(questionCount)} prev = {() => prevQuestion()} index = {questionIndex}/>
 
-            {/*questionArray && <Navigation questionArrayLength = {questionArray.length} 
-                nextQuestion = {() => next(questionArray.length)} prevQuestion = {() => prev()}/>*/}
-
-            {/*questionArray && makeSaveForAnswers(questionArray.length)*/}
-
-            {props.quizData.map(item => item.questions.map(
-                secondItem => <Question key = {item._id} questionData = {secondItem} questionIndex = {questionIndex} updateAnswer = {(e) => changeAnswer(e, answersArray, questionIndex)} selected = {answersArray[questionIndex]}/>)[questionIndex])}
-
-            <Navigation questions = {questionCount} nextQuestion = {() => next(questionCount)} prevQuestion = {() => prev()} index = {questionIndex}/>
-
-            {checkIfCompleted() ? null : <button onClick={() => scoring()}>submit</button>}
+            {checkIfQuizCompleted() ? null : <button onClick={() => gradeQuiz()}>submit</button>}
         </div>
     );
 }

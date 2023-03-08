@@ -1,27 +1,22 @@
 import React, { useState, useEffect } from "react";
 import './answer.css'
 
+/* 
+The component responsible for rendering 1 answer in a question. When clicked, triggers functions 
+in the question component to keep track of which answer is selected. 
+*/
 
 function Answer(props) {
 
     const [isSelected, setIsSelected] = useState(false);
-    
-    //console.log("Current selected answer in answer component", props.currentSelected);
 
     useEffect(() => {
         setIsSelected(props.currentSelected == props.answerText);
     }, [props.currentSelected])
 
-    useEffect(() => {
-        //console.log("checking toggle selection in:", props.answerText, isSelected);
-    }, [isSelected])
-
-    useEffect(() => {
-        //console.log("checking toggle selection in:", props.answerText, isSelected);
-    }, [])
-
     return (
         <div>
+            {/* Conditional rendering exclusively for CSS changes based on whether this answer is selected */}
             {isSelected 
                 ? <p className="selected-question-box" onClick={() => {
                     props.selection(props.answerText);
