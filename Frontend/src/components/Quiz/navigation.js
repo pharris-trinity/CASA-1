@@ -4,8 +4,8 @@ function Navigation(props) {
 
     return (
         <div>
-            <button onClick={() => props.prevQuestion()}>prev</button>
-            <button onClick={() => props.nextQuestion()}>next</button>
+            {props.index > 0 ? <button onClick={() => props.prevQuestion()}>prev</button> : null}
+            {props.index == props.questions - 1 ? null : <button onClick={() => props.nextQuestion()}>next</button>}
         </div>
     );
 }

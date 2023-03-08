@@ -67,6 +67,17 @@ function Quiz(props) {
         return (numCorrect/answersArray.length)*100
     }
 
+    const checkIfCompleted = () => {
+        if(answersArray){
+            if(answersArray.includes(-1)){
+                return true
+            }
+            else{
+                return false
+            }
+        }
+    }
+
     useEffect(() => {
         var count = 0;
         const countVariable = (props.quizData.map(item => 
@@ -125,12 +136,11 @@ function Quiz(props) {
             {/*questionArray && makeSaveForAnswers(questionArray.length)*/}
 
             {props.quizData.map(item => item.questions.map(
-                secondItem => <Question key = {item._id} questionData = {secondItem} questionIndex = {questionIndex} updateAnswer = {(e) => changeAnswer(e, answersArray, questionIndex)}/>)[questionIndex])}
+                secondItem => <Question key = {item._id} questionData = {secondItem} questionIndex = {questionIndex} updateAnswer = {(e) => changeAnswer(e, answersArray, questionIndex)} selected = {answersArray[questionIndex]}/>)[questionIndex])}
 
-            <Navigation questions = {questionCount} 
-                nextQuestion = {() => next(questionCount)} prevQuestion = {() => prev()}/>
+            <Navigation questions = {questionCount} nextQuestion = {() => next(questionCount)} prevQuestion = {() => prev()} index = {questionIndex}/>
 
-            <button onClick={() => scoring()}>submit</button>
+            {checkIfCompleted() ? null : <button onClick={() => scoring()}>submit</button>}
         </div>
     );
 }

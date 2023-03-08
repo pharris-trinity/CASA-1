@@ -31,12 +31,22 @@ function Question(props) {
 
     }
 
+    const checkIfAnswerIsSelected = () => {
+        if(props.selected != -1){
+            setSelectedAnswer(props.questionData.answers[props.selected])
+        }
+        else{
+            setSelectedAnswer("");
+        }
+    }
+
 
     //console.log("index: ", props.questionData.answers.indexOf("search"));
     useEffect(() => {
         //makeAnswerComponents();
-        setSelectedAnswer("");
+        //setSelectedAnswer("");
         console.log("question index: ", props.questionIndex);
+        checkIfAnswerIsSelected();
     }, [props.questionData])
 
     useEffect(() => {
