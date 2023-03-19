@@ -59,6 +59,26 @@ function Quiz(props) {
         return (numCorrect/answersArray.length)*100
     }
 
+    const makeTakenQuiz = async () => {
+        try {
+            const quizQuestions = props.quizData.map(quiz => quiz.questions);
+            //{score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished}
+            var postData = {score: gradeQuiz(), questions: quizQuestions, answers: answersArray, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished}
+            const requestOptions = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(postData)
+            };
+            const response = await fetch('/api/quizsearch', requestOptions);
+            const jsonData = await response.json();
+
+            setQuizlist(jsonData);
+
+        } catch (error) {
+            
+        }
+    }
+
     //checks to make sure an answer has been selected for each quiz question
     const checkIfQuizCompleted = () => {
         if(answersArray){
