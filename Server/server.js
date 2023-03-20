@@ -849,7 +849,7 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
 
   var quizzes = []
   quizzes = user.takenQuizzes;
-  quizzes.push(tmp._id)
+  quizzes.push(tmp)
 
   user.save()
 
