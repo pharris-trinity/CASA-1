@@ -177,6 +177,7 @@ export default function ViewTeams(){
                 }
                 else{
                   setErrorMessages ({name: "addsuccess", message:error.addsuccess})
+                  fetchUserAccount(inputTeamID)
                 }
               }
         );
@@ -207,6 +208,7 @@ export default function ViewTeams(){
                     }
                     else{
                       setErrorMessages ({name: "removesuccess", message:error.removesuccess})
+                      fetchUserAccount(incText3)
                     }
               }
           );
