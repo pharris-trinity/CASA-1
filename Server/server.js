@@ -853,7 +853,7 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
 
   user.save()
 
-  return res.status(200).send("Took quiz successfully")
+  return res.status(200).send(takenQuiz)
 })
 
 //========================
