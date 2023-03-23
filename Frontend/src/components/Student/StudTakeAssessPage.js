@@ -25,6 +25,7 @@ export default function StudentTakeAssessPage() {
     const quizsearchurl= '/api/quizsearch/';
     const [quizlist, setQuizlist] = useState([]);
     const [quiz, setQuiz] = useState([]);
+    const [showList, setShowList] = useState(true);
 
     const pullQuiz = async () => {
         //e.preventDefault();
@@ -54,6 +55,7 @@ export default function StudentTakeAssessPage() {
             const jsonData = await response.json();
 
             setQuiz(jsonData);
+            setShowList(false);
 
         } catch (error) {
             
@@ -67,13 +69,19 @@ export default function StudentTakeAssessPage() {
 
     const i = 0;
     useEffect(() => {
-        pullOneQuiz('63ea96646b905a49c50b2693');
+        //pullOneQuiz('63ea96646b905a49c50b2693');
     }, []);
 
 
     return(
         <div>
-            <Quiz quizData = {quiz}/>
+            {showList 
+            ? (quizlist && quizlist.map(item => (
+                <button onClick={() => pullOneQuiz(item._id)}>
+                    {item._id}
+                </button>
+            ))) 
+            : (quiz && <Quiz quizData = {quiz} showList = {(e) => setShowList(e)}/>)}
             {/*quiz.map(item => (
                 <ul key="Items List">
                     {console.log("Here is item.questions[0]", item.questions[i].description)}
