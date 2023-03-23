@@ -18,6 +18,7 @@ function Quiz(props) {
     const[startTime, setStartTime] = useState();
     const[endTime, setEndTime] = useState();
     const[grade, setGrade] = useState(-1);
+    const[results, setResults] = useState(false);
 
     const curruser = JSON.parse(localStorage.getItem("userID"));
     const curlyuser = "{" + curruser + "}";
