@@ -4,7 +4,6 @@ import "./stylesMentor.css"
 
 const MentorHome = () => {
 
-
 return (
 
 <>

@@ -1,0 +1,39 @@
+.questionbox {
+    margin: 0 auto;
+    width: 80%; 
+    height: auto;
+    background-color: lightgray;
+    padding: 16px;
+    border-radius: 16px;
+    color: black;
+}
+  
+.questionbox p {
+    margin-top: 8px;
+    background-color: white;
+    padding: 16px;
+    border: 3px solid white;
+    border-radius: 20px;
+    font-size: 20px;
+    float: inherit;
+}
+
+.selected-question-box {
+    margin: 0 auto;
+    width: 80%; 
+    height: auto;
+    background-color: rgb(71, 255, 68);
+    padding: 16px;
+    border-radius: 16px;
+    color: black;
+}
+
+.selected-question-box p {
+    margin-top: 8px;
+    background-color: white;
+    padding: 16px;
+    border: 3px solid white;
+    border-radius: 20px;
+    font-size: 20px;
+    float: inherit;
+}

@@ -3,8 +3,10 @@
     "",
     "\\Frontend",
     "\\Frontend\\src",
-    "\\Frontend\\src\\components"
+    "\\Frontend\\src\\components",
+    "\\Frontend\\src\\components\\Coach",
+    "\\Server"
   ],
-  "SelectedNode": "\\Frontend\\src\\components",
+  "SelectedNode": "\\package-lock.json",
   "PreviewInSolutionExplorer": false
 }

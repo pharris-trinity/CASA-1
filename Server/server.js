@@ -667,8 +667,19 @@ app.post('/api/get-MentorData', function(req, res, next) {
     }
   })
 
+  app.get('/api/quizsearch',async(req,res)=>{
+    const quizzes = await Quiz.find({});
+    //console.log(quizzes)
+    if(!quizzes){
+      console.log("no quiz was found")
+      return res.sendStatus(404)
+    } else {
+      return res.status(200).send(quizzes);
+    }
+  })
+
   //get all quizzes by authorid (will work once createquiz api is made?)
-  app.post('/api/quizsearch/:aoid',async(req,res)=>{
+  app.get('/api/quizsearch/:aoid',async(req,res)=>{
     const quizzes = await Quiz.find({authorID: req.params.aoid}); //findById(id)
     //console.log(quizzes)
     if(!quizzes){
@@ -684,14 +695,14 @@ app.post('/api/get-MentorData', function(req, res, next) {
   })
 
   //get the one quiz by object id and send it
-  app.post('/api/quizsearch/oneq/:qid',async(req,res)=>{
-    const onequiz = await Quiz.find({_id: req.params.qid}); //findById(id)
+  app.get('/api/quizsearch/oneq/:oid', async(req,res)=>{
+    const quiz = await Quiz.find({_id: req.params.oid}); //findById(id)
     //console.log(onequiz);
-    if(!onequiz){
+    if(!quiz){
       console.log("no quiz was found")
       return res.sendStatus(404)
     } else {
-      return res.status(200).send(onequiz);
+      return res.status(200).send(quiz);
     }
     /*mongoose.connection.db.collection('quizzes').find({authorID: req.params.aoid}).toArray().then(collection => {  
       //console.log("check quiz: " + collection);

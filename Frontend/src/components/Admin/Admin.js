@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import "./Admin.css";
 
+
 function Admin() {
 
     const [coach_text, setCoachText] = useState("");
@@ -24,7 +25,6 @@ function Admin() {
                 }
         })
     }
-
 
     function mentor_code(e){
         e.preventDefault()
