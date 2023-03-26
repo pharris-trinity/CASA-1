@@ -97,91 +97,91 @@ export default function ViewTeams(){
 
 
     const fetchUserAccount2 = (incText, paramText) => {
-        postData = { displayID: incText }
-        const requestOptions = {
-            method: 'Post',
-            headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify(postData)
-        };
-        fetch('/api/coach/coachseestudentprofile', requestOptions).then(
-            res => res.text()).then(text => {
-                try {
-                    const userVal = JSON.parse(text);
-                    const newlist = userVal[0];
-                    if (paramText == 0){
-                        student1Name(undefined);
-                        student1Tier(undefined);
-                        student1GradeLevel(undefined);
+      postData = { displayID: incText }
+      const requestOptions = {
+          method: 'Post',
+          headers: {'Content-Type': 'application/json'}, 
+          body: JSON.stringify(postData)
+      };
+      fetch('/api/coach/coachseestudentprofile', requestOptions).then(
+          res => res.text()).then(text => {
+              try {
+                  const userVal = JSON.parse(text);
+                  const newlist = userVal[0];
+                  if (paramText == 0){
+                      student1Name(undefined);
+                      student1Tier(undefined);
+                      student1GradeLevel(undefined);
 
-                        student1Name(newlist.displayname);
-                        student1Tier(newlist.tier);
-                        student1GradeLevel(newlist.gradelevel);
-                    }
-                    if (paramText == 1){
-                        student2Name(undefined);
-                        student2Tier(undefined);
-                        student2GradeLevel(undefined);
+                      student1Name(newlist.displayname);
+                      student1Tier(newlist.tier);
+                      student1GradeLevel(newlist.gradelevel);
+                  }
+                  if (paramText == 1){
+                      student2Name(undefined);
+                      student2Tier(undefined);
+                      student2GradeLevel(undefined);
 
 
-                        student2Name(newlist.displayname);
-                        student2Tier(newlist.tier);
-                        student2GradeLevel(newlist.gradelevel);
-                    }
-                    if (paramText == 2){
-                        student3Name(undefined);
-                        student3Tier(undefined);
-                        student3GradeLevel(undefined);
+                      student2Name(newlist.displayname);
+                      student2Tier(newlist.tier);
+                      student2GradeLevel(newlist.gradelevel);
+                  }
+                  if (paramText == 2){
+                      student3Name(undefined);
+                      student3Tier(undefined);
+                      student3GradeLevel(undefined);
 
-                        student3Name(newlist.displayname);
-                        student3Tier(newlist.tier);
-                        student3GradeLevel(newlist.gradelevel);
-                    }
-                    if (paramText == 3){
-                        student4Name(undefined);
-                        student4Tier(undefined);
-                        student4GradeLevel(undefined);
+                      student3Name(newlist.displayname);
+                      student3Tier(newlist.tier);
+                      student3GradeLevel(newlist.gradelevel);
+                  }
+                  if (paramText == 3){
+                      student4Name(undefined);
+                      student4Tier(undefined);
+                      student4GradeLevel(undefined);
 
-                        student4Name(newlist.displayname);
-                        student4Tier(newlist.tier);
-                        student4GradeLevel(newlist.gradelevel);
-                    }
+                      student4Name(newlist.displayname);
+                      student4Tier(newlist.tier);
+                      student4GradeLevel(newlist.gradelevel);
+                  }
 
-                } catch (error) {
-                    console.log("Unable to fetch -")
-                }
-            }
-            );
-
-    };
-
-    const addStudentAccount = (inputTeamID, inputStudentID) => {
-        var tmpData = {team_id: inputTeamID, student_id: inputStudentID}
-        const requestOptions = {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(tmpData)
-        };
-        fetch('/api/team/add_student_to_team', requestOptions).then(
-                res => res.text()).then(text => {
-                if (text === "No team found that matches that ID"){
-                  setErrorMessages ({name: "team", message:error.team})
-                }
-                else if (text === "No user found that matches that ID"){
-                  setErrorMessages ({name: "user", message:error.user})
-                }
-                else if (text === "User already has a team registered to them"){
-                  setErrorMessages ({name: "user2", message:error.user2})
-                }
-                else if (text === "User is already registered to this team"){
-                  setErrorMessages ({name: "user3", message:error.user3})
-                }
-                else{
-                  setErrorMessages ({name: "addsuccess", message:error.addsuccess})
-                  fetchUserAccount(inputTeamID)
-                }
+              } catch (error) {
+                  console.log("Unable to fetch -")
               }
-        );
-  }; 
+          }
+          );
+
+  };
+
+  const addStudentAccount = (inputTeamID, inputStudentID) => {
+    var tmpData = {team_id: inputTeamID, student_id: inputStudentID}
+    const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(tmpData)
+    };
+    fetch('/api/team/add_student_to_team', requestOptions).then(
+            res => res.text()).then(text => {
+            if (text === "No team found that matches that ID"){
+              setErrorMessages ({name: "team", message:error.team})
+            }
+            else if (text === "No user found that matches that ID"){
+              setErrorMessages ({name: "user", message:error.user})
+            }
+            else if (text === "User already has a team registered to them"){
+              setErrorMessages ({name: "user2", message:error.user2})
+            }
+            else if (text === "User is already registered to this team"){
+              setErrorMessages ({name: "user3", message:error.user3})
+            }
+            else{
+              setErrorMessages ({name: "addsuccess", message:error.addsuccess})
+              fetchUserAccount(inputTeamID)
+            }
+          }
+    );
+};  
 
   //removeStudentAccounts takes in a team and a student username inptut and removes that student from that team or returns an error
   const removeStudentAccount = (incText3, incText4) => {
@@ -218,6 +218,35 @@ export default function ViewTeams(){
       <div className="error">{errorMessages.message}</div>
     );
 
+    const findStudentID = (inputTeamID, inputStudentDisplayName, addOrRemove) => {
+      var tmpData = {studentDisplayName: inputStudentDisplayName}
+      const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(tmpData)
+        };
+        fetch('/api/team/student_display_to_id', requestOptions).then(
+                res => res.text()).then(text => {
+                  if (text === "No user found that matches that ID"){
+                    setErrorMessages ({name: "removeuser", message:error.removeuser})
+                  }
+                  else {
+                    var ret = text.replace(/"/g,'');
+                    if(addOrRemove == "add"){
+                      addStudentAccount(inputTeamID, ret); 
+                    }
+                    else {
+                      removeStudentAccount(inputTeamID, ret);
+                    }
+                  }
+                  
+              }
+        );
+    }; 
+
+
+
+
 
 
 return(
@@ -249,7 +278,7 @@ return(
 
             <div className="form-group">
               <input value={studInput} placeholder="enter student display name" onChange={ev1 => setstudInput(ev1.target.value)}/>
-              <button onClick={()=>{addStudentAccount(input, studInput)}}>Add Student to Team</button> 
+              <button onClick={()=>{findStudentID(input, studInput, "add")}}>Add Student to Team</button> 
               {renderErrorMessage("team")}
               {renderErrorMessage("user")}
               {renderErrorMessage("user2")}
@@ -259,7 +288,7 @@ return(
             </div>
             <div className="form-group">
               <input value={studInput1} placeholder="enter student display name" onChange={ev1 => setstudInput1(ev1.target.value)}/> 
-              <button onClick={()=>{removeStudentAccount(input, studInput1)}}>Remove Student to Team</button>
+              <button onClick={()=>{findStudentID(input, studInput1, "remove")}}>Remove Student to Team</button>
               {renderErrorMessage("removeteam")}
               {renderErrorMessage("removeuser")}
               {renderErrorMessage("removeuser2")}

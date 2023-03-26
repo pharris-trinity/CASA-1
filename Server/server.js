@@ -140,6 +140,7 @@ saltRounds = 12
     }
   });
 
+
   app.get('/api/user/modify_user_profile', async(req, res) => {
 
   })
@@ -465,6 +466,19 @@ app.post('/api/coach/coachseestudentprofile', async(req, res) => {
   } else {
     return res.status(200).send(user); 
   }      
+}) 
+
+app.post('/api/team/student_display_to_id', async(req, res) => {
+  const { studentDisplayName } = req.body;
+  const user = await User.find({"displayname": studentDisplayName}) 
+  var ret = user[0]._id
+  console.log("User is :       ->>>>>>>>>", ret)    
+  if(!user){
+    return res.status(502).send("No user found that matches that ID")
+  }
+  else {
+    return res.status(200).send(ret); 
+  } 
 })
 
 
