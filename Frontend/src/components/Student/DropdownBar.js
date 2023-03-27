@@ -24,4 +24,33 @@ function DropdownBar(props) {
   );
 }
 
-export default DropdownBar;
+
+
+function DropdownContent() {
+  return (
+    <div className="dropdown-content">
+      <div className="dropdown-column">
+        <h3 className="dropdown-title">Student Stats</h3>
+          <li>Windows                 5/5</li>
+          <li>Windows Server        4.5/5</li>
+          <li>Linux                   5/5</li>
+          <li>Networking            4.8/5</li>
+          <li>Security Concepts     3.8/5</li>
+          <li>Quantitative Skills   3.8/5</li>
+      </div>
+      <div className="dropdown-column">
+        <h3 className="dropdown-title">Past Assessments</h3>
+          <li>Assessment A</li>
+          <li>Assessment B</li>
+          <li>Assessment C</li>
+          <li>Assessment D</li>
+          <li>Assessment E</li>
+          <li>Assessment F</li>
+      </div>
+    </div>
+  );
+}
+
+
+
+export { DropdownBar, DropdownContent };

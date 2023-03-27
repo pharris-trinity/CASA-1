@@ -2,7 +2,8 @@ import React from "react"
 //import { ReactDOM } from "react-dom/client"
 import "./stylesStud.css"
 import StudNavbar from "./StudNavbar"
-import DropdownBar from './DropdownBar';
+import { DropdownBar, DropdownContent } from "./DropdownBar.js";
+
 
 /*the page for student main page; what shows up for on the main menu*/
 export default function StudentMainPage() {
@@ -34,6 +35,14 @@ export default function StudentMainPage() {
                     <p>Isn't this neat?</p>
                 </DropdownBar>
 
+
+                <DropdownBar headerText="My Statistics   (This is proof of concept and is not being pulled from our database)">
+                    <DropdownContent >
+                        <p>Student Statistics</p>
+                    </DropdownContent>
+                </DropdownBar>
+
+
                 <DropdownBar headerText="Assessments">
                     <ul>
                         <li className="takeAssess">
@@ -45,9 +54,7 @@ export default function StudentMainPage() {
                             <a href="/stud/viewassess">View Assessments</a>
                         </li>
                     </ul>  
-
                 </DropdownBar>
-
             </div>
         </div>
     </div>

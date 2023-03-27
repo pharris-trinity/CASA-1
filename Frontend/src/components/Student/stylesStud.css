@@ -255,8 +255,15 @@ body {
     background-color: #E53B3B;
     border: none; /* Remove border */
     cursor: pointer;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
   }
 
+  /*This isn't working atm*/
+  .button:hover {
+    background-color: #fff;
+    color: #E53B3B;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
  
   .dropdown-bar {
     border-radius: 5px;
@@ -276,6 +283,20 @@ body {
   
   .dropdown-bar-content {
     padding: 10px;
+  }
+
+  .dropdown-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0 5px;
+  }
+  
+  .dropdown-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
   }
   
   

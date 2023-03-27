@@ -23,3 +23,22 @@
     width: 300px;
     padding: 10px;
   }
+
+
+
+
+  .my-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 10px; /* Border radius to create rounded edges */
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    color: #ffffff; /* White text color */
+    background-color: #E53B3B;
+    border: none; /* Remove border */
+    cursor: pointer;
+  }
+
