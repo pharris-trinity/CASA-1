@@ -149,6 +149,7 @@ function Quiz(props) {
 
     return (
         <div>
+            {/* Displays the quiz content unless the quiz has been submitted */}
             {results == false 
             ? <div>
                 {/* Makes a Question component for each question in the quiz, and passes necessary information to the question components */}
@@ -160,8 +161,9 @@ function Quiz(props) {
                 {checkIfQuizCompleted() ? null : <button onClick={() => gradeQuiz()}>submit</button>}
             </div>
             : <div>
+                {/* Displays the result screen and exit button if the quiz has been submitted */}
                 <QuizResults score={grade}/>
-                
+                <QuizNavigation showList = {(e) => props.showList(e)} />
             </div>}
         </div>
     );
