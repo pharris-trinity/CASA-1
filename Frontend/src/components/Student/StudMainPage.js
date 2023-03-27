@@ -36,8 +36,8 @@ export default function StudentMainPage() {
                 </DropdownBar>
 
 
-                <DropdownBar headerText="My Statistics   (This is proof of concept and is not being pulled from our database)">
-                    <DropdownContent >
+                <DropdownBar headerText="My Statistics (This is proof of concept and is not being pulled from our database)">
+                    <DropdownContent>
                         <p>Student Statistics</p>
                     </DropdownContent>
                 </DropdownBar>
@@ -45,14 +45,14 @@ export default function StudentMainPage() {
 
                 <DropdownBar headerText="Assessments">
                     <ul>
-                        <button className="my-button">
-                            <a href="/stud/takeassess">Take Assessments</a>
-                        </button>
+                        <a href="/stud/takeassess">
+                            <button className="my-button">Take Assessments</button>
+                        </a>
                     </ul>  
                     <ul>
-                        <button className="my-button">
-                            <a href="/stud/viewassess">View Assessments</a>
-                        </button>
+                        <a href="/stud/viewassess">
+                            <button className="my-button">View Assessments</button>
+                        </a>
                     </ul>  
                 </DropdownBar>
             </div>

@@ -10,15 +10,16 @@ export default function StudNavbar() {
           <div className="my-navbar__title">CASA</div>
           <div className="my-navbar__buttons">
             <ul>
-                <button className="my-button">
-                    <a href="/stud/main">Main</a>
-                </button>
-                <button className="my-button">
-                    <a href="/stud/profile">Profile</a>
-                </button>
-                <button className="my-button">
-                    <a href="/login">Logout</a>
-                </button>
+                <a href="/stud/main">
+                    <button className="my-button">Main</button>
+                </a>
+                <a href="/stud/profile">
+                    <button className="my-button">Profile</button>
+                </a>
+
+                <a href="/login">
+                    <button className="my-button">Logout</button>
+                </a>
             </ul>
           </div>
         </nav>

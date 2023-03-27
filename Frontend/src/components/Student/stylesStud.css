@@ -271,6 +271,7 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     overflow: hidden;
+    margin-bottom: 5px;
   }
   
   .dropdown-bar-header {
@@ -310,7 +311,7 @@ body {
     align-items: left;
     height: 50px;
     padding: 0 20px;
-    background-color: white;
+    background-color: rgb(211, 211, 211);
     position: fixed;
     width: 100%;
   }
@@ -322,7 +323,7 @@ body {
   }
   
   .my-navbar__title {
-    font-size: 41px;
+    font-size: 45px;
     font-weight: bold;
     color: #E53B3B;
     padding-left: 15px;
