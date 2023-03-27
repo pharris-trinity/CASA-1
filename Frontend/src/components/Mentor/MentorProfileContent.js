@@ -4,7 +4,7 @@ import "./stylesMentor.css";
 const MentorProfileContent = ({data}) => {
     return(
         <div className="profilecontainer">
-        <h1>...</h1>
+        <h1>.</h1>
         <div className="mentorAttributes">
             <ul>
                 {Object.values(data).map(item => (
@@ -21,7 +21,7 @@ const MentorProfileContent = ({data}) => {
                         <div></div>
 
                         <li className="mentorZipcode">
-                            <p>Mentor Email: {item.zipcode}</p>
+                            <p>Mentor Zipcode: {item.zipcode}</p>
                         </li> 
                         <div></div>
 
