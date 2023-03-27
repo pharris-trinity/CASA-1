@@ -874,11 +874,11 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
 
   var quizzes = []
   quizzes = user.takenQuizzes;
-  quizzes.push(tmp._id)
+  quizzes.push(tmp)
 
   user.save()
 
-  return res.status(200).send("Took quiz successfully")
+  return res.status(200).send(takenQuiz)
 })
 
 //========================
