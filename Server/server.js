@@ -858,8 +858,8 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
 
 //========================
 
-app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html')).status(404);
+app.get('/*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
 });
 
 //https://www.freecodecamp.org/news/how-to-create-a-react-app-with-a-node-backend-the-complete-guide/
