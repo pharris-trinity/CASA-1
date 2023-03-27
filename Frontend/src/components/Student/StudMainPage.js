@@ -23,7 +23,7 @@ export default function StudentMainPage() {
     <StudNavbar />
 
     
-
+    
 
     <div className="maincontainer">
         <h1>Main</h1>
@@ -45,14 +45,14 @@ export default function StudentMainPage() {
 
                 <DropdownBar headerText="Assessments">
                     <ul>
-                        <li className="takeAssess">
+                        <button className="my-button">
                             <a href="/stud/takeassess">Take Assessments</a>
-                        </li>
+                        </button>
                     </ul>  
                     <ul>
-                        <li className="viewAssess">
+                        <button className="my-button">
                             <a href="/stud/viewassess">View Assessments</a>
-                        </li>
+                        </button>
                     </ul>  
                 </DropdownBar>
             </div>

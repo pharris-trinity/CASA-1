@@ -40,5 +40,8 @@
     background-color: #E53B3B;
     border: none; /* Remove border */
     cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    margin-left: 15px;
   }
 
