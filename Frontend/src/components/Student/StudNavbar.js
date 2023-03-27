@@ -8,15 +8,15 @@ export default function StudNavbar() {
             <a href="/" className="CASA-hometitle">CASA</a>
         </div>
         <ul>
-            <li className="active">
+            <button className="my-button">
                 <a href="/stud/main">Main</a>
-            </li>
-            <li>
+            </button>
+            <button className="my-button">
                 <a href="/stud/profile">Profile</a>
-            </li>
-            <li>
+            </button>
+            <button className="my-button">
                 <a href="/login">Logout</a>
-            </li>
+            </button>
         </ul>
         
     </nav>);

@@ -238,4 +238,49 @@ body {
   .printscore {
     font-size: x-large;
   }
-/*test quiz 2 css page below*/
+
+
+
+/*ChatGPT the goat*/
+  .my-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 10px; /* Border radius to create rounded edges */
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    color: #ffffff; /* White text color */
+    background-color: #E53B3B;
+    border: none; /* Remove border */
+    cursor: pointer;
+  }
+
+ 
+  .dropdown-bar {
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+  
+  .dropdown-bar-header {
+    background-color: #02005F;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .dropdown-bar-header:hover {
+    background-color: #3B89E5;
+  }
+  
+  .dropdown-bar-content {
+    padding: 10px;
+  }
+  
+  
+  
+  
+  
+  
+  
