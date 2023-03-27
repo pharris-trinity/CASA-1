@@ -12,6 +12,7 @@ function QuizNavigation(props) {
         <div>
             {props.index > 0 ? <button onClick={() => props.prev()}>prev</button> : null}
             {props.index == props.questions - 1 ? null : <button onClick={() => props.next()}>next</button>}
+            {<button onClick={() => props.showList(true)}>exit quiz</button>}
         </div>
     );
 }
