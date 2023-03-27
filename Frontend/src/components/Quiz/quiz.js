@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import QuizNavigation from "./quizNavigation.js";
 import Question from "./question.js";
 import "./quiz.css"
+import QuizResults from "./quizResults.js";
 
 /*
 This component is main controller for taking a quiz. It is passed a quiz that's been pulled from the database,
@@ -86,6 +87,7 @@ function Quiz(props) {
         setEndTime(getDateTime());
         console.log("Here's your score! ", (numCorrect/answersArray.length)*100)
         setGrade((numCorrect/answersArray.length)*100);
+        setResults(true);
         return;
     }
 
@@ -147,13 +149,20 @@ function Quiz(props) {
 
     return (
         <div>
-            {/* Makes a Question component for each question in the quiz, and passes necessary information to the question components */}
-            {props.quizData.map(quiz => quiz.questions.map(
-                question => <Question key = {quiz._id} questionData = {question} questionIndex = {questionIndex} updateAnswer = {(e) => changeAnswer(e, answersArray, questionIndex)} selected = {answersArray[questionIndex]}/>)[questionIndex])}
+            {results == false 
+            ? <div>
+                {/* Makes a Question component for each question in the quiz, and passes necessary information to the question components */}
+                {props.quizData.map(quiz => quiz.questions.map(
+                    question => <Question key = {quiz._id} questionData = {question} questionIndex = {questionIndex} updateAnswer = {(e) => changeAnswer(e, answersArray, questionIndex)} selected = {answersArray[questionIndex]}/>)[questionIndex])}
 
-            <QuizNavigation questions = {questionCount} next = {() => nextQuestion(questionCount)} prev = {() => prevQuestion()} index = {questionIndex}/>
+                <QuizNavigation questions = {questionCount} next = {() => nextQuestion(questionCount)} prev = {() => prevQuestion()} index = {questionIndex}/>
 
-            {checkIfQuizCompleted() ? null : <button onClick={() => gradeQuiz()}>submit</button>}
+                {checkIfQuizCompleted() ? null : <button onClick={() => gradeQuiz()}>submit</button>}
+            </div>
+            : <div>
+                <QuizResults score={grade}/>
+                
+            </div>}
         </div>
     );
 }
