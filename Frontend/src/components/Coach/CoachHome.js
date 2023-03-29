@@ -20,9 +20,9 @@ function CoachHome() {
     navigate('/profile', {replace: true})
   }
   
-  //this doesn't work anymore since we removed the /teacher route
+
   function homeButton(){
-    navigate('/teacher', {replace: true})
+    navigate('/coachhome', {replace: true})
   }
   function coachTableButton(){
     navigate('/coachtable', {replace: true})

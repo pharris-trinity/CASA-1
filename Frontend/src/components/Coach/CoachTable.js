@@ -5,7 +5,7 @@ export default function ViewTeams2(){
   let navigate = useNavigate();
   
   function homeButton(){
-    navigate('/teacher', {replace: true})
+    navigate('/coachhome', {replace: true})
   }
   const[joinList, setJoinList] = useState([]);
 

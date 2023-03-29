@@ -65,7 +65,7 @@ function Login() {
                     navigate('/mentorHome', {replace: true, state:userVal})
                 } 
                 if(userVal.usertype === "Coach"){
-                    navigate('/teacher', {replace: true, state:userVal})                    
+                    navigate('/coachhome', {replace: true, state:userVal})                    
                 } 
                 if(userVal.usertype == "Admin"){
                     navigate('/admin/homepage', {replace: true, state:userVal})
