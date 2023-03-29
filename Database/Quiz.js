@@ -28,6 +28,14 @@ const QuizSchema = new Schema({
     authorID: {
         type: Schema.Types.ObjectId, ref: 'authorID',
         required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
     }
 })
 

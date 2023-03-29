@@ -739,11 +739,12 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
 
 app.post('/api/assessment/add_assessment', async (req, res) => {
-    const {questions, author_id} = req.body;
+    const {questions, author_id, name, cat} = req.body;
     var final_questions = []
 
     var author = await User.findOne({"_id": author_id})
     if(!author){
+      //console.log(author_id)
       return res.status(404).send("Author not found")
     }
     if(author.usertype == "Student"){
@@ -772,7 +773,9 @@ app.post('/api/assessment/add_assessment', async (req, res) => {
 
     var new_quiz = new Quiz({
       questions: final_questions,
-      authorID: author_id
+      authorID: author_id,
+      name: name,
+      category: cat
     });
     let tmp = await new_quiz.save()
     author.madeQuizzes.push(tmp)
