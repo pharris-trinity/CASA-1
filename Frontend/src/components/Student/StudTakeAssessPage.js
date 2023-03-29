@@ -1,6 +1,5 @@
 import React, {Fragment, useEffect, useState} from  "react"
 import "./stylesStud.css"
-import StudNavbar from "./StudNavbar"
 import QuizzesList from "./StudTakeAssessContent";
 import Quiz from "../Quiz/quiz.js";
 /* the page where the takeassess lives for students; you get the specific coachid & find all the

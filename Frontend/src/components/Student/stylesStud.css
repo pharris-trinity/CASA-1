@@ -305,30 +305,7 @@ body {
 
 
 
-  .my-navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: left;
-    height: 50px;
-    padding: 0 20px;
-    background-color: rgb(211, 211, 211);
-    position: fixed;
-    width: 100%;
-  }
-  
-  .my-navbar__logo {
-    width: 200px;
-    height: 41px;
-    margin-right: 5px;
-  }
-  
-  .my-navbar__title {
-    font-size: 45px;
-    font-weight: bold;
-    color: #E53B3B;
-    padding-left: 15px;
-    margin-right: auto
-  }
+
   
   
   

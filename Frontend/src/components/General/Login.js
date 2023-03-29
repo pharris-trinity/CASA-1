@@ -134,8 +134,7 @@ function Login() {
 
   return(
     <>
-    <img src={logo} id="logo" centerImage="center" align="left" alt=""/>
-    <div className='form'>
+    <div className='form' style= {{display: "flex", justifyContent: "center", alignItems: "center", height: "100vh"}}>
         <form onSubmit={handleSubmit}>
             <div className="form-inner">
                 <h2> Login </h2>

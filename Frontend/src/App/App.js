@@ -4,6 +4,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import * as React from "react";
 import {useEffect} from 'react';
 
+import Navbar from "../components/General/Navbar";
 import Login from "../components/General/Login";
 import About from "../components/General/About";
 import CreateUser from "../components/General/CreateUser";
@@ -57,6 +58,7 @@ function App() {
 
   return (
     <div className="App">
+      <Navbar/>
       <Routes>
         {/*General Site Routes*/}
           <Route path="*" element={<Login/>} />
