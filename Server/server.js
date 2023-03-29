@@ -823,7 +823,7 @@ app.post('/api/assessment/find_taken_quizzes', async(req, res) => {
 })
 
 app.post('/api/assessment/take_quiz', async(req, res) => {
-  const {score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished } = req.body;
+  const {score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished, originalQuizID/*,name, catagory*/ } = req.body;
 
   var user = await User.findOne({"_id": testTakerID})
   if(!user){
@@ -841,15 +841,18 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
     incorrectQuestions: incorrectQuestions,
     testTakerID: testTakerID,
     timeStarted: timeStarted,
-    timeFinished: timeFinished
+    timeFinished: timeFinished, 
+    originalQuizID: originalQuizID 
+    
   })
 
   var id;
-  let tmp = await takenQuiz.save();
+  // let tmp = await takenQuiz.save();    Commented out to get ride of saving to takenquiz
 
   var quizzes = []
   quizzes = user.takenQuizzes;
-  quizzes.push(tmp)
+  //quizzes.push(tmp)
+  quizzes.push(takenQuiz) //alternative to push(tmp)
 
   user.save()
 

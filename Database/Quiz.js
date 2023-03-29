@@ -63,7 +63,19 @@ const TakenQuizSchema = new Schema({
     timeFinished: {
         type: Date,
         required: true
-    }
+    },
+    originalQuizID: {
+        type: Schema.Types.ObjectId, ref: 'originalQuizID',
+        required: true
+    } //, 
+    /*name: {
+        type: String,
+        required: true
+    },
+    catagory: {
+        type: String,
+        required: true
+    }*/
 })
 
 const Question = mongoose.model('Question', QuestionSchema);

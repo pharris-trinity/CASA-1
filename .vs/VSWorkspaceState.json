@@ -4,9 +4,9 @@
     "\\Frontend",
     "\\Frontend\\src",
     "\\Frontend\\src\\components",
-    "\\Frontend\\src\\components\\Coach",
-    "\\Server"
+    "\\Frontend\\src\\components\\Mentor",
+    "\\Frontend\\src\\components\\Quiz"
   ],
-  "SelectedNode": "\\package-lock.json",
+  "SelectedNode": "\\Frontend\\src\\components\\Mentor\\DisplayTableMentor.js",
   "PreviewInSolutionExplorer": false
 }
