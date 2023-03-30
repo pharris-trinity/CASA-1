@@ -826,7 +826,7 @@ app.post('/api/assessment/find_taken_quizzes', async(req, res) => {
 })
 
 app.post('/api/assessment/take_quiz', async(req, res) => {
-  const {score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished } = req.body;
+  const {name, category, score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished } = req.body;
 
   var user = await User.findOne({"_id": testTakerID})
   if(!user){
@@ -837,6 +837,8 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
   }
 
   var takenQuiz = new TakenQuiz({
+    name: name,
+    category: category,
     score: score,
     questions: questions,
     answers: answers,
