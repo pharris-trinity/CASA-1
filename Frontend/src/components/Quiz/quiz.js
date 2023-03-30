@@ -94,8 +94,10 @@ function Quiz(props) {
     const makeTakenQuiz = async () => {
         try {
             const quizQuestions = props.quizData.map(quiz => quiz.questions);
+            const quizName = props.quizData[0].name;
+            const quizCategory = props.quizData[0].category;
             //{score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished}
-            var postData = {score: grade, questions: quizQuestions[0], answers: answersArray, correctQuestions: correctGradedAnswers, incorrectQuestions: incorrectGradedAnswers, testTakerID: fixeduser._id, timeStarted: startTime, timeFinished: endTime}
+            var postData = {name: quizName, category: quizCategory, score: grade, questions: quizQuestions[0], answers: answersArray, correctQuestions: correctGradedAnswers, incorrectQuestions: incorrectGradedAnswers, testTakerID: fixeduser._id, timeStarted: startTime, timeFinished: endTime}
             const requestOptions = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
