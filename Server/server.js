@@ -739,11 +739,12 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
 
 app.post('/api/assessment/add_assessment', async (req, res) => {
-    const {questions, author_id} = req.body;
+    const {questions, author_id, name, cat} = req.body;
     var final_questions = []
 
     var author = await User.findOne({"_id": author_id})
     if(!author){
+      //console.log(author_id)
       return res.status(404).send("Author not found")
     }
     if(author.usertype == "Student"){
@@ -772,7 +773,9 @@ app.post('/api/assessment/add_assessment', async (req, res) => {
 
     var new_quiz = new Quiz({
       questions: final_questions,
-      authorID: author_id
+      authorID: author_id,
+      name: name,
+      category: cat
     });
     let tmp = await new_quiz.save()
     author.madeQuizzes.push(tmp)
@@ -823,7 +826,7 @@ app.post('/api/assessment/find_taken_quizzes', async(req, res) => {
 })
 
 app.post('/api/assessment/take_quiz', async(req, res) => {
-  const {score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished, originalQuizID/*,name, catagory*/ } = req.body;
+  const {name, category, score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished, originalQuizID } = req.body;
 
   var user = await User.findOne({"_id": testTakerID})
   if(!user){
@@ -834,6 +837,8 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
   }
 
   var takenQuiz = new TakenQuiz({
+    name: name,
+    category: category,
     score: score,
     questions: questions,
     answers: answers,

@@ -36,6 +36,8 @@
 ### Quizzes
 1. questions
 2. author id
+3. name
+4. category
 
 ### Taken Quizzes
 1. score

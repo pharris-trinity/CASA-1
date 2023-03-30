@@ -21,8 +21,6 @@ function Quiz(props) {
     const[grade, setGrade] = useState(-1);
     const[results, setResults] = useState(false);
     const[originalQuizID, setOriginalQuizID] = useState(0);
-    //const[name, setName] = useState("");
-    //const[catagory, setCatagory] = useState("");
 
     const curruser = JSON.parse(localStorage.getItem("userID"));
     const curlyuser = "{" + curruser + "}";
@@ -97,8 +95,12 @@ function Quiz(props) {
     const makeTakenQuiz = async () => {
         try {
             const quizQuestions = props.quizData.map(quiz => quiz.questions);
-            //{score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished}
-            var postData = {score: grade, questions: quizQuestions[0], answers: answersArray, correctQuestions: correctGradedAnswers, incorrectQuestions: incorrectGradedAnswers, testTakerID: fixeduser._id, timeStarted: startTime, timeFinished: endTime, originalQuizID: originalQuizID}//, name: name, catagory: catagory}
+            const quizName = props.quizData[0].name;
+            const quizCategory = props.quizData[0].category;
+
+            var postData = {name: quizName, category: quizCategory, score: grade, questions: quizQuestions[0], answers: answersArray, correctQuestions: correctGradedAnswers, incorrectQuestions: incorrectGradedAnswers, 
+                testTakerID: fixeduser._id, timeStarted: startTime, timeFinished: endTime, originalQuizID: originalQuizID}
+
             const requestOptions = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -136,10 +138,6 @@ function Quiz(props) {
         setStartTime(getDateTime());
         extractCorrectAnswers();
         setOriginalQuizID(props.quizData.map(quiz=>quiz._id));
-
-        //WHEN YOTA's quiz schema is updated uncomment these,  also the usestates up top   along with the server side, also in makeTakenQuiz,   also in taken Quiz Schema
-        //setOriginalQuizID(props.quizData.map(quiz=>quiz.name));
-        //setOriginalQuizID(props.quizData.map(quiz=>quiz.catagory));
     }, [props.quizData]);
 
     //additional setup once we calculate how many questions are in the quiz 
