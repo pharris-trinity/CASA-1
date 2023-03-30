@@ -238,4 +238,99 @@ body {
   .printscore {
     font-size: x-large;
   }
-/*test quiz 2 css page below*/
+
+
+
+/*ChatGPT the goat*/
+  .my-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 10px; /* Border radius to create rounded edges */
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    color: #ffffff; /* White text color */
+    background-color: #E53B3B;
+    border: none; /* Remove border */
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+
+  /*This isn't working atm*/
+  .button:hover {
+    background-color: #fff;
+    color: #E53B3B;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+ 
+  .dropdown-bar {
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    margin-bottom: 5px;
+  }
+  
+  .dropdown-bar-header {
+    background-color: #02005F;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .dropdown-bar-header:hover {
+    background-color: #3B89E5;
+  }
+  
+  .dropdown-bar-content {
+    padding: 10px;
+  }
+
+  .dropdown-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0 5px;
+  }
+  
+  .dropdown-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+  }
+  
+
+
+
+  .my-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+    height: 50px;
+    padding: 0 20px;
+    background-color: rgb(211, 211, 211);
+    position: fixed;
+    width: 100%;
+  }
+  
+  .my-navbar__logo {
+    width: 200px;
+    height: 41px;
+    margin-right: 5px;
+  }
+  
+  .my-navbar__title {
+    font-size: 45px;
+    font-weight: bold;
+    color: #E53B3B;
+    padding-left: 15px;
+    margin-right: auto
+  }
+  
+  
+  
+  
+  
