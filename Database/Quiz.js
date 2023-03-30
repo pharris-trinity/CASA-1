@@ -79,6 +79,10 @@ const TakenQuizSchema = new Schema({
     timeFinished: {
         type: Date,
         required: true
+    },
+    originalQuizID: {
+        type: Schema.Types.ObjectId, ref: 'originalQuizID',
+        required: true
     }
 })
 

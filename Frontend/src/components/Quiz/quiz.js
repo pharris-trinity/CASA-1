@@ -20,6 +20,7 @@ function Quiz(props) {
     const[endTime, setEndTime] = useState();
     const[grade, setGrade] = useState(-1);
     const[results, setResults] = useState(false);
+    const[originalQuizID, setOriginalQuizID] = useState(0);
 
     const curruser = JSON.parse(localStorage.getItem("userID"));
     const curlyuser = "{" + curruser + "}";
@@ -96,8 +97,10 @@ function Quiz(props) {
             const quizQuestions = props.quizData.map(quiz => quiz.questions);
             const quizName = props.quizData[0].name;
             const quizCategory = props.quizData[0].category;
-            //{score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished}
-            var postData = {name: quizName, category: quizCategory, score: grade, questions: quizQuestions[0], answers: answersArray, correctQuestions: correctGradedAnswers, incorrectQuestions: incorrectGradedAnswers, testTakerID: fixeduser._id, timeStarted: startTime, timeFinished: endTime}
+
+            var postData = {name: quizName, category: quizCategory, score: grade, questions: quizQuestions[0], answers: answersArray, correctQuestions: correctGradedAnswers, incorrectQuestions: incorrectGradedAnswers, 
+                testTakerID: fixeduser._id, timeStarted: startTime, timeFinished: endTime, originalQuizID: originalQuizID}
+
             const requestOptions = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -134,6 +137,7 @@ function Quiz(props) {
         setQuestionCount(count);
         setStartTime(getDateTime());
         extractCorrectAnswers();
+        setOriginalQuizID(props.quizData.map(quiz=>quiz._id));
     }, [props.quizData]);
 
     //additional setup once we calculate how many questions are in the quiz 
