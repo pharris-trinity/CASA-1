@@ -40,6 +40,14 @@ const QuizSchema = new Schema({
 })
 
 const TakenQuizSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
+    },
     score: {
         type: Number,
         required: true
