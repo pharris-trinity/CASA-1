@@ -458,7 +458,7 @@ app.get('/api/filter_mentors', async(req, res) => {
   return res.status(200).send(users);
 })
 
-app.post('/api/coach/coachseestudentprofile', async(req, res) => {
+app.post('/api/coach/get_student_by_id', async(req, res) => {
   const { displayID } = req.body;
   const user = await User.find({"_id": displayID})     
   if(!user){

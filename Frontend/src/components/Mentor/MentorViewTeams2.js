@@ -42,12 +42,7 @@ export default function ViewTeams(){
 
                     }
                     else {
-                        //setData(userVal.name);
-                        //setData1(userVal.school);
-                        //setData2(userVal.national_id);
                         teamMembersID(userVal.members);
-                        //console.log(userVal.members);
-                        //console.log(userVal.members[0]);
                         fetchUserAccount2(userVal.members[0], 0);
                         fetchUserAccount2(userVal.members[1], 1);
                         fetchUserAccount2(userVal.members[2], 2);
@@ -103,7 +98,7 @@ export default function ViewTeams(){
           headers: {'Content-Type': 'application/json'}, 
           body: JSON.stringify(postData)
       };
-      fetch('/api/coach/coachseestudentprofile', requestOptions).then(
+      fetch('/api/coach/get_student_by_id', requestOptions).then(
           res => res.text()).then(text => {
               try {
                   const userVal = JSON.parse(text);

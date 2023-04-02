@@ -9,11 +9,11 @@ to render the info*/
 
 export default function CoachSeeStudentProfile() {
     var postData;
-    const [data, setData] = useState(null);
-    const [data1, setData1] = useState(null);
-    const [data2, setData2] = useState(null);
-    const [data3, setData3] = useState(null);
-    const [data4, setData4] = useState(null);
+    const [studDisplayName, setStudDisplayName] = useState(null);
+    const [studSchool, setStudSchool] = useState(null);
+    const [studTier, setStudTier] = useState(null);
+    const [studGradLevel, setStudGradLevel] = useState(null);
+    const [studTeam, setStudTeam] = useState(null);
 
     const [errorMessages, setErrorMessages] = useState({});
     const error = {
@@ -27,16 +27,16 @@ export default function CoachSeeStudentProfile() {
             headers: {'Content-Type': 'application/json'}, 
             body: JSON.stringify(postData)
         };
-        fetch('/api/coach/coachseestudentprofile', requestOptions).then(
+        fetch('/api/coach/get_student_by_id', requestOptions).then(
             res => res.text()).then(text => {
                 try {
                     const userVal = JSON.parse(text);
                     const newlist = userVal[0]
-                        setData(newlist.displayname);
-                        setData1(newlist.school);
-                        setData2(newlist.tier);
-                        setData3(newlist.gradelevel);
-                        setData4(newlist.team);
+                        setStudDisplayName(newlist.displayname);
+                        setStudSchool(newlist.school);
+                        setStudTier(newlist.tier);
+                        setStudGradLevel(newlist.gradelevel);
+                        setStudTeam(newlist.team);
 
                 } catch (error) {
                     console.log("Unable to fetch -")
@@ -53,11 +53,11 @@ export default function CoachSeeStudentProfile() {
                 
                     <input value={input} placeholder="enter student display name" onChange={ev1 => setInput(ev1.target.value)}/>
                     <button onClick={() => fetchUserAccount(input)}>Get Student Profile</button>
-                        <p>Display Name: {data}</p>
-                        <p>School: {data1}</p>
-                        <p>Tier: {data2}</p>
-                        <p>Gradlevel: {data3}</p>
-                        <p>Team: {data4}</p>
+                        <p>Display Name: {studDisplayName}</p>
+                        <p>School: {studSchool}</p>
+                        <p>Tier: {studTier}</p>
+                        <p>Gradlevel: {studGradLevel}</p>
+                        <p>Team: {studTeam}</p>
 
 
                 <button onClick={homeButton}>
