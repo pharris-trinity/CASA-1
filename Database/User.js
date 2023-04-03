@@ -47,7 +47,7 @@ const Student = User.discriminator('Student', new mongoose.Schema({
         tier: {type: Number, required: false},
         gradelevel: {type: Number, required: false},
         //QUESTION: Should students be part of multiple teams
-        team: Number
+        team: {type: Number, required: false}
     }),
 );
 
