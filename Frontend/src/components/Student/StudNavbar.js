@@ -1,9 +1,10 @@
 import React from  "react"
 import "./stylesStud.css"
+import LogoutButton from './../General/LogoutButton'
 import logo from "./../../Resources/logo.png"
+
 /*the navbar for all the student accounts*/
 export default function StudNavbar() {
-    
     return (
         <nav className="my-navbar">
           <img src={logo} alt="Logo" className="navbar__logo" />
@@ -39,10 +40,10 @@ export default function StudNavbar() {
             </button>
             <button className="my-button">
                 <a href="/stud/profile">Profile</a>
-            </button>
-            <button className="my-button">
-                <a href="/login">Logout</a>
-            </button>
+            </li>
+            <div>
+                <LogoutButton/>            
+            </div>
         </ul>
         
     </nav>);*/
