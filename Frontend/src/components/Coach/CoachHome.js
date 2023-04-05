@@ -40,7 +40,7 @@ function CoachHome() {
 
 return (
   <div className="coach-page-main">
-      <h2>Coach Home Page</h2>
+
       <button className={enabledManageTeam ? "selected-tab" : "unselected-tab"} onClick={teamsButton}>
       Manage Teams
       </button>
