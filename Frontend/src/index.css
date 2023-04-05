@@ -7,11 +7,12 @@
 }
 
 :root {
-  --primary-blue: #648fff;
-  --primary-purple: #785ef0;
-  --primary-red: #DC267F;
-  --primary-orange: #FE6100;
-  --primary-yellow: #FFB000;
+  --primary-blue: #468AD8;
+  --primary-dark-blue: #0A284B;
+  --primary-purple: #A691AE;
+  --primary-red: #FF4242;
+  --primary-green: #6FDE6E;
+  --primary-yellow: #E8F086;
 }
 
 .blue {
