@@ -1,28 +1,35 @@
 // Here will be the mentor page with a decent layout and buttons to future pages.
-import React from 'react';
+import React, { useState } from 'react';
 //import Button from './MentorButton';
 import '../Mentor/Button.css'
 import '../Mentor/PageLayout.css'
 import '../Coach/CoachProfile'
+import './coachHome.css'
 
 import { useNavigate } from "react-router-dom";
+import ManageTeams from './ManageTeams';
+import StudentStats from './StudentStats';
 
 
 function CoachHome() {
+  const [enabledManageTeam, setEnabledManageTeam] = useState(false);
+  const [enabledStudentStats, setEnabledStudentStats] = useState(false);
 
   let navigate = useNavigate();
 
   function teamsButton(){
-      navigate('/ViewTeams2', {replace: true})  
+    //navigate('/ViewTeams2', {replace: true}) 
+    setEnabledManageTeam(!enabledManageTeam); 
+    setEnabledStudentStats(false);
+  }
+
+  function showStudentStats() {
+    setEnabledStudentStats(!enabledStudentStats);
+    setEnabledManageTeam(false); 
   }
 
   function coachProfile(){
     navigate('/profile', {replace: true})
-  }
-  
-  //this doesn't work anymore since we removed the /teacher route
-  function homeButton(){
-    navigate('/teacher', {replace: true})
   }
   function coachTableButton(){
     navigate('/coachtable', {replace: true})
@@ -32,34 +39,32 @@ function CoachHome() {
 
 
 return (
-  <div>
-    <div class="body"> 
-        <h2> CASA for Coaches</h2>
-        <div></div>
-            <button onClick={homeButton}>
-            Home
-            </button>
-            
-            <div></div>
+  <div className="coach-page-main">
+      <h2>Coach Home Page</h2>
+      <button className={enabledManageTeam ? "selected-tab" : "unselected-tab"} onClick={teamsButton}>
+      Manage Teams
+      </button>
 
-            <button onClick={teamsButton}>
-            Team
-            </button>
+      <button className="unselected-tab" onClick={showStudentStats}>
+      Student Stats
+      </button>
 
-            <div></div>
+      <button className="unselected-tab">
+      Create Quizzes
+      </button>
 
-            <button onClick={coachProfile}>
-            Profile
-            </button>
+      <button className="unselected-tab" onClick={coachTableButton}>
+      Find Mentors
+      </button>
 
-            <div></div>
+      <button className="unselected-tab" onClick={coachProfile}>
+      My Account
+      </button>
 
-            <button onClick={coachTableButton}>
-            Table of Mentors
-            </button>
-
-
-    </div>
+      <div className="content-area">
+        <ManageTeams enabled={enabledManageTeam}/>
+        <StudentStats enabled={enabledStudentStats}/>
+      </div>
   </div> 
   );
 }
