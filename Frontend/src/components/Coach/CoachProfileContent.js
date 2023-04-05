@@ -9,7 +9,7 @@ const ProfileContent = ({data}) => {
     let navigate = useNavigate();
 
     function homeButton(){
-        navigate('/teacher', {replace: true})  
+        navigate('/coachhome', {replace: true})  
     }
   
     return(

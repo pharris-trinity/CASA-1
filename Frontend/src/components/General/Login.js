@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Resources/cyberTexasLogo.png";
-import './stylesLogin.css'
-import {useLocalStorage} from './useLocalStorage'
+import './stylesLogin.css';
+import {useLocalStorage} from './useLocalStorage';
+import Navbar from './Navbar';
 
 function Login() {
 
@@ -65,7 +66,7 @@ function Login() {
                     navigate('/mentorHome', {replace: true, state:userVal})
                 } 
                 if(userVal.usertype === "Coach"){
-                    navigate('/teacher', {replace: true, state:userVal})                    
+                    navigate('/coachhome', {replace: true, state:userVal})                    
                 } 
                 if(userVal.usertype == "Admin"){
                     navigate('/admin/homepage', {replace: true, state:userVal})
@@ -134,8 +135,8 @@ function Login() {
 
   return(
     <>
-    <img src={logo} id="logo" centerImage="center" align="left" alt=""/>
-    <div className='form'>
+    <Navbar/>
+    <div className='form' style= {{display: "flex", justifyContent: "center", alignItems: "center", height: "100vh"}}>
         <form onSubmit={handleSubmit}>
             <div className="form-inner">
                 <h2> Login </h2>

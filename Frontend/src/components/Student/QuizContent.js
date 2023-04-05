@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from  "react"
 import "./stylesStud.css";
-import StudNavbar from "./StudNavbar";
 /*this page gets a specific quiz from the localstorage's currquiz information by its obj id;
  then through local storage maps appropriately to each question display; you can change it so that there
   is only one storage const*/
@@ -114,7 +113,6 @@ export default function QuizContent() {
     
     return(
     <>
-    <StudNavbar/>
     <div className="quizcontainer">
         <div className="quizheader">
             <h1>Quiz</h1>

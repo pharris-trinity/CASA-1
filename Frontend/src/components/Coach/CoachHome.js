@@ -4,9 +4,8 @@ import React from 'react';
 import '../Mentor/Button.css'
 import '../Mentor/PageLayout.css'
 import '../Coach/CoachProfile'
-
 import { useNavigate } from "react-router-dom";
-
+import Navbar from './../General/Navbar';
 
 function CoachHome() {
 
@@ -20,9 +19,8 @@ function CoachHome() {
     navigate('/profile', {replace: true})
   }
   
-  //this doesn't work anymore since we removed the /teacher route
   function homeButton(){
-    navigate('/teacher', {replace: true})
+    navigate('/coachhome', {replace: true})
   }
   function coachTableButton(){
     navigate('/coachtable', {replace: true})
@@ -32,6 +30,8 @@ function CoachHome() {
 
 
 return (
+  <> 
+  <Navbar buttonSet="coach"/>
   <div>
     <div class="body"> 
         <h2> CASA for Coaches</h2>
@@ -61,6 +61,7 @@ return (
 
     </div>
   </div> 
+  </>
   );
 }
   
