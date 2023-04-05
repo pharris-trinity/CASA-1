@@ -1,7 +1,6 @@
 import React from "react"
 //import { ReactDOM } from "react-dom/client"
 import "./stylesLanding.css"
-import LandingNavbar from "./LandingNavbar"
 import Navbar from "./Navbar";
 
 /*the page for student main page; what shows up for on the main menu*/
