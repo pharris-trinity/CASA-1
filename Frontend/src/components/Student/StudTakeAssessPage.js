@@ -1,8 +1,11 @@
 import React, {Fragment, useEffect, useState} from  "react"
 import "./stylesStud.css"
 import QuizzesList from "./StudTakeAssessContent";
-import Quiz from "../Quiz/quiz.js";
-import Navbar from './../General/Navbar';
+import Quiz from "../Quiz/quiz.js"
+import Navbar from './../General/Navbar'
+import ButtonList from './../General/ButtonList'
+
+
 /* the page where the takeassess lives for students; you get the specific coachid & find all the
 quizzes under their authorid and pass it to StudTakeAssessContent to render the quizlist
 the links all lead to quizcontent but the id is passed into localstorage to get the specific quiz*/
@@ -75,7 +78,8 @@ export default function StudentTakeAssessPage() {
 
     return(
         <>
-        <Navbar buttonSet="logout"/>
+        {/*<Navbar buttonSet='takeQuiz'/>*/}
+        {/*}
         <div>
             {showList 
             ? (quizlist && quizlist.map(item => (
@@ -89,8 +93,23 @@ export default function StudentTakeAssessPage() {
                     {console.log("Here is item.questions[0]", item.questions[i].description)}
                     <li>{item.questions[i].answers[0]}</li>
                 </ul>
-            ))*/}
+            ))
         </div>
+        */}
+        
+        <div>
+            {showList 
+            ? (quizlist && <ButtonList quizlistInput={quizlist}/>) 
+            : (quiz && <Quiz quizData = {quiz} showList = {(e) => setShowList(e)}/>)}
+            {quiz.map(item => (
+                <ul key="Items List">
+                    {console.log("Here is item.questions[0]", item.questions[i].description)}
+                    <li>{item.questions[i].answers[0]}</li>
+                </ul>
+            ))}
+        </div>
+
+            
         </>
     );
 }

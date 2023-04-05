@@ -1,0 +1,36 @@
+.button-list-container {
+  margin-top: 75px;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+}
+
+
+
+.button-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* optional - to center buttons horizontally */
+  background-color: white;
+  padding: 10px;
+  overflow-y: auto; /* optional - to add a scroll bar when there are many buttons */
+}
+
+
+.my-button {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 10px; /* Border radius to create rounded edges */
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff; /* White text color */
+  background-color: #E53B3B;
+  border: none; /* Remove border */
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
