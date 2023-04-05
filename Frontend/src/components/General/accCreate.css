@@ -64,7 +64,7 @@
     to right,
     #191027 50%,
     #13193e 50%,
-    #6ca961
+    var(--primary-red)
   );
   background-size: 200%;
   background-position: 0%;

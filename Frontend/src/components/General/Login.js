@@ -152,7 +152,7 @@ function Login() {
                     {renderErrorMessage("pass")}
                 </div>
                 <input type="submit" value="LOGIN"/>
-                <button className="my-button" onClick={accountCreation}>Create Account</button>
+                <button className="casa-button" onClick={accountCreation}>Create Account</button>
             </div>
         </form>
     </div>

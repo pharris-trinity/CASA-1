@@ -36,12 +36,12 @@ export default function StudentMainPage() {
                     <DropdownBar headerText="Assessments">
                         <ul>
                             <a href="/stud/takeassess">
-                                <button className="my-button">Take Assessments</button>
+                                <button className="casa-button">Take Assessments</button>
                             </a>
                         </ul>  
                         <ul>
                             <a href="/stud/viewassess">
-                                <button className="my-button">View Assessments</button>
+                                <button className="casa-button">View Assessments</button>
                             </a>
                         </ul>  
                     </DropdownBar>

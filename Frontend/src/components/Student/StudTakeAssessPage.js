@@ -117,7 +117,7 @@ export default function StudentTakeAssessPage() {
         <div>
             {showList 
             ? (quizlist && quizlist.map(item => (
-                !hasTakenQuiz(item._id, takenQuizzes) ? <button className="my-button" onClick={() => pullOneQuiz(item._id)}>
+                !hasTakenQuiz(item._id, takenQuizzes) ? <button className="casa-button" onClick={() => pullOneQuiz(item._id)}>
                     {item.name}
                 </button> : <Fragment></Fragment>
             ))) 
