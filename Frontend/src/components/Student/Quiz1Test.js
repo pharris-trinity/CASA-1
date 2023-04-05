@@ -1,6 +1,5 @@
 import React, {useState} from  "react"
 import "./stylesStud.css"
-import StudNavbar from "./StudNavbar"
 
 /*this page is filled with const and shows how to display the quizzes; 
 not actually connected to any links anymore*/
@@ -78,7 +77,6 @@ export default function TestQuiz1Page() {
     //to be replaced, just a guide
     return(
     <>
-    <StudNavbar />
     <div className="quizcontainer">
         <div className="quizheader">
             <h1>Quiz 1</h1>

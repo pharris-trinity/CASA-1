@@ -8,7 +8,7 @@ const DisplayTable = ({data}) => {
 
     
     function homeButton(){
-      navigate('/teacher', {replace: true})
+      navigate('/coachhome', {replace: true})
     }
   
 

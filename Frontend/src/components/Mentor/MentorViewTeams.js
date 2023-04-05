@@ -8,7 +8,7 @@ export default function ViewTeams(){
   let navigate = useNavigate();
   
   function homeButton(){
-    navigate('/teacher', {replace: true})
+    navigate('/coachhome', {replace: true})
   }
 
     const curruser = JSON.parse(localStorage.getItem("userID"));

@@ -1,8 +1,8 @@
 import React from "react"
 //import { ReactDOM } from "react-dom/client"
 import "./stylesStud.css"
-import StudNavbar from "./StudNavbar"
 import { DropdownBar, DropdownContent } from "./DropdownBar.js";
+import Navbar from './../General/Navbar';
 
 
 /*the page for student main page; what shows up for on the main menu*/
@@ -20,46 +20,34 @@ export default function StudentMainPage() {
 
     return (
     <>
-    <StudNavbar />
-
-    
-    
-
+    <Navbar buttonSet="student"/>
     <div className="maincontainer">
         <h1>Main</h1>
-        <div className="mainrow">
-            <div className="maincol1">
-                
-
-                <DropdownBar headerText="Proof of Concept Dropdown Bar">
-                    <p>Isn't this neat?</p>
-                </DropdownBar>
-
-
-                <DropdownBar headerText="My Statistics (This is proof of concept and is not being pulled from our database)">
-                    <DropdownContent>
-                        <p>Student Statistics</p>
-                    </DropdownContent>
-                </DropdownBar>
-
-
-                <DropdownBar headerText="Assessments">
-                    <ul>
-                        <a href="/stud/takeassess">
-                            <button className="my-button">Take Assessments</button>
-                        </a>
-                    </ul>  
-                    <ul>
-                        <a href="/stud/viewassess">
-                            <button className="my-button">View Assessments</button>
-                        </a>
-                    </ul>  
-                </DropdownBar>
+            <div className="mainrow">
+                <div className="maincol1">
+                    <DropdownBar headerText="Proof of Concept Dropdown Bar">
+                        <p>Isn't this neat?</p>
+                    </DropdownBar>
+                    <DropdownBar headerText="My Statistics (This is proof of concept and is not being pulled from our database)">
+                        <DropdownContent>
+                            <p>Student Statistics</p>
+                        </DropdownContent>
+                    </DropdownBar>
+                    <DropdownBar headerText="Assessments">
+                        <ul>
+                            <a href="/stud/takeassess">
+                                <button className="my-button">Take Assessments</button>
+                            </a>
+                        </ul>  
+                        <ul>
+                            <a href="/stud/viewassess">
+                                <button className="my-button">View Assessments</button>
+                            </a>
+                        </ul>  
+                    </DropdownBar>
             </div>
         </div>
     </div>
-    
     </>
-        
     );
 }
