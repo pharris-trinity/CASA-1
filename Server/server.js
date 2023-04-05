@@ -140,6 +140,7 @@ saltRounds = 12
     }
   });
 
+
   app.get('/api/user/modify_user_profile', async(req, res) => {
 
   })
@@ -426,7 +427,7 @@ app.post('/api/getusername', async(req, res)=> {
   const {studid} = req.body;
   const stud = await User.findOne({"_id": studid});
   if (!stud){
-    return res.sendStatus(404);
+    return res.sendStatus(504);
   }
   else{
     return res.status(200).send(stud.displayname);
@@ -457,13 +458,37 @@ app.get('/api/filter_mentors', async(req, res) => {
   return res.status(200).send(users);
 })
 
+app.post('/api/coach/get_student_by_id', async(req, res) => {
+  const { displayID } = req.body;
+  const user = await User.find({"_id": displayID})     
+  if(!user){
+    return res.sendStatus(404)
+  } else {
+    return res.status(200).send(user); 
+  }      
+}) 
+
+app.post('/api/team/student_display_to_id', async(req, res) => {
+  const { studentDisplayName } = req.body;
+  const user = await User.find({"displayname": studentDisplayName}) 
+  var ret = user[0]._id
+  console.log("User is :       ->>>>>>>>>", ret)    
+  if(!user){
+    return res.status(502).send("No user found that matches that ID")
+  }
+  else {
+    return res.status(200).send(ret); 
+  } 
+})
+
+
 
 app.post('/api/team/add_student_to_team', async(req, res) => {
   //Takes in a team ID and a student ID and updates the team and the student
   const {team_id, student_id} = req.body
 
   const team = await Team.findOne({"national_id": team_id})
-  const user = await User.findOne({"displayname": student_id})
+  const user = await User.findOne({"_id": student_id})
 
   if(!team){
     return res.status(501).send("No team found that matches that ID")
@@ -500,7 +525,7 @@ app.post('/api/team/remove_student_from_team', async(req, res) => {
   const {team_id, student_id} = req.body
 
   const team = await Team.findOne({"national_id": team_id})
-  const user = await User.findOne({"displayname": student_id})
+  const user = await User.findOne({"_id": student_id})
 
   if(!team){
     return res.status(501).send("No team found that matches that ID")
@@ -739,11 +764,12 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
 
 app.post('/api/assessment/add_assessment', async (req, res) => {
-    const {questions, author_id} = req.body;
+    const {questions, author_id, name, cat} = req.body;
     var final_questions = []
 
     var author = await User.findOne({"_id": author_id})
     if(!author){
+      //console.log(author_id)
       return res.status(404).send("Author not found")
     }
     if(author.usertype == "Student"){
@@ -772,7 +798,9 @@ app.post('/api/assessment/add_assessment', async (req, res) => {
 
     var new_quiz = new Quiz({
       questions: final_questions,
-      authorID: author_id
+      authorID: author_id,
+      name: name,
+      category: cat
     });
     let tmp = await new_quiz.save()
     author.madeQuizzes.push(tmp)
@@ -823,7 +851,7 @@ app.post('/api/assessment/find_taken_quizzes', async(req, res) => {
 })
 
 app.post('/api/assessment/take_quiz', async(req, res) => {
-  const {score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished } = req.body;
+  const {name, category, score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished, originalQuizID } = req.body;
 
   var user = await User.findOne({"_id": testTakerID})
   if(!user){
@@ -834,6 +862,8 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
   }
 
   var takenQuiz = new TakenQuiz({
+    name: name,
+    category: category,
     score: score,
     questions: questions,
     answers: answers,
@@ -841,15 +871,18 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
     incorrectQuestions: incorrectQuestions,
     testTakerID: testTakerID,
     timeStarted: timeStarted,
-    timeFinished: timeFinished
+    timeFinished: timeFinished, 
+    originalQuizID: originalQuizID 
+    
   })
 
   var id;
-  let tmp = await takenQuiz.save();
+  // let tmp = await takenQuiz.save();    Commented out to get ride of saving to takenquiz
 
   var quizzes = []
   quizzes = user.takenQuizzes;
-  quizzes.push(tmp)
+  //quizzes.push(tmp)
+  quizzes.push(takenQuiz) //alternative to push(tmp)
 
   user.save()
 

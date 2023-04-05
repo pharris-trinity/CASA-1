@@ -80,7 +80,7 @@ export default function StudentTakeAssessPage() {
             {showList 
             ? (quizlist && quizlist.map(item => (
                 <button className="my-button" onClick={() => pullOneQuiz(item._id)}>
-                    {item._id}
+                    {item.name}
                 </button>
             ))) 
             : (quiz && <Quiz quizData = {quiz} showList = {(e) => setShowList(e)}/>)}

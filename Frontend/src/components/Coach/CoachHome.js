@@ -12,7 +12,7 @@ function CoachHome() {
   let navigate = useNavigate();
 
   function teamsButton(){
-      navigate('/ViewTeams', {replace: true})  
+      navigate('/ViewTeams2', {replace: true})  
   }
 
   function coachProfile(){
