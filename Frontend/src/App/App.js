@@ -4,8 +4,10 @@ import { Routes, Route, Link } from "react-router-dom";
 import * as React from "react";
 import {useEffect} from 'react';
 
+import Navbar from "../components/General/Navbar";
 import Login from "../components/General/Login";
 import About from "../components/General/About";
+import LandingMainPage from "../components/General/LandingMainPage";
 import CreateUser from "../components/General/CreateUser";
 import NotFound from "../components/General/NotFound";
 
@@ -59,8 +61,8 @@ function App() {
     <div className="App">
       <Routes>
         {/*General Site Routes*/}
-          <Route path="*" element={<Login/>} />
-          <Route exact path="/" element ={<Login/>}/>
+          <Route path="*" element={<LandingMainPage/>} />
+          <Route exact path="/" element ={<LandingMainPage/>}/>
           <Route path="login" element={<Login/>} />
           <Route path="about" element={<About/>} />
           <Route path="createuser" element={<CreateUser/>} />

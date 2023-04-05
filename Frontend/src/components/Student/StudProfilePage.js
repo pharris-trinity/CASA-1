@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react"
-import StudNavbar from "./StudNavbar"
 import "./stylesStud.css"
 import StudProfileContent from "./StudProfileContent"
 
@@ -37,7 +36,6 @@ export default function StudentProfilePage() {
 
     return(
     <>
-    <StudNavbar />
     {<StudProfileContent data={(currStud)}/>}
     </>
     ); 

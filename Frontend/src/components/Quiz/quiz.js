@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import QuizNavigation from "./quizNavigation.js";
 import Question from "./question.js";
 import "./quiz.css"
+import Navbar from './../General/Navbar';
 import QuizResults from "./quizResults.js";
 
 /*
@@ -154,6 +155,8 @@ function Quiz(props) {
     }, [grade]);
 
     return (
+        <>
+        <Navbar buttonSet="takeQuiz"/>
         <div>
             {/* Displays the quiz content unless the quiz has been submitted */}
             {results == false 
@@ -172,6 +175,7 @@ function Quiz(props) {
                 <QuizNavigation showList = {(e) => props.showList(e)} />
             </div>}
         </div>
+        </>
     );
 }
 
