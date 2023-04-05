@@ -10,8 +10,6 @@ const DisplayTable = ({data}) => {
     const [studentIDs, setStudentIDs] = useState([])
     const [students, setStudents] = useState([])
 
-    //const coachID = "6373bf8650c5263f57ff20ab"
-
     let navigate = useNavigate();
 
     
@@ -20,17 +18,15 @@ const DisplayTable = ({data}) => {
     }
 
     const getCoach = async(coachID) => {
-        //console.log(id)
         try {
             const requestOptions = {
-                method: 'POSt',
+                method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({'id': coachID})
             }
             const response = await fetch('/api/coachSearch', requestOptions)
             const jsonData = await response.json()
 
-            //console.log(jsonData)
             setCoach(jsonData)
         } catch (error) {
             console.log(error)
@@ -47,12 +43,7 @@ const DisplayTable = ({data}) => {
                 const response = await fetch('/api/teamsearch/' + JSON.stringify(teams[i]), requestOptions)
                 const jsonData = await response.json()
 
-                //console.log(jsonData[0].members)
                 const tempArray = jsonData[0].members.map(item => item)
-                //console.log(tempArray)
-                // for(let i = 0; i < tempArray.length; i++){
-                //     setStudentIDs(studentIds => [...studentIds, tempArray[i]])
-                // }
                 setStudentIDs([...studentIDs, ...tempArray])
                 
                 
@@ -63,11 +54,8 @@ const DisplayTable = ({data}) => {
     }
 
     const getStudentsFromServer = async(ids) => {
-        //console.log("size of ids: ", ids.length)
-        //console.log("ids: ", ids)
         var tempArray = []
         for (let i = 0; i < ids.length; i++) {
-            //console.log(i)
             try {
                 const requestOptions = {
                     method: 'POST',
@@ -76,14 +64,8 @@ const DisplayTable = ({data}) => {
                 }
                 const response = await fetch('/api/studentTakenQuizzes', requestOptions)
                 const jsonData = await response.json()
-
-                //console.log(jsonData)
-                //tempArray = tempArray + jsonData
-                //console.log(typeof tempArray)
                 
                 tempArray = [...tempArray, jsonData]
-                //console.log(tempArray)
-                //setStudents(students => [...students, jsonData])
             } catch (error) {
                 console.log(error)
             }
@@ -95,7 +77,6 @@ const DisplayTable = ({data}) => {
 
     const takenQuizScoreSums = (category, takenQuizzes) => {
         if(!takenQuizzes.length == 0){
-            //console.log(category, " ", takenQuizzes)
             var count = 0
             var totalCorrectAnswers = 0
             var totalQuestions = 0
@@ -119,16 +100,13 @@ const DisplayTable = ({data}) => {
 
     useEffect(() => {
         setcoachID(localStorage.getItem("_id"))
-        //console.log(localStorage.getItem("userID"))
     }, []);
 
     useEffect(() => {
         getCoach(coachID)
-        //console.log(localStorage.getItem("userID"))
     }, [coachID]);
 
     useEffect(() => {
-        //console.log(coach)
         if(coach){
             getStudentsInTeams(coach.teams)
         }
@@ -139,12 +117,6 @@ const DisplayTable = ({data}) => {
             getStudentsFromServer(studentIDs)
         }
     }, [studentIDs])
-
-    useEffect(() => {
-        if(students){
-            //console.log(students)
-        }
-    }, [students])
     
     return (
             <div>
