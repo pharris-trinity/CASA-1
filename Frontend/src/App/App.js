@@ -58,7 +58,6 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar/>
       <Routes>
         {/*General Site Routes*/}
           <Route path="*" element={<Login/>} />

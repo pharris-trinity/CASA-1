@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import QuizNavigation from "./quizNavigation.js";
 import Question from "./question.js";
 import "./quiz.css"
+import Navbar from './../General/Navbar';
 
 /*
 This component is main controller for taking a quiz. It is passed a quiz that's been pulled from the database,
@@ -89,6 +90,8 @@ function Quiz(props) {
     }, [questionCount]);
 
     return (
+        <>
+        <Navbar buttonSet="takeQuiz"/>
         <div>
             {/* Makes a Question component for each question in the quiz, and passes necessary information to the question components */}
             {props.quizData.map(quiz => quiz.questions.map(
@@ -98,6 +101,7 @@ function Quiz(props) {
 
             {checkIfQuizCompleted() ? null : <button onClick={() => gradeQuiz()}>submit</button>}
         </div>
+        </>
     );
 }
 
