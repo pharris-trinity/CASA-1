@@ -5,11 +5,12 @@ import { json, useNavigate } from "react-router-dom";
 const DisplayTable = ({data}) => {
     const keys =  ["name", "school"]
     
+    const [coachID, setcoachID] = useState()
     const [coach, setCoach] = useState()
     const [studentIDs, setStudentIDs] = useState([])
     const [students, setStudents] = useState([])
 
-    const coachID = "6373bf8650c5263f57ff20ab"
+    //const coachID = "6373bf8650c5263f57ff20ab"
 
     let navigate = useNavigate();
 
@@ -63,10 +64,10 @@ const DisplayTable = ({data}) => {
 
     const getStudentsFromServer = async(ids) => {
         //console.log("size of ids: ", ids.length)
-        console.log("ids: ", ids)
+        //console.log("ids: ", ids)
         var tempArray = []
         for (let i = 0; i < ids.length; i++) {
-            console.log(i)
+            //console.log(i)
             try {
                 const requestOptions = {
                     method: 'POST',
@@ -81,7 +82,7 @@ const DisplayTable = ({data}) => {
                 //console.log(typeof tempArray)
                 
                 tempArray = [...tempArray, jsonData]
-                console.log(tempArray)
+                //console.log(tempArray)
                 //setStudents(students => [...students, jsonData])
             } catch (error) {
                 console.log(error)
@@ -94,7 +95,7 @@ const DisplayTable = ({data}) => {
 
     const takenQuizScoreSums = (category, takenQuizzes) => {
         if(!takenQuizzes.length == 0){
-            console.log(category, " ", takenQuizzes)
+            //console.log(category, " ", takenQuizzes)
             var count = 0
             var totalCorrectAnswers = 0
             var totalQuestions = 0
@@ -117,29 +118,31 @@ const DisplayTable = ({data}) => {
     }
 
     useEffect(() => {
-        getCoach(coachID)
-        console.log("default")
+        setcoachID(localStorage.getItem("_id"))
+        //console.log(localStorage.getItem("userID"))
     }, []);
+
+    useEffect(() => {
+        getCoach(coachID)
+        //console.log(localStorage.getItem("userID"))
+    }, [coachID]);
 
     useEffect(() => {
         //console.log(coach)
         if(coach){
             getStudentsInTeams(coach.teams)
-            console.log("coach")
         }
     }, [coach]);
 
     useEffect(() => {
         if(studentIDs){
             getStudentsFromServer(studentIDs)
-            console.log("studentIDs")
         }
     }, [studentIDs])
 
     useEffect(() => {
         if(students){
-            console.log(students)
-            //console.log("students")
+            //console.log(students)
         }
     }, [students])
     

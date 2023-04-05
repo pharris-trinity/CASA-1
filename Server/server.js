@@ -104,7 +104,7 @@ saltRounds = 12
           bcrypt.compare(req.body.password, user.password, (error, result) => {
             
             if(result) {
-              return res.status(201).send(user);
+              return res.status(201).send({_id: user._id, school: user.school, username: user.username, displayname: user.displayname, usertype: user.usertype});
             } else {
               return res.status(401).send("Password mismatch");
             }

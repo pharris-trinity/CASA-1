@@ -37,6 +37,7 @@ function Login() {
             } else if(text === "Password mismatch") {
                 setErrorMessages({name: "pass", message:error.pass})
             } else {
+                //console.log(text.substring(1, text.length-1))
                 setUserID(text.substring(1, text.length-1))
                 fetchUserAccount(event, text)
             }
