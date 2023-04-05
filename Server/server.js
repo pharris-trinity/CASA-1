@@ -201,13 +201,13 @@ app.post('/api/coach/create_coach', async(req, res) => {
   app.post('/api/coach/get_coaches_teams', async(req, res) => {
     const { userID } = req.body;
 
-    await User.find(
+    await Coach.find(
       {"_id": userID}
     ).exec().then(user => {
       if(!user) {return res.status(401).send("ID not found");}
       else {
-        var teamsIDS = user.teams;
-        return res.send(teamsIDS).status(201);
+        //var teamsIDS = user.teams;
+        return res.send({teams: user.teams}).status(201);
       }
     })
   });
@@ -641,8 +641,22 @@ app.post('/api/get-MentorData', function(req, res, next) {
     });
   });
 
+  app.post('/api/studentTakenQuizzes', async(req, res) => {
+    const {id} = req.body
+    const student = await Student.findOne({_id: id})
+
+    if(!student){
+      console.log("no ")
+      return res.sendStatus(404)
+    }
+    else{
+      //return res.status(200).send([student.username, student.takenQuizzes])
+      return res.status(200).send({username: student.username, displayname: student.displayname, takenQuizzes: student.takenQuizzes})
+    }
+  })
+
   //search for team based on national id
-  app.post('/api/teamsearch/:teamid', async(req,res)=>{
+  app.get('/api/teamsearch/:teamid', async(req,res)=>{
     const teamnum = Number(req.params.teamid); //convert string from url into a number
     const team = await Team.find({national_id: teamnum})
     //console.log(team)
@@ -656,7 +670,7 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
   //search for coach based on coach's object id to get madequizzes field: WIP status, may delete
   //currently objid for assessment field is janky, needs to have a create api
-  app.post('/api/coachsearch/:oid', async(req,res)=>{
+  app.get('/api/coachsearch/:oid', async(req,res)=>{
     const coach = await User.findById(req.params.oid); //findById(id)
     //console.log(coach)
     if(!coach){
@@ -664,6 +678,19 @@ app.post('/api/get-MentorData', function(req, res, next) {
       return res.sendStatus(404)
     } else {
       return res.status(200).send(coach);
+    }
+  })
+
+  app.post('/api/coachSearch', async(req, res) => {
+    const {id} = req.body
+    const coach = await Coach.findById(id)
+
+    if(!coach){
+      console.log("no coach found")
+      return res.sendStatus(404)
+    }
+    else{
+      return res.status(200).send(coach)
     }
   })
 
