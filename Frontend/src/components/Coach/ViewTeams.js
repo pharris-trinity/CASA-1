@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import "./MentorTeamStyles.css"
+import "./TeamStyles.css"
 import {useLocalStorage} from '../General/useLocalStorage'
 import { json } from "body-parser";
 import { useNavigate } from "react-router-dom";
