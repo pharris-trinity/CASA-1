@@ -3,7 +3,7 @@ import "./stylesStud.css"
 import QuizzesList from "./StudTakeAssessContent";
 import Quiz from "../Quiz/quiz.js"
 import Navbar from './../General/Navbar'
-import ButtonList from './../General/ButtonList'
+import QuizButtons from '../General/QuizButtons'
 
 
 /* the page where the takeassess lives for students; you get the specific coachid & find all the
@@ -79,7 +79,7 @@ export default function StudentTakeAssessPage() {
     return(
         <>
         {/*<Navbar buttonSet='takeQuiz'/>*/}
-        {/*}
+        
         <div>
             {showList 
             ? (quizlist && quizlist.map(item => (
@@ -93,13 +93,13 @@ export default function StudentTakeAssessPage() {
                     {console.log("Here is item.questions[0]", item.questions[i].description)}
                     <li>{item.questions[i].answers[0]}</li>
                 </ul>
-            ))
+            ))*/}
         </div>
-        */}
+        
         
         <div>
             {showList 
-            ? (quizlist && <ButtonList quizlistInput={quizlist}/>) 
+            ? (quizlist && <QuizButtons quizlistInput={quizlist} />) 
             : (quiz && <Quiz quizData = {quiz} showList = {(e) => setShowList(e)}/>)}
             {quiz.map(item => (
                 <ul key="Items List">
@@ -108,7 +108,6 @@ export default function StudentTakeAssessPage() {
                 </ul>
             ))}
         </div>
-
             
         </>
     );
