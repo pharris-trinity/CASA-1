@@ -45,7 +45,7 @@ return (
       Manage Teams
       </button>
 
-      <button className="unselected-tab" onClick={showStudentStats}>
+      <button className={enabledStudentStats ? "selected-tab" : "unselected-tab"} onClick={showStudentStats}>
       Student Stats
       </button>
 
@@ -62,6 +62,10 @@ return (
       </button>
 
       <div className="content-area">
+        {!enabledManageTeam && !enabledStudentStats 
+          ? <h1 className="descriptor-text">Click on a tab to view its contents</h1> 
+          : null
+        }
         <ManageTeams enabled={enabledManageTeam}/>
         <StudentStats enabled={enabledStudentStats}/>
       </div>
