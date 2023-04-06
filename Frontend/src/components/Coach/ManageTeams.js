@@ -11,20 +11,27 @@ function ManageTeams(props) {
     if(props.enabled == true) {
         return (
             <div>
-                <table>
-                        <thead>
-                            <tr>
-                                <th>
+                <div>
+                    {/*Div where selected student info + add student button, etc. goes*/}
+                </div>
 
-                                </th>
-                            </tr>
-                        </thead>
+                <div>
+                    {/*Div where student table goes*/}
+                    <table>
+                            <thead>
+                                <tr>
+                                    <th>
 
-                        <tbody>
-                            <tr>
-                            </tr>
-                        </tbody>
-                </table>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                </tr>
+                            </tbody>
+                    </table>
+                </div>
             </div>
         );
     }
