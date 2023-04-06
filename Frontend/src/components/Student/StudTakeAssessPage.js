@@ -3,6 +3,9 @@ import "./stylesStud.css"
 import QuizzesList from "./StudTakeAssessContent";
 import Quiz from "../Quiz/quiz.js";
 import Navbar from './../General/Navbar';
+
+import {loginChecker} from "../General/LoginCheck";
+import { useNavigate } from 'react-router-dom';
 /* the page where the takeassess lives for students; you get the specific coachid & find all the
 quizzes under their authorid and pass it to StudTakeAssessContent to render the quizlist
 the links all lead to quizcontent but the id is passed into localstorage to get the specific quiz*/
@@ -26,6 +29,14 @@ export default function StudentTakeAssessPage() {
     const [quizlist, setQuizlist] = useState([]);
     const [quiz, setQuiz] = useState([]);
     const [showList, setShowList] = useState(true);
+
+    
+  let navigate = useNavigate();
+
+    window.onload = (event) => {
+        var toNavigateTo = loginChecker("Coach")
+        if(toNavigateTo != "stay ")navigate(toNavigateTo, {replace: true})
+      };
 
     const pullQuiz = async () => {
         //e.preventDefault();

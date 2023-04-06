@@ -20,7 +20,10 @@ function CoachHome() {
 
   let navigate = useNavigate();
 
-  loginChecker("Coach")
+  window.onload = (event) => {
+    var toNavigateTo = loginChecker("Coach")
+    if(toNavigateTo != "stay ")navigate(toNavigateTo, {replace: true})
+  };
 
   function teamsButton(){
     //navigate('/ViewTeams2', {replace: true}) 
@@ -67,7 +70,6 @@ return (
     <Navbar buttonSet="coach"/>
 
     <div className="coach-page-main">
-
         <button className={enabledManageTeam ? "selected-tab" : "unselected-tab"} onClick={teamsButton}>
         Manage Teams
         </button>
@@ -95,7 +97,7 @@ return (
           }
           <ManageTeams enabled={enabledManageTeam}/>
           <StudentStats enabled={enabledStudentStats}/>
-
+          
           {enabledCreateQuiz 
           ? <h1>This page has not been implemented yet</h1>
           : null}

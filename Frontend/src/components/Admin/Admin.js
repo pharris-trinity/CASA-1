@@ -1,11 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import "./Admin.css";
 
+import {loginChecker} from "../General/LoginCheck";
+import { useNavigate } from 'react-router-dom';
+
 
 function Admin() {
 
     const [coach_text, setCoachText] = useState("");
     const [mentor_text, setMentorText] = useState("");
+
+    
+  let navigate = useNavigate();
+    window.onload = (event) => {
+        var toNavigateTo = loginChecker("Coach")
+        if(toNavigateTo != "stay ")navigate(toNavigateTo, {replace: true})
+      };
 
     useEffect(() =>{
         document.title = "Admin Homepage"

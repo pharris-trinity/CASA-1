@@ -3,6 +3,8 @@ import React from "react"
 import "./stylesStud.css"
 import { DropdownBar, DropdownContent } from "./DropdownBar.js";
 import Navbar from './../General/Navbar';
+import {loginChecker} from "../General/LoginCheck";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -19,6 +21,13 @@ export default function StudentMainPage() {
     console.log(typeof fixeduser._id)
     console.log(typeof fixeduser.username)
     console.log(fixeduser)
+    
+  let navigate = useNavigate();
+
+    window.onload = (event) => {
+        var toNavigateTo = loginChecker("Coach")
+        if(toNavigateTo != "stay ")navigate(toNavigateTo, {replace: true})
+      };
 
 
     return (
