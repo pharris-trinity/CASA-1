@@ -9,14 +9,18 @@ import ManageTeams from './ManageTeams';
 import StudentStats from './StudentStats';
 import Navbar from './../General/Navbar';
 import { useNavigate } from 'react-router-dom';
+import {loginChecker} from "../General/LoginCheck";
 
 function CoachHome() {
+
   const [enabledManageTeam, setEnabledManageTeam] = useState(false);
   const [enabledStudentStats, setEnabledStudentStats] = useState(false);
   const [enabledCreateQuiz, setEnabledCreateQuiz] = useState(false);
   const [enabledFindMentors, setEnabledFindMentors] = useState(false);
 
   let navigate = useNavigate();
+
+  loginChecker("Coach")
 
   function teamsButton(){
     //navigate('/ViewTeams2', {replace: true}) 

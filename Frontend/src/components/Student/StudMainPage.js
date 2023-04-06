@@ -5,8 +5,11 @@ import { DropdownBar, DropdownContent } from "./DropdownBar.js";
 import Navbar from './../General/Navbar';
 
 
+
+
 /*the page for student main page; what shows up for on the main menu*/
 export default function StudentMainPage() {
+
     //local storage has current user information; parse it right by adding curly braces and get your json object
     const curruser = JSON.parse(localStorage.getItem("userID"));
     const curlyuser = "{" + curruser + "}";
