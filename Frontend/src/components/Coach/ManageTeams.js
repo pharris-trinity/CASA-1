@@ -11,7 +11,20 @@ function ManageTeams(props) {
     if(props.enabled == true) {
         return (
             <div>
-                <h3>Manage Teams Component</h3>
+                <table>
+                        <thead>
+                            <tr>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                            </tr>
+                        </tbody>
+                </table>
             </div>
         );
     }

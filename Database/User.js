@@ -42,6 +42,7 @@ const Coach = User.discriminator('Coach', new mongoose.Schema({
 exports.Coach = mongoose.model('Coach')
 
 const Student = User.discriminator('Student', new mongoose.Schema({
+        coachID: {type: Schema.Types.ObjectId, ref: 'coachID', required: false },
         takenQuizzes: {type:[TakenQuiz.schema], required: false},
         school: {type: String, required: false},
         tier: {type: Number, required: false},
