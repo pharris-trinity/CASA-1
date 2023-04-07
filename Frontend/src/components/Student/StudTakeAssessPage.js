@@ -34,8 +34,8 @@ export default function StudentTakeAssessPage() {
   let navigate = useNavigate();
 
     window.onload = (event) => {
-        var toNavigateTo = loginChecker("Coach")
-        if(toNavigateTo != "stay ")navigate(toNavigateTo, {replace: true})
+        var toNavigateTo = loginChecker("Student")
+        if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
       };
 
     const pullQuiz = async () => {

@@ -22,7 +22,7 @@ function CoachHome() {
 
   window.onload = (event) => {
     var toNavigateTo = loginChecker("Coach")
-    if(toNavigateTo != "stay ")navigate(toNavigateTo, {replace: true})
+    if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
   };
 
   function teamsButton(){

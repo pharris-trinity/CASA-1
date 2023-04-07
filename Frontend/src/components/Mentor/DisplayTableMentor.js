@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import "./TableStyle.css";
+import {loginChecker} from "../General/LoginCheck";
+import { useNavigate } from 'react-router-dom';
 
 
 const DisplayTable = ({data}) => {
@@ -7,6 +9,14 @@ const DisplayTable = ({data}) => {
     const [select, setSelect] = useState('')
     const keys =  ["name", "school"]
     const filter = data.filter((item) => keys.some((key)=>item[key].toLowerCase().includes(text.toLowerCase())))
+
+
+    let navigate = useNavigate();
+    window.onload = (event) => {
+        var toNavigateTo = loginChecker("Mentor")
+        if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+      };
+
     // This is for the filter box. This const variable filters the data by the chosen category to the varible from the MongoDB
     // For example: Region # in the filterbox will return teams with an assigned region number from the stored data. It is not currently by will 
     // still work. You will have to maka a boolean of filter with the same map scheme below for All (option) or "", but will need

@@ -1,11 +1,16 @@
 import React, { useState } from "react"
 import "./MentorTeamStyles.css"
-import {useLocalStorage} from '../General/useLocalStorage'
+import {loginChecker} from "../General/LoginCheck";
 import { json } from "body-parser";
 import { useNavigate } from "react-router-dom";
 
 export default function ViewTeams(){
   let navigate = useNavigate();
+
+  window.onload = (event) => {
+      var toNavigateTo = loginChecker("Coach")
+      if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+    };
   
   function homeButton(){
     navigate('/coachhome', {replace: true})

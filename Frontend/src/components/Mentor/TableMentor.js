@@ -1,10 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import "./TableStyle.css";
 import { useNavigate } from "react-router-dom";
+import {loginChecker} from "../General/LoginCheck";
+
 
 const DisplayTable = ({data}) => {
 
-    let navigate = useNavigate();
+    let navigate = useNavigate(); 
+    window.onload = (event) => {
+        var toNavigateTo = loginChecker("Mentor")
+        if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+      };
 
     
     function homeButton(){
