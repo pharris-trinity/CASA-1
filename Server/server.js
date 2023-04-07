@@ -212,6 +212,19 @@ app.post('/api/coach/create_coach', async(req, res) => {
     })
   });
 
+  app.post('/api/coach/get_coaches_students', async(req, res) => {
+    const { userID } = req.body;
+  
+    const students = await Student.find(
+      {"coachID": userID} 
+    )
+      if(!students) {return res.status(401).send("No students found");}
+      else {
+        console.log(students);
+        return res.send(students).status(201);
+      }
+  })
+
 //=================
 
 //Dev Functionality
