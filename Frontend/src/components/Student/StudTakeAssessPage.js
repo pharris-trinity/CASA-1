@@ -78,23 +78,8 @@ export default function StudentTakeAssessPage() {
 
     return(
         <>
-        {/*<Navbar buttonSet='takeQuiz'/>*/}
-        
-        <div>
-            {showList 
-            ? (quizlist && quizlist.map(item => (
-                <button className="my-button" onClick={() => pullOneQuiz(item._id)}>
-                    {item.name}
-                </button>
-            ))) 
-            : (quiz && <Quiz quizData = {quiz} showList = {(e) => setShowList(e)}/>)}
-            {/*quiz.map(item => (
-                <ul key="Items List">
-                    {console.log("Here is item.questions[0]", item.questions[i].description)}
-                    <li>{item.questions[i].answers[0]}</li>
-                </ul>
-            ))*/}
-        </div>
+        <Navbar buttonSet='takeQuiz'/>
+
         
         
         <div>
