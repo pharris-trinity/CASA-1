@@ -11,7 +11,7 @@ export default function LandingMainPage() {
     return (
     <>
     <Navbar buttonSet="landing"/>
-    
+      
     <div className="maincontainer">
         <div className="mainrow">
             <div className="maincol1">
