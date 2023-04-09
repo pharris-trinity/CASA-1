@@ -141,7 +141,7 @@ export default function ViewTeams(){
                   }
 
               } catch (error) {
-                  console.log("Unable to fetch -")
+                  console.log("Unable to fetch -", error)
               }
           }
           );
