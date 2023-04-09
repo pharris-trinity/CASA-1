@@ -681,6 +681,37 @@ app.post('/api/get-MentorData', function(req, res, next) {
     }
   })
 
+  //updates the information in the database
+  app.post('/api/team/update_student_info', async(req, res) => {
+    //Takes in a team ID and a student ID and updates the team and the student
+    const {studentID, studentDispName, studentEmail, studentGradLevel, studentTeamName} = req.body
+    console.log("Got IN-------------")
+    //const team = await Team.findOne({"national_id": team_id})
+    const user = await  User.find({"_id": studentID})
+    console.log("after findOne")
+    if(!user){
+      return res.status(502).send("No user found that matches that ID")
+    }
+    console.log("User has: ", user)
+    console.log("After !user check ")
+    if(studentDispName != '' || studentDispName != 'N/A')user.displayname = studentDispName
+    console.log("disp ")
+    if(studentEmail != '' || studentEmail != 'N/A')user.email = studentEmail
+    console.log("email ")
+    //if(studentGradLevel != '' || studentGradLevel != 'N/A')user.gradlevel = studentGradLevel 
+    
+    //user.team = studentTeamName
+    //console.log("team ")
+    console.log("server side console.log for update_student_info: ", user)
+    user.save()
+    //Save the updated user and team
+  
+    return res.status(200).send("Updated user and team successfully")
+  })
+  
+  
+
+
   //search for coach based on coach's object id to get madequizzes field: WIP status, may delete
   //currently objid for assessment field is janky, needs to have a create api
   app.get('/api/coachsearch/:oid', async(req,res)=>{
