@@ -3,12 +3,9 @@ import React, {useEffect, useState} from "react"
 import CoachProfileContent from "./CoachProfileContent"
 
 export default function CoachProfile() {
-   //local storage has current user information; parse it right by adding curly braces and get your json object
-    const curruser = JSON.parse(localStorage.getItem("userID"));
-    const curlyuser = "{" + curruser + "}";
-    const fixeduser = JSON.parse(curlyuser); //get fields by using fixeduser.username, etc.
-    //const studentIDstr = fixeduser._id; 
-    const coachusername = fixeduser.username;
+
+    const coachusername = localStorage.username;
+
 
     const coachsearchurl= '/api/coachsearch/';
     const finishedurl = coachsearchurl+coachusername;
