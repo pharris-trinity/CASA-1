@@ -7,14 +7,17 @@ function LogoutButton(props) {
   
   const logout = () => {
     console.log("logout function called");
-    localStorage.removeItem("userID");
-    localStorage.removeItem("email");
+    localStorage.removeItem("_id");
+    localStorage.removeItem("username");
+    localStorage.removeItem("school");
+    localStorage.removeItem("displayname");
+    localStorage.removeItem("usertype");
     navigate('/login');
     console.log("should be logged out now");
   }
 
   return (
-    <button onClick={logout}>Logout</button>
+    <button className="casa-button" onClick={logout}>Logout</button>
   );
 }
 

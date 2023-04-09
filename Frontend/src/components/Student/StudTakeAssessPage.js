@@ -15,17 +15,19 @@ the links all lead to quizcontent but the id is passed into localstorage to get 
 export default function StudentTakeAssessPage() {
     
     //local storage has current user information; parse it right by adding curly braces and get your json object
-    const curruser = JSON.parse(localStorage.getItem("userID"));
-    const curlyuser = "{" + curruser + "}";
-    const fixeduser = JSON.parse(curlyuser); //get fields by using fixeduser.username, etc. 
-    const teamnumstr = fixeduser.team.toString();
+    // const curruser = JSON.parse(localStorage.getItem("userID"));
+    // const curlyuser = "{" + curruser + "}";
+    // const fixeduser = JSON.parse(curlyuser); //get fields by using fixeduser.username, etc. 
+    // const teamnumstr = fixeduser.team.toString();
     
     const [coachOID, setCoachOID] = useState("");
     const coachquizzes=[];
     const teamsearchurl = '/api/teamsearch/';
-    const finishedteamurl = teamsearchurl + teamnumstr;
+    //const finishedteamurl = teamsearchurl + teamnumstr;
     const coachsearchurl= '/api/coachsearch/';
     const quizsearchurl= '/api/quizsearch/';
+    const [studentID, setStudentID] = useState()
+    const [takenQuizzes, setTakenQuizzes] = useState()
     const [quizlist, setQuizlist] = useState([]);
     const [quiz, setQuiz] = useState([]);
     const [showList, setShowList] = useState(true);
@@ -65,19 +67,56 @@ export default function StudentTakeAssessPage() {
         }
     }
 
+    const getTakenQuizzes = async(id) => {
+        try {
+            const requestOptions = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({'id': id})
+            }
+            const response = await fetch('/api/studentTakenQuizzes', requestOptions)
+            const jsonData = await response.json()
+
+            //console.log(jsonData)
+            setTakenQuizzes(jsonData.takenQuizzes)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const hasTakenQuiz = (id, takenQs) => {
+        if(!takenQs){
+            return false
+        }
+        return takenQs.some(item => id === item.originalQuizID)
+    }
+
+
     useEffect(() => {
         pullQuiz();
+        setStudentID(localStorage.getItem("_id"))
     }, []);
 
 
     const i = 0;
     useEffect(() => {
-        //pullOneQuiz('63ea96646b905a49c50b2693');
-    }, []);
+        if(studentID){
+            console.log(studentID)
+            getTakenQuizzes(studentID)
+        }
+    }, [studentID]);
+    
+    useEffect(() => {
+        if(takenQuizzes){
+            console.log(takenQuizzes)
+        }
+    }, [takenQuizzes])
+
 
 
     return(
         <>
+<<<<<<< HEAD
         <Navbar buttonSet='takeQuiz'/>
 
         
@@ -85,6 +124,16 @@ export default function StudentTakeAssessPage() {
         <div>
             {showList 
             ? (quizlist && <QuizButtons quizlistInput={quizlist} />) 
+=======
+        {/*<Navbar buttonSet="logout"/>*/}
+        <div>
+            {showList 
+            ? (quizlist && quizlist.map(item => (
+                !hasTakenQuiz(item._id, takenQuizzes) ? <button className="casa-button" onClick={() => pullOneQuiz(item._id)}>
+                    {item.name}
+                </button> : <Fragment></Fragment>
+            ))) 
+>>>>>>> origin/develop
             : (quiz && <Quiz quizData = {quiz} showList = {(e) => setShowList(e)}/>)}
             {quiz.map(item => (
                 <ul key="Items List">

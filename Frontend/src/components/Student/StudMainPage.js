@@ -9,13 +9,13 @@ import Navbar from './../General/Navbar';
 export default function StudentMainPage() {
     //local storage has current user information; parse it right by adding curly braces and get your json object
     const curruser = JSON.parse(localStorage.getItem("userID"));
-    const curlyuser = "{" + curruser + "}";
-    const fixeduser = JSON.parse(curlyuser); //get fields by using fixeduser.username, etc.
-    console.log(fixeduser.username)
-    console.log(fixeduser._id)
-    console.log(typeof fixeduser._id)
-    console.log(typeof fixeduser.username)
-    console.log(fixeduser)
+    // const curlyuser = "{" + curruser + "}";
+    // const fixeduser = JSON.parse(curlyuser); //get fields by using fixeduser.username, etc.
+    // console.log(fixeduser.username)
+    // console.log(fixeduser._id)
+    // console.log(typeof fixeduser._id)
+    // console.log(typeof fixeduser.username)
+    // console.log(fixeduser)
 
 
     return (
@@ -36,12 +36,12 @@ export default function StudentMainPage() {
                     <DropdownBar headerText="Assessments">
                         <ul>
                             <a href="/stud/takeassess">
-                                <button className="my-button">Take Assessments</button>
+                                <button className="casa-button">Take Assessments</button>
                             </a>
                         </ul>  
                         <ul>
                             <a href="/stud/viewassess">
-                                <button className="my-button">View Assessments</button>
+                                <button className="casa-button">View Assessments</button>
                             </a>
                         </ul>  
                     </DropdownBar>

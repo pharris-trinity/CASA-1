@@ -88,8 +88,7 @@ export default function ViewTeams(){
         removeuser3: "ERROR: Student Is Not Registered To This Team",     
         removesuccess: "Student Successfully Removed From Team"
     }
-
-
+ 
 
     const fetchUserAccount2 = (incText, paramText) => {
       postData = { displayID: incText }
