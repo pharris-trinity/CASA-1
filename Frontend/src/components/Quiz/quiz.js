@@ -171,7 +171,8 @@ function Quiz(props) {
                     <QuizNavigation questions = {questionCount} next = {() => nextQuestion(questionCount)} prev = {() => prevQuestion()} 
                         index = {questionIndex} showList = {(e) => props.showList(e)} />
 
-                    {checkIfQuizCompleted() ? null : <button className='casa-button' onClick={() => gradeQuiz()}>submit</button>}
+                    {checkIfQuizCompleted() ? null : <button className='casa-button'
+                        style={{float: "right", marginRight:"10", marginTop: "-44px"}} onClick={() => gradeQuiz()}>SUBMIT</button>}
                 </div>
             </div>
             : <div>
