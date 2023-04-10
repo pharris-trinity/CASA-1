@@ -32,9 +32,11 @@ function Question(props) {
         checkIfAnswerIsSelected();
     }, [props.questionData])
 
+
+    //style={{ marginBottom: "30px"}}
     return (
         <div>
-            <p style={{ marginBottom: "30px"}}>{props.questionData && props.questionData.description}</p>
+            <p className="question-description">{props.questionData && props.questionData.description}</p>
 
             {/* Renders an Answer component for each of the question's answers */}
             {props.questionData && props.questionData.answers.map((answer) =>

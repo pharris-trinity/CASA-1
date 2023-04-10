@@ -8,15 +8,15 @@
 
 
 .main-box {
-    width: 90vw;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-    background-color: var(--primary-dark-blue);
-    height: 90%;
-    padding: 10px 20px;
-    border-radius: 10px; /* Border radius to create rounded edges */
-  }
+  width: 90vw;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: content-box;
+  background-color: var(--primary-dark-blue);
+  height: 90%;
+  padding: 10px 20px;
+  border-radius: 10px; /* Border radius to create rounded edges */
+}
   
   .quiz-title {
     padding: 10px;
