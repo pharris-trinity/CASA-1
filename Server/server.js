@@ -709,27 +709,32 @@ app.post('/api/get-MentorData', function(req, res, next) {
   //updates the information in the database
   app.post('/api/team/update_student_info', async(req, res) => {
     //Takes in a team ID and a student ID and updates the team and the student
-    const {studentID, studentDispName, studentEmail, studentGradLevel, studentTeamName} = req.body
-    console.log("Got IN-------------")
-    //const team = await Team.findOne({"national_id": team_id})
-    const user = await  User.find({"_id": studentID})
-    console.log("after findOne")
+    const {studentID, studentDispName, studentGradLevel, studentTeamID} = req.body
+    const user = await User.findOne({"_id": studentID})
+    const team = await Team.findOne({"national_id": studentTeamID});
+    console.log(team);
+
     if(!user){
-      return res.status(502).send("No user found that matches that ID")
+      return res.status(501).send("No user found that matches that ID")
     }
-    console.log("User has: ", user)
-    console.log("After !user check ")
+    if(!team) {
+      return res.status(502).send("No team matches this National Team Number")
+    }
+    console.log(studentGradLevel);
     if(studentDispName != '' || studentDispName != 'N/A')user.displayname = studentDispName
-    console.log("disp ")
-    if(studentEmail != '' || studentEmail != 'N/A')user.email = studentEmail
-    console.log("email ")
-    //if(studentGradLevel != '' || studentGradLevel != 'N/A')user.gradlevel = studentGradLevel 
+
+    if(studentGradLevel != '' || studentGradLevel != 'N/A')user.gradelevel = studentGradLevel 
     
-    //user.team = studentTeamName
-    //console.log("team ")
-    console.log("server side console.log for update_student_info: ", user)
-    user.save()
-    //Save the updated user and team
+    if(team.national_id != user.team.national_id) {
+      user.team = team.national_id;
+      var members = team.members;
+      if(members != undefined){
+        members.push(user._id);
+      }
+      team.members = members;
+      team.save();
+    }
+    user.save();
   
     return res.status(200).send("Updated user and team successfully")
   })

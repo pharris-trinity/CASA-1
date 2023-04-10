@@ -84,6 +84,7 @@ function ManageTeams(props) {
             if(team.national_id === teamID);
             teamName = team.name;
         })
+        console.log("teamName in getTeamName: ", teamName);
         return teamName;
     }
 
@@ -159,6 +160,7 @@ function ManageTeams(props) {
 
     const closeAddStudent = () => {
         setEnabledAddToTeam(false);
+        getStudents(coachUserID);
     }
 
 
@@ -231,8 +233,8 @@ function ManageTeams(props) {
 
                             <tbody >
                                 {students && students.map(student => (
-                                <tr>
-                                    <td >{student.displayname}</td>
+                                <tr key={student._id} onClick={() => (console.log("you clicked: ", student.displayname))}>
+                                    <td>{student.displayname}</td>
                                     <td>{student.email}</td>
                                     <td>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
                                     <td>{student.team != -1 ? getTeamName(student.team) : "N/A"}</td>
