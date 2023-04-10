@@ -1,11 +1,13 @@
 import React, {Fragment, useEffect, useState} from  "react"
 import "./stylesStud.css"
 import QuizzesList from "./StudTakeAssessContent";
-import Quiz from "../Quiz/quiz.js";
-import Navbar from './../General/Navbar';
+import Quiz from "../Quiz/quiz.js"
+import Navbar from './../General/Navbar'
+import QuizButtons from '../General/QuizButtons'
+import { useNavigate } from "react-router-dom";
+import { loginChecker } from "../General/LoginCheck";
 
-import {loginChecker} from "../General/LoginCheck";
-import { useNavigate } from 'react-router-dom';
+
 /* the page where the takeassess lives for students; you get the specific coachid & find all the
 quizzes under their authorid and pass it to StudTakeAssessContent to render the quizlist
 the links all lead to quizcontent but the id is passed into localstorage to get the specific quiz*/
@@ -30,7 +32,7 @@ export default function StudentTakeAssessPage() {
   let navigate = useNavigate();
 
     window.onload = (event) => {
-        var toNavigateTo = loginChecker("Student")
+        var toNavigateTo = loginChecker("Student");
         if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
       };
 
@@ -118,8 +120,8 @@ export default function StudentTakeAssessPage() {
 
     return(
         <>
-        {/*<Navbar buttonSet="logout"/>*/}
-        <div>
+        <Navbar buttonSet="takeQuiz"/>
+        <div style={{ marginTop: "51px" }}>
             {showList 
             ? (quizlist && quizlist.map(item => (
                 !hasTakenQuiz(item._id, takenQuizzes) ? <button className="casa-button" onClick={() => pullOneQuiz(item._id)}>
@@ -127,12 +129,11 @@ export default function StudentTakeAssessPage() {
                 </button> : <Fragment></Fragment>
             ))) 
             : (quiz && <Quiz quizData = {quiz} showList = {(e) => setShowList(e)}/>)}
-            {/*quiz.map(item => (
+            {quiz.map(item => (
                 <ul key="Items List">
                     {console.log("Here is item.questions[0]", item.questions[i].description)}
-                    <li>{item.questions[i].answers[0]}</li>
                 </ul>
-            ))*/}
+            ))}
         </div>
         </>
     );

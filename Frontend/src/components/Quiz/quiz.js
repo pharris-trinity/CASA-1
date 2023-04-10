@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import QuizNavigation from "./quizNavigation.js";
 import Question from "./question.js";
 import "./quiz.css"
-import Navbar from './../General/Navbar';
 import QuizResults from "./quizResults.js";
+import Navbar from './../General/Navbar';
 
 /*
 This component is main controller for taking a quiz. It is passed a quiz that's been pulled from the database,
@@ -154,18 +154,26 @@ function Quiz(props) {
 
     return (
         <>
-        <Navbar buttonSet="takeQuiz"/>
+        {/*<Navbar buttonSet="takeQuiz"/>*/}
+        
         <div>
             {/* Displays the quiz content unless the quiz has been submitted */}
             {results == false 
-            ? <div>
-                {/* Makes a Question component for each question in the quiz, and passes necessary information to the question components */}
-                {props.quizData.map(quiz => quiz.questions.map(
-                    question => <Question key = {quiz._id} questionData = {question} questionIndex = {questionIndex} updateAnswer = {(e) => changeAnswer(e, answersArray, questionIndex)} selected = {answersArray[questionIndex]}/>)[questionIndex])}
+            ? <div className='main-box'>
+                <div className='quiz-title'>{props.quizData[0].name}</div>
+                    <div className='content-box'>
+                    {/* Makes a Question component for each question in the quiz, and passes necessary information to the question components */}
+                    {props.quizData.map(quiz => quiz.questions.map(
+                        question => <Question key = {quiz._id} questionData = {question} questionIndex = {questionIndex}
+                        updateAnswer = {(e) => changeAnswer(e, answersArray, questionIndex)} 
+                        selected = {answersArray[questionIndex]}/>)[questionIndex])}
 
-                <QuizNavigation questions = {questionCount} next = {() => nextQuestion(questionCount)} prev = {() => prevQuestion()} index = {questionIndex} showList = {(e) => props.showList(e)} />
+                    <QuizNavigation questions = {questionCount} next = {() => nextQuestion(questionCount)} prev = {() => prevQuestion()} 
+                        index = {questionIndex} showList = {(e) => props.showList(e)} />
 
-                {checkIfQuizCompleted() ? null : <button onClick={() => gradeQuiz()}>submit</button>}
+                    {checkIfQuizCompleted() ? null : <button className='casa-button'
+                        style={{float: "right", marginRight:"10", marginTop: "-44px"}} onClick={() => gradeQuiz()}>SUBMIT</button>}
+                </div>
             </div>
             : <div>
                 {/* Displays the result screen and exit button if the quiz has been submitted */}
