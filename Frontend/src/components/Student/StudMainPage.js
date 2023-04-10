@@ -11,12 +11,6 @@ import { useNavigate } from 'react-router-dom';
 
 /*the page for student main page; what shows up for on the main menu*/
 export default function StudentMainPage() {
-
-    //local storage has current user information; parse it right by adding curly braces and get your json object
-    const curruser = JSON.parse(localStorage.getItem("userID"));
-    const curlyuser = "{" + curruser + "}";
-    const fixeduser = JSON.parse(curlyuser); //get fields by using fixeduser.username, etc.
-
     
   let navigate = useNavigate();
 

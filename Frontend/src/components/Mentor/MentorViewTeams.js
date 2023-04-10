@@ -11,10 +11,7 @@ export default function ViewTeams(){
     navigate('/coachhome', {replace: true})
   }
 
-    const curruser = JSON.parse(localStorage.getItem("userID"));
-    const curlyuser = "{" + curruser + "}";
-    const fixeduser = JSON.parse(curlyuser);
-    const coachID = fixeduser._id; 
+    const coachID = localStorage._id; 
 
     var postData;
     var allStudents;

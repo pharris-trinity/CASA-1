@@ -4,29 +4,30 @@ import { useNavigate as navigate} from 'react-router-dom';
 //let navigate = useNavigate();
 
 export const loginChecker = (expectedUserType) => {
-    const curruser = JSON.parse(localStorage.getItem("userID"));
-    const curlyuser = "{" + curruser + "}";
-    const fixeduser = JSON.parse(curlyuser);
+    //const curruser = JSON.parse(localStorage.getItem("userID"));
+    //const curlyuser = "{" + curruser + "}";
+    //const fixeduser = JSON.parse(curlyuser);
+    //const fixeduser = JSON.parse(localStorage.getItem("userID"));
 
     console.log("expectedUserType", expectedUserType)
-    console.log("fixeduser.usertype", fixeduser.usertype)
+    console.log("localStorage.usertype", localStorage.usertype)
 
     if(localStorage.usertype !== expectedUserType){
       console.log("inside the if statement")
-      if(fixeduser.usertype === "Student"){
+      if(localStorage.usertype === "Student"){
         console.log("inside the if statement for studnet")
         //navigate('/stud/main', {replace: true})
         return('/stud/main')
       }
-      else if(fixeduser.usertype === "Mentor"){
+      else if(localStorage.usertype === "Mentor"){
         console.log("inside the if statement for mentor")
         return('/mentorHome')
       } 
-      else if(fixeduser.usertype === "Coach"){
+      else if(localStorage.usertype === "Coach"){
         console.log("inside the if statement for coach")
           return('/coachhome')                   
       } 
-      else if(fixeduser.usertype === "Admin"){
+      else if(localStorage.usertype === "Admin"){
         console.log("inside the if statement for admin")
         return('/admin/homepage')
       }

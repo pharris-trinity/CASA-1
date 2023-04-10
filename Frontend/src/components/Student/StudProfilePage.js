@@ -9,13 +9,7 @@ import { useNavigate } from 'react-router-dom';
 to render the info*/
 
 export default function StudentProfilePage() {
-    
-   //local storage has current user information; parse it right by adding curly braces and get your json object
-    const curruser = JSON.parse(localStorage.getItem("userID"));
-    const curlyuser = "{" + curruser + "}";
-    const fixeduser = JSON.parse(curlyuser); //get fields by using fixeduser.username, etc.
-    //const studentIDstr = fixeduser._id;
-    const studentusername = fixeduser.username;
+    const studentusername = localStorage.username;
 
     const studentsearchurl= '/api/studentsearch/';
     const finishedurl = studentsearchurl+studentusername;

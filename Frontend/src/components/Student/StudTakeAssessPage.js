@@ -14,12 +14,6 @@ the links all lead to quizcontent but the id is passed into localstorage to get 
 
 export default function StudentTakeAssessPage() {
     
-    //local storage has current user information; parse it right by adding curly braces and get your json object
-    // const curruser = JSON.parse(localStorage.getItem("userID"));
-    // const curlyuser = "{" + curruser + "}";
-    // const fixeduser = JSON.parse(curlyuser); //get fields by using fixeduser.username, etc. 
-    // const teamnumstr = fixeduser.team.toString();
-    
     const [coachOID, setCoachOID] = useState("");
     const coachquizzes=[];
     const teamsearchurl = '/api/teamsearch/';

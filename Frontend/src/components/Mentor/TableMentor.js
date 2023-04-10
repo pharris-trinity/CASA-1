@@ -10,7 +10,8 @@ const DisplayTable = ({data}) => {
     const [studentIDs, setStudentIDs] = useState([])
     const [students, setStudents] = useState([])
 
-    
+    let navigate = useNavigate();
+
     function homeButton(){
       navigate('/coachhome', {replace: true})
     }
