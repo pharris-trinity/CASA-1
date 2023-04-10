@@ -3,12 +3,13 @@ import "./MentorTeamStyles.css"
 import {useLocalStorage} from '../General/useLocalStorage'
 import { json } from "body-parser";
 import { useNavigate } from "react-router-dom";
+import { loginChecker } from "../General/LoginCheck";
 
 export default function ViewTeams(){
   let navigate = useNavigate();
   
   window.onload = (event) => {
-      var toNavigateTo = loginChecker("Coach")
+      var toNavigateTo = loginChecker("Coach");
       if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
     };
   
