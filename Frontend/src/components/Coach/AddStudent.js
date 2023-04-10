@@ -71,7 +71,6 @@ function AddStudent(props) {
                                 onChange={(e) => setTeam(e.target.value)}
                             />
                         </div>
-                        <br/>``
                         <button className="casa-button" type="submit">Add person</button>
                         <button className="casa-button" type="button" onClick={props.closeForm}>Close</button>
                     </form>
