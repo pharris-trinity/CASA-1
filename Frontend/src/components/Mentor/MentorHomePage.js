@@ -1,23 +1,9 @@
 import React, { useEffect, useState } from "react";
 import MentorNavBar from "../Mentor/NavBarMentor";
 import "./stylesMentor.css"
-import {loginChecker} from "../General/LoginCheck";
-import { useNavigate } from 'react-router-dom';
 
 const MentorHome = () => {
     console.log("MENTOR HOME---------------------------------")
-    let navigate = useNavigate();
-
-    window.onload = async (event) => {
-        loginChecker("Mentor")
-       /* console.log("onload__________________")
-        var toNavigateTo = loginChecker("Mentor")
-        console.log("inside of MentorHomePage.js", toNavigateTo)
-        if(toNavigateTo != ""){
-            console.log("inside of the tonavigagto if statement", toNavigateTo)
-            await navigate(toNavigateTo, {replace: true})
-        }*/
-      };
 
 return (
 

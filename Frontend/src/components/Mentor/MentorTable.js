@@ -2,16 +2,9 @@ import React, {useEffect, useState} from 'react';
 import TableMentor from './DisplayTableMentor'
 import MentorNavBar from "./NavBarMentor";
 import "./stylesMentor2.css"
-import {loginChecker} from "../General/LoginCheck";
-import { useNavigate } from 'react-router-dom';
 
 function MentorTable() {
 
-  let navigate = useNavigate();
-  window.onload = (event) => {
-      var toNavigateTo = loginChecker("Mentor")
-      if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
-    };
 
 
   const [elements, setElements] = useState([])

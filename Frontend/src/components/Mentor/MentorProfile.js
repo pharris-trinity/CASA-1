@@ -2,16 +2,9 @@ import React, { useEffect, useState } from "react";
 import MentorNavBar from "./NavBarMentor";
 import "./stylesMentor.css"
 import MentorProfileContent from "./MentorProfileContent"
-import {loginChecker} from "../General/LoginCheck";
-import { useNavigate } from 'react-router-dom';
 
 const MentorHome = () => {
 
-    let navigate = useNavigate();
-    window.onload = (event) => {
-        var toNavigateTo = loginChecker("Mentor")
-        if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
-      };
 
     const [query, setQuery] = useState("")
 
