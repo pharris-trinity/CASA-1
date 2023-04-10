@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './stylesStud.css'; // Import CSS stylesheet
+import './dropdownBar.css';
 
 function DropdownBar(props) {
   const [isExpanded, setIsExpanded] = useState(false);

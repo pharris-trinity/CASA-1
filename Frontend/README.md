@@ -45,7 +45,6 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 With imports from the mentor table, mentor profile, and mentor homepage. 
 
 **Mentor Folder**
-Button.css - A .css file with the global Button function. This is can be used or removed.
 
 cyberTexasLogo.png - A picture of the CyberTexas logo.
 

@@ -16,11 +16,7 @@ export default function StudentMainPage() {
     const curruser = JSON.parse(localStorage.getItem("userID"));
     const curlyuser = "{" + curruser + "}";
     const fixeduser = JSON.parse(curlyuser); //get fields by using fixeduser.username, etc.
-    console.log(fixeduser.username)
-    console.log(fixeduser._id)
-    console.log(typeof fixeduser._id)
-    console.log(typeof fixeduser.username)
-    console.log(fixeduser)
+
     
   let navigate = useNavigate();
 
@@ -28,6 +24,7 @@ export default function StudentMainPage() {
         var toNavigateTo = loginChecker("Student")
         if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
       };
+
 
 
     return (
@@ -48,12 +45,12 @@ export default function StudentMainPage() {
                     <DropdownBar headerText="Assessments">
                         <ul>
                             <a href="/stud/takeassess">
-                                <button className="my-button">Take Assessments</button>
+                                <button className="casa-button">Take Assessments</button>
                             </a>
                         </ul>  
                         <ul>
                             <a href="/stud/viewassess">
-                                <button className="my-button">View Assessments</button>
+                                <button className="casa-button">View Assessments</button>
                             </a>
                         </ul>  
                     </DropdownBar>
