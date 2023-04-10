@@ -8,6 +8,7 @@ and making an answer component for each possible answer
 
 function AddStudent(props) {
     const[studentEmail, setStudentEmail] = useState();
+    const[team, setTeam] = useState();  
     
     // const addStudentToTeam = (inputTeamID, inputStudentID) => {
     //     var tmpData = {team_id: inputTeamID, student_id: inputStudentID}
@@ -41,6 +42,8 @@ function AddStudent(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         alert('You have submitted');
+        console.log("given to handleSubmit", e);
+        //addStudentToTeam();
     }
 
     if(props.enabled == true) {
@@ -48,9 +51,9 @@ function AddStudent(props) {
             <div className="form-popup">
                 <h2>Add Student</h2>
                 <div>
-                    <form className="form-container" onSubmit={handleSubmit}>
+                    <form className="form-container" onSubmit={handleSubmit} on>
                         <div>
-                            <label htmlFor='email'>Student's Email: </label>
+                            <label htmlFor='email'>Student's Email </label>
                             <input
                                 type='text'
                                 id='email'
@@ -59,17 +62,18 @@ function AddStudent(props) {
                                 onChange={(e) => setStudentEmail(e.target.value)}
                             />
 
-                            {/* <label htmlFor='firstName'>Name: </label>
+                            <label htmlFor='firstName'>Team (Optional)</label>
                             <input
                                 type='text'
-                                id='firstName'
-                                name='firstName'
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                            /> */}
+                                id='team'
+                                name='team'
+                                value={team}
+                                onChange={(e) => setTeam(e.target.value)}
+                            />
                         </div>
+                        <br/>``
                         <button className="casa-button" type="submit">Add person</button>
-                        <button className="casa-button" type="close">Close</button>
+                        <button className="casa-button" type="button" onClick={props.closeForm}>Close</button>
                     </form>
                 </div>
 

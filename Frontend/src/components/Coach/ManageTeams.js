@@ -170,6 +170,10 @@ function ManageTeams(props) {
         setEnabledAddToTeam(true);
     }
 
+    const closeAddStudent = () => {
+        setEnabledAddToTeam(false);
+    }
+
 
     useEffect(() => {
         setCoachUserID(localStorage.getItem("_id"));
@@ -222,7 +226,7 @@ function ManageTeams(props) {
                 {/*Div for add and delete button code*/}
                 <div>
                     <button className="casa-button" onClick={addStudentButton}>Add Student</button>
-                    <AddStudent enabled={enabledAddToTeam}/>
+                    <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
                 </div>
 
                 {/*Div where student table goes*/}
