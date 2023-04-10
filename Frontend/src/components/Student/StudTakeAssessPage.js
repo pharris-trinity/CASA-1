@@ -120,7 +120,7 @@ export default function StudentTakeAssessPage() {
 
     return(
         <>
-        <Navbar buttonSet="logout"/>
+        <Navbar buttonSet="takeQuiz"/>
         <div style={{ marginTop: "51px" }}>
             {showList 
             ? (quizlist && quizlist.map(item => (
