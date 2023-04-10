@@ -79,6 +79,7 @@ function App() {
           <Route path="profile" element={<CoachProfile/>} />
           {/*ViewTeams are functionally the same, they just display info in a different order*/}
           <Route path="ViewTeams" element={<ViewTeams/>} />
+          <Route path="coachtable" element={<TableMentor/>} />
 
         {/*Mentor Routes*/}
           <Route path="mentorHome" element={<MentorHome/>} />
