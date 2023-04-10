@@ -123,7 +123,7 @@ function AddStudent(props) {
                                 required
                             />
 
-                            <label htmlFor='firstName'>Team National ID (Optional)</label>
+                            <label htmlFor='team'>Team National ID (Optional)</label>
                             <input
                                 type='number'
                                 id='team'

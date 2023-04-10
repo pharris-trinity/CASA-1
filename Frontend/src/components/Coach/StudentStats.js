@@ -57,7 +57,7 @@ function StudentStats(props) {
             }
             const response = await fetch('/api/coach/get_coaches_students', requestOptions)
             const jsonData = await response.json()
-            console.log(jsonData);
+            //console.log(jsonData);
             setStudents(jsonData);
         } catch (error) {
             console.log(error)

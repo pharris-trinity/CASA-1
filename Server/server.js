@@ -736,7 +736,7 @@ app.post('/api/get-MentorData', function(req, res, next) {
     }
     user.save();
   
-    return res.status(200).send("Updated user and team successfully")
+    return res.status(200).send(user);
   })
   
   
