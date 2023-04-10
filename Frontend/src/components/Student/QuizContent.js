@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from  "react"
 import "./stylesStud.css";
+import {loginChecker} from "../General/LoginCheck";
+import { useNavigate } from 'react-router-dom';
+
 /*this page gets a specific quiz from the localstorage's currquiz information by its obj id;
  then through local storage maps appropriately to each question display; you can change it so that there
   is only one storage const*/
@@ -12,6 +15,14 @@ export default function QuizContent() {
     const fquizurl = quizsearchurl + currquizid;
     //console.log(fquizurl);
     const [currentquiz, setCurrentQuiz] = useState([]);
+
+    let navigate = useNavigate();
+
+    window.onload = (event) => {
+        var toNavigateTo = loginChecker("Student")
+        if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+      };
+
     
     useEffect(function getquizinfo() {
       if(currquizid != null){
