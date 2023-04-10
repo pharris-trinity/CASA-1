@@ -5,4 +5,12 @@
     width: 80%; /* to limit the maximum width of the container */
     margin: 0 auto; /* to center the container horizontally */
   }
+
+.question-description {
+  margin: auto;
+  width: 90%;
+  text-align: center;
+  overflow: wrap;
+  color: white;
+}
   
