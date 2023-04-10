@@ -39,11 +39,11 @@ export default function StudentMainPage() {
                                 <button className="casa-button">Take Assessments</button>
                             </a>
                         </ul>  
-                        <ul>
+                        {/*<ul>
                             <a href="/stud/viewassess">
                                 <button className="casa-button">View Assessments</button>
                             </a>
-                        </ul>  
+                        </ul>*/}  
                     </DropdownBar>
             </div>
         </div>

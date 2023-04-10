@@ -156,11 +156,13 @@ function Quiz(props) {
 
     return (
         <>
-        <Navbar buttonSet="takeQuiz"/>
+        {/*<Navbar buttonSet="takeQuiz"/>*/}
+        
         <div>
             {/* Displays the quiz content unless the quiz has been submitted */}
             {results == false 
             ? <div>
+                <h3>{props.quizData[0].name}</h3>
                 {/* Makes a Question component for each question in the quiz, and passes necessary information to the question components */}
                 {props.quizData.map(quiz => quiz.questions.map(
                     question => <Question key = {quiz._id} questionData = {question} questionIndex = {questionIndex} updateAnswer = {(e) => changeAnswer(e, answersArray, questionIndex)} selected = {answersArray[questionIndex]}/>)[questionIndex])}
