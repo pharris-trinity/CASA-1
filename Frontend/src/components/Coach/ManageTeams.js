@@ -53,6 +53,8 @@ function ManageTeams(props) {
     }
 
     const getTeams = async (inputTeams) => {
+        var tempTeams = [];
+        console.log("inputTeams length", inputTeams);
         for(let i = 0; i < inputTeams.length; i++){
             try {
                 console.log(inputTeams[i])
@@ -62,15 +64,18 @@ function ManageTeams(props) {
                 };
                 const response = await fetch('/api/teamsearch/' + JSON.stringify(inputTeams[i]), requestOptions);
                 const jsonData = await response.json();
-                setTeams(...teams, ...jsonData);
+                console.log("jsonData in getTeams", jsonData, "index", i);
+                tempTeams.push(jsonData);
             } catch (error) {
                 console.log("error in getTeams: ", error);
             }
         }
+        setTeams(...tempTeams);
     }
 
     const getTeamName = (teamID) => {
         var teamName = "";
+        console.log("teams in getTeamName", teams);
         teams.map(team => {
             console.log("comparing team nationalID and teamID in getTeamName: ", team.national_id, teamID);
             if(team.national_id == teamID) {
@@ -134,6 +139,7 @@ function ManageTeams(props) {
 
     useEffect(() => {
         if(coach) {
+            console.log("heres whats in coach.teams after coach loads in: ",coach.teams);
             getTeams(coach.teams);
         }
     }, [coach])
@@ -165,7 +171,7 @@ function ManageTeams(props) {
                                 onChange={(e) => setUpdateDisplayName(e.target.value)}
                             />
 
-                            <p>Email (Not Editable)</p>
+                            <p className="label-style">Email (Not Editable)</p>
                             <p className="email-box">{displayEmail}</p>
 
                             <label htmlFor='grade'>Grade Level</label>
@@ -185,20 +191,22 @@ function ManageTeams(props) {
                                 value={updateTeamID}
                                 onChange={(e) => setUpdateTeamID(e.target.value)}
                             />
-                            <button className="casa-button" type="submit">Save Changes</button>
+                            <button className="casa-button button-alignment" type="submit">Save Changes</button>
+                            <br/>
+                            <button className="casa-button button-alignment" type="button" onClick={addStudentButton}>Add Student</button>
                         </div>
                     </form>
 
                     {/*Div for add and delete button code*/}
                     <div>
-                        <button className="casa-button" onClick={addStudentButton}>Add Student</button>
                         <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
+                        <button className="casa-button" type="button">Delete Student</button>
                     </div>
                 </div>
 
                 {/*Div where student table goes*/}
-                <div className="right">
-                    <table >
+                <div >
+                    <table className="right">
                             <thead>
                                 <tr >
                                     <th>Student Name</th>
@@ -215,7 +223,7 @@ function ManageTeams(props) {
                                     <td>{student.displayname}</td>
                                     <td>{student.email}</td>
                                     <td>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
-                                    <td>{(student.team && student.team != -1) ? getTeamName(student.team) : "N/A"}</td>
+                                    <td>{(teams && student.team != -1) ? getTeamName(student.team) : "N/A"}</td>
                                     <td>{student.team != -1 ? student.team : "N/A"}</td>
                                 </tr>
                                 ))}

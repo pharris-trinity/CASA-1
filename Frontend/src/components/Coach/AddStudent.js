@@ -111,7 +111,7 @@ function AddStudent(props) {
             <div className="form-popup">
                 <h2>Add Student</h2>
                 <div>
-                    <form className="form-container" onSubmit={handleSubmit} on>
+                    <form className="add-student-container" onSubmit={handleSubmit} on>
                         <div>
                             <label htmlFor='email'>Student's Email </label>
                             <input
