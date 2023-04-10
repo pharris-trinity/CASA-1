@@ -3,6 +3,8 @@ import React from 'react';
 //import { Text } from 'react-native';
 import "./stylesCoach.css"
 import { useNavigate } from "react-router-dom";
+import {loginChecker} from "../General/LoginCheck";
+
 
 
 const ProfileContent = ({data}) => {
@@ -11,6 +13,12 @@ const ProfileContent = ({data}) => {
     function homeButton(){
         navigate('/coachhome', {replace: true})  
     }
+
+    window.onload = (event) => {
+        var toNavigateTo = loginChecker("Coach")
+        if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+      };
+
   
     return(
         <div className="profilecontainer">

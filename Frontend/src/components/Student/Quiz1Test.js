@@ -1,5 +1,7 @@
 import React, {useState} from  "react"
 import "./stylesStud.css"
+import {loginChecker} from "../General/LoginCheck";
+import { useNavigate } from 'react-router-dom';
 
 /*this page is filled with const and shows how to display the quizzes; 
 not actually connected to any links anymore*/
@@ -9,6 +11,14 @@ export default function TestQuiz1Page() {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
     
+
+    let navigate = useNavigate();
+
+    window.onload = (event) => {
+        var toNavigateTo = loginChecker("Student")
+        if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+      };
+
     //temp questions
     const questions = [
     {

@@ -3,6 +3,7 @@ import MentorNavBar from "../Mentor/NavBarMentor";
 import "./stylesMentor.css"
 
 const MentorHome = () => {
+    console.log("MENTOR HOME---------------------------------")
 
 return (
 
@@ -29,7 +30,7 @@ return (
             </div>
         </div>
     </div>
-    
+
     </>
 
     );

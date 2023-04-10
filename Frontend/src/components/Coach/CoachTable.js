@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
+import {loginChecker} from "../General/LoginCheck";
 
 export default function ViewTeams2(){
   let navigate = useNavigate();
@@ -13,6 +14,11 @@ export default function ViewTeams2(){
     //var tmp = {id: inputID}
     setJoinList(prev => [...prev, inputID.displayname]);
   }
+
+  window.onload = (event) => {
+    var toNavigateTo = loginChecker("Coach")
+    if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+  };
 
 
 

@@ -8,14 +8,21 @@ import ManageTeams from './ManageTeams';
 import StudentStats from './StudentStats';
 import Navbar from './../General/Navbar';
 import { useNavigate } from 'react-router-dom';
+import {loginChecker} from "../General/LoginCheck";
 
 function CoachHome() {
+
   const [enabledManageTeam, setEnabledManageTeam] = useState(false);
   const [enabledStudentStats, setEnabledStudentStats] = useState(false);
   const [enabledCreateQuiz, setEnabledCreateQuiz] = useState(false);
   const [enabledFindMentors, setEnabledFindMentors] = useState(false);
 
   let navigate = useNavigate();
+
+  window.onload = (event) => {
+    var toNavigateTo = loginChecker("Coach")
+    if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+  };
 
   function teamsButton(){
     //navigate('/ViewTeams2', {replace: true}) 
@@ -62,7 +69,6 @@ return (
     <Navbar buttonSet="coach"/>
 
     <div className="coach-page-main">
-
         <button className={enabledManageTeam ? "selected-tab" : "unselected-tab"} onClick={teamsButton}>
         Manage Teams
         </button>
@@ -90,7 +96,7 @@ return (
           }
           <ManageTeams enabled={enabledManageTeam}/>
           <StudentStats enabled={enabledStudentStats}/>
-
+          
           {enabledCreateQuiz 
           ? <h1>This page has not been implemented yet</h1>
           : null}
