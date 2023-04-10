@@ -23,9 +23,7 @@ function Quiz(props) {
     const[results, setResults] = useState(false);
     const[originalQuizID, setOriginalQuizID] = useState(0);
 
-    const curruser = JSON.parse(localStorage.getItem("userID"));
-    const curlyuser = "{" + curruser + "}";
-    const fixeduser = JSON.parse(curlyuser);
+    const userID = localStorage._id;
 
     //pulls out the correct answer for each quesiton and constructs an array to hold them
     const extractCorrectAnswers = () => {
@@ -100,7 +98,7 @@ function Quiz(props) {
             const quizCategory = props.quizData[0].category;
 
             var postData = {name: quizName, category: quizCategory, score: grade, questions: quizQuestions[0], answers: answersArray, correctQuestions: correctGradedAnswers, incorrectQuestions: incorrectGradedAnswers, 
-                testTakerID: fixeduser._id, timeStarted: startTime, timeFinished: endTime, originalQuizID: originalQuizID}
+                testTakerID: userID, timeStarted: startTime, timeFinished: endTime, originalQuizID: originalQuizID}
 
             const requestOptions = {
                 method: 'POST',

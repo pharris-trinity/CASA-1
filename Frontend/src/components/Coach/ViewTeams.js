@@ -1,20 +1,23 @@
 import React, { useState } from "react"
-import "./MentorTeamStyles.css"
+import "./TeamStyles.css"
 import {useLocalStorage} from '../General/useLocalStorage'
 import { json } from "body-parser";
 import { useNavigate } from "react-router-dom";
+import { loginChecker } from "../General/LoginCheck";
 
 export default function ViewTeams(){
   let navigate = useNavigate();
+  
+  window.onload = (event) => {
+      var toNavigateTo = loginChecker("Coach");
+      if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+    };
   
   function homeButton(){
     navigate('/coachhome', {replace: true})
   }
 
-    const curruser = JSON.parse(localStorage.getItem("userID"));
-    const curlyuser = "{" + curruser + "}";
-    const fixeduser = JSON.parse(curlyuser);
-    const coachID = fixeduser._id; 
+    const coachID = localStorage._id; 
 
     var postData;
     const[memberID, teamMembersID] = useState (null);
@@ -22,6 +25,23 @@ export default function ViewTeams(){
     const [input, setInput] = useState('');
     const [studInput, setstudInput] = useState('');
     const [studInput1, setstudInput1] = useState('');
+    var postData;
+    const [name1, setName1] = useState(null);
+    const [tier1, setTier1] = useState(null);
+    const [grade1, setGrade1] = useState(null);
+
+    const [name2, setName2] = useState(null);
+    const [tier2, student2Tier] = useState(null);
+    const [grade2, student2GradeLevel] = useState(null);
+
+    const [name3, setName3] = useState(null);
+    const [tier3, student3Tier] = useState(null);
+    const [grade3, student3GradeLevel] = useState(null);
+
+
+    const [name4, setName4] = useState(null);
+    const [tier4, student4Tier] = useState(null);
+    const [grade4, student4GradeLevel] = useState(null);
 
 
     //fetchUserAccount finds the team data to display
@@ -36,17 +56,17 @@ export default function ViewTeams(){
         await fetch('/api/team/get_team', requestOptions).then(
                 res => res.text()).then(text => {
                 try {
-                    const userVal = JSON.parse(text);
-                    if (userVal.coach != coachID){
+                    const team = JSON.parse(text);
+                    if (team.coach != coachID){
                       //setErrorMessages ({name: "team", message:error.team})
 
                     }
                     else {
-                        teamMembersID(userVal.members);
-                        fetchUserAccount2(userVal.members[0], 0);
-                        fetchUserAccount2(userVal.members[1], 1);
-                        fetchUserAccount2(userVal.members[2], 2);
-                        fetchUserAccount2(userVal.members[3], 3);
+                        teamMembersID(team.members);
+                        fetchUserAccount2(team.members[0], 0);
+                        fetchUserAccount2(team.members[1], 1);
+                        fetchUserAccount2(team.members[2], 2);
+                        fetchUserAccount2(team.members[3], 3);
 
                     }
                 } catch (error) {
@@ -56,24 +76,6 @@ export default function ViewTeams(){
         );
 
     };
-
-    var postData;
-    const [name1, student1Name] = useState(null);
-    const [tier1, student1Tier] = useState(null);
-    const [grade1, student1GradeLevel] = useState(null);
-
-    const [name2, student2Name] = useState(null);
-    const [tier2, student2Tier] = useState(null);
-    const [grade2, student2GradeLevel] = useState(null);
-
-    const [name3, student3Name] = useState(null);
-    const [tier3, student3Tier] = useState(null);
-    const [grade3, student3GradeLevel] = useState(null);
-
-
-    const [name4, student4Name] = useState(null);
-    const [tier4, student4Tier] = useState(null);
-    const [grade4, student4GradeLevel] = useState(null);
 
     const [errorMessages, setErrorMessages] = useState({});
     const error = {
@@ -100,48 +102,48 @@ export default function ViewTeams(){
       fetch('/api/coach/get_student_by_id', requestOptions).then(
           res => res.text()).then(text => {
               try {
-                  const userVal = JSON.parse(text);
-                  const newlist = userVal[0];
+                  const team = JSON.parse(text);
+                  const newlist = team[0];
                   if (paramText == 0){
-                      student1Name(undefined);
-                      student1Tier(undefined);
-                      student1GradeLevel(undefined);
+                      setName1(undefined);
+                      setTier1(undefined);
+                      setGrade1(undefined);
 
-                      student1Name(newlist.displayname);
-                      student1Tier(newlist.tier);
-                      student1GradeLevel(newlist.gradelevel);
+                      setName1(newlist.displayname);
+                      setTier1(newlist.tier);
+                      setGrade1(newlist.gradelevel);
                   }
                   if (paramText == 1){
-                      student2Name(undefined);
+                      setName2(undefined);
                       student2Tier(undefined);
                       student2GradeLevel(undefined);
 
 
-                      student2Name(newlist.displayname);
+                      setName2(newlist.displayname);
                       student2Tier(newlist.tier);
                       student2GradeLevel(newlist.gradelevel);
                   }
                   if (paramText == 2){
-                      student3Name(undefined);
+                      setName3(undefined);
                       student3Tier(undefined);
                       student3GradeLevel(undefined);
 
-                      student3Name(newlist.displayname);
+                      setName3(newlist.displayname);
                       student3Tier(newlist.tier);
                       student3GradeLevel(newlist.gradelevel);
                   }
                   if (paramText == 3){
-                      student4Name(undefined);
+                      setName4(undefined);
                       student4Tier(undefined);
                       student4GradeLevel(undefined);
 
-                      student4Name(newlist.displayname);
+                      setName4(newlist.displayname);
                       student4Tier(newlist.tier);
                       student4GradeLevel(newlist.gradelevel);
                   }
 
               } catch (error) {
-                  console.log("Unable to fetch -")
+                  console.log("Unable to fetch -", error)
               }
           }
           );
@@ -177,7 +179,7 @@ export default function ViewTeams(){
     );
 };  
 
-  //removeStudentAccounts takes in a team and a student username inptut and removes that student from that team or returns an error
+  //removeStudentAccounts takes in a team and a student username input and removes that student from that team or returns an error
   const removeStudentAccount = (incText3, incText4) => {
           var removeData = {team_id: incText3, student_id: incText4}
           const requestOptions = {

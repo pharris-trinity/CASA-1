@@ -1,7 +1,5 @@
 import React, { useState } from "react"
 import "./stylesCoach.css"
-import { json } from "body-parser";
-import { useNavigate } from "react-router-dom";
 //import StudProfileContent from "./Student/StudProfileContent"
 
 /* where the student profile page lives; get the local storage user information & send to StudProfileContent
