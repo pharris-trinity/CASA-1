@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import TableMentor from './DisplayTableMentor'
-import MentorNavBar from "./NavBarMentor";
 import "./stylesMentor2.css"
 
 function MentorTable() {
@@ -30,16 +29,9 @@ function MentorTable() {
 
   return (
     <>
-
-  <MentorNavBar />
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
     <div></div>
             {<TableMentor data={(elements)} />}
- </>
+    </>
   );
 }
 

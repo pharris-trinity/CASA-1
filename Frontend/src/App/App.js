@@ -23,11 +23,9 @@ import TableMentor from "../components/Mentor/TableMentor";
 import MentorHome from "../components/Mentor/MentorHomePage";
 import MentorProfile from "../components/Mentor/MentorProfile"
 // eslint-disable-next-line
-import ViewTeams from '../components/Mentor/MentorViewTeams';
-import ViewTeams2 from '../components/Mentor/MentorViewTeams2';
+import ViewTeams from '../components/Coach/ViewTeams';
 
 import CoachHome from "../components/Coach/CoachHome";
-import CoachTable from '../components/Coach/CoachTable';
 import CoachProfile from '../components/Coach/CoachProfile';
 
 import Admin from '../components/Admin/Admin';
@@ -79,10 +77,8 @@ function App() {
         {/*Coach Routes*/}
           <Route path="coachhome" element={<CoachHome/>} />
           <Route path="profile" element={<CoachProfile/>} />
-          <Route path="coachtable" element={<TableMentor/>} />
-          {/*ViewTeams 1 and 2 are functionally the same, they just display info in a different order*/}
+          {/*ViewTeams are functionally the same, they just display info in a different order*/}
           <Route path="ViewTeams" element={<ViewTeams/>} />
-          <Route path="ViewTeams2" element={<ViewTeams2/>} />
 
         {/*Mentor Routes*/}
           <Route path="mentorHome" element={<MentorHome/>} />
