@@ -6,7 +6,7 @@ function QuizButtons(props) {
   return (
     <div className="button-list">
       {props.quizlistInput.map((quiz) => (
-        <button className="my-button" key={quiz.id} onClick={() => pullOneQuiz(quiz.id)}>
+        <button className="casa-button" key={quiz.id} onClick={() => pullOneQuiz(quiz.id)}>
           {quiz.name}
         </button>
       ))}
