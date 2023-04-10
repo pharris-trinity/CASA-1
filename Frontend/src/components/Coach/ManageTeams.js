@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './ManageTeams.css'
+import AddStudent from "./AddStudent";
 
 /* 
 The Question component has logic to render a quiz question, including the description 
@@ -11,6 +12,8 @@ function ManageTeams(props) {
     const [coach, setCoach] = useState();
     const [students, setStudents] = useState([]);
     const [teams, setTeams] = useState();
+
+
     var studentToDisplay = ["N/A", "N/A", "N/A", "N/A"];
     const [inputDispName, setInputDispName] = useState('');
     const [inputEmail, setInputEmail] = useState('');
@@ -22,6 +25,21 @@ function ManageTeams(props) {
     const [displayEmail, setDisplayEmail] = useState("N/A");
     const [displayGradLevel, setDisplayGradLevel] = useState("N/A");
     const [displayTeamName, setDisplayTeamName] = useState("N/A");
+
+    const[enabledAddToTeam, setEnabledAddToTeam] = useState(false);
+    const [errorMessages, setErrorMessages] = useState({});
+    const error = {
+        team: "ERROR: Team Not Found",
+        user: "ERROR: Invalid Student, Student Name Does Not Exist", 
+        user2: "ERROR: Student Is Already In A Team",
+        user3: "ERROR:Student Is Already In This Team",
+        addsuccess: "Student Successfully Added To Team",
+        removeteam: "ERROR: Team Not Found",
+        removeuser: "ERROR: Invalid Student, Student Name Does Not Exist", 
+        removeuser2: "ERROR: Student Is Not Registered To Any Team", 
+        removeuser3: "ERROR: Student Is Not Registered To This Team",     
+        removesuccess: "Student Successfully Removed From Team"
+    }
 
     
     const getCoach = async(coachID) => {
@@ -148,7 +166,9 @@ function ManageTeams(props) {
         }
     }
 
-
+    const addStudentButton = () => {
+        setEnabledAddToTeam(true);
+    }
 
 
     useEffect(() => {
@@ -181,9 +201,8 @@ function ManageTeams(props) {
     if(props.enabled == true) {
         return (
             <div>
-                <div>
+                <div className="form-group">
                     {/*Div where selected student info + add student button, etc. goes*/}
-                    <div className="form-group">
                         {/*<button onClick={fillInEditingBoxes(1)}></button>*/}
                         <p >{displayDsipalyName}</p>{/*contentEditable="true" */}
                         <input value={inputDispName} placeholder="Change Display Name To"  onChange={ev => setInputDispName(ev.target.value)}/>
@@ -197,17 +216,17 @@ function ManageTeams(props) {
                         <p >{displayTeamName}</p>{/*contentEditable="true" */}
                         <input value={inputTeamName} placeholder="Change Team Name To"  onChange={ev => setInputTeamName(ev.target.value)}/>
 
-                        <button onClick={()=>{saver(inputDispName,inputEmail,inputGradLevel, inputTeamName, 1);}}>Save Edits</button>
-                        
-
-             
-
-
-            </div>
+                        <button onClick={()=>{saver(inputDispName,inputEmail,inputGradLevel, inputTeamName, 1);}}>Save Edits</button> 
                 </div>
 
+                {/*Div for add and delete button code*/}
                 <div>
-                    {/*Div where student table goes*/}
+                    <button className="casa-button" onClick={addStudentButton}>Add Student</button>
+                    <AddStudent enabled={enabledAddToTeam}/>
+                </div>
+
+                {/*Div where student table goes*/}
+                <div>
                     <table >
                             <thead>
                                 <tr >
@@ -224,18 +243,14 @@ function ManageTeams(props) {
                                 <tr>
                                     <td >{student.displayname}</td>
                                     <td>{student.email}</td>
-                                    <td>{student.gradelevel}</td>
+                                    <td>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
                                     <td>{student.team != -1 ? getTeamName(student.team) : "N/A"}</td>
                                     <td>{student.team != -1 ? student.team : "N/A"}</td>
                                 </tr>
                                 ))}
                             </tbody>
                     </table>
-
-                    
-
                 </div>
-                
             </div>
         );
     }
