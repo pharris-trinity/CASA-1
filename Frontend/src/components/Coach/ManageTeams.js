@@ -205,7 +205,7 @@ function ManageTeams(props) {
     if(props.enabled == true) {
         return (
             <div>
-                <div className="form-group">
+                <div className="left form-group">
                     {/*Div where selected student info + add student button, etc. goes*/}
                         {/*<button onClick={fillInEditingBoxes(1)}></button>*/}
                         <p >{displayDsipalyName}</p>{/*contentEditable="true" */}
@@ -221,16 +221,16 @@ function ManageTeams(props) {
                         <input value={inputTeamName} placeholder="Change Team Name To"  onChange={ev => setInputTeamName(ev.target.value)}/>
 
                         <button onClick={()=>{saver(inputDispName,inputEmail,inputGradLevel, inputTeamName, 1);}}>Save Edits</button> 
-                </div>
 
-                {/*Div for add and delete button code*/}
-                <div>
-                    <button className="casa-button" onClick={addStudentButton}>Add Student</button>
-                    <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
+                    {/*Div for add and delete button code*/}
+                    <div>
+                        <button className="casa-button" onClick={addStudentButton}>Add Student</button>
+                        <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
+                    </div>
                 </div>
 
                 {/*Div where student table goes*/}
-                <div>
+                <div className="right">
                     <table >
                             <thead>
                                 <tr >
