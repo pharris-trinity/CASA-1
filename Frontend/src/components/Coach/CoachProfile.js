@@ -2,13 +2,18 @@ import React, {useEffect, useState} from "react"
 //import "./stylesCoach.css"
 import CoachProfileContent from "./CoachProfileContent"
 
+import {loginChecker} from "../General/LoginCheck";
+import { useNavigate } from 'react-router-dom';
+
 export default function CoachProfile() {
-   //local storage has current user information; parse it right by adding curly braces and get your json object
-    const curruser = JSON.parse(localStorage.getItem("userID"));
-    const curlyuser = "{" + curruser + "}";
-    const fixeduser = JSON.parse(curlyuser); //get fields by using fixeduser.username, etc.
-    //const studentIDstr = fixeduser._id; 
-    const coachusername = fixeduser.username;
+    const coachusername = localStorage.username;
+    
+  let navigate = useNavigate();
+
+    window.onload = (event) => {
+        var toNavigateTo = loginChecker("Coach")
+        if(toNavigateTo != "stay ")navigate(toNavigateTo, {replace: true})
+      };
 
     const coachsearchurl= '/api/coachsearch/';
     const finishedurl = coachsearchurl+coachusername;
