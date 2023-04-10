@@ -4,6 +4,8 @@ import QuizzesList from "./StudTakeAssessContent";
 import Quiz from "../Quiz/quiz.js"
 import Navbar from './../General/Navbar'
 import QuizButtons from '../General/QuizButtons'
+import { useNavigate } from "react-router-dom";
+import { loginChecker } from "../General/LoginCheck";
 
 
 /* the page where the takeassess lives for students; you get the specific coachid & find all the
@@ -30,7 +32,7 @@ export default function StudentTakeAssessPage() {
   let navigate = useNavigate();
 
     window.onload = (event) => {
-        var toNavigateTo = loginChecker("Student")
+        var toNavigateTo = loginChecker("Student");
         if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
       };
 
