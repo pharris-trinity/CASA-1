@@ -3,9 +3,9 @@
     display: block;
     position: fixed;
     margin: auto;
-    /* top: 50%;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); */
+    transform: translate(-50%, -50%); 
     border: 3px solid #f1f1f1;
     z-index: 9;
     background-color: var(--primary-dark-blue);
@@ -15,18 +15,10 @@
   /* Add styles to the form container */
   .form-container {
     padding: 10px;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    background-color: black;
-    display: flex;
   }
   
   /* Full-width input fields */
-  .form-container input[type=text], .form-container input[type=password] {
+  .form-container input[type=email], .form-container input[type=number] {
     width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;
@@ -35,7 +27,7 @@
   }
   
   /* When the inputs get focus, do something */
-  .form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  .form-container input[type=email]:focus, .form-container input[type=number]:focus {
     background-color: #ddd;
     outline: none;
   }

@@ -494,6 +494,16 @@ app.post('/api/team/student_display_to_id', async(req, res) => {
   } 
 })
 
+app.post('/api/coach/get_studentid_by_email', async(req, res) => {
+  const { student_email } = req.body;
+  const user = await User.find({"email": student_email})     
+  if(!user){
+    return res.sendStatus(404)
+  } else {
+    return res.status(200).send(user[0]._id); 
+  }      
+}) 
+
 
 
 app.post('/api/team/add_student_to_team', async(req, res) => {
@@ -568,6 +578,21 @@ app.post('/api/team/remove_student_from_team', async(req, res) => {
 
   return res.status(200).send("Removed user from team")
 
+})
+
+app.post('/api/coach/add_coachid_to_student', async (req, res) => {
+  const {coachID, student_email} = req.body;
+
+  const student = await Student.findOne({email: student_email});
+
+  if(!student) {
+    return res.status(501).send("No student found with that email");
+  }
+
+  student.coachID = coachID;
+  student.save()
+
+  return res.status(200).send("CoachID was successfully added to student");
 })
 
 app.get('/api/stored', async (req, res) => {

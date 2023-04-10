@@ -27,19 +27,6 @@ function ManageTeams(props) {
     const [displayTeamName, setDisplayTeamName] = useState("N/A");
 
     const[enabledAddToTeam, setEnabledAddToTeam] = useState(false);
-    const [errorMessages, setErrorMessages] = useState({});
-    const error = {
-        team: "ERROR: Team Not Found",
-        user: "ERROR: Invalid Student, Student Name Does Not Exist", 
-        user2: "ERROR: Student Is Already In A Team",
-        user3: "ERROR:Student Is Already In This Team",
-        addsuccess: "Student Successfully Added To Team",
-        removeteam: "ERROR: Team Not Found",
-        removeuser: "ERROR: Invalid Student, Student Name Does Not Exist", 
-        removeuser2: "ERROR: Student Is Not Registered To Any Team", 
-        removeuser3: "ERROR: Student Is Not Registered To This Team",     
-        removesuccess: "Student Successfully Removed From Team"
-    }
 
     
     const getCoach = async(coachID) => {
