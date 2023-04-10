@@ -10,7 +10,7 @@ function QuizNavigation(props) {
 
     return (
         <>
-        <div>
+        <div style={{ marginTop: 20 }}>
             {/*Definitely a way to make this conditional rendering cleaner, but was under deadline pressure - Josh*/}
             {props.prev !== undefined ? props.index > 0 ?
                 <button className='casa-button' style={{ float: 'left' }} onClick={() => props.prev()}>PREV</button> : null : null}
@@ -19,7 +19,7 @@ function QuizNavigation(props) {
              <button className='casa-button' style={{ float: 'right' }} onClick={() => props.next()}>NEXT</button> : null}
 
             <div style={{clear: 'both'}}></div>
-            {props.showList !== undefined ? <button className='casa-button' onClick={() => props.showList(true)}>EXIT QUIZ</button> : null}
+            {props.showList !== undefined ? <button className='casa-button' style={{ marginTop: 50 }} onClick={() => props.showList(true)}>EXIT QUIZ</button> : null}
         </div>
         </>  
     );

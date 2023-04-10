@@ -34,10 +34,12 @@ function Question(props) {
 
     return (
         <div>
-            <p>{props.questionData && props.questionData.description}</p>
+            <p style={{ marginBottom: "30px"}}>{props.questionData && props.questionData.description}</p>
 
-            {/* Renders an Answer compoonent for each of the question's answers */}
-            {props.questionData && props.questionData.answers.map((answer) => <Answer updateAnswer = {(e) => props.updateAnswer(props.questionData.answers.indexOf(e))} currentSelected = {selectedAnswer} answerText = {answer} selection = {(e) => chooseAnswer(e)}/>)}
+            {/* Renders an Answer component for each of the question's answers */}
+            {props.questionData && props.questionData.answers.map((answer) =>
+                <Answer updateAnswer = {(e) => props.updateAnswer(props.questionData.answers.indexOf(e))}
+                currentSelected = {selectedAnswer} answerText = {answer} selection = {(e) => chooseAnswer(e)}/>)}
         </div>
     );
 }

@@ -167,7 +167,8 @@ function Quiz(props) {
                     {/* Makes a Question component for each question in the quiz, and passes necessary information to the question components */}
                     {props.quizData.map(quiz => quiz.questions.map(
                         question => <Question key = {quiz._id} questionData = {question} questionIndex = {questionIndex}
-                        updateAnswer = {(e) => changeAnswer(e, answersArray, questionIndex)} selected = {answersArray[questionIndex]}/>)[questionIndex])}
+                        updateAnswer = {(e) => changeAnswer(e, answersArray, questionIndex)} 
+                        selected = {answersArray[questionIndex]}/>)[questionIndex])}
 
                     <QuizNavigation questions = {questionCount} next = {() => nextQuestion(questionCount)} prev = {() => prevQuestion()} 
                         index = {questionIndex} showList = {(e) => props.showList(e)} />
