@@ -25,6 +25,7 @@ export default function StudentMainPage() {
         <h1>Main</h1>
             <div className="mainrow">
                 <div className="maincol1">
+                    {/*
                     <DropdownBar headerText="Proof of Concept Dropdown Bar">
                         <p>Isn't this neat?</p>
                     </DropdownBar>
@@ -33,17 +34,20 @@ export default function StudentMainPage() {
                             <p>Student Statistics</p>
                         </DropdownContent>
                     </DropdownBar>
+                    */}
                     <DropdownBar headerText="Assessments">
                         <ul>
                             <a href="/stud/takeassess">
                                 <button className="casa-button">Take Assessments</button>
                             </a>
                         </ul>  
-                        {/*<ul>
+                        {/*
+                        <ul>
                             <a href="/stud/viewassess">
                                 <button className="casa-button">View Assessments</button>
                             </a>
-                        </ul>*/}  
+                        </ul>
+                        */}  
                     </DropdownBar>
             </div>
         </div>

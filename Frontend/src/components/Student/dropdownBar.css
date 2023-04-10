@@ -3,18 +3,19 @@
 .dropdown-bar {
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
     overflow: hidden;
     margin-bottom: 5px;
   }
   
   .dropdown-bar-header {
-    background-color: #02005F;
+    background-color: var(--primary-dark-blue);
     padding: 10px;
     cursor: pointer;
   }
   
   .dropdown-bar-header:hover {
-    background-color: #3B89E5;
+    background-color: var(--primary-blue);
   }
   
   .dropdown-bar-content {
