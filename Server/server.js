@@ -386,6 +386,7 @@ app.post('/api/coach/create_coach', async(req, res) => {
       return res.status(401).send("Team already exists")
     }
     team.save()
+    console.log("server console log in register_team: ", team)
 
     c.teams = teamsArr;
     c.save()

@@ -57,17 +57,17 @@ function ManageTeams(props) {
 
     const getTeams = async (inputTeams) => {
         var tempTeams = [];
-        console.log("inputTeams length", inputTeams);
+        //console.log("inputTeams length", inputTeams);
         for(let i = 0; i < inputTeams.length; i++){
             try {
-                console.log(inputTeams[i])
+          //      console.log(inputTeams[i])
                 const requestOptions = {
                     method: 'GET',
                     headers: {'Content-Type': 'application/json'}
                 };
                 const response = await fetch('/api/teamsearch/' + JSON.stringify(inputTeams[i]), requestOptions);
                 const jsonData = await response.json();
-                console.log("jsonData in getTeams", jsonData, "index", i);
+       //         console.log("jsonData in getTeams", jsonData, "index", i);
                 tempTeams.push(jsonData);
             } catch (error) {
                 console.log("error in getTeams: ", error);
@@ -78,14 +78,14 @@ function ManageTeams(props) {
 
     const getTeamName = (teamID) => {
         var teamName = "";
-        console.log("teams in getTeamName", teams);
+  //      console.log("teams in getTeamName", teams);
         teams.map(team => {
-            console.log("comparing team nationalID and teamID in getTeamName: ", team.national_id, teamID);
+  //          console.log("comparing team nationalID and teamID in getTeamName: ", team.national_id, teamID);
             if(team.national_id == teamID) {
                 teamName = team.name;
             }
         })
-        console.log("teamName in getTeamName: ", teamName);
+    //    console.log("teamName in getTeamName: ", teamName);
         return teamName;
     }
 
@@ -117,20 +117,24 @@ function ManageTeams(props) {
 
     const addStudentButton = () => {
         setEnabledAddToTeam(true);
+        console.log("enabledAddToTeam: ", enabledAddToTeam)
     }
 
     const closeAddStudent = () => {
         setEnabledAddToTeam(false);
+        console.log("enabledAddToTeam: ", enabledAddToTeam)
         getStudents(coachUserID);
     }
 
     const makeTeamButton = () => {
         setEnableMakeTeam(true);
+        console.log("maketeamButton: ", enableMakeTeam)
     }
 
     const closeMakeTeam = () => {
-        setEnabledAddToTeam(false);
+        setEnableMakeTeam(false);
         getTeams(coach.teams);
+        console.log("closemaketeamButton: ", enableMakeTeam)
     }
 
     useEffect(() => {

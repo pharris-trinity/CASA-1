@@ -7,7 +7,7 @@ function MakeTeam(props) {
     const[teamName, setTeamName] = useState();
     const[teamSchool, setTeamSchool] = useState();
     const[teamDistrict, setTeamDistrict] = useState();
-    const[teamIsROTC, setTeamIsROTC] = useState();
+    const[teamIsROTC, setTeamIsROTC] = useState(false);
     const[teamCoachID, setTeamCoachID] = useState();
 
 /*
@@ -19,6 +19,7 @@ app.post('/api/admin/register_team', async(req, res) => {
 */
     const createATeam = async (tID, tName, tSchool, tDistrict, tROTC, tcoachID) => {
         var tmpData = { national_id: tID, name: tName, school: tSchool, district: tDistrict, rotc: tROTC, coach: tcoachID }
+        console.log("createATEAM TMPDATA: ", tmpData);
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -35,7 +36,7 @@ app.post('/api/admin/register_team', async(req, res) => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert('You have submitted');
+        //alert('You have submitted');
         props.closeForm();
     }
 
@@ -44,17 +45,18 @@ app.post('/api/admin/register_team', async(req, res) => {
             <div className="form-popup">
                 <h2>Make Team</h2>
                 <div>
-                    <form className="form-container" onSubmit={handleSubmit}>
+                    <form className="make-team-container" onSubmit={handleSubmit}>
                         <div>
                             <label htmlFor='national_id'>Team's National ID: </label>
                             <input
-                                type='text'
+                                type='number'
                                 id='national_id'
                                 name='national_id'
                                 value={teamNationalID}
                                 onChange={(e) => setTeamNationalID(e.target.value)}
                                 required                            
                             />
+
                             <label htmlFor='teamName'>Team's Name: </label>
                             <input
                                 type='text'
@@ -64,9 +66,7 @@ app.post('/api/admin/register_team', async(req, res) => {
                                 onChange={(e) => setTeamName(e.target.value)}
                                 required                            
                             />
-                            <label htmlFor='teamIsROTC'>Is the team ROTC True/False: </label>
-                            <button className="casa-button" type="submit" onClick={()=>{setTeamIsROTC(true)}}>True</button>
-                            <button className="casa-button" type="submit" onClick={()=>{setTeamIsROTC(false)}}>False</button>
+
                             <label htmlFor='teamSchool'>School Name: </label>
                             <input
                                 type='text'
@@ -76,6 +76,7 @@ app.post('/api/admin/register_team', async(req, res) => {
                                 onChange={(e) => setTeamSchool(e.target.value)}
                                 required                            
                             />
+
                             <label htmlFor='teamDistrict'>School District: </label>
                             <input
                                 type='text'
