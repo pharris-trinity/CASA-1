@@ -127,6 +127,7 @@ function ManageTeams(props) {
     }, []) 
 
     useEffect(() => {
+        console.log(coachUserID);
         if(coachUserID) {
             getCoach(coachUserID);
             getStudents(coachUserID);
@@ -160,7 +161,7 @@ function ManageTeams(props) {
         return (
             <div>
                 <div className="left form-group">
-                <form className="form-container" onSubmit={handleSubmit} on>
+                <form className="form-container" onSubmit={handleSubmit}>
                         <div>
                             <label htmlFor='name'>Name </label>
                             <input

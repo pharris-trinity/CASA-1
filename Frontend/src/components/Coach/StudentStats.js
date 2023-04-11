@@ -12,12 +12,12 @@ function StudentStats(props) {
     const [studentIDs, setStudentIDs] = useState([])
     const [students, setStudents] = useState([])
 
-    const getCoach = async(coachID) => {
+    const getCoach = async(internalCoachID) => {
         try {
             const requestOptions = {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({'id': coachID})
+                body: JSON.stringify({'id': internalCoachID})
             }
             const response = await fetch('/api/coachSearch', requestOptions)
             const jsonData = await response.json()
@@ -57,7 +57,6 @@ function StudentStats(props) {
             }
             const response = await fetch('/api/coach/get_coaches_students', requestOptions)
             const jsonData = await response.json()
-            //console.log(jsonData);
             setStudents(jsonData);
         } catch (error) {
             console.log(error)
@@ -114,7 +113,9 @@ function StudentStats(props) {
     }, []);
 
     useEffect(() => {
-        getCoach(coachID)
+        if(coachID) {
+            getCoach(coachID)
+        }
     }, [coachID]);
 
     useEffect(() => {
