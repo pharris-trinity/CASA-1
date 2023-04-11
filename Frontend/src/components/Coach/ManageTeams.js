@@ -12,35 +12,14 @@ function ManageTeams(props) {
     const [coachUserID, setCoachUserID] = useState();
     const [coach, setCoach] = useState();
     const [students, setStudents] = useState([]);
-    const [teams, setTeams] = useState();
-
-
-    var studentToDisplay = ["N/A", "N/A", "N/A", "N/A"];
-    const [inputDispName, setInputDispName] = useState('');
-    const [inputEmail, setInputEmail] = useState('');
-    const [inputGradLevel, setInputGradLevel] = useState('');
-    const [inputTeamName, setInputTeamName] = useState('');
-    var studID = '';
-    var rowNumber = 1;
-    const [displayDsipalyName, setDisplayDsipalyName] = useState("N/A");
+    const [teams, setTeams] = useState([]);
+    const [updateDisplayName, setUpdateDisplayName] = useState("N/A");
     const [displayEmail, setDisplayEmail] = useState("N/A");
-    const [displayGradLevel, setDisplayGradLevel] = useState("N/A");
-    const [displayTeamName, setDisplayTeamName] = useState("N/A");
+    const [updateGradLevel, setUpdateGradLevel] = useState("N/A");
+    const [updateTeamID, setUpdateTeamID] = useState("N/A");
+    const [currentStudentID, setCurrentStudentID] = useState();
 
     const[enabledAddToTeam, setEnabledAddToTeam] = useState(false);
-    const [errorMessages, setErrorMessages] = useState({});
-    const error = {
-        team: "ERROR: Team Not Found",
-        user: "ERROR: Invalid Student, Student Name Does Not Exist", 
-        user2: "ERROR: Student Is Already In A Team",
-        user3: "ERROR:Student Is Already In This Team",
-        addsuccess: "Student Successfully Added To Team",
-        removeteam: "ERROR: Team Not Found",
-        removeuser: "ERROR: Invalid Student, Student Name Does Not Exist", 
-        removeuser2: "ERROR: Student Is Not Registered To Any Team", 
-        removeuser3: "ERROR: Student Is Not Registered To This Team",     
-        removesuccess: "Student Successfully Removed From Team"
-    }
 
     const[enableMakeTeam, setEnableMakeTeam] = useState(false);
 
@@ -70,107 +49,79 @@ function ManageTeams(props) {
             }
             const response = await fetch('/api/coach/get_coaches_students', requestOptions)
             const jsonData = await response.json()
-            console.log(jsonData);
             setStudents(jsonData);
         } catch (error) {
             console.log(error)
         }
     }
 
-    const getTeams = async (teams) => {
-        for(let i = 0; i < teams.length; i++){
+    const getTeams = async (inputTeams) => {
+        var tempTeams = [];
+        console.log("inputTeams length", inputTeams);
+        for(let i = 0; i < inputTeams.length; i++){
             try {
+                console.log(inputTeams[i])
                 const requestOptions = {
                     method: 'GET',
                     headers: {'Content-Type': 'application/json'}
                 };
-                const response = await fetch('/api/teamsearch/' + JSON.stringify(teams[i]), requestOptions);
+                const response = await fetch('/api/teamsearch/' + JSON.stringify(inputTeams[i]), requestOptions);
                 const jsonData = await response.json();
-                console.log("jsonData in getTeams", jsonData);
-                setTeams(jsonData);
+                console.log("jsonData in getTeams", jsonData, "index", i);
+                tempTeams.push(jsonData);
             } catch (error) {
                 console.log("error in getTeams: ", error);
             }
         }
+        setTeams(...tempTeams);
     }
 
     const getTeamName = (teamID) => {
         var teamName = "";
+        console.log("teams in getTeamName", teams);
         teams.map(team => {
-            if(team.national_id === teamID);
-            teamName = team.name;
+            console.log("comparing team nationalID and teamID in getTeamName: ", team.national_id, teamID);
+            if(team.national_id == teamID) {
+                teamName = team.name;
+            }
         })
+        console.log("teamName in getTeamName: ", teamName);
         return teamName;
     }
 
+    const updateStudentAccount = async ( currentStudentID, newDispName, newGradLevel, newTeamID) => {
+        var tmpData = {studentID: currentStudentID, studentDispName: newDispName, studentGradLevel: newGradLevel, studentTeamID: newTeamID}
+        try {
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(tmpData)
+        };
+        
+        const response = await fetch('/api/team/update_student_info', requestOptions)
+        const jsonData = await response.json()
+        getStudents(coachUserID);
 
-    //function fillInEditingBoxes(arrayNumber){
-    const fillInEditingBoxes = async(changeDispNameTo, changeEmailTo, ChangeGrafLevelTo, ChangeTeamNameTo, arrayNumber) => {
-        if(students != [] && rowNumber != -1 && rowNumber != undefined ){
-           // console.log("students[arrayNumber]._id: ", rowNumber, students[rowNumber])
-            if(studID == '') { 
-                //console.log("studID: ", studID)
-                studID = students[arrayNumber]._id;
-                //console.log("studID: ", studID)
-            }
-            if(students[arrayNumber].displayname == null) studentToDisplay.push("N/A")
-            else studentToDisplay[0] = (students[arrayNumber].displayname)
-            if(students[arrayNumber].email == null) studentToDisplay.push("N/A")
-            else studentToDisplay[1] = (students[arrayNumber].email)
-            if(students[arrayNumber].gradelevel == null) studentToDisplay.push("N/A")
-            else studentToDisplay[2] = (students[arrayNumber].gradelevel)
-            if(students[arrayNumber].team == null) studentToDisplay.push("N/A")
-            else studentToDisplay[3] = (students[arrayNumber].team)
-
-            if(changeDispNameTo != '') studentToDisplay[0] = changeDispNameTo;
-            if(changeEmailTo != '') studentToDisplay[1] = changeEmailTo;
-            if(ChangeGrafLevelTo != '') studentToDisplay[2] = ChangeGrafLevelTo;
-            if(ChangeTeamNameTo != '') studentToDisplay[3] = ChangeTeamNameTo;
-
-
-            console.log("studentToDisplay: ", studentToDisplay)
-
-            setDisplayDsipalyName(studentToDisplay[0] );
-            setDisplayEmail(studentToDisplay[1] )
-            setDisplayGradLevel(studentToDisplay[2] )
-            setDisplayTeamName(studentToDisplay[3] )
+        } catch (error) {
+            console.log(error);
         }
     }
 
-    function saver(changeDispNameTo, changeEmailTo, ChangeGrafLevelTo, ChangeTeamNameTo, arrayNumber){
-        rowNumber = arrayNumber;
-        console.log("changeDispNameTo, changeEmailTo, ChangeGrafLevelTo, ChangeTeamNameTo, arrayNumber", changeDispNameTo, changeEmailTo, ChangeGrafLevelTo, ChangeTeamNameTo, arrayNumber)
-        if(studentToDisplay[0] == "N/A" || studentToDisplay[0] == '') {
-            console.log("Called fillInEditingBoxes")
-            fillInEditingBoxes(changeDispNameTo, changeEmailTo, ChangeGrafLevelTo, ChangeTeamNameTo, rowNumber);
-        }
-        updateStudentAccount(changeDispNameTo, changeEmailTo, ChangeGrafLevelTo, ChangeTeamNameTo)
-    }
-    const updateStudentAccount = ( newDispName, newEmail, newGradLevel, newTeamName) => {
-        console.log("studentToDisplay in updateStudent: ", studentToDisplay)
-        if(studentToDisplay[0] != '' && studentToDisplay[0] != "N/A" && studID != ''){
-            if(newDispName == '' || newDispName == undefined) newDispName = studentToDisplay[0];
-            if(newEmail == '' || newEmail == undefined) newEmail = studentToDisplay[1];
-            if(newGradLevel == '' || newGradLevel == undefined) newGradLevel = studentToDisplay[2];
-            if(newTeamName == '' || newTeamName == undefined) newTeamName = studentToDisplay[3];
-            console.log("studID----------------------------------------------------------------------", studID)
-            var tmpData = {StudentID: studID, studentDispName: newDispName, studentEmail: newEmail, studentGradLevel: newGradLevel, studentTeamName: newTeamName}
-            console.log("tmpData======================================: ", tmpData)
-            const requestOptions = {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(tmpData)
-            };
-            fetch('/api/team/update_student_info', requestOptions).then(
-                fillInEditingBoxes(newDispName, newEmail, newGradLevel, newTeamName, rowNumber)
-                //getStudents(coachUserID),
-                
-            )
-        }
+    const fillDisplayInfo = (student) => {
+        setCurrentStudentID(student._id);
+        setUpdateDisplayName(student.displayname);
+        setDisplayEmail(student.email);
+        student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("");
+        (student.team != -1) ? setUpdateTeamID(student.team): setUpdateTeamID("");
     }
 
     const addStudentButton = () => {
         setEnabledAddToTeam(true);
+    }
+
+    const closeAddStudent = () => {
+        setEnabledAddToTeam(false);
+        getStudents(coachUserID);
     }
 
     const makeTeamButton = () => {
@@ -199,46 +150,74 @@ function ManageTeams(props) {
 
     useEffect(() => {
         if(coach) {
-            console.log("coach: ", coach);
-            console.log("coach's teams before getTeams", coach.teams);
+            console.log("heres whats in coach.teams after coach loads in: ",coach.teams);
             getTeams(coach.teams);
         }
     }, [coach])
 
     useEffect(() => {
-        console.log("teams has been updated", teams);
+        if(teams){
+            console.log("teams after teams is updated hypothetically: ", teams);
+        }
     }, [teams])
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,updateTeamID);
+        alert("Student has been updated");
+    }
 
     if(props.enabled == true) {
         return (
             <div>
-                <div className="form-group">
-                    {/*Div where selected student info + add student button, etc. goes*/}
-                        {/*<button onClick={fillInEditingBoxes(1)}></button>*/}
-                        <p >{displayDsipalyName}</p>{/*contentEditable="true" */}
-                        <input value={inputDispName} placeholder="Change Display Name To"  onChange={ev => setInputDispName(ev.target.value)}/>
-                        
-                        <p >{displayEmail}</p> {/*contentEditable="true" */}
-                        <input value={inputEmail} placeholder="Change Email  To"  onChange={ev => setInputEmail(ev.target.value)}/>
-                        <p >{displayGradLevel}</p>{/*contentEditable="true" */}
-                        <input value={inputGradLevel} placeholder="Change grad level  To"  onChange={ev => setInputGradLevel(ev.target.value)}/>
-                        {/*<td>{getTeamName(student.team)}</td>
-                        <input value={inputDispName} placeholder="Change Display Name To"  onChange={ev => setInputDispName(ev.target.value)}/>*/}
-                        <p >{displayTeamName}</p>{/*contentEditable="true" */}
-                        <input value={inputTeamName} placeholder="Change Team Name To"  onChange={ev => setInputTeamName(ev.target.value)}/>
+                <div className="left form-group">
+                <form className="form-container" onSubmit={handleSubmit} on>
+                        <div>
+                            <label htmlFor='name'>Name </label>
+                            <input
+                                type='text'
+                                id='name'
+                                name='name'
+                                value={updateDisplayName}
+                                onChange={(e) => setUpdateDisplayName(e.target.value)}
+                            />
 
-                        <button onClick={()=>{saver(inputDispName,inputEmail,inputGradLevel, inputTeamName, 1);}}>Save Edits</button> 
-                </div>
+                            <p className="label-style">Email (Not Editable)</p>
+                            <p className="email-box">{displayEmail}</p>
 
-                {/*Div for add and delete button code*/}
-                <div>
-                    <button className="casa-button" onClick={addStudentButton}>Add Student</button>
-                    <AddStudent enabled={enabledAddToTeam}/>
+                            <label htmlFor='grade'>Grade Level</label>
+                            <input
+                                type='number'
+                                id='grade'
+                                name='grade'
+                                value={updateGradLevel}
+                                onChange={(e) => setUpdateGradLevel(e.target.value)}
+                            />
+
+                            <label htmlFor='team'>Team National ID</label>
+                            <input
+                                type='number'
+                                id='team'
+                                name='team'
+                                value={updateTeamID}
+                                onChange={(e) => setUpdateTeamID(e.target.value)}
+                            />
+                            <button className="casa-button button-alignment" type="submit">Save Changes</button>
+                            <br/>
+                            <button className="casa-button button-alignment" type="button" onClick={addStudentButton}>Add Student</button>
+                        </div>
+                    </form>
+
+                    {/*Div for add and delete button code*/}
+                    <div>
+                        <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
+                        <button className="casa-button" type="button">Delete Student</button>
+                    </div>
                 </div>
 
                 {/*Div where student table goes*/}
-                <div>
-                    <table >
+                <div >
+                    <table className="right">
                             <thead>
                                 <tr >
                                     <th>Student Name</th>
@@ -251,11 +230,11 @@ function ManageTeams(props) {
 
                             <tbody >
                                 {students && students.map(student => (
-                                <tr>
-                                    <td >{student.displayname}</td>
+                                <tr key={student._id} onClick={() => (fillDisplayInfo(student))}>
+                                    <td>{student.displayname}</td>
                                     <td>{student.email}</td>
                                     <td>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
-                                    <td>{student.team != -1 ? getTeamName(student.team) : "N/A"}</td>
+                                    <td>{(teams && student.team != -1) ? getTeamName(student.team) : "N/A"}</td>
                                     <td>{student.team != -1 ? student.team : "N/A"}</td>
                                 </tr>
                                 ))}
