@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './ManageTeams.css'
 import AddStudent from "./AddStudent";
+import MakeTeam from "./MakeTeam";
 
 /* 
 The Question component has logic to render a quiz question, including the description 
@@ -40,6 +41,8 @@ function ManageTeams(props) {
         removeuser3: "ERROR: Student Is Not Registered To This Team",     
         removesuccess: "Student Successfully Removed From Team"
     }
+
+    const[enableMakeTeam, setEnableMakeTeam] = useState(false);
 
     
     const getCoach = async(coachID) => {
@@ -170,6 +173,14 @@ function ManageTeams(props) {
         setEnabledAddToTeam(true);
     }
 
+    const makeTeamButton = () => {
+        setEnableMakeTeam(true);
+    }
+
+    const closeMakeTeam = () => {
+        setEnabledAddToTeam(false);
+        getTeams(coach.teams);
+    }
 
     useEffect(() => {
         setCoachUserID(localStorage.getItem("_id"));
@@ -251,6 +262,14 @@ function ManageTeams(props) {
                             </tbody>
                     </table>
                 </div>
+
+                 {/*Div for make team button code*/}
+                 <div>
+                    <button className="casa-button" onClick={makeTeamButton}>Make A Team</button>
+                    <MakeTeam enabled={enableMakeTeam} closeForm={closeMakeTeam}/>
+                </div>
+
+
             </div>
         );
     }
