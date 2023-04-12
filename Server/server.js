@@ -596,6 +596,35 @@ app.post('/api/coach/add_coachid_to_student', async (req, res) => {
   return res.status(200).send("CoachID was successfully added to student");
 })
 
+app.post('/api/coach/remove_coachid_from_student', async (req, res) => {
+  const {coachID, student_id} = req.body;
+
+  const student = await Student.findOne({_id: student_id});
+
+  if(!student) {
+    return res.status(501).send("No student found with that email");
+  }
+
+  if(student.team != -1) {
+    const team = await Team.findOne({national_id: student.team})
+    if(!team) {
+      return res.status(502).send("No team found with this team ID");
+    }
+    var members = team.members
+    if(members != undefined){
+      members.remove(student_id)
+    }
+    team.members = members
+    team.save()
+  }
+
+  student.team = -1;
+  student.coachID = undefined;
+  student.save()
+
+  return res.status(200).send("CoachID was successfully removed from student");
+})
+
 app.get('/api/stored', async (req, res) => {
   try {
     const ads = await Teams.find({"national_id": teamID});
@@ -723,30 +752,39 @@ app.post('/api/get-MentorData', function(req, res, next) {
     }
 
     if(studentTeamID != -1) {
-      const team = await Team.findOne({"national_id": studentTeamID})
-      console.log(team);
-      if(!team) {
+      const newTeam = await Team.findOne({"national_id": studentTeamID})
+      const oldTeam = await Team.findOne({"national_id": user.team})
+      console.log(newTeam);
+      if(!newTeam) {
         return res.status(503).send("No team matches this National Team Number")
       } else {
-        if(team.national_id != user.team.national_id) {
-          console.log("logging team's coach: ", team.coach,"and coach's id: ", coach._id);
-          if(team.coach == coach._id) {
-            user.team = team.national_id;
-            var members = team.members;
+        if(newTeam.national_id != user.team) {
+          console.log("logging team's coach:", newTeam.coach,"and coach's id:", coach._id);
+          if(newTeam.coach.equals(coach._id)) {
+            user.team = newTeam.national_id;
+            var members = newTeam.members;
+            console.log("user's updated team in update student info", user.team);
             if(members != undefined && !members.includes(user._id)){
               members.push(user._id);
             }
-            team.members = members;
-            team.save();
+            newTeam.members = members;
+            newTeam.save();
+
+            var oldMembers = oldTeam.members
+            if(oldMembers != undefined){
+              oldMembers.remove(studentID)
+            }
+            oldTeam.members = oldMembers
+            oldTeam.save()
           } else return res.status(505).send("Coach does not have access to this team")
         }
       }
     }
 
     console.log(studentGradLevel);
-    if(studentDispName != '' || studentDispName != 'N/A')user.displayname = studentDispName
+    if(studentDispName != '' && studentDispName != 'N/A' && studentDispName != null)user.displayname = studentDispName
 
-    if(studentGradLevel != '' || studentGradLevel != 'N/A')user.gradelevel = studentGradLevel 
+    if(studentGradLevel != '' && studentGradLevel != 'N/A' && studentGradLevel != null)user.gradelevel = studentGradLevel 
 
     user.save();
   

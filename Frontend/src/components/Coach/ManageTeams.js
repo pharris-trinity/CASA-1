@@ -109,6 +109,23 @@ function ManageTeams(props) {
         }
     }
 
+    const removeStudent = async (studentID) => {
+        var tmpData = {coachID: coachUserID, student_id: studentID}
+        try {
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(tmpData)
+        };
+        
+        const response = await fetch('/api/coach/remove_coachid_from_student', requestOptions)
+        const jsonData = await response.json()
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const fillDisplayInfo = (student) => {
         setCurrentStudentID(student._id);
         setUpdateDisplayName(student.displayname);
@@ -139,7 +156,14 @@ function ManageTeams(props) {
         console.log("closemaketeamButton: ", enableMakeTeam)
     }
     const deleteStudentButton = () => {
-
+        const confirmText = "Are you sure you want to delete the current selected student? \n(This does not delete their account, but removes them from your roster)";
+        if(window.confirm(confirmText) == true) {
+            console.log("confirmed delete student");
+            removeStudent(currentStudentID);
+            getStudents(coachUserID);
+        } else {
+            console.log("Cancelled delete student");
+        }
     }
 
 
@@ -215,19 +239,17 @@ function ManageTeams(props) {
                             />
                             <div className="button-alignment">
                                 <button className="casa-button" type="submit">Save Changes</button>
-
                                 <button className="casa-button" type="button" onClick={addStudentButton}>Add Student</button>
-                                <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
-
                                 <button className="casa-button" type="button" onClick={makeTeamButton}>Make A Team</button>
-                                <MakeTeam enabled={enableMakeTeam} closeForm={closeMakeTeam}/>
                             </div>
                         </div>
                     </form>
 
                     {/*Div for Delete button code*/}
                     <div>
-                        <button className="casa-button" type="button" onClick={deleteStudentButton}>Delete Student</button>
+                        <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
+                        <MakeTeam enabled={enableMakeTeam} closeForm={closeMakeTeam}/>
+                        <button className="casa-button delete-button" type="button" onClick={deleteStudentButton}>Delete Student</button>
                     </div>
                 </div>
 
