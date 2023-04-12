@@ -213,15 +213,20 @@ function ManageTeams(props) {
                                 value={updateTeamID}
                                 onChange={(e) => setUpdateTeamID(e.target.value)}
                             />
-                            <button className="casa-button button-alignment" type="submit">Save Changes</button>
-                            <br/>
-                            <button className="casa-button button-alignment" type="button" onClick={addStudentButton}>Add Student</button>
+                            <div className="button-alignment">
+                                <button className="casa-button" type="submit">Save Changes</button>
+
+                                <button className="casa-button" type="button" onClick={addStudentButton}>Add Student</button>
+                                <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
+
+                                <button className="casa-button" type="button" onClick={makeTeamButton}>Make A Team</button>
+                                <MakeTeam enabled={enableMakeTeam} closeForm={closeMakeTeam}/>
+                            </div>
                         </div>
                     </form>
 
-                    {/*Div for add and delete button code*/}
+                    {/*Div for Delete button code*/}
                     <div>
-                        <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
                         <button className="casa-button" type="button" onClick={deleteStudentButton}>Delete Student</button>
                     </div>
                 </div>
@@ -254,10 +259,10 @@ function ManageTeams(props) {
                 </div>
 
                  {/*Div for make team button code*/}
-                 <div>
-                    <button className="casa-button" onClick={makeTeamButton}>Make A Team</button>
+                 {/* <div>
+                    <button className="casa-button" type="button" onClick={makeTeamButton}>Make A Team</button>
                     <MakeTeam enabled={enableMakeTeam} closeForm={closeMakeTeam}/>
-                </div>
+                </div> */}
 
 
             </div>

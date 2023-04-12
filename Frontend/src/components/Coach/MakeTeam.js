@@ -36,6 +36,7 @@ app.post('/api/admin/register_team', async(req, res) => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
+        createATeam(teamNationalID, teamName, teamSchool, teamDistrict, teamIsROTC, teamCoachID);
         //alert('You have submitted');
         props.closeForm();
     }
@@ -87,7 +88,7 @@ app.post('/api/admin/register_team', async(req, res) => {
                                 required                                
                             />
 
-                            <button className="casa-button" type="submit" onClick={()=>{createATeam(teamNationalID, teamName, teamSchool, teamDistrict, teamIsROTC, teamCoachID);}}>Create Team</button>
+                            <button className="casa-button" type="submit">Create Team</button>
                             <button className="casa-button" type="button" onClick={props.closeForm}>Close</button>
                         </div>
                     </form>
