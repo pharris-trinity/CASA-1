@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import './ManageTeams.css'
 import AddStudent from "./AddStudent";
 import MakeTeam from "./MakeTeam";
+import { useNavigate } from "react-router-dom";
+import {loginChecker} from "../General/LoginCheck";
 
 /* 
 The Question component has logic to render a quiz question, including the description 
@@ -89,8 +91,8 @@ function ManageTeams(props) {
         return teamName;
     }
 
-    const updateStudentAccount = async ( currentStudentID, newDispName, newGradLevel, newTeamID) => {
-        var tmpData = {studentID: currentStudentID, studentDispName: newDispName, studentGradLevel: newGradLevel, studentTeamID: newTeamID}
+    const updateStudentAccount = async (currentStudentID, newDispName, newGradLevel, newTeamID) => {
+        var tmpData = {coachID: coachUserID, studentID: currentStudentID, studentDispName: newDispName, studentGradLevel: newGradLevel, studentTeamID: newTeamID}
         try {
         const requestOptions = {
             method: 'POST',
@@ -136,12 +138,17 @@ function ManageTeams(props) {
         getTeams(coach.teams);
         console.log("closemaketeamButton: ", enableMakeTeam)
     }
+    const deleteStudentButton = () => {
+
+    }
+
 
     useEffect(() => {
         setCoachUserID(localStorage.getItem("_id"));
     }, []) 
 
     useEffect(() => {
+        console.log(coachUserID);
         if(coachUserID) {
             getCoach(coachUserID);
             getStudents(coachUserID);
@@ -175,7 +182,7 @@ function ManageTeams(props) {
         return (
             <div>
                 <div className="left form-group">
-                <form className="form-container" onSubmit={handleSubmit} on>
+                <form className="form-container" onSubmit={handleSubmit}>
                         <div>
                             <label htmlFor='name'>Name </label>
                             <input
@@ -215,7 +222,7 @@ function ManageTeams(props) {
                     {/*Div for add and delete button code*/}
                     <div>
                         <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
-                        <button className="casa-button" type="button">Delete Student</button>
+                        <button className="casa-button" type="button" onClick={deleteStudentButton}>Delete Student</button>
                     </div>
                 </div>
 
