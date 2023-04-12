@@ -118,7 +118,7 @@ const DisplayTable = ({data}) => {
     }, [studentIDs])
     
     return (
-            <div>
+        <div>
            <div className='flex justify-between my-8'>
             </div>
                 <table>
@@ -151,7 +151,7 @@ const DisplayTable = ({data}) => {
             </button>
             
 
-            </div>
+        </div>
         )
 }
 

@@ -212,6 +212,19 @@ app.post('/api/coach/create_coach', async(req, res) => {
     })
   });
 
+  app.post('/api/coach/get_coaches_students', async(req, res) => {
+    const { userID } = req.body;
+  
+    const students = await Student.find(
+      {"coachID": userID} 
+    )
+      if(!students) {return res.status(401).send("No students found");}
+      else {
+        console.log(students);
+        return res.send(students).status(201);
+      }
+  })
+
 //=================
 
 //Dev Functionality
@@ -481,6 +494,16 @@ app.post('/api/team/student_display_to_id', async(req, res) => {
   } 
 })
 
+app.post('/api/coach/get_studentid_by_email', async(req, res) => {
+  const { student_email } = req.body;
+  const user = await User.find({"email": student_email})     
+  if(!user){
+    return res.sendStatus(404)
+  } else {
+    return res.status(200).send(user[0]._id); 
+  }      
+}) 
+
 
 
 app.post('/api/team/add_student_to_team', async(req, res) => {
@@ -555,6 +578,21 @@ app.post('/api/team/remove_student_from_team', async(req, res) => {
 
   return res.status(200).send("Removed user from team")
 
+})
+
+app.post('/api/coach/add_coachid_to_student', async (req, res) => {
+  const {coachID, student_email} = req.body;
+
+  const student = await Student.findOne({email: student_email});
+
+  if(!student) {
+    return res.status(501).send("No student found with that email");
+  }
+
+  student.coachID = coachID;
+  student.save()
+
+  return res.status(200).send("CoachID was successfully added to student");
 })
 
 app.get('/api/stored', async (req, res) => {
@@ -667,6 +705,55 @@ app.post('/api/get-MentorData', function(req, res, next) {
       return res.status(200).send(team);
     }
   })
+
+  //updates the information in the database
+  app.post('/api/team/update_student_info', async(req, res) => {
+    //Takes in a team ID and a student ID and updates the team and the student
+    const {coachID, studentID, studentDispName, studentGradLevel, studentTeamID} = req.body
+
+    const user = await User.findOne({"_id": studentID})
+    if(!user){
+      return res.status(501).send("No user found that matches that ID")
+    }
+
+    const coach = await Coach.findOne({"_id": coachID});
+    if(!coach) {
+      return res.status(502).send("No coach was found that matches this ID")
+    }
+
+    if(studentTeamID != -1) {
+      const team = await Team.findOne({"national_id": studentTeamID})
+      console.log(team);
+      if(!team) {
+        return res.status(503).send("No team matches this National Team Number")
+      } else {
+        if(team.national_id != user.team.national_id) {
+          console.log("logging team's coach: ", team.coach,"and coach's id: ", coach._id);
+          if(team.coach == coach._id) {
+            user.team = team.national_id;
+            var members = team.members;
+            if(members != undefined && !members.includes(user._id)){
+              members.push(user._id);
+            }
+            team.members = members;
+            team.save();
+          } else return res.status(505).send("Coach does not have access to this team")
+        }
+      }
+    }
+
+    console.log(studentGradLevel);
+    if(studentDispName != '' || studentDispName != 'N/A')user.displayname = studentDispName
+
+    if(studentGradLevel != '' || studentGradLevel != 'N/A')user.gradelevel = studentGradLevel 
+
+    user.save();
+  
+    return res.status(200).send(user);
+  })
+  
+  
+
 
   //search for coach based on coach's object id to get madequizzes field: WIP status, may delete
   //currently objid for assessment field is janky, needs to have a create api
