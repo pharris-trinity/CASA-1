@@ -30,14 +30,12 @@
   }
 
 
-
-
   .td-even{
     border: 2px solid black;
     text-align: left;
     padding: 10px;
     font-size: 14px;
-    background-color: #888888;
+    background-color: var(--primary-blue);
   }
 
   .td-odd{
@@ -45,7 +43,7 @@
     text-align: left;
     padding: 10px;
     font-size: 14px;
-    background-color: #aaa;
+    background-color: #85baf6;
   }
   
   th {
@@ -56,7 +54,7 @@
   }
   
   td {
-    color: white;
+    color: black;
     font-weight: bold;
     background-color: var(--primary-blue);
   }
@@ -74,32 +72,3 @@
   form * {
     font-size: 12px;
   }
-  
-
-/*
-.table {
-    box-shadow: 0 0 10px rbga(0,0,0,0.1);
-    border-collapse: collapse;
-    font-family: 'Quicksand', sans-serif;
-    overflow: hidden;
-    font-weight: bold;
-}
-
-.table thead th {
-    background: #009578;
-    color: #ffffff;
-}
-
-.table td,
-.table th {
-    padding: 10 px 20px; 
-}
-
-.table tbody tr:nth-of-type(even){
-    background: #eeeeee;
-}
-
-.table tbody tr:last-of-type{
-    border-bottom: 2px solid #009578;
-}
-*/
