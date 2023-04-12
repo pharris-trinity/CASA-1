@@ -10,6 +10,7 @@ import About from "../components/General/About";
 import LandingMainPage from "../components/General/LandingMainPage";
 import CreateUser from "../components/General/CreateUser";
 import NotFound from "../components/General/NotFound";
+import CreateCoach from '../components/General/createCoach';
 
 import StudMainPage from '../components/Student/StudMainPage';
 import StudProfilePage from '../components/Student/StudProfilePage';
@@ -64,6 +65,7 @@ function App() {
           <Route path="login" element={<Login/>} />
           <Route path="about" element={<About/>} />
           <Route path="createuser" element={<CreateUser/>} />
+          <Route path="createCoach" element={<CreateCoach/>}/>
 
         {/*Student Routes*/}
           <Route path="stud/main" element={<StudMainPage/>} />

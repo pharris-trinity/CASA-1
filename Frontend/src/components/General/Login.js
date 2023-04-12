@@ -40,7 +40,7 @@ function Login() {
                 setUserID(text.substring(1, text.length-1))
                 fetchUserAccount(event, text)
             }
-    })
+        })
 
   };
 
@@ -89,6 +89,11 @@ function Login() {
   const mentorAccountCreation = (e) => {
     e.preventDefault()
       navigate('/createMentor', {replace: true})
+  }
+
+  const coachAccountCreation = (e) => {
+    e.preventDefault()
+     navigate('/createCoach', {replace: true})
   }
 
   // Generate JSX code for error message
@@ -152,7 +157,8 @@ function Login() {
                     {renderErrorMessage("pass")}
                 </div>
                 <input type="submit" value="LOGIN"/>
-                <button className="casa-button" onClick={accountCreation}>Create Account</button>
+                <button className="casa-button" onClick={accountCreation}>Create Student Account</button>
+                <button className="casa-button" onClick={coachAccountCreation}>Create Coach Account</button>
             </div>
         </form>
     </div>
