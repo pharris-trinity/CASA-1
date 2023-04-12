@@ -86,8 +86,8 @@ function ManageTeams(props) {
         return teamName;
     }
 
-    const updateStudentAccount = async ( currentStudentID, newDispName, newGradLevel, newTeamID) => {
-        var tmpData = {studentID: currentStudentID, studentDispName: newDispName, studentGradLevel: newGradLevel, studentTeamID: newTeamID}
+    const updateStudentAccount = async (currentStudentID, newDispName, newGradLevel, newTeamID) => {
+        var tmpData = {coachID: coachUserID, studentID: currentStudentID, studentDispName: newDispName, studentGradLevel: newGradLevel, studentTeamID: newTeamID}
         try {
         const requestOptions = {
             method: 'POST',
@@ -119,6 +119,10 @@ function ManageTeams(props) {
     const closeAddStudent = () => {
         setEnabledAddToTeam(false);
         getStudents(coachUserID);
+    }
+
+    const deleteStudentButton = () => {
+
     }
 
 
@@ -201,7 +205,7 @@ function ManageTeams(props) {
                     {/*Div for add and delete button code*/}
                     <div>
                         <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
-                        <button className="casa-button" type="button">Delete Student</button>
+                        <button className="casa-button" type="button" onClick={deleteStudentButton}>Delete Student</button>
                     </div>
                 </div>
 

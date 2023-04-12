@@ -709,27 +709,35 @@ app.post('/api/get-MentorData', function(req, res, next) {
   //updates the information in the database
   app.post('/api/team/update_student_info', async(req, res) => {
     //Takes in a team ID and a student ID and updates the team and the student
-    const {studentID, studentDispName, studentGradLevel, studentTeamID} = req.body
+    const {coachID, studentID, studentDispName, studentGradLevel, studentTeamID} = req.body
 
     const user = await User.findOne({"_id": studentID})
     if(!user){
       return res.status(501).send("No user found that matches that ID")
     }
 
+    const coach = await Coach.findOne({"_id": coachID});
+    if(!coach) {
+      return res.status(502).send("No coach was found that matches this ID")
+    }
+
     if(studentTeamID != -1) {
-      const team = await Team.findOne({"national_id": studentTeamID});
+      const team = await Team.findOne({"national_id": studentTeamID})
       console.log(team);
       if(!team) {
-        return res.status(502).send("No team matches this National Team Number")
+        return res.status(503).send("No team matches this National Team Number")
       } else {
         if(team.national_id != user.team.national_id) {
-          user.team = team.national_id;
-          var members = team.members;
-          if(members != undefined && !members.includes(user._id)){
-            members.push(user._id);
-          }
-          team.members = members;
-          team.save();
+          console.log("logging team's coach: ", team.coach,"and coach's id: ", coach._id);
+          if(team.coach == coach._id) {
+            user.team = team.national_id;
+            var members = team.members;
+            if(members != undefined && !members.includes(user._id)){
+              members.push(user._id);
+            }
+            team.members = members;
+            team.save();
+          } else return res.status(505).send("Coach does not have access to this team")
         }
       }
     }
