@@ -1,7 +1,6 @@
 import React from 'react';
 //import { Text, View } from "react-native";
 //import { Text } from 'react-native';
-import "./stylesCoach.css"
 import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
 
@@ -10,55 +9,29 @@ import {loginChecker} from "../General/LoginCheck";
 const ProfileContent = ({data}) => {
     let navigate = useNavigate();
 
-    function homeButton(){
-        navigate('/coachhome', {replace: true})  
-    }
-
     window.onload = (event) => {
         var toNavigateTo = loginChecker("Coach")
         if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
       };
 
+    function homeButton(){
+        navigate('/coachhome', {replace: true})  
+    }
+
   
     return(
         <div className="profilecontainer">
-        <h1>Profile</h1>
-        <div className="coachAttributes">
-                {data.map(item => (
-                        <ul>
-                            <li key={item.displayname} className="studentName">
-                                <p>Name: {item.displayname} </p>
-                            </li>
-                            <div className='invisible'>
-                                <h2> space</h2>
-                            </div>
-
-                            <li key={item.username} className="studentName">
-                                <p>Username: {item.username} </p>
-                            </li>
-                            <div className='invisible'>
-                                <h2> space</h2>
-                            </div>
-
-
-                            <li key={item.email} className="studentName">
-                                <p>Email: {item.email}</p>
-                            </li>
-                            <div className='invisible'>
-                                <h2> space</h2>
-                            </div>
-
-
-                            <li key={item.school} className="studentName">
-                                <p>School: {item.school}</p>
-                            </li>
-                            <div className='invisible'>
-                                <h2> space</h2>
-                            </div>
-
-                        </ul> 
+        <h1>Profile (Mostly Unimplemented)</h1>
+            <div className="coachAttributes">
+                {data.map(user => (
+                    <div>
+                        <h3>Name: {user.displayname} </h3>
+                        <h3>Username: {user.username} </h3>
+                        <h3>Email: {user.email}</h3>
+                        <h3>School: {user.school}</h3>
+                    </div>
                 ))}
-        </div>
+            </div>
         <button onClick={homeButton}>
             Home
         </button>
