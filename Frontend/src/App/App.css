@@ -38,7 +38,7 @@ input[type="password"] {
 }
 
 .casa-button:hover {
-  background-color: #fff;
-  color: #E53B3B;
+  background-color: var(--primary-dark-blue);
+  color: #ffffff;
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }

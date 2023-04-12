@@ -12,7 +12,6 @@ const DisplayTable = ({data}) => {
 
     let navigate = useNavigate();
 
-    
     function homeButton(){
       navigate('/coachhome', {replace: true})
     }
