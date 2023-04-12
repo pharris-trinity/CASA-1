@@ -1,10 +1,4 @@
-.left {
-
-    width: 900px;
-    height: 500px;
-    background: orange;
-    display: flex;
-    justify-content: space-between;
-    align-items: left;
-
+.profile-container {
+    padding-left: 2%;
+    padding-top: 2%;
 }

@@ -23,18 +23,47 @@
   
   th,
   td {
-    border: 1px solid #ffffff;
+    border: 2px solid black;
     text-align: left;
-    padding: 8px;
-    font-size: 12px;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .td-selected{
+    border: 2px solid black;
+    text-align: left;
+    padding: 10px;
+    font-size: 14px;
+    background-color: var(--primary-red);
+  }
+
+  .td-even{
+    border: 2px solid black;
+    text-align: left;
+    padding: 10px;
+    font-size: 14px;
+    background-color: var(--primary-blue);
+  }
+
+  .td-odd{
+    border: 2px solid black;
+    text-align: left;
+    padding: 10px;
+    font-size: 14px;
+    background-color: #85baf6;
   }
   
   th {
-    background-color: rgb(117, 201, 250);
+    width: 12vw;
+    color: white;
+    font-weight: bold;
+    background-color: var(--primary-dark-blue);
   }
   
   td {
-    background-color: rgb(205, 235, 253);
+    color: black;
+    font-weight: bold;
+    background-color: var(--primary-blue);
   }
   
   form {
@@ -50,32 +79,3 @@
   form * {
     font-size: 12px;
   }
-  
-
-/*
-.table {
-    box-shadow: 0 0 10px rbga(0,0,0,0.1);
-    border-collapse: collapse;
-    font-family: 'Quicksand', sans-serif;
-    overflow: hidden;
-    font-weight: bold;
-}
-
-.table thead th {
-    background: #009578;
-    color: #ffffff;
-}
-
-.table td,
-.table th {
-    padding: 10 px 20px; 
-}
-
-.table tbody tr:nth-of-type(even){
-    background: #eeeeee;
-}
-
-.table tbody tr:last-of-type{
-    border-bottom: 2px solid #009578;
-}
-*/
