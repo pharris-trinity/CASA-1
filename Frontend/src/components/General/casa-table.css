@@ -1,6 +1,5 @@
 table {
   margin-top: 10px;
-  margin-right: 10px;
   border-collapse: collapse;
   width: 100%;
 }
@@ -38,14 +37,14 @@ td {
 }
 
 .th-manage-teams{
-    width: 12vw;
-    color: white;
-    font-weight: bold;
-    background-color: var(--primary-dark-blue);
+  border: 2px solid black;
+  color: white;
+  font-weight: bold;
+  background-color: var(--primary-dark-blue);
  }
 
-th {
-  width: 12vw;
+
+thead {
   color: white;
   font-weight: bold;
   background-color: var(--primary-dark-blue);

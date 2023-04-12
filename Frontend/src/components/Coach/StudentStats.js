@@ -150,12 +150,12 @@ function StudentStats(props) {
                         <table>
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Windows</th>
-                                        <th>Win_Server</th>
-                                        <th>Linux</th>
-                                        <th>Networking</th>
-                                        <th>Security_Concepts</th>
+                                        <th className="th-manage-teams">Name</th>
+                                        <th className="th-manage-teams">Windows</th>
+                                        <th className="th-manage-teams">Win_Server</th>
+                                        <th className="th-manage-teams">Linux</th>
+                                        <th className="th-manage-teams">Networking</th>
+                                        <th className="th-manage-teams">Security_Concepts</th>
                                     </tr>
                                 </thead>
 

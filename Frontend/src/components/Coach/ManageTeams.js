@@ -219,19 +219,19 @@ function ManageTeams(props) {
                 </div>
 
                 {/*Div where student table goes*/}
-                <div >
+                <div>
                     <table className="right">
                             <thead>
-                                <tr >
-                                    <th classname="th-manage-teams">Student Name</th>
-                                    <th classname="th-manage-teams">Email</th>
-                                    <th classname="th-manage-teams">Grade Level</th>
-                                    <th classname="th-manage-teams">Team Name</th>
-                                    <th classname="th-manage-teams">Team ID</th>
+                                <tr>
+                                    <th className="th-manage-teams">Student Name</th>
+                                    <th className="th-manage-teams">Email</th>
+                                    <th className="th-manage-teams">Grade Level</th>
+                                    <th className="th-manage-teams">Team Name</th>
+                                    <th className="th-manage-teams">Team ID</th>
                                 </tr>
                             </thead>
 
-                            <tbody >
+                            <tbody>
                                 {students && students.map((student, index) => (
                                 <tr key={student._id} onClick={() => (fillDisplayInfo(student))}>
                                     <td key={index} className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.displayname}</td>
