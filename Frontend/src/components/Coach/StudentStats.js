@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './StudentStats.css'
+import '../General/casa-table.css'
 import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
 
@@ -159,16 +160,16 @@ function StudentStats(props) {
                                 </thead>
 
                                 <tbody>
-                                        {students && students.map(item => (
-                                            <tr>
-                                                <td>{item.displayname}</td>
-                                                <td>{takenQuizScoreSums("windows", item.takenQuizzes)}</td>
-                                                <td>{takenQuizScoreSums("win_server", item.takenQuizzes)}</td>
-                                                <td>{takenQuizScoreSums("linux", item.takenQuizzes)}</td>
-                                                <td>{takenQuizScoreSums("networking", item.takenQuizzes)}</td>
-                                                <td>{takenQuizScoreSums("security_concepts", item.takenQuizzes)}</td>
-                                            </tr>
-                                        ))}
+                                {students && students.map((item, index) => (
+                                    <tr>
+                                        <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.displayname}</td>
+                                        <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("windows", item.takenQuizzes)}</td>
+                                        <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("win_server", item.takenQuizzes)}</td>
+                                        <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("linux", item.takenQuizzes)}</td>
+                                        <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("networking", item.takenQuizzes)}</td>
+                                        <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("security_concepts", item.takenQuizzes)}</td>
+                                    </tr>
+                                ))}
                                 </tbody>
                         </table>
                 </div>

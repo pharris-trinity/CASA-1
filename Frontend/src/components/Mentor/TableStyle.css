@@ -29,6 +29,13 @@
     font-size: 14px;
   }
 
+  .td-selected{
+    border: 2px solid black;
+    text-align: left;
+    padding: 10px;
+    font-size: 14px;
+    background-color: var(--primary-red);
+  }
 
   .td-even{
     border: 2px solid black;

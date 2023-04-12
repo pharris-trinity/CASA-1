@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import './ManageTeams.css'
+import '../General/casa-table.css'
 import AddStudent from "./AddStudent";
 import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
@@ -222,22 +223,22 @@ function ManageTeams(props) {
                     <table className="right">
                             <thead>
                                 <tr >
-                                    <th>Student Name</th>
-                                    <th>Email</th>
-                                    <th>Grade Level</th>
-                                    <th>Team Name</th>
-                                    <th>Team ID</th>
+                                    <th classname="th-manage-teams">Student Name</th>
+                                    <th classname="th-manage-teams">Email</th>
+                                    <th classname="th-manage-teams">Grade Level</th>
+                                    <th classname="th-manage-teams">Team Name</th>
+                                    <th classname="th-manage-teams">Team ID</th>
                                 </tr>
                             </thead>
 
                             <tbody >
-                                {students && students.map(student => (
+                                {students && students.map((student, index) => (
                                 <tr key={student._id} onClick={() => (fillDisplayInfo(student))}>
-                                    <td>{student.displayname}</td>
-                                    <td>{student.email}</td>
-                                    <td>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
-                                    <td>{(teams && student.team != -1) ? getTeamName(student.team) : "N/A"}</td>
-                                    <td>{student.team != -1 ? student.team : "N/A"}</td>
+                                    <td key={index} className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.displayname}</td>
+                                    <td key={index} className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.email}</td>
+                                    <td key={index} className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
+                                    <td key={index} className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{(teams && student.team != -1) ? getTeamName(student.team) : "N/A"}</td>
+                                    <td key={index} className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.team != -1 ? student.team : "N/A"}</td>
                                 </tr>
                                 ))}
                             </tbody>
