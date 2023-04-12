@@ -28,7 +28,6 @@ export default function CoachProfile(props) {
         fetch(finishedurl, requestOptions).then(res => res.json()).then(
             data => {
                 setCoach(data.collection)
-                console.log("Values in data collection:" + data.collection) // object Object
                 if(data.collection == null) {console.log(Error)}
             })
         },[]);

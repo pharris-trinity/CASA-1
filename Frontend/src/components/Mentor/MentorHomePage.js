@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./stylesMentor.css"
 
 const MentorHome = () => {
-    console.log("MENTOR HOME---------------------------------")
 
 return (
 

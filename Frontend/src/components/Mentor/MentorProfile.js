@@ -17,8 +17,6 @@ const MentorHome = () => {
         fetch('/api/get-MentorData', requestOptions).then(res => res.json()).then(
             data => {
                 setQuery(data.collection)
-                console.log("Values in data collection: " + data.collection)
-                console.log("Values in setElements: " + setQuery)
                 if (data.collection == null)
                     console.log(Error)
             })

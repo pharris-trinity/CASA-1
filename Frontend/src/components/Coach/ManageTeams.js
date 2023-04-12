@@ -60,17 +60,14 @@ function ManageTeams(props) {
 
     const getTeams = async (inputTeams) => {
         var tempTeams = [];
-        //console.log("inputTeams length", inputTeams);
         for(let i = 0; i < inputTeams.length; i++){
             try {
-          //      console.log(inputTeams[i])
                 const requestOptions = {
                     method: 'GET',
                     headers: {'Content-Type': 'application/json'}
                 };
                 const response = await fetch('/api/teamsearch/' + JSON.stringify(inputTeams[i]), requestOptions);
                 const jsonData = await response.json();
-       //         console.log("jsonData in getTeams", jsonData, "index", i);
                 tempTeams.push(jsonData);
             } catch (error) {
                 console.log("error in getTeams: ", error);
@@ -81,14 +78,11 @@ function ManageTeams(props) {
 
     const getTeamName = (teamID) => {
         var teamName = "";
-  //      console.log("teams in getTeamName", teams);
         teams.map(team => {
-  //          console.log("comparing team nationalID and teamID in getTeamName: ", team.national_id, teamID);
             if(team.national_id == teamID) {
                 teamName = team.name;
             }
         })
-    //    console.log("teamName in getTeamName: ", teamName);
         return teamName;
     }
 
@@ -137,33 +131,27 @@ function ManageTeams(props) {
 
     const addStudentButton = () => {
         setEnabledAddToTeam(true);
-        console.log("enabledAddToTeam: ", enabledAddToTeam)
     }
 
     const closeAddStudent = () => {
         setEnabledAddToTeam(false);
-        console.log("enabledAddToTeam: ", enabledAddToTeam)
         getStudents(coachUserID);
     }
 
     const makeTeamButton = () => {
         setEnableMakeTeam(true);
-        console.log("maketeamButton: ", enableMakeTeam)
     }
 
     const closeMakeTeam = () => {
         setEnableMakeTeam(false);
         getTeams(coach.teams);
-        console.log("closemaketeamButton: ", enableMakeTeam)
     }
     const deleteStudentButton = () => {
         const confirmText = "Are you sure you want to delete the current selected student? \n(This does not delete their account, but removes them from your roster)";
         if(window.confirm(confirmText) == true) {
-            console.log("confirmed delete student");
             removeStudent(currentStudentID);
             getStudents(coachUserID);
         } else {
-            console.log("Cancelled delete student");
         }
     }
 
@@ -173,7 +161,6 @@ function ManageTeams(props) {
     }, []) 
 
     useEffect(() => {
-        console.log(coachUserID);
         if(coachUserID) {
             getCoach(coachUserID);
             getStudents(coachUserID);
@@ -181,26 +168,14 @@ function ManageTeams(props) {
     }, [coachUserID]) 
 
     useEffect(() => {
-        console.log("students array: ", students);
-    }, [students])
-
-    useEffect(() => {
         if(coach) {
-            console.log("heres whats in coach.teams after coach loads in: ",coach.teams);
             getTeams(coach.teams);
         }
     }, [coach])
 
-    useEffect(() => {
-        if(teams){
-            console.log("teams after teams is updated hypothetically: ", teams);
-        }
-    }, [teams])
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,updateTeamID);
-        alert("Student has been updated");
     }
 
     if(props.enabled == true) {

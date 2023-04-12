@@ -37,7 +37,6 @@ function Quiz(props) {
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         var dateTime = date+' '+time;
-        console.log("dateTime: ", dateTime);
         return(dateTime);
     }
 
@@ -85,7 +84,6 @@ function Quiz(props) {
         setCorrectGradedAnswers(tempCorrectAnswers);
         setIncorrectGradedAnswers(tempIncorrectAnswers);
         setEndTime(getDateTime());
-        console.log("Here's your score! ", (numCorrect/answersArray.length)*100)
         setGrade((numCorrect/answersArray.length)*100);
         setResults(true);
         return;
@@ -107,7 +105,6 @@ function Quiz(props) {
             };
             fetch('/api/assessment/take_quiz', requestOptions).then(res => res.json()).then(
                 data => {
-                    console.log("this is data in the take quiz fetch", data);
                     return;
                 })
 
@@ -141,14 +138,12 @@ function Quiz(props) {
 
     //additional setup once we calculate how many questions are in the quiz 
     useEffect(() => {
-        console.log("Count variable is:", questionCount);
         if(questionCount){
             constructAnswerArray(questionCount);
         }
     }, [questionCount]);
 
     useEffect(() => {
-        console.log("Grade in state is: ", grade);
         if(grade != -1) {makeTakenQuiz()}
     }, [grade]);
 

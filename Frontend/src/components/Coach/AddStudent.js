@@ -26,7 +26,6 @@ function AddStudent(props) {
     }  
 
     const addCoachToStudent = async (coach_id, email) => {
-        console.log("info in addCoachToStudent", coach_id, email)
         try {
             const requestOptions = {
                 method: 'POST',
@@ -35,7 +34,6 @@ function AddStudent(props) {
             }
             const response = await fetch('/api/coach/add_coachid_to_student', requestOptions)
             const jsonData = await response.json()
-            console.log(jsonData);
             //return(jsonData);
         } catch (error) {
             console.log(error)
@@ -51,7 +49,6 @@ function AddStudent(props) {
             }
             const response = await fetch('/api/coach/get_studentid_by_email', requestOptions)
             const jsonData = await response.json()
-            console.log(jsonData);
             return(jsonData);
         } catch (error) {
             console.log(error)
@@ -88,15 +85,12 @@ function AddStudent(props) {
     
     useEffect(() => {
         if(studentID !== undefined) {
-            console.log("studentid right before addstudenttoteam", studentID);
             addStudentToTeam(team,studentID);
         }
     }, [studentID])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        alert("Student has been added");
-        console.log("given to handleSubmit", e);
         addCoachToStudent(localStorage._id, studentEmail);
         if(team != undefined) {
             const tempStudentID = await getStudentID(studentEmail);

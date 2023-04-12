@@ -9,30 +9,21 @@ export const loginChecker = (expectedUserType) => {
     //const fixeduser = JSON.parse(curlyuser);
     //const fixeduser = JSON.parse(localStorage.getItem("userID"));
 
-    console.log("expectedUserType", expectedUserType)
-    console.log("localStorage.usertype", localStorage.usertype)
-
     if(localStorage.usertype !== expectedUserType){
-      console.log("inside the if statement")
       if(localStorage.usertype === "Student"){
-        console.log("inside the if statement for studnet")
         //navigate('/stud/main', {replace: true})
         return('/stud/main')
       }
       else if(localStorage.usertype === "Mentor"){
-        console.log("inside the if statement for mentor")
         return('/mentorHome')
       } 
       else if(localStorage.usertype === "Coach"){
-        console.log("inside the if statement for coach")
           return('/coachhome')                   
       } 
       else if(localStorage.usertype === "Admin"){
-        console.log("inside the if statement for admin")
         return('/admin/homepage')
       }
       else {
-        console.log("inside the if statement for else")
         return('/login')
       }
   }

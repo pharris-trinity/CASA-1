@@ -486,7 +486,6 @@ app.post('/api/team/student_display_to_id', async(req, res) => {
   const { studentDisplayName } = req.body;
   const user = await User.find({"displayname": studentDisplayName}) 
   var ret = user[0]._id
-  console.log("User is :       ->>>>>>>>>", ret)    
   if(!user){
     return res.status(502).send("No user found that matches that ID")
   }
@@ -754,16 +753,13 @@ app.post('/api/get-MentorData', function(req, res, next) {
     if(studentTeamID != -1) {
       const newTeam = await Team.findOne({"national_id": studentTeamID})
       const oldTeam = await Team.findOne({"national_id": user.team})
-      console.log(newTeam);
       if(!newTeam) {
         return res.status(503).send("No team matches this National Team Number")
       } else {
         if(newTeam.national_id != user.team) {
-          console.log("logging team's coach:", newTeam.coach,"and coach's id:", coach._id);
           if(newTeam.coach.equals(coach._id)) {
             user.team = newTeam.national_id;
             var members = newTeam.members;
-            console.log("user's updated team in update student info", user.team);
             if(members != undefined && !members.includes(user._id)){
               members.push(user._id);
             }
@@ -781,7 +777,6 @@ app.post('/api/get-MentorData', function(req, res, next) {
       }
     }
 
-    console.log(studentGradLevel);
     if(studentDispName != '' && studentDispName != 'N/A' && studentDispName != null)user.displayname = studentDispName
 
     if(studentGradLevel != '' && studentGradLevel != 'N/A' && studentGradLevel != null)user.gradelevel = studentGradLevel 
