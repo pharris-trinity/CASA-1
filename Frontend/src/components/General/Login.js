@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../Resources/cyberTexasLogo.png";
-import './stylesLogin.css'
-import {useLocalStorage} from './useLocalStorage'
+import './stylesLogin.css';
+import {useLocalStorage} from './useLocalStorage';
+import Navbar from './Navbar';
 
 function Login() {
 
@@ -39,7 +40,7 @@ function Login() {
                 setUserID(text.substring(1, text.length-1))
                 fetchUserAccount(event, text)
             }
-    })
+        })
 
   };
 
@@ -65,7 +66,7 @@ function Login() {
                     navigate('/mentorHome', {replace: true, state:userVal})
                 } 
                 if(userVal.usertype === "Coach"){
-                    navigate('/teacher', {replace: true, state:userVal})                    
+                    navigate('/coachhome', {replace: true, state:userVal})                    
                 } 
                 if(userVal.usertype == "Admin"){
                     navigate('/admin/homepage', {replace: true, state:userVal})
@@ -88,6 +89,11 @@ function Login() {
   const mentorAccountCreation = (e) => {
     e.preventDefault()
       navigate('/createMentor', {replace: true})
+  }
+
+  const coachAccountCreation = (e) => {
+    e.preventDefault()
+     navigate('/createCoach', {replace: true})
   }
 
   // Generate JSX code for error message
@@ -134,8 +140,8 @@ function Login() {
 
   return(
     <>
-    <img src={logo} id="logo" centerImage="center" align="left" alt=""/>
-    <div className='form'>
+    <Navbar/>
+    <div className='form' style= {{display: "flex", justifyContent: "center", alignItems: "center", height: "100vh"}}>
         <form onSubmit={handleSubmit}>
             <div className="form-inner">
                 <h2> Login </h2>
@@ -151,7 +157,8 @@ function Login() {
                     {renderErrorMessage("pass")}
                 </div>
                 <input type="submit" value="LOGIN"/>
-                <button id='login' className="create_button" onClick={accountCreation}>Create Account</button>
+                <button className="casa-button" onClick={accountCreation}>Create Student Account</button>
+                <button className="casa-button" onClick={coachAccountCreation}>Create Coach Account</button>
             </div>
         </form>
     </div>

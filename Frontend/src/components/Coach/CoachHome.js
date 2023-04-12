@@ -1,29 +1,72 @@
 // Here will be the mentor page with a decent layout and buttons to future pages.
-import React from 'react';
+import React, { useState } from 'react';
 //import Button from './MentorButton';
-import '../Mentor/Button.css'
 import '../Mentor/PageLayout.css'
 import '../Coach/CoachProfile'
-
-import { useNavigate } from "react-router-dom";
-
+import './coachHome.css'
+import ManageTeams from './ManageTeams';
+import StudentStats from './StudentStats';
+import Navbar from './../General/Navbar';
+import { useNavigate } from 'react-router-dom';
+import {loginChecker} from "../General/LoginCheck";
+import CoachProfile from '../Coach/CoachProfile';
 
 function CoachHome() {
 
+  const [enabledManageTeam, setEnabledManageTeam] = useState(false);
+  const [enabledStudentStats, setEnabledStudentStats] = useState(false);
+  const [enabledCreateQuiz, setEnabledCreateQuiz] = useState(false);
+  const [enabledFindMentors, setEnabledFindMentors] = useState(false);
+  const [enabledCoachProfile, setEnabledCoachProfile] = useState(false);
+
   let navigate = useNavigate();
 
+  window.onload = (event) => {
+    var toNavigateTo = loginChecker("Coach")
+    if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+  };
+
   function teamsButton(){
-      navigate('/ViewTeams', {replace: true})  
+    //navigate('/ViewTeams2', {replace: true}) 
+    setEnabledManageTeam(!enabledManageTeam); 
+    setEnabledStudentStats(false);
+    setEnabledCreateQuiz(false);
+    setEnabledFindMentors(false); 
+    setEnabledCoachProfile(false);
   }
 
-  function coachProfile(){
-    navigate('/profile', {replace: true})
+  function showStudentStats() {
+    setEnabledStudentStats(!enabledStudentStats);
+    setEnabledManageTeam(false); 
+    setEnabledCreateQuiz(false);
+    setEnabledFindMentors(false);
+    setEnabledCoachProfile(false);
   }
-  
-  //this doesn't work anymore since we removed the /teacher route
-  function homeButton(){
-    navigate('/teacher', {replace: true})
+
+  function showCreateQuiz() {
+    setEnabledCreateQuiz(!enabledCreateQuiz);
+    setEnabledManageTeam(false);
+    setEnabledStudentStats(false);
+    setEnabledFindMentors(false);
+    setEnabledCoachProfile(false);
   }
+
+  function showFindMentors() {
+    setEnabledFindMentors(!enabledFindMentors);
+    setEnabledCreateQuiz(false);
+    setEnabledManageTeam(false);
+    setEnabledStudentStats(false);
+    setEnabledCoachProfile(false);
+  }
+
+  function showCoachProfile(){
+    setEnabledCoachProfile(!enabledCoachProfile);
+    setEnabledFindMentors(false);
+    setEnabledCreateQuiz(false);
+    setEnabledManageTeam(false);
+    setEnabledStudentStats(false);
+  }
+
   function coachTableButton(){
     navigate('/coachtable', {replace: true})
   }
@@ -32,35 +75,49 @@ function CoachHome() {
 
 
 return (
-  <div>
-    <div class="body"> 
-        <h2> CASA for Coaches</h2>
-        <div></div>
-            <button onClick={homeButton}>
-            Home
-            </button>
-            
-            <div></div>
+  <>
+    <Navbar buttonSet="coach"/>
 
-            <button onClick={teamsButton}>
-            Team
-            </button>
+    <div className="coach-page-main">
+        <button className={enabledManageTeam ? "selected-tab" : "unselected-tab"} onClick={teamsButton}>
+        Manage Teams
+        </button>
 
-            <div></div>
+        <button className={enabledStudentStats ? "selected-tab" : "unselected-tab"} onClick={showStudentStats}>
+        Student Stats
+        </button>
 
-            <button onClick={coachProfile}>
-            Profile
-            </button>
+        <button className={enabledCreateQuiz ? "selected-tab" : "unselected-tab"} onClick={showCreateQuiz}>
+        Create Quizzes
+        </button>
 
-            <div></div>
+        <button className={enabledFindMentors ? "selected-tab" : "unselected-tab"} onClick={showFindMentors}>
+        Find Mentors
+        </button>
 
-            <button onClick={coachTableButton}>
-            Table of Mentors
-            </button>
+        <button className={enabledCoachProfile ? "selected-tab" : "unselected-tab"} onClick={showCoachProfile}>
+        My Account
+        </button>
 
+        <div className="content-area">
+          {!enabledManageTeam && !enabledStudentStats && !enabledCreateQuiz && !enabledFindMentors && !enabledCoachProfile
+            ? <h1 className="descriptor-text">Click on a tab to view its contents</h1> 
+            : null
+          }
+          <ManageTeams enabled={enabledManageTeam}/>
+          <StudentStats enabled={enabledStudentStats}/>
+          <CoachProfile enabled={enabledCoachProfile}/>
+          
+          {enabledCreateQuiz 
+          ? <h1>This page has not been implemented yet</h1>
+          : null}
 
-    </div>
-  </div> 
+          {enabledFindMentors 
+          ? <h1>This page has not been implemented yet</h1>
+          : null}
+        </div>
+    </div> 
+  </>
   );
 }
   

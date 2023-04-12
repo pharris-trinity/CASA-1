@@ -1,0 +1,71 @@
+table {
+  margin-top: 10px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 2px solid black;
+  text-align: left;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.td-selected{
+  border: 2px solid black;
+  text-align: left;
+  padding: 10px;
+  font-size: 14px;
+  background-color: var(--primary-red);
+}
+
+.td-even{
+  border: 2px solid black;
+  text-align: left;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #699ad2;
+}
+
+.td-odd{
+  border: 2px solid black;
+  text-align: left;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #85baf6;
+}
+
+.th-manage-teams{
+  border: 2px solid black;
+  color: white;
+  font-weight: bold;
+  background-color: var(--primary-dark-blue);
+ }
+
+
+thead {
+  color: white;
+  font-weight: bold;
+  background-color: var(--primary-dark-blue);
+}
+
+td {
+  color: black;
+  font-weight: bold;
+  background-color: var(--primary-blue);
+}
+
+form {
+  display: flex;
+  gap: 5px;
+}
+
+form td:last-child {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+form * {
+  font-size: 12px;
+}

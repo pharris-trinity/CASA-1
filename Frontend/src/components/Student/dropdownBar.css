@@ -1,0 +1,37 @@
+/*Stylings for the DropdownBar Component*/
+
+.dropdown-bar {
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    overflow: hidden;
+    margin-bottom: 5px;
+  }
+  
+  .dropdown-bar-header {
+    background-color: var(--primary-dark-blue);
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .dropdown-bar-header:hover {
+    background-color: var(--primary-blue);
+  }
+  
+  .dropdown-bar-content {
+    padding: 10px;
+  }
+
+  .dropdown-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0 5px;
+  }
+  
+  .dropdown-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+  }

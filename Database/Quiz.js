@@ -28,10 +28,26 @@ const QuizSchema = new Schema({
     authorID: {
         type: Schema.Types.ObjectId, ref: 'authorID',
         required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
     }
 })
 
 const TakenQuizSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
+    },
     score: {
         type: Number,
         required: true
@@ -62,6 +78,10 @@ const TakenQuizSchema = new Schema({
     },
     timeFinished: {
         type: Date,
+        required: true
+    },
+    originalQuizID: {
+        type: Schema.Types.ObjectId, ref: 'originalQuizID',
         required: true
     }
 })

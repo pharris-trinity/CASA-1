@@ -1,22 +1,24 @@
 import React, {useEffect, useState} from "react"
-import StudNavbar from "./StudNavbar"
 import "./stylesStud.css"
 import StudProfileContent from "./StudProfileContent"
+
+import {loginChecker} from "../General/LoginCheck";
+import { useNavigate } from 'react-router-dom';
 
 /* where the student profile page lives; get the local storage user information & send to StudProfileContent
 to render the info*/
 
 export default function StudentProfilePage() {
-    
-   //local storage has current user information; parse it right by adding curly braces and get your json object
-    const curruser = JSON.parse(localStorage.getItem("userID"));
-    const curlyuser = "{" + curruser + "}";
-    const fixeduser = JSON.parse(curlyuser); //get fields by using fixeduser.username, etc.
-    //const studentIDstr = fixeduser._id;
-    const studentusername = fixeduser.username;
+    const studentusername = localStorage.username;
 
     const studentsearchurl= '/api/studentsearch/';
     const finishedurl = studentsearchurl+studentusername;
+
+    let navigate = useNavigate();
+    window.onload = (event) => {
+        var toNavigateTo = loginChecker("Student")
+        if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+      };
 
     
     const [currStud, setStud] = useState([])
@@ -37,7 +39,6 @@ export default function StudentProfilePage() {
 
     return(
     <>
-    <StudNavbar />
     {<StudProfileContent data={(currStud)}/>}
     </>
     ); 

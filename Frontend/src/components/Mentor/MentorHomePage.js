@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import MentorNavBar from "../Mentor/NavBarMentor";
 import "./stylesMentor.css"
 
 const MentorHome = () => {
 
 return (
 
-<>
-    <MentorNavBar />
-    
+<>    
     <div className="maincontainer">
         <h1>Mentor Homepage</h1>
         <div className="mainrow">
@@ -29,7 +26,7 @@ return (
             </div>
         </div>
     </div>
-    
+
     </>
 
     );

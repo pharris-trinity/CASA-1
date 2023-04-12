@@ -104,7 +104,7 @@ saltRounds = 12
           bcrypt.compare(req.body.password, user.password, (error, result) => {
             
             if(result) {
-              return res.status(201).send(user);
+              return res.status(201).send({_id: user._id, school: user.school, username: user.username, displayname: user.displayname, usertype: user.usertype});
             } else {
               return res.status(401).send("Password mismatch");
             }
@@ -139,6 +139,7 @@ saltRounds = 12
       return res.status(200).send(user);
     }
   });
+
 
   app.get('/api/user/modify_user_profile', async(req, res) => {
 
@@ -200,16 +201,29 @@ app.post('/api/coach/create_coach', async(req, res) => {
   app.post('/api/coach/get_coaches_teams', async(req, res) => {
     const { userID } = req.body;
 
-    await User.find(
+    await Coach.find(
       {"_id": userID}
     ).exec().then(user => {
       if(!user) {return res.status(401).send("ID not found");}
       else {
-        var teamsIDS = user.teams;
-        return res.send(teamsIDS).status(201);
+        //var teamsIDS = user.teams;
+        return res.send({teams: user.teams}).status(201);
       }
     })
   });
+
+  app.post('/api/coach/get_coaches_students', async(req, res) => {
+    const { userID } = req.body;
+  
+    const students = await Student.find(
+      {"coachID": userID} 
+    )
+      if(!students) {return res.status(401).send("No students found");}
+      else {
+        console.log(students);
+        return res.send(students).status(201);
+      }
+  })
 
 //=================
 
@@ -372,6 +386,7 @@ app.post('/api/coach/create_coach', async(req, res) => {
       return res.status(401).send("Team already exists")
     }
     team.save()
+    console.log("server console log in register_team: ", team)
 
     c.teams = teamsArr;
     c.save()
@@ -426,7 +441,7 @@ app.post('/api/getusername', async(req, res)=> {
   const {studid} = req.body;
   const stud = await User.findOne({"_id": studid});
   if (!stud){
-    return res.sendStatus(404);
+    return res.sendStatus(504);
   }
   else{
     return res.status(200).send(stud.displayname);
@@ -457,13 +472,46 @@ app.get('/api/filter_mentors', async(req, res) => {
   return res.status(200).send(users);
 })
 
+app.post('/api/coach/get_student_by_id', async(req, res) => {
+  const { displayID } = req.body;
+  const user = await User.find({"_id": displayID})     
+  if(!user){
+    return res.sendStatus(404)
+  } else {
+    return res.status(200).send(user); 
+  }      
+}) 
+
+app.post('/api/team/student_display_to_id', async(req, res) => {
+  const { studentDisplayName } = req.body;
+  const user = await User.find({"displayname": studentDisplayName}) 
+  var ret = user[0]._id
+  if(!user){
+    return res.status(502).send("No user found that matches that ID")
+  }
+  else {
+    return res.status(200).send(ret); 
+  } 
+})
+
+app.post('/api/coach/get_studentid_by_email', async(req, res) => {
+  const { student_email } = req.body;
+  const user = await User.find({"email": student_email})     
+  if(!user){
+    return res.sendStatus(404)
+  } else {
+    return res.status(200).send(user[0]._id); 
+  }      
+}) 
+
+
 
 app.post('/api/team/add_student_to_team', async(req, res) => {
   //Takes in a team ID and a student ID and updates the team and the student
   const {team_id, student_id} = req.body
 
   const team = await Team.findOne({"national_id": team_id})
-  const user = await User.findOne({"displayname": student_id})
+  const user = await User.findOne({"_id": student_id})
 
   if(!team){
     return res.status(501).send("No team found that matches that ID")
@@ -500,7 +548,7 @@ app.post('/api/team/remove_student_from_team', async(req, res) => {
   const {team_id, student_id} = req.body
 
   const team = await Team.findOne({"national_id": team_id})
-  const user = await User.findOne({"displayname": student_id})
+  const user = await User.findOne({"_id": student_id})
 
   if(!team){
     return res.status(501).send("No team found that matches that ID")
@@ -530,6 +578,50 @@ app.post('/api/team/remove_student_from_team', async(req, res) => {
 
   return res.status(200).send("Removed user from team")
 
+})
+
+app.post('/api/coach/add_coachid_to_student', async (req, res) => {
+  const {coachID, student_email} = req.body;
+
+  const student = await Student.findOne({email: student_email});
+
+  if(!student) {
+    return res.status(501).send("No student found with that email");
+  }
+
+  student.coachID = coachID;
+  student.save()
+
+  return res.status(200).send("CoachID was successfully added to student");
+})
+
+app.post('/api/coach/remove_coachid_from_student', async (req, res) => {
+  const {coachID, student_id} = req.body;
+
+  const student = await Student.findOne({_id: student_id});
+
+  if(!student) {
+    return res.status(501).send("No student found with that email");
+  }
+
+  if(student.team != -1) {
+    const team = await Team.findOne({national_id: student.team})
+    if(!team) {
+      return res.status(502).send("No team found with this team ID");
+    }
+    var members = team.members
+    if(members != undefined){
+      members.remove(student_id)
+    }
+    team.members = members
+    team.save()
+  }
+
+  student.team = -1;
+  student.coachID = undefined;
+  student.save()
+
+  return res.status(200).send("CoachID was successfully removed from student");
 })
 
 app.get('/api/stored', async (req, res) => {
@@ -616,8 +708,22 @@ app.post('/api/get-MentorData', function(req, res, next) {
     });
   });
 
+  app.post('/api/studentTakenQuizzes', async(req, res) => {
+    const {id} = req.body
+    const student = await Student.findOne({_id: id})
+
+    if(!student){
+      console.log("no ")
+      return res.sendStatus(404)
+    }
+    else{
+      //return res.status(200).send([student.username, student.takenQuizzes])
+      return res.status(200).send({username: student.username, displayname: student.displayname, takenQuizzes: student.takenQuizzes})
+    }
+  })
+
   //search for team based on national id
-  app.post('/api/teamsearch/:teamid', async(req,res)=>{
+  app.get('/api/teamsearch/:teamid', async(req,res)=>{
     const teamnum = Number(req.params.teamid); //convert string from url into a number
     const team = await Team.find({national_id: teamnum})
     //console.log(team)
@@ -629,9 +735,63 @@ app.post('/api/get-MentorData', function(req, res, next) {
     }
   })
 
+  //updates the information in the database
+  app.post('/api/team/update_student_info', async(req, res) => {
+    //Takes in a team ID and a student ID and updates the team and the student
+    const {coachID, studentID, studentDispName, studentGradLevel, studentTeamID} = req.body
+
+    const user = await User.findOne({"_id": studentID})
+    if(!user){
+      return res.status(501).send("No user found that matches that ID")
+    }
+
+    const coach = await Coach.findOne({"_id": coachID});
+    if(!coach) {
+      return res.status(502).send("No coach was found that matches this ID")
+    }
+
+    if(studentTeamID != -1) {
+      const newTeam = await Team.findOne({"national_id": studentTeamID})
+      const oldTeam = await Team.findOne({"national_id": user.team})
+      if(!newTeam) {
+        return res.status(503).send("No team matches this National Team Number")
+      } else {
+        if(newTeam.national_id != user.team) {
+          if(newTeam.coach.equals(coach._id)) {
+            user.team = newTeam.national_id;
+            var members = newTeam.members;
+            if(members != undefined && !members.includes(user._id)){
+              members.push(user._id);
+            }
+            newTeam.members = members;
+            newTeam.save();
+
+            var oldMembers = oldTeam.members
+            if(oldMembers != undefined){
+              oldMembers.remove(studentID)
+            }
+            oldTeam.members = oldMembers
+            oldTeam.save()
+          } else return res.status(505).send("Coach does not have access to this team")
+        }
+      }
+    }
+
+    if(studentDispName != '' && studentDispName != 'N/A' && studentDispName != null)user.displayname = studentDispName
+
+    if(studentGradLevel != '' && studentGradLevel != 'N/A' && studentGradLevel != null)user.gradelevel = studentGradLevel 
+
+    user.save();
+  
+    return res.status(200).send(user);
+  })
+  
+  
+
+
   //search for coach based on coach's object id to get madequizzes field: WIP status, may delete
   //currently objid for assessment field is janky, needs to have a create api
-  app.post('/api/coachsearch/:oid', async(req,res)=>{
+  app.get('/api/coachsearch/:oid', async(req,res)=>{
     const coach = await User.findById(req.params.oid); //findById(id)
     //console.log(coach)
     if(!coach){
@@ -639,6 +799,19 @@ app.post('/api/get-MentorData', function(req, res, next) {
       return res.sendStatus(404)
     } else {
       return res.status(200).send(coach);
+    }
+  })
+
+  app.post('/api/coachSearch', async(req, res) => {
+    const {id} = req.body
+    const coach = await Coach.findById(id)
+
+    if(!coach){
+      console.log("no coach found")
+      return res.sendStatus(404)
+    }
+    else{
+      return res.status(200).send(coach)
     }
   })
 
@@ -739,11 +912,12 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
 
 app.post('/api/assessment/add_assessment', async (req, res) => {
-    const {questions, author_id} = req.body;
+    const {questions, author_id, name, cat} = req.body;
     var final_questions = []
 
     var author = await User.findOne({"_id": author_id})
     if(!author){
+      //console.log(author_id)
       return res.status(404).send("Author not found")
     }
     if(author.usertype == "Student"){
@@ -772,7 +946,9 @@ app.post('/api/assessment/add_assessment', async (req, res) => {
 
     var new_quiz = new Quiz({
       questions: final_questions,
-      authorID: author_id
+      authorID: author_id,
+      name: name,
+      category: cat
     });
     let tmp = await new_quiz.save()
     author.madeQuizzes.push(tmp)
@@ -823,7 +999,7 @@ app.post('/api/assessment/find_taken_quizzes', async(req, res) => {
 })
 
 app.post('/api/assessment/take_quiz', async(req, res) => {
-  const {score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished } = req.body;
+  const {name, category, score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished, originalQuizID } = req.body;
 
   var user = await User.findOne({"_id": testTakerID})
   if(!user){
@@ -834,6 +1010,8 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
   }
 
   var takenQuiz = new TakenQuiz({
+    name: name,
+    category: category,
     score: score,
     questions: questions,
     answers: answers,
@@ -841,15 +1019,18 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
     incorrectQuestions: incorrectQuestions,
     testTakerID: testTakerID,
     timeStarted: timeStarted,
-    timeFinished: timeFinished
+    timeFinished: timeFinished, 
+    originalQuizID: originalQuizID 
+    
   })
 
   var id;
-  let tmp = await takenQuiz.save();
+  // let tmp = await takenQuiz.save();    Commented out to get ride of saving to takenquiz
 
   var quizzes = []
   quizzes = user.takenQuizzes;
-  quizzes.push(tmp)
+  //quizzes.push(tmp)
+  quizzes.push(takenQuiz) //alternative to push(tmp)
 
   user.save()
 
