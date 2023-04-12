@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import './StudentStats.css'
+import './StudentStats.css';
 import '../General/casa-table.css'
 import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
@@ -142,37 +142,34 @@ function StudentStats(props) {
 
     if(props.enabled == true) {
         return (
-            <div>
-                <h3>Student Stats Component</h3>
+            <div className="stats-container">
+                <h3>Student Stats (Based on Quiz Categories)</h3>
+                <table>
+                        <thead>
+                            <tr>
+                                <th className="th-manage-teams">Name</th>
+                                <th className="th-manage-teams">Windows</th>
+                                <th className="th-manage-teams">Win_Server</th>
+                                <th className="th-manage-teams">Linux</th>
+                                <th className="th-manage-teams">Networking</th>
+                                <th className="th-manage-teams">Security_Concepts</th>
+                            </tr>
+                        </thead>
 
-                <div className='flex justify-between my-8'>
-                    </div>
-                        <table>
-                                <thead>
-                                    <tr>
-                                        <th className="th-manage-teams">Name</th>
-                                        <th className="th-manage-teams">Windows</th>
-                                        <th className="th-manage-teams">Win_Server</th>
-                                        <th className="th-manage-teams">Linux</th>
-                                        <th className="th-manage-teams">Networking</th>
-                                        <th className="th-manage-teams">Security_Concepts</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                {students && students.map((item, index) => (
-                                    <tr>
-                                        <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.displayname}</td>
-                                        <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("windows", item.takenQuizzes)}</td>
-                                        <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("win_server", item.takenQuizzes)}</td>
-                                        <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("linux", item.takenQuizzes)}</td>
-                                        <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("networking", item.takenQuizzes)}</td>
-                                        <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("security_concepts", item.takenQuizzes)}</td>
-                                    </tr>
-                                ))}
-                                </tbody>
-                        </table>
-                </div>
+                        <tbody>
+                        {students && students.map((item, index) => (
+                            <tr>
+                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.displayname}</td>
+                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("windows", item.takenQuizzes)}</td>
+                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("win_server", item.takenQuizzes)}</td>
+                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("linux", item.takenQuizzes)}</td>
+                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("networking", item.takenQuizzes)}</td>
+                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("security_concepts", item.takenQuizzes)}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                </table>
+            </div>
         );
     }
 }

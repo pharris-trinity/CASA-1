@@ -12,9 +12,8 @@
 .right {
     width: 60%;
     float: right;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 3%;
+    padding-right: 2%;
+    padding-left: 2%;
 }
 
 .form-container {

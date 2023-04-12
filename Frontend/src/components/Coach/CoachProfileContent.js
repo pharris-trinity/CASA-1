@@ -3,6 +3,7 @@ import React from 'react';
 //import { Text } from 'react-native';
 import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
+import './CoachProfile.css';
 
 
 
@@ -13,14 +14,9 @@ const ProfileContent = ({data}) => {
         var toNavigateTo = loginChecker("Coach")
         if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
       };
-
-    function homeButton(){
-        navigate('/coachhome', {replace: true})  
-    }
-
-  
+ 
     return(
-        <div className="profilecontainer">
+        <div className="profile-container">
         <h1>Profile (Mostly Unimplemented)</h1>
             <div className="coachAttributes">
                 {data.map(user => (
@@ -32,10 +28,6 @@ const ProfileContent = ({data}) => {
                     </div>
                 ))}
             </div>
-        <button onClick={homeButton}>
-            Home
-        </button>
-
     </div> 
     )
 }
