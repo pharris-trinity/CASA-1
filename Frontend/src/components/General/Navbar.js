@@ -33,6 +33,7 @@ export default function Navbar(props) {
       { name: "LOG OUT"}
     ],
     takeQuiz: [ 
+      { name: "STUDENT HOME PAGE", link: "./../stud/main"},
       { name: "LOG OUT"}
     ]
   };

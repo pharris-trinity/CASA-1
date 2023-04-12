@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import './ManageTeams.css'
 import AddStudent from "./AddStudent";
+import { useNavigate } from "react-router-dom";
+import {loginChecker} from "../General/LoginCheck";
 
 /* 
 The Question component has logic to render a quiz question, including the description 
@@ -160,6 +162,12 @@ function ManageTeams(props) {
         updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,updateTeamID);
         alert("Student has been updated");
     }
+
+    let navigate = useNavigate();
+    window.onload = (event) => {
+        var toNavigateTo = loginChecker("Coach")
+        if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+      };
 
     if(props.enabled == true) {
         return (

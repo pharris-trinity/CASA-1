@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import MentorNavBar from "./NavBarMentor";
 import "./stylesMentor.css"
 import MentorProfileContent from "./MentorProfileContent"
 
 const MentorHome = () => {
+
 
     const [query, setQuery] = useState("")
 
@@ -26,9 +26,7 @@ const MentorHome = () => {
 
 return (
 
-<>
-    <MentorNavBar />
-    
+<>   
     <div className="maincontainer">
         <h1>Mentor Homepage</h1>
         {<MentorProfileContent data={(query)}/>}

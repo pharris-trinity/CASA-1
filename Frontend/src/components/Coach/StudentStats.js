@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './StudentStats.css'
+import { useNavigate } from "react-router-dom";
+import {loginChecker} from "../General/LoginCheck";
 
 /* 
 The Question component has logic to render a quiz question, including the description 
@@ -11,6 +13,12 @@ function StudentStats(props) {
     const [coach, setCoach] = useState()
     const [studentIDs, setStudentIDs] = useState([])
     const [students, setStudents] = useState([])
+
+    let navigate = useNavigate();
+    window.onload = (event) => {
+        var toNavigateTo = loginChecker("Coach")
+        if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+      };
 
     const getCoach = async(internalCoachID) => {
         try {
@@ -130,7 +138,6 @@ function StudentStats(props) {
             getStudentsFromServer(studentIDs)
         }
     }, [studentIDs])
-
 
     if(props.enabled == true) {
         return (

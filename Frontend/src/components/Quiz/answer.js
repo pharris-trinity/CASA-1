@@ -15,7 +15,7 @@ function Answer(props) {
     }, [props.currentSelected])
 
     return (
-        <div>
+        <div style={{ marginTop: 10 }}>
             {/* Conditional rendering exclusively for CSS changes based on whether this answer is selected */}
             {isSelected 
                 ? <p className="selected-question-box" onClick={() => {
