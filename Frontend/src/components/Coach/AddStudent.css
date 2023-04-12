@@ -1,0 +1,33 @@
+/* The popup form - hidden by default */
+.form-popup {
+    display: block;
+    position: fixed;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+    background-color: var(--primary-dark-blue);
+    color: white;
+  }
+  
+  /* Add styles to the form container */
+  .add-student-container {
+    padding: 10px;
+  }
+  
+  /* Full-width input fields */
+  .add-student-container input[type=email], .add-student-container input[type=number] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+  
+  /* When the inputs get focus, do something */
+  .add-student-container input[type=email]:focus, .add-student-container input[type=number]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
