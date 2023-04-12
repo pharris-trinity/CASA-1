@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './ManageTeams.css'
 import AddStudent from "./AddStudent";
+import MakeTeam from "./MakeTeam";
 import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
 
@@ -21,6 +22,8 @@ function ManageTeams(props) {
     const [currentStudentID, setCurrentStudentID] = useState();
 
     const[enabledAddToTeam, setEnabledAddToTeam] = useState(false);
+
+    const[enableMakeTeam, setEnableMakeTeam] = useState(false);
 
     
     const getCoach = async(coachID) => {
@@ -56,17 +59,17 @@ function ManageTeams(props) {
 
     const getTeams = async (inputTeams) => {
         var tempTeams = [];
-        console.log("inputTeams length", inputTeams);
+        //console.log("inputTeams length", inputTeams);
         for(let i = 0; i < inputTeams.length; i++){
             try {
-                console.log(inputTeams[i])
+          //      console.log(inputTeams[i])
                 const requestOptions = {
                     method: 'GET',
                     headers: {'Content-Type': 'application/json'}
                 };
                 const response = await fetch('/api/teamsearch/' + JSON.stringify(inputTeams[i]), requestOptions);
                 const jsonData = await response.json();
-                console.log("jsonData in getTeams", jsonData, "index", i);
+       //         console.log("jsonData in getTeams", jsonData, "index", i);
                 tempTeams.push(jsonData);
             } catch (error) {
                 console.log("error in getTeams: ", error);
@@ -77,14 +80,14 @@ function ManageTeams(props) {
 
     const getTeamName = (teamID) => {
         var teamName = "";
-        console.log("teams in getTeamName", teams);
+  //      console.log("teams in getTeamName", teams);
         teams.map(team => {
-            console.log("comparing team nationalID and teamID in getTeamName: ", team.national_id, teamID);
+  //          console.log("comparing team nationalID and teamID in getTeamName: ", team.national_id, teamID);
             if(team.national_id == teamID) {
                 teamName = team.name;
             }
         })
-        console.log("teamName in getTeamName: ", teamName);
+    //    console.log("teamName in getTeamName: ", teamName);
         return teamName;
     }
 
@@ -106,6 +109,23 @@ function ManageTeams(props) {
         }
     }
 
+    const removeStudent = async (studentID) => {
+        var tmpData = {coachID: coachUserID, student_id: studentID}
+        try {
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(tmpData)
+        };
+        
+        const response = await fetch('/api/coach/remove_coachid_from_student', requestOptions)
+        const jsonData = await response.json()
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const fillDisplayInfo = (student) => {
         setCurrentStudentID(student._id);
         setUpdateDisplayName(student.displayname);
@@ -116,15 +136,34 @@ function ManageTeams(props) {
 
     const addStudentButton = () => {
         setEnabledAddToTeam(true);
+        console.log("enabledAddToTeam: ", enabledAddToTeam)
     }
 
     const closeAddStudent = () => {
         setEnabledAddToTeam(false);
+        console.log("enabledAddToTeam: ", enabledAddToTeam)
         getStudents(coachUserID);
     }
 
-    const deleteStudentButton = () => {
+    const makeTeamButton = () => {
+        setEnableMakeTeam(true);
+        console.log("maketeamButton: ", enableMakeTeam)
+    }
 
+    const closeMakeTeam = () => {
+        setEnableMakeTeam(false);
+        getTeams(coach.teams);
+        console.log("closemaketeamButton: ", enableMakeTeam)
+    }
+    const deleteStudentButton = () => {
+        const confirmText = "Are you sure you want to delete the current selected student? \n(This does not delete their account, but removes them from your roster)";
+        if(window.confirm(confirmText) == true) {
+            console.log("confirmed delete student");
+            removeStudent(currentStudentID);
+            getStudents(coachUserID);
+        } else {
+            console.log("Cancelled delete student");
+        }
     }
 
 
@@ -163,12 +202,6 @@ function ManageTeams(props) {
         alert("Student has been updated");
     }
 
-    let navigate = useNavigate();
-    window.onload = (event) => {
-        var toNavigateTo = loginChecker("Coach")
-        if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
-      };
-
     if(props.enabled == true) {
         return (
             <div>
@@ -204,16 +237,19 @@ function ManageTeams(props) {
                                 value={updateTeamID}
                                 onChange={(e) => setUpdateTeamID(e.target.value)}
                             />
-                            <button className="casa-button button-alignment" type="submit">Save Changes</button>
-                            <br/>
-                            <button className="casa-button button-alignment" type="button" onClick={addStudentButton}>Add Student</button>
+                            <div className="button-alignment">
+                                <button className="casa-button" type="submit">Save Changes</button>
+                                <button className="casa-button" type="button" onClick={addStudentButton}>Add Student</button>
+                                <button className="casa-button" type="button" onClick={makeTeamButton}>Make A Team</button>
+                            </div>
                         </div>
                     </form>
 
-                    {/*Div for add and delete button code*/}
+                    {/*Div for Delete button code*/}
                     <div>
                         <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
-                        <button className="casa-button" type="button" onClick={deleteStudentButton}>Delete Student</button>
+                        <MakeTeam enabled={enableMakeTeam} closeForm={closeMakeTeam}/>
+                        <button className="casa-button delete-button" type="button" onClick={deleteStudentButton}>Delete Student</button>
                     </div>
                 </div>
 
@@ -243,6 +279,14 @@ function ManageTeams(props) {
                             </tbody>
                     </table>
                 </div>
+
+                 {/*Div for make team button code*/}
+                 {/* <div>
+                    <button className="casa-button" type="button" onClick={makeTeamButton}>Make A Team</button>
+                    <MakeTeam enabled={enableMakeTeam} closeForm={closeMakeTeam}/>
+                </div> */}
+
+
             </div>
         );
     }

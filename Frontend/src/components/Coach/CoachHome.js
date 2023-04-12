@@ -9,6 +9,7 @@ import StudentStats from './StudentStats';
 import Navbar from './../General/Navbar';
 import { useNavigate } from 'react-router-dom';
 import {loginChecker} from "../General/LoginCheck";
+import CoachProfile from '../Coach/CoachProfile';
 
 function CoachHome() {
 
@@ -16,6 +17,7 @@ function CoachHome() {
   const [enabledStudentStats, setEnabledStudentStats] = useState(false);
   const [enabledCreateQuiz, setEnabledCreateQuiz] = useState(false);
   const [enabledFindMentors, setEnabledFindMentors] = useState(false);
+  const [enabledCoachProfile, setEnabledCoachProfile] = useState(false);
 
   let navigate = useNavigate();
 
@@ -30,6 +32,7 @@ function CoachHome() {
     setEnabledStudentStats(false);
     setEnabledCreateQuiz(false);
     setEnabledFindMentors(false); 
+    setEnabledCoachProfile(false);
   }
 
   function showStudentStats() {
@@ -37,6 +40,7 @@ function CoachHome() {
     setEnabledManageTeam(false); 
     setEnabledCreateQuiz(false);
     setEnabledFindMentors(false);
+    setEnabledCoachProfile(false);
   }
 
   function showCreateQuiz() {
@@ -44,6 +48,7 @@ function CoachHome() {
     setEnabledManageTeam(false);
     setEnabledStudentStats(false);
     setEnabledFindMentors(false);
+    setEnabledCoachProfile(false);
   }
 
   function showFindMentors() {
@@ -51,10 +56,15 @@ function CoachHome() {
     setEnabledCreateQuiz(false);
     setEnabledManageTeam(false);
     setEnabledStudentStats(false);
+    setEnabledCoachProfile(false);
   }
 
-  function coachProfile(){
-    navigate('/profile', {replace: true})
+  function showCoachProfile(){
+    setEnabledCoachProfile(!enabledCoachProfile);
+    setEnabledFindMentors(false);
+    setEnabledCreateQuiz(false);
+    setEnabledManageTeam(false);
+    setEnabledStudentStats(false);
   }
 
   function coachTableButton(){
@@ -85,17 +95,18 @@ return (
         Find Mentors
         </button>
 
-        <button className="unselected-tab" onClick={coachProfile}>
+        <button className={enabledCoachProfile ? "selected-tab" : "unselected-tab"} onClick={showCoachProfile}>
         My Account
         </button>
 
         <div className="content-area">
-          {!enabledManageTeam && !enabledStudentStats && !enabledCreateQuiz && !enabledFindMentors
+          {!enabledManageTeam && !enabledStudentStats && !enabledCreateQuiz && !enabledFindMentors && !enabledCoachProfile
             ? <h1 className="descriptor-text">Click on a tab to view its contents</h1> 
             : null
           }
           <ManageTeams enabled={enabledManageTeam}/>
           <StudentStats enabled={enabledStudentStats}/>
+          <CoachProfile enabled={enabledCoachProfile}/>
           
           {enabledCreateQuiz 
           ? <h1>This page has not been implemented yet</h1>

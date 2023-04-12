@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import "./stylesCoach.css"
 //import StudProfileContent from "./Student/StudProfileContent"
 
 /* where the student profile page lives; get the local storage user information & send to StudProfileContent

@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react"
-//import "./stylesCoach.css"
 import CoachProfileContent from "./CoachProfileContent"
 
 import {loginChecker} from "../General/LoginCheck";
 import { useNavigate } from 'react-router-dom';
 
-export default function CoachProfile() {
+export default function CoachProfile(props) {
     const coachusername = localStorage.username;
     
   let navigate = useNavigate();
@@ -34,10 +33,12 @@ export default function CoachProfile() {
             })
         },[]);
 
-    return(
-    <>
-    {<CoachProfileContent data={(currCoach)}/>}
-    </>
-    ); 
+    if(props.enabled) {
+        return(
+            <>
+                {<CoachProfileContent data={(currCoach)}/>}
+            </>
+        ); 
+    }
     
 }
