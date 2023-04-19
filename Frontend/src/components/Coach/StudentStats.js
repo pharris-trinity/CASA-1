@@ -17,6 +17,7 @@ function StudentStats(props) {
     const [students, setStudents] = useState([])
 
     const [enabledIndividual, setEnabledIndividual] = useState(false)
+    const [individualStudent, setIndividualStudent] = useState([])
 
     //const [singleStudent, setSingleStudent] = useState([])
 
@@ -124,7 +125,7 @@ function StudentStats(props) {
 
     const selectIndividual = (student) => {
         setEnabledIndividual(true);
-
+        setIndividualStudent(student)
     }
 
     useEffect(() => {
@@ -149,10 +150,18 @@ function StudentStats(props) {
             getStudentsFromServer(studentIDs)
         }
     }, [studentIDs])
+    
+    useEffect(() => {
+        if(!props.enabled){
+            setEnabledIndividual(false)
+        }
+    }, [props.enabled])
 
     if(props.enabled == true) {
         return (
-            
+            enabledIndividual ? 
+            (individualStudent && <IndividualStudentStats student={individualStudent} setEnable={(e) => setEnabledIndividual(e)}/>)
+            :
             <div className="stats-container">
                 <h3>Student Stats (Based on Quiz Categories)</h3>
                 <table>
