@@ -3,6 +3,7 @@ import './StudentStats.css';
 import '../General/casa-table.css'
 import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
+import IndividualStudentStats from "./IndividualStudentStats.js"
 
 /* 
 The Question component has logic to render a quiz question, including the description 
@@ -14,6 +15,10 @@ function StudentStats(props) {
     const [coach, setCoach] = useState()
     const [studentIDs, setStudentIDs] = useState([])
     const [students, setStudents] = useState([])
+
+    const [enabledIndividual, setEnabledIndividual] = useState(false)
+
+    //const [singleStudent, setSingleStudent] = useState([])
 
     let navigate = useNavigate();
     window.onload = (event) => {
@@ -117,6 +122,11 @@ function StudentStats(props) {
         return "No Quizzes Taken"
     }
 
+    const selectIndividual = (student) => {
+        setEnabledIndividual(true);
+
+    }
+
     useEffect(() => {
         setcoachID(localStorage.getItem("_id"))
     }, []);
@@ -142,6 +152,7 @@ function StudentStats(props) {
 
     if(props.enabled == true) {
         return (
+            
             <div className="stats-container">
                 <h3>Student Stats (Based on Quiz Categories)</h3>
                 <table>
@@ -158,7 +169,7 @@ function StudentStats(props) {
 
                         <tbody>
                         {students && students.map((item, index) => (
-                            <tr>
+                            <tr key={item._id} onClick={() => selectIndividual(item)}>
                                 <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.displayname}</td>
                                 <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("windows", item.takenQuizzes)}</td>
                                 <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("win_server", item.takenQuizzes)}</td>
