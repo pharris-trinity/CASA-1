@@ -2,6 +2,7 @@ import React from "react"
 //import { ReactDOM } from "react-dom/client"
 import "./stylesLanding.css"
 import Navbar from "./Navbar";
+import NationalID from "./NationalID";
 
 /*the page for student main page; what shows up for on the main menu*/
 export default function LandingMainPage() {
@@ -10,6 +11,7 @@ export default function LandingMainPage() {
 
     return (
     <>
+    <NationalID/>
     <Navbar buttonSet="landing"/>
       
     <div className="maincontainer">
