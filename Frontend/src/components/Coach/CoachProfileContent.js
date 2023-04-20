@@ -21,20 +21,23 @@ const ProfileContent = ({data}) => {
         <div className='main-box'>
             <div className='page-title'>Coach Profile</div>
                 <div className='content-box'>
-                    <div className='text-container'>
-                        <span className="left-text">Coach Name</span>
-                        <span className="right-text">USE PROPS FOR THIS</span>
-                    </div>
-                    <div className='text-container'>
-                        <span className="left-text">Username</span>
-                        <span className="right-text">USE PROPS FOR THIS</span>
-                    </div>
-                    <div className='text-container'>
-                        <span className="left-text">Email</span>
-                        <span className="right-text">USE PROPS FOR THIS</span>
-                    </div>
+                    {data.map(user => (
+                        <React.Fragment key={user.id}>
+                        <div className='text-container'>
+                            <span className="left-text">Coach Name</span>
+                            <span className="right-text">{user.displayname}</span>
+                        </div>
+                        <div className='text-container'>
+                            <span className="left-text">Username</span>
+                            <span className="right-text">{user.username}</span>
+                        </div>
+                        <div className='text-container'>
+                            <span className="left-text">Email</span>
+                            <span className="right-text">{user.email}</span>
+                        </div>
+                        </React.Fragment>
+                    ))}
             </div>
-
         </div>
 
 
