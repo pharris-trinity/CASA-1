@@ -34,9 +34,9 @@ app.post('/api/admin/register_team', async(req, res) => {
         setTeamCoachID(localStorage.getItem("_id"));
     }, []) 
     
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        createATeam(teamNationalID, teamName, teamSchool, teamDistrict, teamIsROTC, teamCoachID);
+        await createATeam(teamNationalID, teamName, teamSchool, teamDistrict, teamIsROTC, teamCoachID);
         //alert('You have submitted');
         props.closeForm();
     }
