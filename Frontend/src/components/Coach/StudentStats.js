@@ -179,12 +179,12 @@ function StudentStats(props) {
                         <tbody>
                         {students && students.map((item, index) => (
                             <tr key={item._id} onClick={() => selectIndividual(item)}>
-                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.displayname}</td>
-                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("windows", item.takenQuizzes)}</td>
-                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("win_server", item.takenQuizzes)}</td>
-                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("linux", item.takenQuizzes)}</td>
-                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("networking", item.takenQuizzes)}</td>
-                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("security_concepts", item.takenQuizzes)}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.displayname}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("windows", item.takenQuizzes)}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("win_server", item.takenQuizzes)}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("linux", item.takenQuizzes)}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("networking", item.takenQuizzes)}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("security_concepts", item.takenQuizzes)}</td>
                             </tr>
                         ))}
                         </tbody>

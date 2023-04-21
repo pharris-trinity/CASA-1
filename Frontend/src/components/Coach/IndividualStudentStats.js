@@ -32,12 +32,12 @@ function IndividualStudentStats (props) {
                 </thead>
                 <tbody>
                     {props.student.takenQuizzes && props.student.takenQuizzes.map((item, index) => (
-                        <tr>
-                            <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.name}</td>
-                            <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.category}</td>
-                            <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.correctQuestions.length + "/" + item.questions.length}</td>
-                            <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.score}</td>
-                            <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.timeFinished.split('T')[0] + " " + item.timeFinished.split('T')[1].substring(0,5)}</td>
+                        <tr key={item._id}>
+                            <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.name}</td>
+                            <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.category}</td>
+                            <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.correctQuestions.length + "/" + item.questions.length}</td>
+                            <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.score}</td>
+                            <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.timeFinished.split('T')[0] + " " + item.timeFinished.split('T')[1].substring(0,5)}</td>
                         </tr>
                     ))}
                 </tbody>
