@@ -4,7 +4,6 @@ import '../General/casa-table.css'
 
 
 function IndividualStudentStats (props) {
-    //console.log("props: ", props);
 
 
     useEffect(() => {
@@ -13,13 +12,13 @@ function IndividualStudentStats (props) {
 
     return(
         props.student.takenQuizzes.length == 0 ? 
-        <div>
+        <div className="stats-container">
             <h3>No Quizzes Available</h3>
-            <button onClick={() => props.setEnable(false)}>back</button>
+            <button className="casa-button"  onClick={() => props.setEnable(false)}>back</button>
         </div>
        
          :
-        <div>
+        <div className="stats-container">
             <h3>{props.student.displayname && props.student.displayname}</h3>
             <table>
                 <thead>
@@ -32,18 +31,18 @@ function IndividualStudentStats (props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.student.takenQuizzes && props.student.takenQuizzes.map(item => (
+                    {props.student.takenQuizzes && props.student.takenQuizzes.map((item, index) => (
                         <tr>
-                            <td>{item.name}</td>
-                            <td>{item.category}</td>
-                            <td>{item.correctQuestions.length + "/" + item.questions.length}</td>
-                            <td>{item.score}</td>
-                            <td>{item.timeFinished.split('T')[0] + " " + item.timeFinished.split('T')[1].substring(0,5)}</td>
+                            <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.name}</td>
+                            <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.category}</td>
+                            <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.correctQuestions.length + "/" + item.questions.length}</td>
+                            <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.score}</td>
+                            <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{item.timeFinished.split('T')[0] + " " + item.timeFinished.split('T')[1].substring(0,5)}</td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <button onClick={() => props.setEnable(false)}>back</button>
+            <button className="casa-button" onClick={() => props.setEnable(false)}>back</button>
         </div>
     );
 }
