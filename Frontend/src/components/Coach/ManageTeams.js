@@ -52,7 +52,6 @@ function ManageTeams(props) {
             }
             const response = await fetch('/api/coach/get_coaches_students', requestOptions)
             const jsonData = await response.json()
-            console.log("getStudents has been called!", jsonData);
             setStudents(jsonData);
         } catch (error) {
             console.log(error)
@@ -69,12 +68,12 @@ function ManageTeams(props) {
                 };
                 const response = await fetch('/api/teamsearch/' + JSON.stringify(inputTeams[i]), requestOptions);
                 const jsonData = await response.json();
-                tempTeams.push(jsonData);
+                tempTeams.push(...jsonData);
             } catch (error) {
                 console.log("error in getTeams: ", error);
             }
         }
-        setTeams(...tempTeams);
+        setTeams(tempTeams);
     }
 
     const getTeamName = (teamID) => {
@@ -143,9 +142,9 @@ function ManageTeams(props) {
         setEnableMakeTeam(true);
     }
 
-    const closeMakeTeam = () => {
+    const closeMakeTeam = async () => {
         setEnableMakeTeam(false);
-        getTeams(coach.teams);
+        await getCoach(coachUserID);
     }
     const deleteStudentButton = async () => {
         const confirmText = "Are you sure you want to delete the current selected student? \n(This does not delete their account, but removes them from your roster)";

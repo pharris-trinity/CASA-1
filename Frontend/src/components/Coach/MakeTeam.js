@@ -19,7 +19,6 @@ app.post('/api/admin/register_team', async(req, res) => {
 */
     const createATeam = async (tID, tName, tSchool, tDistrict, tROTC, tcoachID) => {
         var tmpData = { national_id: tID, name: tName, school: tSchool, district: tDistrict, rotc: tROTC, coach: tcoachID }
-        console.log("createATEAM TMPDATA: ", tmpData);
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
