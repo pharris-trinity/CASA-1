@@ -5,6 +5,7 @@ import AddStudent from "./AddStudent";
 import MakeTeam from "./MakeTeam";
 import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
+import {FaArrowUp, FaArrowDown} from "react-icons/fa";
 
 /* 
 The Question component has logic to render a quiz question, including the description 
@@ -178,6 +179,53 @@ function ManageTeams(props) {
         updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,updateTeamID);
     }
 
+
+    //Sort
+    const [sorted, setSorted] = useState({sorted: "id", reversed: "false"});
+    
+    const sortByName = () => {
+        console.log("onclick working");
+        setSorted({sorted: "name", reversed: !sorted.reversed});
+        const usersCopy = [...students];
+        usersCopy.sort((userA, userB) => {
+            const nameA = userA.displayname;
+            const nameB = userB.displayname;
+            if (sorted.reversed) {
+                return nameB.localeCompare(nameA);
+            }
+            return nameA.localeCompare(nameB);
+        });
+        setStudents(usersCopy); 
+    }
+    /*
+    const sortByGrade = () => {
+        
+    }
+    const sortByTeamName = () => {
+        
+    }
+    
+    const sortByTeamID = () => {
+        console.log("is clicking");
+        setSorted({sorted: "team", reverse: !sorted.reversed});
+        const usersCopy = [...students];
+        usersCopy.sort((usersA, usersB) => {
+            if (sorted.reversed){
+                return usersA.team - usersB.team;
+            }
+            return usersB.team - usersA.team;
+        });
+        setStudents(usersCopy);
+    };
+    */
+
+    const renderArrow = () => {
+        if (sorted.reversed){
+            return <FaArrowDown/>;
+        }
+        return <FaArrowUp/>;
+    }
+
     if(props.enabled == true) {
         return (
             <div>
@@ -234,11 +282,25 @@ function ManageTeams(props) {
                     <table className="right">
                             <thead>
                                 <tr>
-                                    <th className="th-manage-teams">Student Name</th>
-                                    <th className="th-manage-teams">Email</th>
-                                    <th className="th-manage-teams">Grade Level</th>
-                                    <th className="th-manage-teams">Team Name</th>
-                                    <th className="th-manage-teams">Team ID</th>
+                                    <th className="th-manage-teams" onClick = {sortByName}>
+                                        Student Name
+                                    </th>
+                                    <th className="th-manage-teams">
+                                        Email
+                                    </th>
+                                    <th className="th-manage-teams" >
+                                        Grade Level
+                                    </th>
+                                    <th className="th-manage-teams" >
+                                        Team Name
+                                    </th>
+                                    {/*<th className="th-manage-teams" onClick = {sortByTeamID}>
+                                        Team ID
+                                        {sorted.sorted == "team" ? renderArrow() : null}
+                                    </th>*/}
+                                    <th className="th-manage-teams">
+                                        Team ID
+                                    </th>
                                 </tr>
                             </thead>
 
