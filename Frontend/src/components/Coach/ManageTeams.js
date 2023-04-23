@@ -17,10 +17,10 @@ function ManageTeams(props) {
     const [coach, setCoach] = useState();
     const [students, setStudents] = useState([]);
     const [teams, setTeams] = useState([]);
-    const [updateDisplayName, setUpdateDisplayName] = useState("N/A");
-    const [displayEmail, setDisplayEmail] = useState("N/A");
-    const [updateGradLevel, setUpdateGradLevel] = useState("N/A");
-    const [updateTeamID, setUpdateTeamID] = useState("N/A");
+    const [updateDisplayName, setUpdateDisplayName] = useState("");
+    const [displayEmail, setDisplayEmail] = useState("");
+    const [updateGradLevel, setUpdateGradLevel] = useState("");
+    const [updateTeamID, setUpdateTeamID] = useState("");
     const [currentStudentID, setCurrentStudentID] = useState();
 
     const[enabledAddToTeam, setEnabledAddToTeam] = useState(false);
@@ -333,11 +333,11 @@ function ManageTeams(props) {
                             <tbody>
                                 {students && students.map((student, index) => (
                                 <tr key={student._id} onClick={() => (fillDisplayInfo(student))}>
-                                    <td key={index} className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.displayname}</td>
-                                    <td key={index} className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.email}</td>
-                                    <td key={index} className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
-                                    <td key={index} className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{(teams && student.team != -1) ? getTeamName(student.team) : "N/A"}</td>
-                                    <td key={index} className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.team != -1 ? student.team : "N/A"}</td>
+                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.displayname}</td>
+                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.email}</td>
+                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
+                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{(teams && student.team != -1) ? getTeamName(student.team) : "N/A"}</td>
+                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.team != -1 ? student.team : "N/A"}</td>
                                 </tr>
                                 ))}
                             </tbody>
