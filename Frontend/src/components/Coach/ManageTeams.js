@@ -26,7 +26,10 @@ function ManageTeams(props) {
     const[enabledAddToTeam, setEnabledAddToTeam] = useState(false);
 
     const[enableMakeTeam, setEnableMakeTeam] = useState(false);
-
+    //Sort
+    const [sorted, setSorted] = useState({sorted: "id", reversed: "false"});
+    //search
+    const [serachPhrase, setSearchPhrase] = useState("");
     
     const getCoach = async(coachID) => {
         try {
@@ -178,13 +181,9 @@ function ManageTeams(props) {
         e.preventDefault();
         updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,updateTeamID);
     }
-
-
-    //Sort
-    const [sorted, setSorted] = useState({sorted: "id", reversed: "false"});
     
+    //sorts by student display name
     const sortByName = () => {
-        console.log("onclick working");
         setSorted({sorted: "name", reversed: !sorted.reversed});
         const usersCopy = [...students];
         usersCopy.sort((userA, userB) => {
@@ -195,19 +194,44 @@ function ManageTeams(props) {
             }
             return nameA.localeCompare(nameB);
         });
+        //setStudents(null);
         setStudents(usersCopy); 
     }
-    /*
+    
+    //sorts by grade level
     const sortByGrade = () => {
-        
+        setSorted({sorted: "grade", reverse: !sorted.reversed});
+        const usersCopy = [...students];
+        usersCopy.sort((usersA, usersB) => {
+            if (sorted.reversed){
+                return usersA.gradelevel - usersB.gradelevel;
+            }
+            return usersB.gradelevel - usersA.gradelevel;
+        });
+        setStudents(usersCopy);
+
     }
+
+    //sorts by team name
     const sortByTeamName = () => {
-        
+        console.log("onclick working");
+        setSorted({sorted: "team", reversed: !sorted.reversed});
+        const usersCopy = [...students];
+        usersCopy.sort((userA, userB) => {
+            const nameA = getTeamName(userA.team);
+            const nameB = getTeamName(userB.team);
+            if (sorted.reversed) {
+                return nameB.localeCompare(nameA);
+            }
+            return nameA.localeCompare(nameB);
+        });
+        //setStudents(null);
+        setStudents(usersCopy); 
     }
     
+    //sorts by team id
     const sortByTeamID = () => {
-        console.log("is clicking");
-        setSorted({sorted: "team", reverse: !sorted.reversed});
+        setSorted({sorted: "teamID", reverse: !sorted.reversed});
         const usersCopy = [...students];
         usersCopy.sort((usersA, usersB) => {
             if (sorted.reversed){
@@ -217,14 +241,15 @@ function ManageTeams(props) {
         });
         setStudents(usersCopy);
     };
-    */
 
+    //shows the arrow direction of sort
     const renderArrow = () => {
         if (sorted.reversed){
             return <FaArrowDown/>;
         }
         return <FaArrowUp/>;
     }
+
 
     if(props.enabled == true) {
         return (
@@ -284,22 +309,23 @@ function ManageTeams(props) {
                                 <tr>
                                     <th className="th-manage-teams" onClick = {sortByName}>
                                         Student Name
+                                        {sorted.sorted == "name" ? renderArrow() : null}
                                     </th>
                                     <th className="th-manage-teams">
                                         Email
                                     </th>
-                                    <th className="th-manage-teams" >
+                                    <th className="th-manage-teams" onClick={sortByGrade}>
                                         Grade Level
+                                        {sorted.sorted == "grade" ? renderArrow() : null}
                                     </th>
-                                    <th className="th-manage-teams" >
+                                    <th className="th-manage-teams" onClick={sortByTeamName}>
                                         Team Name
-                                    </th>
-                                    {/*<th className="th-manage-teams" onClick = {sortByTeamID}>
-                                        Team ID
                                         {sorted.sorted == "team" ? renderArrow() : null}
-                                    </th>*/}
-                                    <th className="th-manage-teams">
+                                    </th>
+                                    <th className="th-manage-teams" onClick = {sortByTeamID}>
                                         Team ID
+                                        {sorted.sorted == "teamId" ? renderArrow() : null}
+
                                     </th>
                                 </tr>
                             </thead>
