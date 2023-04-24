@@ -3,6 +3,7 @@ import './StudentStats.css';
 import '../General/casa-table.css'
 import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
+import IndividualStudentStats from "./IndividualStudentStats.js"
 
 /* 
 The Question component has logic to render a quiz question, including the description 
@@ -14,6 +15,11 @@ function StudentStats(props) {
     const [coach, setCoach] = useState()
     const [studentIDs, setStudentIDs] = useState([])
     const [students, setStudents] = useState([])
+
+    const [enabledIndividual, setEnabledIndividual] = useState(false)
+    const [individualStudent, setIndividualStudent] = useState([])
+
+    //const [singleStudent, setSingleStudent] = useState([])
 
     let navigate = useNavigate();
     window.onload = (event) => {
@@ -117,6 +123,11 @@ function StudentStats(props) {
         return "No Quizzes Taken"
     }
 
+    const selectIndividual = (student) => {
+        setEnabledIndividual(true);
+        setIndividualStudent(student)
+    }
+
     useEffect(() => {
         setcoachID(localStorage.getItem("_id"))
     }, []);
@@ -139,9 +150,18 @@ function StudentStats(props) {
             getStudentsFromServer(studentIDs)
         }
     }, [studentIDs])
+    
+    useEffect(() => {
+        if(!props.enabled){
+            setEnabledIndividual(false)
+        }
+    }, [props.enabled])
 
     if(props.enabled == true) {
         return (
+            enabledIndividual ? 
+            (individualStudent && <IndividualStudentStats student={individualStudent} setEnable={(e) => setEnabledIndividual(e)}/>)
+            :
             <div className="stats-container">
                 <h3>Student Stats (Based on Quiz Categories)</h3>
                 <table>
@@ -158,13 +178,13 @@ function StudentStats(props) {
 
                         <tbody>
                         {students && students.map((item, index) => (
-                            <tr>
-                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.displayname}</td>
-                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("windows", item.takenQuizzes)}</td>
-                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("win_server", item.takenQuizzes)}</td>
-                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("linux", item.takenQuizzes)}</td>
-                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("networking", item.takenQuizzes)}</td>
-                                <td key={index} className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("security_concepts", item.takenQuizzes)}</td>
+                            <tr key={item._id} onClick={() => selectIndividual(item)}>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.displayname}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("windows", item.takenQuizzes)}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("win_server", item.takenQuizzes)}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("linux", item.takenQuizzes)}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("networking", item.takenQuizzes)}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {takenQuizScoreSums("security_concepts", item.takenQuizzes)}</td>
                             </tr>
                         ))}
                         </tbody>

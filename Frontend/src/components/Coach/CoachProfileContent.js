@@ -16,20 +16,49 @@ const ProfileContent = ({data}) => {
       };
  
     return(
+
+
+        <div className='main-box'>
+            <div className='page-title'>Coach Profile</div>
+                <div className='content-box'>
+                    {data.map(user => (
+                        <React.Fragment key={user.id}>
+                        <div className='text-container'>
+                            <span className="left-text">Coach Name</span>
+                            <span className="right-text">{user.displayname}</span>
+                        </div>
+                        <div className='text-container'>
+                            <span className="left-text">Username</span>
+                            <span className="right-text">{user.username}</span>
+                        </div>
+                        <div className='text-container'>
+                            <span className="left-text">Email</span>
+                            <span className="right-text">{user.email}</span>
+                        </div>
+                        </React.Fragment>
+                    ))}
+            </div>
+        </div>
+
+
+
+        /*
         <div className="profile-container">
-        <h1>Profile (Mostly Unimplemented)</h1>
+        <h1>Profile</h1>
             <div className="coachAttributes">
                 {data.map(user => (
                     <div>
                         <h3>Name: {user.displayname} </h3>
                         <h3>Username: {user.username} </h3>
                         <h3>Email: {user.email}</h3>
-                        <h3>School: {user.school}</h3>
                     </div>
                 ))}
             </div>
-    </div> 
+        </div> 
+
+        */
+
     )
 }
 
-export default  ProfileContent
+export default ProfileContent

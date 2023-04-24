@@ -109,11 +109,11 @@ return (
           <CoachProfile enabled={enabledCoachProfile}/>
           
           {enabledCreateQuiz 
-          ? <h1>This page has not been implemented yet</h1>
+          ? <h1>This page's functionality hasn't been implemented yet.</h1>
           : null}
 
           {enabledFindMentors 
-          ? <h1>This page has not been implemented yet</h1>
+          ? <h1>This page's functionality hasn't been implemented yet.</h1>
           : null}
         </div>
     </div> 
