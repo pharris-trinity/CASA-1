@@ -85,6 +85,7 @@ function ManageTeams(props) {
         teams.map(team => {
             if(team.national_id == teamID) {
                 teamName = team.name;
+                console.log(team.name)
             }
         })
         return teamName;
@@ -256,7 +257,6 @@ function ManageTeams(props) {
         return <FaGripLines/>;
     }
 
-
     if(props.enabled == true) {
         return (
             <div>
@@ -314,23 +314,23 @@ function ManageTeams(props) {
                             <thead>
                                 <tr>
                                     <th className="th-manage-teams" onClick = {sortByName}>
-                                        Student Name
+                                    <span style={{marginRight: 10}}>Student Name</span>
                                         {sorted.sorted == "name" ? renderArrow() : renderConst()}
                                     </th>
                                     <th className="th-manage-teams" onClick = {sortByEmail}>
-                                        Email
+                                    <span style={{marginRight: 10}}>Email</span>
                                         {sorted.sorted == "email" ? renderArrow() : renderConst()}
 
                                     </th>
                                     <th className="th-manage-teams" onClick={sortByGrade}>
-                                        Grade Level
+                                        <span style={{marginRight: 10}}>Grade Level</span>
                                         {sorted.sorted == "grade" ? renderArrow() : renderConst()}
                                     </th>
                                     <th className="th-manage-teams" >
                                         Team Name
                                     </th>
                                     <th className="th-manage-teams" onClick = {sortByTeamID}>
-                                        Team ID
+                                    <span style={{marginRight: 10}}>Team ID</span>
                                         {sorted.sorted == "teamID" ? renderArrow() : renderConst()}
 
                                     </th>
