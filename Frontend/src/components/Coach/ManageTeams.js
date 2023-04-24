@@ -194,19 +194,38 @@ function ManageTeams(props) {
             }
             return nameA.localeCompare(nameB);
         });
-        //setStudents(null);
         setStudents(usersCopy); 
     }
+    
+    //sorts by student email
+    const sortByEmail = () => {
+        setSorted({sorted: "email", reversed: !sorted.reversed});
+        const usersCopy = [...students];
+        usersCopy.sort((userA, userB) => {
+            const nameA = userA.email;
+            const nameB = userB.email;
+            if (sorted.reversed) {
+                return nameB.localeCompare(nameA);
+            }
+            return nameA.localeCompare(nameB);
+        });
+        setStudents(usersCopy); 
+    }
+
     
     //sorts by grade level
     const sortByGrade = () => {
         setSorted({sorted: "grade", reverse: !sorted.reversed});
         const usersCopy = [...students];
         usersCopy.sort((usersA, usersB) => {
+            const nameA = usersA.gradlevel;
+            const nameB = usersB.gradlevel;
+            const nameAString = String(nameA);
+            const nameBString = String(nameB);
             if (sorted.reversed){
-                return usersA.gradelevel - usersB.gradelevel;
+                return nameBString.localeCompare(nameAString);
             }
-            return usersB.gradelevel - usersA.gradelevel;
+            return nameAString.localeCompare(nameBString);
         });
         setStudents(usersCopy);
 
@@ -214,7 +233,6 @@ function ManageTeams(props) {
 
     //sorts by team name
     const sortByTeamName = () => {
-        console.log("onclick working");
         setSorted({sorted: "team", reversed: !sorted.reversed});
         const usersCopy = [...students];
         usersCopy.sort((userA, userB) => {
@@ -225,7 +243,6 @@ function ManageTeams(props) {
             }
             return nameA.localeCompare(nameB);
         });
-        //setStudents(null);
         setStudents(usersCopy); 
     }
     
@@ -234,10 +251,14 @@ function ManageTeams(props) {
         setSorted({sorted: "teamID", reverse: !sorted.reversed});
         const usersCopy = [...students];
         usersCopy.sort((usersA, usersB) => {
+            const nameA = usersA.team;
+            const nameB = usersB.team;
+            const nameAString = String(nameA);
+            const nameBString = String(nameB);
             if (sorted.reversed){
-                return usersA.team - usersB.team;
+                return nameBString.localeCompare(nameAString);
             }
-            return usersB.team - usersA.team;
+            return nameAString.localeCompare(nameBString);
         });
         setStudents(usersCopy);
     };
@@ -311,8 +332,10 @@ function ManageTeams(props) {
                                         Student Name
                                         {sorted.sorted == "name" ? renderArrow() : null}
                                     </th>
-                                    <th className="th-manage-teams">
+                                    <th className="th-manage-teams" onClick = {sortByEmail}>
                                         Email
+                                        {sorted.sorted == "email" ? renderArrow() : null}
+
                                     </th>
                                     <th className="th-manage-teams" onClick={sortByGrade}>
                                         Grade Level
