@@ -5,7 +5,7 @@ import AddStudent from "./AddStudent";
 import MakeTeam from "./MakeTeam";
 import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
-import {FaArrowUp, FaArrowDown} from "react-icons/fa";
+import {FaArrowUp, FaArrowDown, FaGripLines} from "react-icons/fa";
 
 /* 
 The Question component has logic to render a quiz question, including the description 
@@ -215,29 +215,11 @@ function ManageTeams(props) {
     
     //sorts by grade level
     const sortByGrade = () => {
-        setSorted({sorted: "grade", reverse: !sorted.reversed});
-        const usersCopy = [...students];
-        usersCopy.sort((usersA, usersB) => {
-            const nameA = usersA.gradlevel;
-            const nameB = usersB.gradlevel;
-            const nameAString = String(nameA);
-            const nameBString = String(nameB);
-            if (sorted.reversed){
-                return nameBString.localeCompare(nameAString);
-            }
-            return nameAString.localeCompare(nameBString);
-        });
-        setStudents(usersCopy);
-
-    }
-
-    //sorts by team name
-    const sortByTeamName = () => {
-        setSorted({sorted: "team", reversed: !sorted.reversed});
+        setSorted({sorted: "grade", reversed: !sorted.reversed});
         const usersCopy = [...students];
         usersCopy.sort((userA, userB) => {
-            const nameA = getTeamName(userA.team);
-            const nameB = getTeamName(userB.team);
+            const nameA = String(userA.gradelevel);
+            const nameB = String(userB.gradelevel);
             if (sorted.reversed) {
                 return nameB.localeCompare(nameA);
             }
@@ -245,30 +227,33 @@ function ManageTeams(props) {
         });
         setStudents(usersCopy); 
     }
-    
+
     //sorts by team id
     const sortByTeamID = () => {
-        setSorted({sorted: "teamID", reverse: !sorted.reversed});
+        setSorted({sorted: "teamID", reversed: !sorted.reversed});
         const usersCopy = [...students];
-        usersCopy.sort((usersA, usersB) => {
-            const nameA = usersA.team;
-            const nameB = usersB.team;
-            const nameAString = String(nameA);
-            const nameBString = String(nameB);
-            if (sorted.reversed){
-                return nameBString.localeCompare(nameAString);
+        usersCopy.sort((userA, userB) => {
+            const nameA = String(userA.team);
+            const nameB = String(userB.team);
+            if (sorted.reversed) {
+                return nameB.localeCompare(nameA);
             }
-            return nameAString.localeCompare(nameBString);
+            return nameA.localeCompare(nameB);
         });
-        setStudents(usersCopy);
-    };
+        setStudents(usersCopy); 
+    }
+
 
     //shows the arrow direction of sort
     const renderArrow = () => {
         if (sorted.reversed){
             return <FaArrowDown/>;
         }
-        return <FaArrowUp/>;
+            return <FaArrowUp/>;
+    }
+    //when arrows are not in affect, shows neutral lines to display that you can switch the directions of these arrows
+    const renderConst = () => {
+        return <FaGripLines/>;
     }
 
 
@@ -330,24 +315,23 @@ function ManageTeams(props) {
                                 <tr>
                                     <th className="th-manage-teams" onClick = {sortByName}>
                                         Student Name
-                                        {sorted.sorted == "name" ? renderArrow() : null}
+                                        {sorted.sorted == "name" ? renderArrow() : renderConst()}
                                     </th>
                                     <th className="th-manage-teams" onClick = {sortByEmail}>
                                         Email
-                                        {sorted.sorted == "email" ? renderArrow() : null}
+                                        {sorted.sorted == "email" ? renderArrow() : renderConst()}
 
                                     </th>
                                     <th className="th-manage-teams" onClick={sortByGrade}>
                                         Grade Level
-                                        {sorted.sorted == "grade" ? renderArrow() : null}
+                                        {sorted.sorted == "grade" ? renderArrow() : renderConst()}
                                     </th>
-                                    <th className="th-manage-teams" onClick={sortByTeamName}>
+                                    <th className="th-manage-teams" >
                                         Team Name
-                                        {sorted.sorted == "team" ? renderArrow() : null}
                                     </th>
                                     <th className="th-manage-teams" onClick = {sortByTeamID}>
                                         Team ID
-                                        {sorted.sorted == "teamId" ? renderArrow() : null}
+                                        {sorted.sorted == "teamID" ? renderArrow() : renderConst()}
 
                                     </th>
                                 </tr>
