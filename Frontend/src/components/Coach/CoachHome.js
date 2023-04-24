@@ -1,5 +1,5 @@
 // Here will be the mentor page with a decent layout and buttons to future pages.
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 //import Button from './MentorButton';
 import '../Mentor/PageLayout.css'
 import '../Coach/CoachProfile'
@@ -10,6 +10,7 @@ import Navbar from './../General/Navbar';
 import { useNavigate } from 'react-router-dom';
 import {loginChecker} from "../General/LoginCheck";
 import CoachProfile from '../Coach/CoachProfile';
+import { validateNationalID } from '../General/NationalID';
 
 function CoachHome() {
 
@@ -71,7 +72,13 @@ function CoachHome() {
     navigate('/coachtable', {replace: true})
   }
 
-  
+  // useEffect(() => {
+  //   console.log("validate 00-0000: ", validateNationalID("00-0000"))
+  //   console.log("validate 1-1111: ", validateNationalID("1-1111"))
+  //   console.log("validate aa-0000: ", validateNationalID("aa-0000"))
+  //   console.log("validate 000000: ", validateNationalID("0000000"))
+  //   console.log("validate 00-aaaa: ", validateNationalID("1-1111"))
+  // }, [])
 
 
 return (
