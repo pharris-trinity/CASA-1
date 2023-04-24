@@ -257,6 +257,15 @@ function ManageTeams(props) {
         return <FaGripLines/>;
     }
 
+    const search = (e) => {
+        const matchedUsers = students.filter((user) => {
+            return user.displayname.toLowerCase().includes(e.target.value.toLowerCase());
+        });
+        setStudents(matchedUsers);
+        setSearchPhrase(e.target.value);
+    }
+
+
     if(props.enabled == true) {
         return (
             <div>
@@ -310,6 +319,14 @@ function ManageTeams(props) {
 
                 {/*Div where student table goes*/}
                 <div>
+                    <div>
+                        <input 
+                            type = "text" 
+                            placeholder="Filter Table"
+                            value={serachPhrase}
+                            onChange={search}
+                        />
+                    </div>
                     <table className="right">
                             <thead>
                                 <tr>
