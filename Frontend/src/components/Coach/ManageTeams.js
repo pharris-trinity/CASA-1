@@ -29,7 +29,7 @@ function ManageTeams(props) {
     //Sort
     const [sorted, setSorted] = useState({sorted: "id", reversed: "false"});
     //search
-    const [serachPhrase, setSearchPhrase] = useState("");
+    const [searchPhrase, setSearchPhrase] = useState("");
     
     const getCoach = async(coachID) => {
         try {
@@ -256,13 +256,19 @@ function ManageTeams(props) {
     const renderConst = () => {
         return <FaGripLines/>;
     }
+    const allUsersCopy = [...students];
 
     const search = (e) => {
         const matchedUsers = students.filter((user) => {
             return user.displayname.toLowerCase().includes(e.target.value.toLowerCase());
         });
-        setStudents(matchedUsers);
-        setSearchPhrase(e.target.value);
+        if (e.target.value == 0) {
+            setStudents(allUsersCopy);
+        }
+        else {
+            setStudents(matchedUsers);
+            setSearchPhrase(e.target.value);
+        }
     }
 
 
@@ -322,10 +328,14 @@ function ManageTeams(props) {
                     <div>
                         <input 
                             type = "text" 
-                            placeholder="Filter Table"
-                            value={serachPhrase}
+                            placeholder="Search Table"
+                            value={searchPhrase}
                             onChange={search}
                         />
+                        <button onClick={search}>
+                            
+                            Search
+                        </button>
                     </div>
                     <table className="right">
                             <thead>
