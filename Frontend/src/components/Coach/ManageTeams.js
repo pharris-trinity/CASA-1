@@ -7,8 +7,10 @@ import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
 
 /* 
-The Question component has logic to render a quiz question, including the description 
-and making an answer component for each possible answer
+The ManageTeams component has multiple functions.
+    - Contains the table of all students assigned to a Coach
+    - Has functionality for updating a student's information in DB
+    - Contains the buttons for "Add Student, "Delete Student", and "Make Team"
 */
 
 function ManageTeams(props) {
@@ -26,7 +28,7 @@ function ManageTeams(props) {
 
     const[enableMakeTeam, setEnableMakeTeam] = useState(false);
 
-    
+    //gets coach object from DB based on the user's ID
     const getCoach = async(coachID) => {
         try {
             const requestOptions = {
@@ -43,6 +45,7 @@ function ManageTeams(props) {
         }
     }
 
+    //gets all students assigned to the coach from DB
     const  getStudents = async (coachID) => {
         try {
             const requestOptions = {
@@ -58,6 +61,7 @@ function ManageTeams(props) {
         }
     }
 
+    //gets all teams objects from DB given a list of teamIDs
     const getTeams = async (inputTeams) => {
         var tempTeams = [];
         for(let i = 0; i < inputTeams.length; i++){
@@ -76,6 +80,7 @@ function ManageTeams(props) {
         setTeams(tempTeams);
     }
 
+    //gets a team's name based on teamID
     const getTeamName = (teamID) => {
         var teamName = "";
         teams.map(team => {
@@ -86,6 +91,7 @@ function ManageTeams(props) {
         return teamName;
     }
 
+    //given new student info, updates the student in DB to reflect the new info
     const updateStudentAccount = async (currentStudentID, newDispName, newGradLevel, newTeamID) => {
         var tmpData = {coachID: coachUserID, studentID: currentStudentID, studentDispName: newDispName, studentGradLevel: newGradLevel, studentTeamID: newTeamID}
         try {
@@ -104,6 +110,7 @@ function ManageTeams(props) {
         }
     }
 
+    //removes a coach's ID from student's coachID field
     const removeStudent = async (studentID) => {
         var tmpData = {coachID: coachUserID, student_id: studentID}
         try {
@@ -121,6 +128,7 @@ function ManageTeams(props) {
         }
     }
 
+    //updates state variables so the form fields contain the current selected student's info
     const fillDisplayInfo = (student) => {
         setCurrentStudentID(student._id);
         setUpdateDisplayName(student.displayname);
@@ -129,23 +137,29 @@ function ManageTeams(props) {
         (student.team != -1) ? setUpdateTeamID(student.team): setUpdateTeamID("");
     }
 
+    //opens AddStudents component
     const addStudentButton = () => {
         setEnabledAddToTeam(true);
     }
 
+    //closes AddStudents component and updates students from DB
     const closeAddStudent = () => {
         setEnabledAddToTeam(false);
         getStudents(coachUserID);
     }
 
+    //opens MakeTeam component
     const makeTeamButton = () => {
         setEnableMakeTeam(true);
     }
 
+    //closes MakeTeam component and updates coach info from DB
     const closeMakeTeam = async () => {
         setEnableMakeTeam(false);
         await getCoach(coachUserID);
     }
+
+    //button to remove the current selected student from the coach's roster
     const deleteStudentButton = async () => {
         const confirmText = "Are you sure you want to delete the current selected student? \n(This does not delete their account, but removes them from your roster)";
         if(window.confirm(confirmText) == true) {
@@ -155,11 +169,12 @@ function ManageTeams(props) {
         }
     }
 
-
+    //gets coachID from local storage on page load
     useEffect(() => {
         setCoachUserID(localStorage.getItem("_id"));
     }, []) 
 
+    //gets coach and all students from DB when coachID is updated
     useEffect(() => {
         if(coachUserID) {
             getCoach(coachUserID);
@@ -167,12 +182,14 @@ function ManageTeams(props) {
         }
     }, [coachUserID]) 
 
+    //when coach is updated, updates the teams from DB
     useEffect(() => {
         if(coach) {
             getTeams(coach.teams);
         }
     }, [coach])
 
+    //submit functionality for React form. Updates student based on information from the form.
     const handleSubmit = async (e) => {
         e.preventDefault();
         updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,updateTeamID);
@@ -183,6 +200,7 @@ function ManageTeams(props) {
             <div>
                 <div className="left form-group">
                 <form className="form-container" onSubmit={handleSubmit}>
+                        {/* React Form Inputs */}
                         <div>
                             <label htmlFor='name'>Name </label>
                             <input
@@ -221,7 +239,7 @@ function ManageTeams(props) {
                         </div>
                     </form>
 
-                    {/*Div for Delete button code*/}
+                    {/* Delete Button and Misc Components */}
                     <div>
                         <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
                         <MakeTeam enabled={enableMakeTeam} closeForm={closeMakeTeam}/>
@@ -229,7 +247,7 @@ function ManageTeams(props) {
                     </div>
                 </div>
 
-                {/*Div where student table goes*/}
+                {/* Student Table */}
                 <div>
                     <table className="right">
                             <thead>
@@ -255,14 +273,6 @@ function ManageTeams(props) {
                             </tbody>
                     </table>
                 </div>
-
-                 {/*Div for make team button code*/}
-                 {/* <div>
-                    <button className="casa-button" type="button" onClick={makeTeamButton}>Make A Team</button>
-                    <MakeTeam enabled={enableMakeTeam} closeForm={closeMakeTeam}/>
-                </div> */}
-
-
             </div>
         );
     }

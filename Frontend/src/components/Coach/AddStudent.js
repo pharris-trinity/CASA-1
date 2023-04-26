@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import './AddStudent.css'
 
 /* 
-The Question component has logic to render a quiz question, including the description 
-and making an answer component for each possible answer
+The add student component is a pop-up Modal that has the functionality for adding a new student
+to a coach's roster
 */
 
 function AddStudent(props) {
@@ -25,6 +25,7 @@ function AddStudent(props) {
         removesuccess: "Student Successfully Removed From Team"
     }  
 
+    //stores a coach's ID to a student's coachID field in the database
     const addCoachToStudent = async (coach_id, email) => {
         try {
             const requestOptions = {
@@ -40,6 +41,7 @@ function AddStudent(props) {
         }
     }
 
+    //gets the student's ID from the DB
     const getStudentID = async (email) => {
         try {
             const requestOptions = {
@@ -55,6 +57,7 @@ function AddStudent(props) {
         }
     }
     
+    //adds a student to a team in DB and stores the teamID in the student's team field
     const addStudentToTeam = (inputTeamID, inputStudentID) => {
         var tmpData = {team_id: inputTeamID, student_id: inputStudentID}
         const requestOptions = {
@@ -82,13 +85,9 @@ function AddStudent(props) {
               }
         );
     };
-    
-    useEffect(() => {
-        // if(studentID !== undefined) {
-        //     addStudentToTeam(team,studentID);
-        // }
-    }, [studentID])
 
+    /* Submit functionality for the React form.
+    updates all necessary info based on form submission and closes the form */
     const handleSubmit = async (e) => {
         e.preventDefault();
         await addCoachToStudent(localStorage._id, studentEmail);

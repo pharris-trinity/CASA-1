@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import './MakeTeam.css'
 
+/* 
+This component is a modal pop-up that contains a React Form. Upon submission of the form, a new team
+will be created.
+*/
 
 function MakeTeam(props) {
     const[teamNationalID, setTeamNationalID] = useState();
@@ -10,13 +14,7 @@ function MakeTeam(props) {
     const[teamIsROTC, setTeamIsROTC] = useState(false);
     const[teamCoachID, setTeamCoachID] = useState();
 
-/*
-
-app.post('/api/admin/register_team', async(req, res) => {
-    const { national_id, name, school, district, rotc, coach } = req.body;
-
-
-*/
+    //Creates a team in DB and adds the teamID to the coach's teams
     const createATeam = async (tID, tName, tSchool, tDistrict, tROTC, tcoachID) => {
         var tmpData = { national_id: tID, name: tName, school: tSchool, district: tDistrict, rotc: tROTC, coach: tcoachID }
         const requestOptions = {
@@ -33,6 +31,7 @@ app.post('/api/admin/register_team', async(req, res) => {
         setTeamCoachID(localStorage.getItem("_id"));
     }, []) 
     
+    //form submission functionality. Attempts to create a team from input form info and closes the form.
     const handleSubmit = async (e) => {
         e.preventDefault();
         await createATeam(teamNationalID, teamName, teamSchool, teamDistrict, teamIsROTC, teamCoachID);

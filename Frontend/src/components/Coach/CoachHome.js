@@ -11,6 +11,10 @@ import { useNavigate } from 'react-router-dom';
 import {loginChecker} from "../General/LoginCheck";
 import CoachProfile from '../Coach/CoachProfile';
 
+/* 
+CoachHome is the coach's home page. It uses state variables to control which sub-component is being rendered.
+*/
+
 function CoachHome() {
 
   const [enabledManageTeam, setEnabledManageTeam] = useState(false);
@@ -21,10 +25,13 @@ function CoachHome() {
 
   let navigate = useNavigate();
 
+  //makes sure the current user is a Coach -> otherwise, kicks them off the page
   window.onload = (event) => {
     var toNavigateTo = loginChecker("Coach")
     if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
   };
+
+  //the 5 funtions below control which component is being rendered
 
   function teamsButton(){
     //navigate('/ViewTeams2', {replace: true}) 
@@ -66,13 +73,6 @@ function CoachHome() {
     setEnabledManageTeam(false);
     setEnabledStudentStats(false);
   }
-
-  function coachTableButton(){
-    navigate('/coachtable', {replace: true})
-  }
-
-  
-
 
 return (
   <>
