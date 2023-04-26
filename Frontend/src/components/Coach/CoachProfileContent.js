@@ -10,17 +10,55 @@ import './CoachProfile.css';
 const ProfileContent = ({data}) => {
     let navigate = useNavigate();
 
+    //Get teams to display them
+    const [teams, setTeams] = useState([]);
+    
+    const getTeams = async (inputTeams) => {
+        var tempTeams = [];
+        for(let i = 0; i < inputTeams.length; i++){
+            try {
+                const requestOptions = {
+                    method: 'GET',
+                    headers: {'Content-Type': 'application/json'}
+                };
+                const response = await fetch('/api/teamsearch/' + JSON.stringify(inputTeams[i]), requestOptions);
+                const jsonData = await response.json();
+                tempTeams.push(...jsonData);
+            } catch (error) {
+                console.log("error in getTeams: ", error);
+            }
+        }
+        setTeams(tempTeams);
+    }
+
+    useEffect(() => {
+        if(coach) {
+            getTeams(coach.teams);
+        }
+    }, [coach])
+
+
+
+
     window.onload = (event) => {
         var toNavigateTo = loginChecker("Coach")
         if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
       };
  
+    
+
+
+
+
+
+
+
     return(
 
 
         <div className='main-box'>
             <div className='page-title'>Coach Profile</div>
-                <div className='content-box'>
+                <div className='big-content-box'>
                     {data.map(user => (
                         <React.Fragment key={user.id}>
                         <div className='text-container'>
@@ -37,26 +75,14 @@ const ProfileContent = ({data}) => {
                         </div>
                         </React.Fragment>
                     ))}
-            </div>
+                </div>
+                <div className='small-content-box' overflow-y='auto'>
+                        {console.log(teams)}
+                </div>
+                <div className='small-content-box'>
+                        Test
+                </div>
         </div>
-
-
-
-        /*
-        <div className="profile-container">
-        <h1>Profile</h1>
-            <div className="coachAttributes">
-                {data.map(user => (
-                    <div>
-                        <h3>Name: {user.displayname} </h3>
-                        <h3>Username: {user.username} </h3>
-                        <h3>Email: {user.email}</h3>
-                    </div>
-                ))}
-            </div>
-        </div> 
-
-        */
 
     )
 }
