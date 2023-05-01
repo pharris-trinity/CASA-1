@@ -30,6 +30,7 @@ function ManageTeams(props) {
     const [sorted, setSorted] = useState({sorted: "id", reversed: "false"});
     //search
     const [searchPhrase, setSearchPhrase] = useState("");
+    const [allUsersCopy, setAllUsersCopy] = useState([]);
     
     const getCoach = async(coachID) => {
         try {
@@ -57,6 +58,7 @@ function ManageTeams(props) {
             const response = await fetch('/api/coach/get_coaches_students', requestOptions)
             const jsonData = await response.json()
             setStudents(jsonData);
+            setAllUsersCopy(jsonData);
         } catch (error) {
             console.log(error)
         }
@@ -256,14 +258,21 @@ function ManageTeams(props) {
     const renderConst = () => {
         return <FaGripLines/>;
     }
-    const allUsersCopy = [...students];
+    //const allUsersCopy = [...students];
 
-    const search = (e) => {
+    const search = async (e) => {
+
         const matchedUsers = students.filter((user) => {
             return user.displayname.toLowerCase().includes(e.target.value.toLowerCase());
         });
-        if (e.target.value == 0) {
+        console.log("matchedUsers: ", matchedUsers)
+        console.log("students: ", students)
+        console.log("e.target.value.length: ", e.target.value.length)
+        console.log("allUsersCopy: ", allUsersCopy)
+        if (e.target.value.length == 0) {
             setStudents(allUsersCopy);
+            console.log("INSIDE THE e.target.value.length IF STATEMENT")
+            console.log("allUsersCopy: ", allUsersCopy)
         }
         else {
             setStudents(matchedUsers);
