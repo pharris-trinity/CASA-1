@@ -7,8 +7,8 @@ and making an answer component for each possible answer
 */
 
 function AddStudent(props) {
-    const[studentEmail, setStudentEmail] = useState();
-    const[team, setTeam] = useState();
+    const[studentEmail, setStudentEmail] = useState("");
+    const[team, setTeam] = useState(-1);
     const[studentID, setStudentID] = useState();
     const [errorMessages, setErrorMessages] = useState({});
 
@@ -84,17 +84,18 @@ function AddStudent(props) {
     };
     
     useEffect(() => {
-        if(studentID !== undefined) {
-            addStudentToTeam(team,studentID);
-        }
+        // if(studentID !== undefined) {
+        //     addStudentToTeam(team,studentID);
+        // }
     }, [studentID])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        addCoachToStudent(localStorage._id, studentEmail);
-        if(team != undefined) {
+        await addCoachToStudent(localStorage._id, studentEmail);
+        if(team != undefined && team != -1) {
             const tempStudentID = await getStudentID(studentEmail);
             setStudentID(tempStudentID);
+            await addStudentToTeam(team, tempStudentID);
         }
         props.closeForm();
         
@@ -105,7 +106,7 @@ function AddStudent(props) {
             <div className="form-popup">
                 <h2>Add Student</h2>
                 <div>
-                    <form className="add-student-container" onSubmit={handleSubmit} on>
+                    <form className="add-student-container" onSubmit={handleSubmit}>
                         <div>
                             <label htmlFor='email'>Student's Email </label>
                             <input
