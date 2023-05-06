@@ -1,15 +1,16 @@
 import {React, useState, useEffect} from "react"
 
 export const formatTeamIDString = (id) => {
-    if(id.length == 6) {
+    const stringID = id.toString();
+    if(stringID.length === 6) {
         var tempString = "";
-        for(let i = 0; i < id.length; i++){
+        for(let i = 0; i < stringID.length; i++){
             if(i == 2) {
-                tempString = tempString + "-" + id[i];
+                tempString = tempString + "-" + stringID[i];
             } else {
-                tempString = tempString + id[i];
+                tempString = tempString + stringID[i];
             }
         }
         return tempString;
-    }
+    } else console.log("unsuccessfully calling formatTeamIDString")
 }

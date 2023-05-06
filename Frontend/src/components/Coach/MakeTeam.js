@@ -45,7 +45,7 @@ app.post('/api/admin/register_team', async(req, res) => {
             //alert('You have submitted');
             props.closeForm();
         } else {
-            alert('Invalid TeamID, please try again.')
+            alert('Invalid TeamID. Team was not created.')
             props.closeForm();
         }
     }

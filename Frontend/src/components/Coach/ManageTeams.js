@@ -5,6 +5,9 @@ import AddStudent from "./AddStudent";
 import MakeTeam from "./MakeTeam";
 import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
+import { formatTeamIDNumber } from "../General/formatTeamIDNumber";
+import { formatTeamIDString } from "../General/formatTeamIDString";
+import { validateTeamID } from "../General/validateTeamID";
 
 /* 
 The Question component has logic to render a quiz question, including the description 
@@ -125,8 +128,8 @@ function ManageTeams(props) {
         setCurrentStudentID(student._id);
         setUpdateDisplayName(student.displayname);
         setDisplayEmail(student.email);
-        student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("");
-        (student.team != -1) ? setUpdateTeamID(student.team): setUpdateTeamID("");
+        student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("N/A");
+        (student.team != -1) ? setUpdateTeamID(formatTeamIDString(student.team)): setUpdateTeamID("N/A");
     }
 
     const addStudentButton = () => {
@@ -175,7 +178,11 @@ function ManageTeams(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,updateTeamID);
+        if(validateTeamID(updateTeamID)) {
+            const convertedIDNumber = formatTeamIDNumber(updateTeamID);
+            console.log("converted teamID in handleSubmit of updateTeam",convertedIDNumber);
+            updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,convertedIDNumber);
+        }
     }
 
     if(props.enabled == true) {
@@ -207,7 +214,7 @@ function ManageTeams(props) {
 
                             <label htmlFor='team'>Team National ID</label>
                             <input
-                                type='number'
+                                type='text'
                                 id='team'
                                 name='team'
                                 value={updateTeamID}
@@ -249,7 +256,7 @@ function ManageTeams(props) {
                                     <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.email}</td>
                                     <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
                                     <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{(teams && student.team != -1) ? getTeamName(student.team) : "N/A"}</td>
-                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.team != -1 ? student.team : "N/A"}</td>
+                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.team != -1 ? formatTeamIDString(student.team) : "N/A"}</td>
                                 </tr>
                                 ))}
                             </tbody>
