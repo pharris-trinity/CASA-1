@@ -1,6 +1,6 @@
 import {React, useState, useEffect} from "react"
 
-export const validateNationalID = (id) => {
+export const validateTeamID = (id) => {
     //console.log("national ID: ", id)
     const digits = "0123456789"
 

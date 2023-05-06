@@ -10,7 +10,9 @@ import Navbar from './../General/Navbar';
 import { useNavigate } from 'react-router-dom';
 import {loginChecker} from "../General/LoginCheck";
 import CoachProfile from '../Coach/CoachProfile';
-import { validateNationalID } from '../General/NationalID';
+import { validateTeamID } from '../General/validateTeamID';
+import { formatTeamIDString } from '../General/formatTeamIDString';
+import { formatTeamIDNumber } from '../General/formatTeamIDNumber';
 
 function CoachHome() {
 
@@ -72,13 +74,17 @@ function CoachHome() {
     navigate('/coachtable', {replace: true})
   }
 
-  // useEffect(() => {
-  //   console.log("validate 00-0000: ", validateNationalID("00-0000"))
-  //   console.log("validate 1-1111: ", validateNationalID("1-1111"))
-  //   console.log("validate aa-0000: ", validateNationalID("aa-0000"))
-  //   console.log("validate 000000: ", validateNationalID("0000000"))
-  //   console.log("validate 00-aaaa: ", validateNationalID("1-1111"))
-  // }, [])
+  useEffect(() => {
+    // console.log("validate 00-0000: ", validateTeamID("00-0000"))
+    // console.log("validate 1-1111: ", validateTeamID("1-1111"))
+    // console.log("validate aa-0000: ", validateTeamID("aa-0000"))
+    // console.log("validate 000000: ", validateTeamID("0000000"))
+    // console.log("validate 00-aaaa: ", validateTeamID("1-1111"))
+    console.log("formatTeamIDString 000000", formatTeamIDString("000000"));
+    console.log("formatTeamIDStrong 0", formatTeamIDString("0"));
+    console.log("formatTeamIDNumber 00-0000", formatTeamIDNumber("00-0000"));
+    //console.log("formatTeamIDNumber 0")
+  }, [])
 
 
 return (
