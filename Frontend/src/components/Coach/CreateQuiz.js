@@ -31,7 +31,7 @@ function CreateQuiz(props){
         return(
             <div>
                 Create Quiz
-                <QuestionForm submitRef={submitRef} setQuestion={(e) => addQuestion(e)}/>
+                <QuestionForm submitRef={submitRef} setQuestion={(e) => addQuestion(e)} questions={questions}/>
                 <button onClick={() => submitRef.current.click()}>Submit</button>
             </div> 
             
