@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './MakeTeam.css'
+import { formatTeamIDNumber } from "../General/formatTeamIDNumber";
+import { validateTeamID } from "../General/validateTeamID";
 
 
 function MakeTeam(props) {
@@ -17,6 +19,7 @@ app.post('/api/admin/register_team', async(req, res) => {
 
 
 */
+
     const createATeam = async (tID, tName, tSchool, tDistrict, tROTC, tcoachID) => {
         var tmpData = { national_id: tID, name: tName, school: tSchool, district: tDistrict, rotc: tROTC, coach: tcoachID }
         const requestOptions = {
@@ -35,9 +38,16 @@ app.post('/api/admin/register_team', async(req, res) => {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await createATeam(teamNationalID, teamName, teamSchool, teamDistrict, teamIsROTC, teamCoachID);
-        //alert('You have submitted');
-        props.closeForm();
+        if(validateTeamID(teamNationalID)) {
+            const teamIDNumber = formatTeamIDNumber(teamNationalID);
+            console.log("converted teamTeamIDNumber: ", teamIDNumber);
+            await createATeam(teamIDNumber, teamName, teamSchool, teamDistrict, teamIsROTC, teamCoachID);
+            //alert('You have submitted');
+            props.closeForm();
+        } else {
+            alert('Invalid TeamID. Team was not created.')
+            props.closeForm();
+        }
     }
 
     if(props.enabled === true){
@@ -49,7 +59,7 @@ app.post('/api/admin/register_team', async(req, res) => {
                         <div>
                             <label htmlFor='national_id'>Team's National ID: </label>
                             <input
-                                type='number'
+                                type='text'
                                 id='national_id'
                                 name='national_id'
                                 value={teamNationalID}

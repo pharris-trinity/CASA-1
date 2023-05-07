@@ -1,5 +1,5 @@
 // Here will be the mentor page with a decent layout and buttons to future pages.
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 //import Button from './MentorButton';
 import '../Mentor/PageLayout.css'
 import '../Coach/CoachProfile'
@@ -10,6 +10,9 @@ import Navbar from './../General/Navbar';
 import { useNavigate } from 'react-router-dom';
 import {loginChecker} from "../General/LoginCheck";
 import CoachProfile from '../Coach/CoachProfile';
+import { validateTeamID } from '../General/validateTeamID';
+import { formatTeamIDString } from '../General/formatTeamIDString';
+import { formatTeamIDNumber } from '../General/formatTeamIDNumber';
 import CreateQuiz from './CreateQuiz';
 
 function CoachHome() {
@@ -72,7 +75,17 @@ function CoachHome() {
     navigate('/coachtable', {replace: true})
   }
 
-  
+  useEffect(() => {
+    // console.log("validate 00-0000: ", validateTeamID("00-0000"))
+    // console.log("validate 1-1111: ", validateTeamID("1-1111"))
+    // console.log("validate aa-0000: ", validateTeamID("aa-0000"))
+    // console.log("validate 000000: ", validateTeamID("0000000"))
+    // console.log("validate 00-aaaa: ", validateTeamID("1-1111"))
+    //console.log("formatTeamIDString 000000", formatTeamIDString("000000"));
+    //console.log("formatTeamIDStrong 0", formatTeamIDString("0"));
+    //console.log("formatTeamIDNumber 00-0000", formatTeamIDNumber("00-0000"));
+    //console.log("formatTeamIDNumber 0")
+  }, [])
 
 
 return (
