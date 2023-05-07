@@ -5,6 +5,7 @@ import AddStudent from "./AddStudent";
 import MakeTeam from "./MakeTeam";
 import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
+import {FaArrowUp, FaArrowDown, FaGripLines} from "react-icons/fa";
 import { formatTeamIDNumber } from "../General/formatTeamIDNumber";
 import { formatTeamIDString } from "../General/formatTeamIDString";
 import { validateTeamID } from "../General/validateTeamID";
@@ -19,16 +20,20 @@ function ManageTeams(props) {
     const [coach, setCoach] = useState();
     const [students, setStudents] = useState([]);
     const [teams, setTeams] = useState([]);
-    const [updateDisplayName, setUpdateDisplayName] = useState("N/A");
-    const [displayEmail, setDisplayEmail] = useState("N/A");
-    const [updateGradLevel, setUpdateGradLevel] = useState("N/A");
-    const [updateTeamID, setUpdateTeamID] = useState("N/A");
+    const [updateDisplayName, setUpdateDisplayName] = useState("");
+    const [displayEmail, setDisplayEmail] = useState("");
+    const [updateGradLevel, setUpdateGradLevel] = useState("");
+    const [updateTeamID, setUpdateTeamID] = useState("");
     const [currentStudentID, setCurrentStudentID] = useState();
 
     const[enabledAddToTeam, setEnabledAddToTeam] = useState(false);
 
     const[enableMakeTeam, setEnableMakeTeam] = useState(false);
-
+    //Sort
+    const [sorted, setSorted] = useState({sorted: "id", reversed: "false"});
+    //search
+    const [searchPhrase, setSearchPhrase] = useState("");
+    const [allUsersCopy, setAllUsersCopy] = useState([]);
     
     const getCoach = async(coachID) => {
         try {
@@ -56,6 +61,7 @@ function ManageTeams(props) {
             const response = await fetch('/api/coach/get_coaches_students', requestOptions)
             const jsonData = await response.json()
             setStudents(jsonData);
+            setAllUsersCopy(jsonData);
         } catch (error) {
             console.log(error)
         }
@@ -84,6 +90,7 @@ function ManageTeams(props) {
         teams.map(team => {
             if(team.national_id == teamID) {
                 teamName = team.name;
+                console.log(team.name)
             }
         })
         return teamName;
@@ -184,6 +191,103 @@ function ManageTeams(props) {
             updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,convertedIDNumber);
         }
     }
+    
+    //sorts by student display name
+    const sortByName = () => {
+        setSorted({sorted: "name", reversed: !sorted.reversed});
+        const usersCopy = [...students];
+        usersCopy.sort((userA, userB) => {
+            const nameA = userA.displayname;
+            const nameB = userB.displayname;
+            if (sorted.reversed) {
+                return nameB.localeCompare(nameA);
+            }
+            return nameA.localeCompare(nameB);
+        });
+        setStudents(usersCopy); 
+    }
+    
+    //sorts by student email
+    const sortByEmail = () => {
+        setSorted({sorted: "email", reversed: !sorted.reversed});
+        const usersCopy = [...students];
+        usersCopy.sort((userA, userB) => {
+            const nameA = userA.email;
+            const nameB = userB.email;
+            if (sorted.reversed) {
+                return nameB.localeCompare(nameA);
+            }
+            return nameA.localeCompare(nameB);
+        });
+        setStudents(usersCopy); 
+    }
+
+    
+    //sorts by grade level
+    const sortByGrade = () => {
+        setSorted({sorted: "grade", reversed: !sorted.reversed});
+        const usersCopy = [...students];
+        usersCopy.sort((userA, userB) => {
+            const nameA = String(userA.gradelevel);
+            const nameB = String(userB.gradelevel);
+            if (sorted.reversed) {
+                return nameB.localeCompare(nameA);
+            }
+            return nameA.localeCompare(nameB);
+        });
+        setStudents(usersCopy); 
+    }
+
+    //sorts by team id
+    const sortByTeamID = () => {
+        setSorted({sorted: "teamID", reversed: !sorted.reversed});
+        const usersCopy = [...students];
+        usersCopy.sort((userA, userB) => {
+            const nameA = String(userA.team);
+            const nameB = String(userB.team);
+            if (sorted.reversed) {
+                return nameB.localeCompare(nameA);
+            }
+            return nameA.localeCompare(nameB);
+        });
+        setStudents(usersCopy); 
+    }
+
+
+    //shows the arrow direction of sort
+    const renderArrow = () => {
+        if (sorted.reversed){
+            return <FaArrowDown/>;
+        }
+            return <FaArrowUp/>;
+    }
+    //when arrows are not in affect, shows neutral lines to display that you can switch the directions of these arrows
+    const renderConst = () => {
+        return <FaGripLines/>;
+    }
+    //const allUsersCopy = [...students];
+
+    const search = async (e) => {
+
+        const matchedUsers = students.filter((user) => {
+            return user.displayname.toLowerCase().includes(e.target.value.toLowerCase());
+        });
+        console.log("matchedUsers: ", matchedUsers)
+        console.log("students: ", students)
+        console.log("e.target.value.length: ", e.target.value.length)
+        console.log("allUsersCopy: ", allUsersCopy)
+        if (e.target.value.length == 0) {
+            setStudents(allUsersCopy);
+            console.log("INSIDE THE e.target.value.length IF STATEMENT")
+            console.log("allUsersCopy: ", allUsersCopy)
+            setSearchPhrase(e.target.value);
+        }
+        else {
+            setStudents(matchedUsers);
+            setSearchPhrase(e.target.value);
+        }
+    }
+
 
     if(props.enabled == true) {
         return (
@@ -238,14 +342,42 @@ function ManageTeams(props) {
 
                 {/*Div where student table goes*/}
                 <div>
+                    <div>
+                        <input 
+                            type = "text" 
+                            placeholder="Search Table"
+                            value={searchPhrase}
+                            onChange={search}
+                        />
+                        <button onClick={search}>
+                            
+                            Search
+                        </button>
+                    </div>
                     <table className="right">
                             <thead>
                                 <tr>
-                                    <th className="th-manage-teams">Student Name</th>
-                                    <th className="th-manage-teams">Email</th>
-                                    <th className="th-manage-teams">Grade Level</th>
-                                    <th className="th-manage-teams">Team Name</th>
-                                    <th className="th-manage-teams">Team ID</th>
+                                    <th className="th-manage-teams" onClick = {sortByName}>
+                                    <span style={{marginRight: 10}}>Student Name</span>
+                                        {sorted.sorted == "name" ? renderArrow() : renderConst()}
+                                    </th>
+                                    <th className="th-manage-teams" onClick = {sortByEmail}>
+                                    <span style={{marginRight: 10}}>Email</span>
+                                        {sorted.sorted == "email" ? renderArrow() : renderConst()}
+
+                                    </th>
+                                    <th className="th-manage-teams" onClick={sortByGrade}>
+                                        <span style={{marginRight: 10}}>Grade Level</span>
+                                        {sorted.sorted == "grade" ? renderArrow() : renderConst()}
+                                    </th>
+                                    <th className="th-manage-teams" >
+                                        Team Name
+                                    </th>
+                                    <th className="th-manage-teams" onClick = {sortByTeamID}>
+                                    <span style={{marginRight: 10}}>Team ID</span>
+                                        {sorted.sorted == "teamID" ? renderArrow() : renderConst()}
+
+                                    </th>
                                 </tr>
                             </thead>
 
