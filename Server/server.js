@@ -750,13 +750,33 @@ app.post('/api/get-MentorData', function(req, res, next) {
       return res.status(502).send("No coach was found that matches this ID")
     }
 
-    if(studentTeamID != -1) {
+    if(studentTeamID != -1 && studentTeamID != "") {
       const newTeam = await Team.findOne({"national_id": studentTeamID})
       const oldTeam = await Team.findOne({"national_id": user.team})
       if(!newTeam) {
         return res.status(503).send("No team matches this National Team Number")
       } else {
-        if(newTeam.national_id != user.team) {
+        if(oldTeam) {
+          if(newTeam.national_id != user.team) {
+            if(newTeam.coach.equals(coach._id)) {
+              user.team = newTeam.national_id;
+              var members = newTeam.members;
+              if(members != undefined && !members.includes(user._id)){
+                members.push(user._id);
+              }
+              newTeam.members = members;
+              newTeam.save();
+
+              var oldMembers = oldTeam.members
+              if(oldMembers != undefined){
+                oldMembers.remove(studentID)
+              }
+              oldTeam.members = oldMembers
+              oldTeam.save()
+            } else return res.status(505).send("Coach does not have access to this team")
+          }
+        } else {
+          console.log("oldteam didn't exist");
           if(newTeam.coach.equals(coach._id)) {
             user.team = newTeam.national_id;
             var members = newTeam.members;
@@ -765,14 +785,7 @@ app.post('/api/get-MentorData', function(req, res, next) {
             }
             newTeam.members = members;
             newTeam.save();
-
-            var oldMembers = oldTeam.members
-            if(oldMembers != undefined){
-              oldMembers.remove(studentID)
-            }
-            oldTeam.members = oldMembers
-            oldTeam.save()
-          } else return res.status(505).send("Coach does not have access to this team")
+          }
         }
       }
     }
@@ -1039,8 +1052,8 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
 
 //========================
 
-app.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html')).status(404);
+app.get('/*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../Frontend/build', 'index.html'));
 });
 
 //https://www.freecodecamp.org/news/how-to-create-a-react-app-with-a-node-backend-the-complete-guide/

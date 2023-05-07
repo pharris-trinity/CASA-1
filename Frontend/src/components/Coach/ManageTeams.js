@@ -6,6 +6,9 @@ import MakeTeam from "./MakeTeam";
 import { useNavigate } from "react-router-dom";
 import {loginChecker} from "../General/LoginCheck";
 import {FaArrowUp, FaArrowDown, FaGripLines} from "react-icons/fa";
+import { formatTeamIDNumber } from "../General/formatTeamIDNumber";
+import { formatTeamIDString } from "../General/formatTeamIDString";
+import { validateTeamID } from "../General/validateTeamID";
 
 /* 
 The Question component has logic to render a quiz question, including the description 
@@ -74,12 +77,12 @@ function ManageTeams(props) {
                 };
                 const response = await fetch('/api/teamsearch/' + JSON.stringify(inputTeams[i]), requestOptions);
                 const jsonData = await response.json();
-                tempTeams.push(jsonData);
+                tempTeams.push(...jsonData);
             } catch (error) {
                 console.log("error in getTeams: ", error);
             }
         }
-        setTeams(...tempTeams);
+        setTeams(tempTeams);
     }
 
     const getTeamName = (teamID) => {
@@ -132,8 +135,8 @@ function ManageTeams(props) {
         setCurrentStudentID(student._id);
         setUpdateDisplayName(student.displayname);
         setDisplayEmail(student.email);
-        student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("");
-        (student.team != -1) ? setUpdateTeamID(student.team): setUpdateTeamID("");
+        student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("N/A");
+        (student.team != -1) ? setUpdateTeamID(formatTeamIDString(student.team)): setUpdateTeamID("N/A");
     }
 
     const addStudentButton = () => {
@@ -149,14 +152,14 @@ function ManageTeams(props) {
         setEnableMakeTeam(true);
     }
 
-    const closeMakeTeam = () => {
+    const closeMakeTeam = async () => {
         setEnableMakeTeam(false);
-        getTeams(coach.teams);
+        await getCoach(coachUserID);
     }
-    const deleteStudentButton = () => {
+    const deleteStudentButton = async () => {
         const confirmText = "Are you sure you want to delete the current selected student? \n(This does not delete their account, but removes them from your roster)";
         if(window.confirm(confirmText) == true) {
-            removeStudent(currentStudentID);
+            await removeStudent(currentStudentID);
             getStudents(coachUserID);
         } else {
         }
@@ -182,7 +185,11 @@ function ManageTeams(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,updateTeamID);
+        if(validateTeamID(updateTeamID)) {
+            const convertedIDNumber = formatTeamIDNumber(updateTeamID);
+            console.log("converted teamID in handleSubmit of updateTeam",convertedIDNumber);
+            updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,convertedIDNumber);
+        }
     }
     
     //sorts by student display name
@@ -311,7 +318,7 @@ function ManageTeams(props) {
 
                             <label htmlFor='team'>Team National ID</label>
                             <input
-                                type='number'
+                                type='text'
                                 id='team'
                                 name='team'
                                 value={updateTeamID}
@@ -381,7 +388,7 @@ function ManageTeams(props) {
                                     <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.email}</td>
                                     <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
                                     <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{(teams && student.team != -1) ? getTeamName(student.team) : "N/A"}</td>
-                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.team != -1 ? student.team : "N/A"}</td>
+                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.team != -1 ? formatTeamIDString(student.team) : "N/A"}</td>
                                 </tr>
                                 ))}
                             </tbody>
