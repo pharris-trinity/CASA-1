@@ -2,14 +2,11 @@ import React, { useState, useEffect } from "react";
 import './IndividualStudentStats.css'
 import '../General/casa-table.css'
 
-
+/*
+    This component shows all of the quiz scores of an individual student
+*/
 function IndividualStudentStats (props) {
-
-
-    useEffect(() => {
-        console.log(props)
-    }, [])
-
+    //parses the student information and renders the appropriate information on the page.
     return(
         props.student.takenQuizzes.length == 0 ? 
         <div className="stats-container">
