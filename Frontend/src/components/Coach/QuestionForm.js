@@ -15,7 +15,7 @@ function QuestionForm(props){
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log("submitted")
-        props.setQuestion(...props.questions, Question(description, options, correctAnswer))
+        props.setQuestion(Question(description, options, correctAnswer))
     }
 
     const handleChange = (index, event) =>{
@@ -28,7 +28,7 @@ function QuestionForm(props){
 
     useEffect(() => {
         if(options){
-            console.log(options)
+            //console.log(options)
         }
     }, [options])
 
@@ -48,7 +48,7 @@ function QuestionForm(props){
                 })
             }
             <h1>Correct Answer:</h1>
-            <input type="number" pattern="[0-9]*" placeholder="0" value={correctAnswer} onChange={e => setCorrectAnswer(v => e.target.validity.valid ? e.target.value : v)} />
+            <input type="number" pattern="[0-9]*" placeholder="0" value={correctAnswer} onChange={e => setCorrectAnswer(v => e.target.validity.valid ? parseInt(e.target.value, 10) : v)} />
         </div>
         <button ref={props.submitRef} type="submit" style={{ display: 'none' }} />
     </form>

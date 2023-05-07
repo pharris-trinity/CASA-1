@@ -7,12 +7,15 @@ function CreateQuiz(props){
     const [questions, setQuestions] = useState([]);
 
     const addQuestion = (newQ) => {
-        if(questions){
-            setQuestions(...questions, newQ)
-        }
-        else{
-            setQuestions(newQ)
-        }
+        var tempArray = [...questions]
+        tempArray.push(newQ)
+        setQuestions(tempArray)
+        // if(questions){
+        //     setQuestions(...questions, newQ)
+        // }
+        // else{
+        //     setQuestions(tempArray)
+        // }
     }
 
     const handleSubmit = (e) => {
