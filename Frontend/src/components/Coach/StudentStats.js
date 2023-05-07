@@ -6,27 +6,29 @@ import {loginChecker} from "../General/LoginCheck";
 import IndividualStudentStats from "./IndividualStudentStats.js"
 
 /* 
-The Question component has logic to render a quiz question, including the description 
-and making an answer component for each possible answer
+    This component shows brief information about the progress of all the students that a coach is assigned to.
 */
 
 function StudentStats(props) {
+
+    //useEffects to store appropriate infromation
     const [coachID, setcoachID] = useState()
     const [coach, setCoach] = useState()
     const [studentIDs, setStudentIDs] = useState([])
     const [students, setStudents] = useState([])
 
+    //useEffect to determine whether this component should be rendered or render the IndividualStudentStats.js component
     const [enabledIndividual, setEnabledIndividual] = useState(false)
     const [individualStudent, setIndividualStudent] = useState([])
 
-    //const [singleStudent, setSingleStudent] = useState([])
-
+    //runs the login checker to ensure that the user is allowed to access the component
     let navigate = useNavigate();
     window.onload = (event) => {
         var toNavigateTo = loginChecker("Coach")
         if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
       };
 
+    //retrieves a coach's information from the data base
     const getCoach = async(internalCoachID) => {
         try {
             const requestOptions = {
@@ -63,6 +65,7 @@ function StudentStats(props) {
     //     }
     // }
 
+    //retrieves the object Ids of students that the coach is assigned to
     const  getStudents = async (coachID) => {
         try {
             const requestOptions = {
@@ -78,6 +81,7 @@ function StudentStats(props) {
         }
     }
 
+    //retrieves the information of the students from the database
     const getStudentsFromServer = async(ids) => {
         var tempArray = []
         for (let i = 0; i < ids.length; i++) {
@@ -100,6 +104,7 @@ function StudentStats(props) {
         setStudents([...students, ...tempArray])
     }
 
+    //computes the overview score of a given quiz category.
     const takenQuizScoreSums = (category, takenQuizzes) => {
         if(!takenQuizzes.length == 0){
             var count = 0
@@ -123,21 +128,25 @@ function StudentStats(props) {
         return "No Quizzes Taken"
     }
 
+    //updates useStates to render IndividualStudentStats.js component instead of the current one
     const selectIndividual = (student) => {
         setEnabledIndividual(true);
         setIndividualStudent(student)
     }
 
+    //retrieves the coach's ID from local storage when the component is loaded
     useEffect(() => {
         setcoachID(localStorage.getItem("_id"))
     }, []);
 
+    //retrieves the coach's information from the data base when coachID is updated
     useEffect(() => {
         if(coachID) {
             getCoach(coachID)
         }
     }, [coachID]);
 
+    //retrieves the Ids of the students that are assigned to the coach when coach is updated
     useEffect(() => {
         if(coach){
             //getStudentsInTeams(coach.teams)
@@ -145,18 +154,21 @@ function StudentStats(props) {
         }
     }, [coach]);
 
+    //retrives the Students' information when the informations of the student is updated
     useEffect(() => {
         if(studentIDs){
             getStudentsFromServer(studentIDs)
         }
     }, [studentIDs])
     
+    //updates the useState to render the IndividualStudentStats component when switching to a different table
     useEffect(() => {
         if(!props.enabled){
             setEnabledIndividual(false)
         }
     }, [props.enabled])
 
+    //parses the students' information and renders the appropriate information in a tabular format
     if(props.enabled == true) {
         return (
             enabledIndividual ? 

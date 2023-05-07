@@ -13,6 +13,7 @@ import CoachProfile from '../Coach/CoachProfile';
 import { validateTeamID } from '../General/validateTeamID';
 import { formatTeamIDString } from '../General/formatTeamIDString';
 import { formatTeamIDNumber } from '../General/formatTeamIDNumber';
+import CreateQuiz from './CreateQuiz';
 
 function CoachHome() {
 
@@ -120,6 +121,7 @@ return (
           <ManageTeams enabled={enabledManageTeam}/>
           <StudentStats enabled={enabledStudentStats}/>
           <CoachProfile enabled={enabledCoachProfile}/>
+          <CreateQuiz enabled={enabledCreateQuiz}/>
           
           {enabledCreateQuiz 
           ? <h1>This page's functionality hasn't been implemented yet.</h1>
