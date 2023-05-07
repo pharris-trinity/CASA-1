@@ -15,6 +15,10 @@ import { formatTeamIDString } from '../General/formatTeamIDString';
 import { formatTeamIDNumber } from '../General/formatTeamIDNumber';
 import CreateQuiz from './CreateQuiz';
 
+/* 
+CoachHome is the coach's home page. It uses state variables to control which sub-component is being rendered.
+*/
+
 function CoachHome() {
 
   const [enabledManageTeam, setEnabledManageTeam] = useState(false);
@@ -25,10 +29,13 @@ function CoachHome() {
 
   let navigate = useNavigate();
 
+  //makes sure the current user is a Coach -> otherwise, kicks them off the page
   window.onload = (event) => {
     var toNavigateTo = loginChecker("Coach")
     if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
   };
+
+  //the 5 funtions below control which component is being rendered
 
   function teamsButton(){
     //navigate('/ViewTeams2', {replace: true}) 
@@ -86,7 +93,6 @@ function CoachHome() {
     //console.log("formatTeamIDNumber 00-0000", formatTeamIDNumber("00-0000"));
     //console.log("formatTeamIDNumber 0")
   }, [])
-
 
 return (
   <>
