@@ -273,6 +273,7 @@ function ManageTeams(props) {
             setStudents(allUsersCopy);
             console.log("INSIDE THE e.target.value.length IF STATEMENT")
             console.log("allUsersCopy: ", allUsersCopy)
+            setSearchPhrase(e.target.value);
         }
         else {
             setStudents(matchedUsers);
