@@ -78,14 +78,11 @@ function AddStudent(props) {
     /* Submit functionality for the React form.
     updates all necessary info based on form submission and closes the form */
     const handleSubmit = async (e) => {
-        console.log("handlesubmit inside of addstudent")
         e.preventDefault();
         if (validateTeamID(team) || team == "") {
             const numberTeamID = formatTeamIDNumber(team);
-            console.log("converted teamID in AddStudent + typeof", numberTeamID, typeof numberTeamID);
             const tempStudentID = await getStudentID(studentEmail);
             const checkTeam = await getTeam(formatTeamIDNumber(team));
-            console.log("checkTeam in AddStudent", checkTeam);
             if(tempStudentID == undefined){
                 alert("Invalid Student Email. Student was not added.");
             }

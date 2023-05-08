@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import './questionForm.css'
 
+/*  
+Component that has inputs for all parts of making a Question. For create quiz functionality.
+*/
+
 function QuestionForm(props){
     const [description, setDescription] = useState("");
     const [options, setOptions] = useState([{0: ""}, {1: ""}, {2: ""}, {3: ""}]);
     //const [options, setOptions] = useState(["","","",""])
     const [correctAnswer, setCorrectAnswer] = useState(0);
 
+    //compiles info and makes a question object
     const Question = function(desc, ans, correctAns){
         const description = desc
         const answers = ans
@@ -15,34 +20,23 @@ function QuestionForm(props){
         return { description, answers, correctAnswer, value }
     }
 
+    //submit functionality for React Form
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log("Form ", props.num, "submitted")
         var formattedOptions = [];
         for(var i = 0; i < options.length; i++) {
-            console.log("handleSubmit: options[i][i]", options[i][i]);
             formattedOptions.push(options[i][i]);
         }
-
-        console.log("handleSubmit: formatted options", formattedOptions);
         props.setQuestion(Question(description, formattedOptions, correctAnswer))
     }
 
+    //logic to update text box for answer options
     const handleChange = (index, event) =>{
-        //console.log(event)
         event.preventDefault()
         let data = [...options]
         data[index][index] = event.target.value
-        //console.log("handleChange: data[index][index]", data[index][index] )
-        //console.log("handleChange: data[index]", data[index] )
         setOptions(data)
     }
-
-    useEffect(() => {
-        if(options){
-            //console.log(options)
-        }
-    }, [options])
 
     return(
     <form onSubmit={handleSubmit}>

@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './quizInfo.css'
 
+/*
+Component that has input fields for Quiz Name and Quiz Category. Part of create quiz funcionality.
+*/
+
 function QuizInfo(props){
     const [quizName, setQuizName] = useState("");
     const [category, setCategory] = useState("windows");
 
 
+    //submit functionality for React Form. 
     const handleSubmit = (e) => {
         e.preventDefault()
-        //props.setQuestion(Question(description, options, correctAnswer))
-        //[Quiz Name, Category]
         props.setInfo([quizName, category]);
     }
-
-    useEffect(() => {
-        if(category){
-            console.log(category)
-        }
-    }, [category])
 
     return(
     <form onSubmit={handleSubmit}>
