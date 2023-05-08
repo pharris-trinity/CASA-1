@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import QuestionForm from './QuestionForm';
 import QuizInfo from './QuizInfo';
+import './createQuiz.css'
 
 function CreateQuiz(props){
 
@@ -13,7 +14,6 @@ function CreateQuiz(props){
     const [toDelete, setToDelete] = useState();
     const refs = useRef([]);
     const quizInfoRef = useRef();
-
 
     const createQuiz = async () => {
         console.log("createQuiz: quizName", quizName);
@@ -30,9 +30,13 @@ function CreateQuiz(props){
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(tmpData)
         };
-        fetch('/api/assessment/add_assessment', requestOptions).then(
 
-        )
+        const response = await fetch('/api/assessment/add_assessment', requestOptions)
+        const jsonData = await response.json()
+
+        console.log("reached end of createQuiz, attempting to reset component");
+        alert("Quiz has been created!");
+        props.reset();
     }
 
     const addQuestions = (quests) => {
@@ -122,8 +126,8 @@ function CreateQuiz(props){
 
     if(props.enabled){
         return(
-            <div>
-                <h3>Create Quiz</h3>
+            <div className="main-box">
+                <h1 className="page-title">Create Quiz</h1>
 
                 <QuizInfo submitRef={quizInfoRef} setInfo={(e) => quizInfoRef.current = e}/>
                 {/*console.log("quizInfoRef.current: ", quizInfoRef.current)*/}
@@ -137,9 +141,9 @@ function CreateQuiz(props){
                     </div>
                 )}
                 
-                <button onClick={createEmptyQuestion}>Add Question</button>
+                <button className="casa-button" onClick={createEmptyQuestion}>Add Question</button>
 
-                <button onClick={() => {
+                <button className="casa-button" onClick={() => {
 
                 refs.current.map(ref => {ref.click()})
                 addQuestions(refs);

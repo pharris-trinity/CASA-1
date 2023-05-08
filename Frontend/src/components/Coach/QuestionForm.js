@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './questionForm.css'
 
 function QuestionForm(props){
     const [description, setDescription] = useState("");
@@ -45,9 +46,9 @@ function QuestionForm(props){
 
     return(
     <form onSubmit={handleSubmit}>
-        <div className="form-field">
-            <label>Question {props.num + 1}</label>
-            <h1>Description</h1>
+        <div className="cq-content-box">
+            <label className="cq-text-container">Question {props.num + 1}</label>
+            <h3 className="cq-text-container-left">Description</h3>
             <input 
                 type="text" 
                 placeholder="description..." 
@@ -57,7 +58,7 @@ function QuestionForm(props){
             
             />
 
-            <h1>Possible Answers:</h1>
+            <h3 className="cq-text-container-left">Possible Answers:</h3>
             {options.map((input, index) => {
                     return(
                         <div key={index} className="form-group">
@@ -72,7 +73,7 @@ function QuestionForm(props){
                     )
                 })
             }
-            <h1>Correct Answer:</h1>
+            <h3 className="cq-text-container-left">Correct Answer:</h3>
             <input 
                 type="number" 
                 pattern="[0-9]*" 
