@@ -25,7 +25,7 @@ function AddStudent(props) {
             return jsonData;
 
         } catch (error) {
-            console.log(error)
+           // console.log(error)
         }
     }
 
@@ -41,7 +41,7 @@ function AddStudent(props) {
             const jsonData = await response.json()
             //return(jsonData);
         } catch (error) {
-            console.log(error)
+            //console.log(error)
         }
     }
 
@@ -57,7 +57,6 @@ function AddStudent(props) {
             const jsonData = await response.json()
             return(jsonData);
         } catch (error) {
-            console.log(error)
         }
     }
     
@@ -79,6 +78,7 @@ function AddStudent(props) {
     /* Submit functionality for the React form.
     updates all necessary info based on form submission and closes the form */
     const handleSubmit = async (e) => {
+        console.log("handlesubmit inside of addstudent")
         e.preventDefault();
         if (validateTeamID(team) || team == "") {
             const numberTeamID = formatTeamIDNumber(team);
@@ -86,6 +86,9 @@ function AddStudent(props) {
             const tempStudentID = await getStudentID(studentEmail);
             const checkTeam = await getTeam(formatTeamIDNumber(team));
             console.log("checkTeam in AddStudent", checkTeam);
+            if(tempStudentID == undefined){
+                alert("Invalid Student Email. Student was not added.");
+            }
             if(checkTeam) {
                 setStudentID(tempStudentID);
                 await addStudentToTeam(numberTeamID, tempStudentID);
@@ -128,7 +131,7 @@ function AddStudent(props) {
                                 onChange={(e) => setTeam(e.target.value)}
                             />
                             <button className="casa-button" type="submit">Add</button>
-                            <button className="casa-button" type="button" onClick={props.closeForm}>Close</button>
+                            <button className="casa-button" type="button" onClick={ props.closeForm}>Close</button>
                         </div>
                     </form>
                 </div>
