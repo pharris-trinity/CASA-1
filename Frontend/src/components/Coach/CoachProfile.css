@@ -52,4 +52,14 @@
 .text-container .right-text {
     text-align: right;
 }
+
+.coach-overflow-box {
+  overflow-y: auto;
+}
+
+.coach-center-text {
+  display:flex;
+  justify-content: center;
+  align-content: center;
+}
   
