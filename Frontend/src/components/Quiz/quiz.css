@@ -7,11 +7,10 @@
 }
 
 
-.main-box {
+.quiz-main-box {
   width: 90vw;
   margin: 0 auto;
   padding: 20px;
-  box-sizing: content-box;
   background-color: var(--primary-dark-blue);
   height: 90%;
   padding: 10px 20px;
