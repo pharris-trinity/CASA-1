@@ -87,24 +87,10 @@ function CoachHome() {
     setResetKey("reset");
   }
   useEffect(() => {
-    console.log(resetKey);
     if(resetKey == "reset") {
       setResetKey("key");
     }
   }, [resetKey])
-
-
-  useEffect(() => {
-    // console.log("validate 00-0000: ", validateTeamID("00-0000"))
-    // console.log("validate 1-1111: ", validateTeamID("1-1111"))
-    // console.log("validate aa-0000: ", validateTeamID("aa-0000"))
-    // console.log("validate 000000: ", validateTeamID("0000000"))
-    // console.log("validate 00-aaaa: ", validateTeamID("1-1111"))
-    //console.log("formatTeamIDString 000000", formatTeamIDString("000000"));
-    //console.log("formatTeamIDStrong 0", formatTeamIDString("0"));
-    //console.log("formatTeamIDNumber 00-0000", formatTeamIDNumber("00-0000"));
-    //console.log("formatTeamIDNumber 0")
-  }, [])
 
 return (
   <>
