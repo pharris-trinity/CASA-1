@@ -1,6 +1,8 @@
 .main-box {
     width: 70%;
     height: 95%;
+    margin-left: 15%;
+    margin-right: 15%;
     padding-top: 10px;
     overflow-y: auto;
     box-sizing: content-box;
@@ -26,6 +28,7 @@ border-radius: 10px; /* Border radius to create rounded edges */
 .button-spacer {
   display: flex;
   justify-content: center;
+  margin-top: 10px;
 }
 .button-right {
   margin-left: 25%;

@@ -368,7 +368,7 @@ function ManageTeams(props) {
                             value={searchPhrase}
                             onChange={search}
                         />
-                        <button onClick={search}>
+                        <button  className = 'casa-button' onClick={search}>
                             
                             Search
                         </button>
