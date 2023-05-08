@@ -496,9 +496,10 @@ app.post('/api/team/student_display_to_id', async(req, res) => {
 
 app.post('/api/coach/get_studentid_by_email', async(req, res) => {
   const { student_email } = req.body;  
+  console.log(student_email)
   const user = await User.find({"email": student_email})  
-  console.log("THE USER IS ____________________________________________________________________________________", user._id, typeof user)
-  if(!user || user._id == undefined){
+  console.log("THE USER IS ____________________________________________________________________________________", user[0]._id, typeof user)
+  if(!user || user[0]._id == undefined){
     console.log("INSIDE THE IF STATEMENT------------------------------------")
     return res.sendStatus(404)
   } else {
