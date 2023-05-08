@@ -60,7 +60,6 @@ const ProfileContent = ({data}) => {
     }, [coachUserID]) 
 
     useEffect(() => {
-        console.log("coach in CoachProfileContent", coach);
         if(coach) {
             getTeams(coach.teams);
         }
@@ -89,7 +88,7 @@ const ProfileContent = ({data}) => {
                         </React.Fragment>
                     ))}
             </div>
-            <div className="content-box">
+            <div className="coach-content-box">
                 <h3 className="text-container coach-center-text">Teams</h3>
                 {coach && coach.teams.map(teamID => 
                     <div>
@@ -97,12 +96,10 @@ const ProfileContent = ({data}) => {
                     </div>
                 )}
             </div>
-            <div className="content-box">
+            <div className="coach-content-box">
                 <h3 className="text-container coach-center-text">Made Quizzes</h3>
-                    {coach && console.log("coach.madeQuizzes", coach.madeQuizzes)}
                     {coach && coach.madeQuizzes.map(quiz => 
                         <div>
-                            {console.log("quiz in the thing", quiz)}
                             <span>{quiz.name}</span>
                         </div>
                     

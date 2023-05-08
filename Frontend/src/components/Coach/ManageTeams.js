@@ -346,7 +346,7 @@ function ManageTeams(props) {
                             <div className="button-alignment">
                                 <button className="casa-button" type="submit">Save Changes</button>
                                 <button className="casa-button" type="button" onClick={addStudentButton}>Add Student</button>
-                                <button className="casa-button" type="button" onClick={makeTeamButton}>Make A Team</button>
+                                <button className="casa-button" type="button" onClick={makeTeamButton}>Create Team</button>
                             </div>
                         </div>
                     </form>
