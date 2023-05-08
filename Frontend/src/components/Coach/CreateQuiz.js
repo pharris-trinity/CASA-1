@@ -62,20 +62,20 @@ function CreateQuiz(props){
 
     
     const removeQuestion = (num) => {
-        var filterArray = [];
-        console.log("empty?? filterArray + length", filterArray, filterArray.length)
-        console.log("removeQuestion: num", num);
-        console.log("removeQuestion: pre-filter questionForms", questionForms);
-        for(var i = 0; i < questionForms.length; i++) {
-            console.log("logging i: ", i, "logging num: ", num);
-            if(i != num) {
-                filterArray.push(questionForms[i]);
-                console.log("filterArray after something pushed: ", filterArray);
-            }
-        }
-        // var filterArray = questionForms.filter((item) => {
-        //     console.log("item: ", item, " and number in lambda function", num);
-        //     return item != num ? item : null})
+        // var filterArray = [];
+        //console.log("empty?? filterArray + length", filterArray, filterArray.length)
+        //console.log("removeQuestion: num", num);
+        //console.log("removeQuestion: pre-filter questionForms", questionForms);
+        // for(var i = 0; i < questionForms.length; i++) {
+        //     console.log("logging i: ", i, "logging num: ", num);
+        //     if(i != num) {
+        //         filterArray.push(questionForms[i]);
+        //         //console.log("filterArray after something pushed: ", filterArray);
+        //     }
+        // }
+        var filterArray = questionForms.filter((item) => {
+            console.log("item: ", item, " and number in lambda function", num);
+            return item != num ? item : null})
         console.log("removeQuestion: post-filter filterArray", filterArray);
         // for(var i = 0; i < filterArray.length; i++) {
         //     filterArray[i] = i;
@@ -109,16 +109,16 @@ function CreateQuiz(props){
 
     useEffect(() => {
         if(category) {
-            //createQuiz();
+            createQuiz();
         }
     }, [category]) 
 
-    useEffect(() => {
-        console.log("toDelete in useEffect", toDelete);
-        if(toDelete || toDelete == 0) {
-            removeQuestion(toDelete);
-        }
-    }, [toDelete]) 
+    // useEffect(() => {
+    //     console.log("toDelete in useEffect", toDelete);
+    //     if(toDelete || toDelete == 0) {
+    //         removeQuestion(toDelete);
+    //     }
+    // }, [toDelete]) 
 
     if(props.enabled){
         return(
@@ -126,14 +126,14 @@ function CreateQuiz(props){
                 <h3>Create Quiz</h3>
 
                 <QuizInfo submitRef={quizInfoRef} setInfo={(e) => quizInfoRef.current = e}/>
-                {console.log("quizInfoRef.current: ", quizInfoRef.current)}
+                {/*console.log("quizInfoRef.current: ", quizInfoRef.current)*/}
 
                 {questionForms && questionForms.map((index) =>
                     <div>
-                        {console.log("index in the QuestionForm map", index)}
-                        {/* <QuestionForm num={index} submitRef={ref => {refs.current[index] = ref}} setQuestion={(e) => refs.current[index] = e} deleteQuestion={(e) => removeQuestion(e)}/> */}
-                        <QuestionForm num={index} submitRef={ref => {refs.current[index] = ref}} setQuestion={(e) => refs.current[index] = e} deleteQuestion={(e) => setToDelete(e)}/>
-                        {console.log("refs in the map", refs)}
+                        {/* {console.log("index in the QuestionForm map", index)} */}
+                        <QuestionForm num={index} submitRef={ref => {refs.current[index] = ref}} setQuestion={(e) => refs.current[index] = e}/>
+                        {/* <QuestionForm key={index} num={index} submitRef={ref => {refs.current[index] = ref}} setQuestion={(e) => refs.current[index] = e} deleteQuestion={(e) => setToDelete(e)}/> */}
+                        {/* {console.log("refs in the map", refs)} */}
                     </div>
                 )}
                 

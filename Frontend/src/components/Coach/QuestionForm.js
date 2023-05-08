@@ -80,7 +80,7 @@ function QuestionForm(props){
                 value={correctAnswer} 
                 onChange={e => setCorrectAnswer(v => e.target.validity.valid ? parseInt(e.target.value, 10) : v)} />
         </div>
-        <button type="button" onClick={() => props.deleteQuestion(props.num)}>Delete Question</button>
+        {/* <button type="button" onClick={() => props.deleteQuestion(props.num)}>Delete Question</button> */}
         <button num={props.num} ref={props.submitRef} type="submit" style={{ display: 'none' }} />
     </form>
     )
