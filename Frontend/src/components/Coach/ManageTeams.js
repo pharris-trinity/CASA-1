@@ -97,7 +97,6 @@ function ManageTeams(props) {
         teams.map(team => {
             if(team.national_id == teamID) {
                 teamName = team.name;
-                console.log(team.name)
             }
         })
         return teamName;
@@ -178,7 +177,6 @@ function ManageTeams(props) {
 
     //button to remove the current selected student from the coach's roster
     const deleteStudentButton = async () => {
-        console.log("currentStudentID: ", currentStudentID)
         if(currentStudentID != undefined) {
             const confirmText = "Are you sure you want to delete the current selected student? \n(This does not delete their account, but removes them from your roster)";
             if(window.confirm(confirmText) == true) {
@@ -214,7 +212,6 @@ function ManageTeams(props) {
         e.preventDefault();
         if(validateTeamID(updateTeamID)) {
             const convertedIDNumber = formatTeamIDNumber(updateTeamID);
-            console.log("converted teamID in handleSubmit of updateTeam",convertedIDNumber);
             updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,convertedIDNumber);
         }
     }
@@ -299,14 +296,8 @@ function ManageTeams(props) {
         const matchedUsers = students.filter((user) => {
             return user.displayname.toLowerCase().includes(e.target.value.toLowerCase());
         });
-        console.log("matchedUsers: ", matchedUsers)
-        console.log("students: ", students)
-        console.log("e.target.value.length: ", e.target.value.length)
-        console.log("allUsersCopy: ", allUsersCopy)
         if (e.target.value.length == 0) {
             setStudents(allUsersCopy);
-            console.log("INSIDE THE e.target.value.length IF STATEMENT")
-            console.log("allUsersCopy: ", allUsersCopy)
             setSearchPhrase(e.target.value);
         }
         else {

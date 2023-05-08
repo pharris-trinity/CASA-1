@@ -3,7 +3,13 @@ import QuestionForm from './QuestionForm';
 import QuizInfo from './QuizInfo';
 import './createQuiz.css'
 
+/*
+The CreateQuiz component is the main component for coaches to be able to create quizzes.
+It contains functionality for compilation and submission of user-input info that becomes a quiz
+*/
+
 function CreateQuiz(props){
+
 
     const [teamCoachID, setTeamCoachID] = useState();
     const [questions, setQuestions] = useState([]);
@@ -11,13 +17,12 @@ function CreateQuiz(props){
     const [questionForms, setQuestionForms] = useState([]);
     const [quizName, setQuizName] = useState();
     const [category, setCategory] = useState();
-    const [toDelete, setToDelete] = useState();
+    //const [toDelete, setToDelete] = useState();
     const refs = useRef([]);
     const quizInfoRef = useRef();
 
+    /* Final function call of the component that compiles all info and creates the quiz */
     const createQuiz = async () => {
-        console.log("createQuiz: quizName", quizName);
-        console.log("createQuiz: category", category);
         const testQuestion = {
             description: "description",
             answers: ["0","1","2","3"],
@@ -33,12 +38,13 @@ function CreateQuiz(props){
 
         const response = await fetch('/api/assessment/add_assessment', requestOptions)
         const jsonData = await response.json()
-
-        console.log("reached end of createQuiz, attempting to reset component");
         alert("Quiz has been created!");
+
+        //interacts with CoachHome in order to reset the CreateQuiz component
         props.reset();
     }
 
+    //Given an array of Question objects, puts them into the state object "questions"
     const addQuestions = (quests) => {
         var tempArray = [];
         for(var i = 0; i < quests.current.length; i++) {
@@ -47,6 +53,7 @@ function CreateQuiz(props){
         setQuestions(tempArray);
     }
 
+    //creates a blank QuestionForm component
     const createEmptyQuestion = () => {
         var tempArray = [];
         //var tempRefs = [];
@@ -64,7 +71,11 @@ function CreateQuiz(props){
         }
     }
 
-    
+    /* Failed logic for the removeQuestion function. I spent 5 hours trying to get this to work but couldn't.
+    Essentially, you need to find a way to remove the correct index from questionForms while not causing 
+    all the QuestionForm components to re-render and lose their data.
+    Best of luck whoever ends up with this next - Josh Rea (5/8/23, at 4am)
+    */
     const removeQuestion = (num) => {
         // var filterArray = [];
         //console.log("empty?? filterArray + length", filterArray, filterArray.length)
@@ -86,36 +97,40 @@ function CreateQuiz(props){
         // }
         // console.log("removeQuestion: post-sort questionForms", filterArray);
         setQuestionForms(filterArray);
-        setToDelete();
+        //setToDelete();
     }
 
+    //Gets the coachID from local storage
     useEffect(() => {
         setTeamCoachID(localStorage.getItem("_id"));
     }, []) 
 
-    useEffect(() => {
-        if(questions){
-            console.log(questions)
-        }
-    }, [questions])
-
-    useEffect(() => {
-        if(questionIndex){
-            //console.log("QuestinIndex in use effect: ", questionIndex)
-        }
-    }, [questionIndex])
-
-    useEffect(() => {
-        if(questionForms) {
-            console.log("Question Forms: ", questionForms)
-        }
-    }, [questionForms])
-
+    //calls createQuiz after category has been updated in state
     useEffect(() => {
         if(category) {
             createQuiz();
         }
     }, [category]) 
+
+    {/* Below is a collection of useEffects for testing purposes + removeQuestion functionality */}
+
+    // useEffect(() => {
+    //     if(questions){
+    //         console.log(questions)
+    //     }
+    // }, [questions])
+
+    // useEffect(() => {
+    //     if(questionIndex){
+    //         console.log("QuestionIndex in use effect: ", questionIndex)
+    //     }
+    // }, [questionIndex])
+
+    // useEffect(() => {
+    //     if(questionForms) {
+    //         console.log("Question Forms: ", questionForms)
+    //     }
+    // }, [questionForms])
 
     // useEffect(() => {
     //     console.log("toDelete in useEffect", toDelete);
@@ -129,32 +144,32 @@ function CreateQuiz(props){
             <div className="main-box">
                 <h1 className="page-title">Create Quiz</h1>
 
+                {/* Renders the QuizInfo component */}
                 <QuizInfo submitRef={quizInfoRef} setInfo={(e) => quizInfoRef.current = e}/>
-                {/*console.log("quizInfoRef.current: ", quizInfoRef.current)*/}
 
+                {/* Dynamically renders QuestionForm components based on the indexes in questionForms
+                    I will admit, this is semi janky logic that may need to be reworked for removeQuestion */}
                 {questionForms && questionForms.map((index) =>
                     <div>
-                        {/* {console.log("index in the QuestionForm map", index)} */}
                         <QuestionForm num={index} submitRef={ref => {refs.current[index] = ref}} setQuestion={(e) => refs.current[index] = e}/>
-                        {/* <QuestionForm key={index} num={index} submitRef={ref => {refs.current[index] = ref}} setQuestion={(e) => refs.current[index] = e} deleteQuestion={(e) => setToDelete(e)}/> */}
-                        {/* {console.log("refs in the map", refs)} */}
                     </div>
                 )}
                 
-                <button className="casa-button" onClick={createEmptyQuestion}>Add Question</button>
+                <div className="button-spacer">
+                    <button className="casa-button button-left" onClick={createEmptyQuestion}>Add Question</button>
 
-                <button className="casa-button" onClick={() => {
+                    {/* Submit button for all of the QuestionForms and QuizInfo component */}
+                    <button className="casa-button button-right" onClick={() => {
 
-                refs.current.map(ref => {ref.click()})
-                addQuestions(refs);
+                    refs.current.map(ref => {ref.click()})
+                    addQuestions(refs);
 
-                quizInfoRef.current.click();
-                console.log("quizInfoRef.current[0]", quizInfoRef.current[0]);
-                console.log("quizInfoRef.current[1]", quizInfoRef.current[1]);
-                setQuizName(quizInfoRef.current[0]);
-                setCategory(quizInfoRef.current[1]);
+                    quizInfoRef.current.click();
+                    setQuizName(quizInfoRef.current[0]);
+                    setCategory(quizInfoRef.current[1]);
 
-                }}>Create Quiz</button>
+                    }}>Create Quiz</button>
+                </div>
             </div> 
             
         )

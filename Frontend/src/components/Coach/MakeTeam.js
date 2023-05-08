@@ -51,7 +51,6 @@ app.post('/api/admin/register_team', async(req, res) => {
         e.preventDefault();
         if(validateTeamID(teamNationalID)) {
             const teamIDNumber = formatTeamIDNumber(teamNationalID);
-            console.log("converted teamTeamIDNumber: ", teamIDNumber);
             await createATeam(teamIDNumber, teamName, teamSchool, teamDistrict, teamIsROTC, teamCoachID);
             //alert('You have submitted');
             props.closeForm();
