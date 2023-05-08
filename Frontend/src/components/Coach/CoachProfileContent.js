@@ -18,9 +18,9 @@ const ProfileContent = ({data}) => {
     return(
 
 
-        <div className='main-box'>
+        <div className='coach-main-box'>
             <div className='page-title'>Coach Profile</div>
-                <div className='content-box'>
+                <div className='coach-content-box'>
                     {data.map(user => (
                         <React.Fragment key={user.id}>
                         <div className='text-container'>

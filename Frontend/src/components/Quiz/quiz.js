@@ -156,7 +156,7 @@ function Quiz(props) {
             {results == false 
             ? <div className='quiz-main-box'>
                 <div className='quiz-title'>{props.quizData[0].name}</div>
-                    <div className='content-box'>
+                    <div className='quiz-content-box'>
                     {/* Makes a Question component for each question in the quiz, and passes necessary information to the question components */}
                     {props.quizData.map(quiz => quiz.questions.map(
                         question => <Question key = {quiz._id} questionData = {question} questionIndex = {questionIndex}

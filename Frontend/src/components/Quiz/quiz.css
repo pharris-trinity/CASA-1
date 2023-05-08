@@ -31,7 +31,10 @@
     border-radius: 10px; /* Border radius to create rounded edges */
   }
   
-  .content-box {
+  .quiz-content-box {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
     margin-top: 20px;
     background-color: var(--primary-blue);
     padding: 10px 20px;
