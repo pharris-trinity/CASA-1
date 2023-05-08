@@ -63,7 +63,7 @@ app.post('/api/admin/register_team', async(req, res) => {
     if(props.enabled === true){
         return (
             <div className="form-popup">
-                <h2>Make Team</h2>
+                <h2>Create Team</h2>
                 <div>
                     <form className="make-team-container" onSubmit={handleSubmit}>
                         <div>

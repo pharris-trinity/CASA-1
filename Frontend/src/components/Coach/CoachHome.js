@@ -128,7 +128,7 @@ return (
           <CreateQuiz key={resetKey} reset={resetCreateQuiz} enabled={enabledCreateQuiz}/>
 
           {enabledFindMentors 
-          ? <h1>This page's functionality hasn't been implemented yet.</h1>
+          ? <h1>This page is planned to be implemented in the future.</h1>
           : null}
         </div>
     </div> 

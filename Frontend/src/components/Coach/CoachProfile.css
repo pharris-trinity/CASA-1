@@ -1,6 +1,8 @@
-.main-box {
+.coach-main-box {
   width: 70%;
   height: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
   padding-top: 10px;
   box-sizing: content-box;
   background-color: var(--primary-dark-blue);
@@ -23,7 +25,7 @@
   border-radius: 10px; /* Border radius to create rounded edges */
 }
 
-.content-box {
+.coach-content-box {
     width: 75%;
     margin-top: 20px;
     margin-left: 12.5%;
@@ -49,5 +51,15 @@
 
 .text-container .right-text {
     text-align: right;
+}
+
+.coach-overflow-box {
+  overflow-y: auto;
+}
+
+.coach-center-text {
+  display:flex;
+  justify-content: center;
+  align-content: center;
 }
   
