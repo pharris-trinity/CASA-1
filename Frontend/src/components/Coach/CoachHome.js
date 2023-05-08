@@ -128,10 +128,6 @@ return (
           <StudentStats enabled={enabledStudentStats}/>
           <CoachProfile enabled={enabledCoachProfile}/>
           <CreateQuiz enabled={enabledCreateQuiz}/>
-          
-          {enabledCreateQuiz 
-          ? <h1>This page's functionality hasn't been implemented yet.</h1>
-          : null}
 
           {enabledFindMentors 
           ? <h1>This page's functionality hasn't been implemented yet.</h1>
