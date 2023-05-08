@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import './MakeTeam.css'
 import { formatTeamIDNumber } from "../General/formatTeamIDNumber";
 import { validateTeamID } from "../General/validateTeamID";
+import { json } from "body-parser";
 
 /* 
 This component is a modal pop-up that contains a React Form. Upon submission of the form, a new team
@@ -15,6 +16,7 @@ function MakeTeam(props) {
     const[teamDistrict, setTeamDistrict] = useState();
     const[teamIsROTC, setTeamIsROTC] = useState(false);
     const[teamCoachID, setTeamCoachID] = useState();
+
 
 
 
@@ -35,9 +37,9 @@ app.post('/api/admin/register_team', async(req, res) => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(tmpData)
         };
-        fetch('/api/admin/register_team', requestOptions).then(
-
-        )
+        fetch('/api/admin/register_team', requestOptions).then((response) => {
+             if(response.status == 201) alert('TeamID is already in use. Team was not created.');
+        });
     }
 
     useEffect(() => {

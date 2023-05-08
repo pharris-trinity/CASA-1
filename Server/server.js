@@ -495,11 +495,14 @@ app.post('/api/team/student_display_to_id', async(req, res) => {
 })
 
 app.post('/api/coach/get_studentid_by_email', async(req, res) => {
-  const { student_email } = req.body;
-  const user = await User.find({"email": student_email})     
-  if(!user){
+  const { student_email } = req.body;  
+  const user = await User.find({"email": student_email})  
+  console.log("THE USER IS ____________________________________________________________________________________", user._id, typeof user)
+  if(!user || user._id == undefined){
+    console.log("INSIDE THE IF STATEMENT------------------------------------")
     return res.sendStatus(404)
   } else {
+    //console.log("USER SENT BACK", user)
     return res.status(200).send(user[0]._id); 
   }      
 }) 

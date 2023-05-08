@@ -51,7 +51,7 @@ function ManageTeams(props) {
 
             setCoach(jsonData)
         } catch (error) {
-            console.log(error)
+            //console.log(error)
         }
     }
 
@@ -68,7 +68,7 @@ function ManageTeams(props) {
             setStudents(jsonData);
             setAllUsersCopy(jsonData);
         } catch (error) {
-            console.log(error)
+           // console.log(error)
         }
     }
 
@@ -85,7 +85,7 @@ function ManageTeams(props) {
                 const jsonData = await response.json();
                 tempTeams.push(...jsonData);
             } catch (error) {
-                console.log("error in getTeams: ", error);
+                //console.log("error in getTeams: ", error);
             }
         }
         setTeams(tempTeams);
@@ -105,20 +105,25 @@ function ManageTeams(props) {
 
     //given new student info, updates the student in DB to reflect the new info
     const updateStudentAccount = async (currentStudentID, newDispName, newGradLevel, newTeamID) => {
-        var tmpData = {coachID: coachUserID, studentID: currentStudentID, studentDispName: newDispName, studentGradLevel: newGradLevel, studentTeamID: newTeamID}
-        try {
-        const requestOptions = {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(tmpData)
-        };
-        
-        const response = await fetch('/api/team/update_student_info', requestOptions)
-        const jsonData = await response.json()
-        getStudents(coachUserID);
+        if(newGradLevel < 9 || newGradLevel > 12){
+            alert("The grade level has been edited to be outside of the highschool range.")
+        }
+        else {
+            var tmpData = {coachID: coachUserID, studentID: currentStudentID, studentDispName: newDispName, studentGradLevel: newGradLevel, studentTeamID: newTeamID}
+            try {
+            const requestOptions = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(tmpData)
+            };
+            
+            const response = await fetch('/api/team/update_student_info', requestOptions)
+            const jsonData = await response.json()
+            getStudents(coachUserID);
 
-        } catch (error) {
-            console.log(error);
+            } catch (error) {
+                //console.log(error);
+            }
         }
     }
 
@@ -136,7 +141,7 @@ function ManageTeams(props) {
         const jsonData = await response.json()
 
         } catch (error) {
-            console.log(error);
+            //console.log(error);
         }
     }
 
@@ -173,11 +178,14 @@ function ManageTeams(props) {
 
     //button to remove the current selected student from the coach's roster
     const deleteStudentButton = async () => {
-        const confirmText = "Are you sure you want to delete the current selected student? \n(This does not delete their account, but removes them from your roster)";
-        if(window.confirm(confirmText) == true) {
-            await removeStudent(currentStudentID);
-            getStudents(coachUserID);
-        } else {
+        console.log("currentStudentID: ", currentStudentID)
+        if(currentStudentID != undefined) {
+            const confirmText = "Are you sure you want to delete the current selected student? \n(This does not delete their account, but removes them from your roster)";
+            if(window.confirm(confirmText) == true) {
+                await removeStudent(currentStudentID);
+                getStudents(coachUserID);
+            } else {
+            }
         }
     }
 
