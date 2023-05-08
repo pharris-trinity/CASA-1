@@ -26,6 +26,7 @@ function CoachHome() {
   const [enabledCreateQuiz, setEnabledCreateQuiz] = useState(false);
   const [enabledFindMentors, setEnabledFindMentors] = useState(false);
   const [enabledCoachProfile, setEnabledCoachProfile] = useState(false);
+  const [resetKey, setResetKey] = useState("key");
 
   let navigate = useNavigate();
 
@@ -82,6 +83,17 @@ function CoachHome() {
     navigate('/coachtable', {replace: true})
   }
 
+  const resetCreateQuiz = () => {
+    setResetKey("reset");
+  }
+  useEffect(() => {
+    console.log(resetKey);
+    if(resetKey == "reset") {
+      setResetKey("key");
+    }
+  }, [resetKey])
+
+
   useEffect(() => {
     // console.log("validate 00-0000: ", validateTeamID("00-0000"))
     // console.log("validate 1-1111: ", validateTeamID("1-1111"))
@@ -127,7 +139,7 @@ return (
           <ManageTeams enabled={enabledManageTeam}/>
           <StudentStats enabled={enabledStudentStats}/>
           <CoachProfile enabled={enabledCoachProfile}/>
-          <CreateQuiz enabled={enabledCreateQuiz}/>
+          <CreateQuiz key={resetKey} reset={resetCreateQuiz} enabled={enabledCreateQuiz}/>
 
           {enabledFindMentors 
           ? <h1>This page's functionality hasn't been implemented yet.</h1>

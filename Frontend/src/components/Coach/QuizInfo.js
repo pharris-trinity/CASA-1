@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './quizInfo.css'
 
 function QuizInfo(props){
     const [quizName, setQuizName] = useState("");
@@ -20,9 +21,9 @@ function QuizInfo(props){
 
     return(
     <form onSubmit={handleSubmit}>
-        <div className="form-field">
+        <div className="quizinfo-content-box">
             {/* <label>Question {props.num + 1}</label> */}
-            <h3>Quiz Name</h3>
+            <h3 className="quizinfo-text-container">Quiz Name</h3>
             <input 
                 type="text" 
                 placeholder="name..." 
@@ -32,7 +33,7 @@ function QuizInfo(props){
             
             />
 
-            <h3>Category</h3>
+            <h3 className="quizinfo-text-container">Category</h3>
             <select value={category} onChange={e => setCategory(e.target.value)}>
                 <option value="windows">Windows</option>
                 <option value="win_server">Win Server</option>
