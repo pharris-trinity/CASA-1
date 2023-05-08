@@ -1,0 +1,36 @@
+.quizinfo-content-box {
+    width: 75%;
+    margin-top: 20px;
+    margin-left: 12.5%;
+    margin-right: 12.5%;
+    background-color: var(--primary-blue);
+    padding: 10px 20px;
+    border-radius: 10px; /* Border radius to create rounded edges */
+}
+  
+.quizinfo-text-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    padding: 1%;
+}
+
+.quizinfo-content-box input[type=text], .quizinfo-content-box input[type=number] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+  }
+
+.quizinfo-content-box select {
+width: 100%;
+padding: 10px;
+margin: 5px 0 22px 0;
+border: none;
+background: #f1f1f1;
+}
+    

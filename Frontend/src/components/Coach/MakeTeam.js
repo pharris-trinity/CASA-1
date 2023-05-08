@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import './MakeTeam.css'
+import { formatTeamIDNumber } from "../General/formatTeamIDNumber";
+import { validateTeamID } from "../General/validateTeamID";
+import { json } from "body-parser";
 
+/* 
+This component is a modal pop-up that contains a React Form. Upon submission of the form, a new team
+will be created.
+*/
 
 function MakeTeam(props) {
     const[teamNationalID, setTeamNationalID] = useState();
@@ -10,6 +17,9 @@ function MakeTeam(props) {
     const[teamIsROTC, setTeamIsROTC] = useState(false);
     const[teamCoachID, setTeamCoachID] = useState();
 
+
+
+
 /*
 
 app.post('/api/admin/register_team', async(req, res) => {
@@ -17,6 +27,9 @@ app.post('/api/admin/register_team', async(req, res) => {
 
 
 */
+
+
+    //Creates a team in DB and adds the teamID to the coach's teams
     const createATeam = async (tID, tName, tSchool, tDistrict, tROTC, tcoachID) => {
         var tmpData = { national_id: tID, name: tName, school: tSchool, district: tDistrict, rotc: tROTC, coach: tcoachID }
         const requestOptions = {
@@ -24,20 +37,28 @@ app.post('/api/admin/register_team', async(req, res) => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(tmpData)
         };
-        fetch('/api/admin/register_team', requestOptions).then(
-
-        )
+        fetch('/api/admin/register_team', requestOptions).then((response) => {
+             if(response.status == 201) alert('TeamID is already in use. Team was not created.');
+        });
     }
 
     useEffect(() => {
         setTeamCoachID(localStorage.getItem("_id"));
     }, []) 
     
+    //form submission functionality. Attempts to create a team from input form info and closes the form.
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await createATeam(teamNationalID, teamName, teamSchool, teamDistrict, teamIsROTC, teamCoachID);
-        //alert('You have submitted');
-        props.closeForm();
+        if(validateTeamID(teamNationalID)) {
+            const teamIDNumber = formatTeamIDNumber(teamNationalID);
+            console.log("converted teamTeamIDNumber: ", teamIDNumber);
+            await createATeam(teamIDNumber, teamName, teamSchool, teamDistrict, teamIsROTC, teamCoachID);
+            //alert('You have submitted');
+            props.closeForm();
+        } else {
+            alert('Invalid TeamID. Team was not created.')
+            props.closeForm();
+        }
     }
 
     if(props.enabled === true){
@@ -49,7 +70,7 @@ app.post('/api/admin/register_team', async(req, res) => {
                         <div>
                             <label htmlFor='national_id'>Team's National ID: </label>
                             <input
-                                type='number'
+                                type='text'
                                 id='national_id'
                                 name='national_id'
                                 value={teamNationalID}

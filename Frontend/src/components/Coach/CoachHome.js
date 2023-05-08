@@ -1,5 +1,5 @@
 // Here will be the mentor page with a decent layout and buttons to future pages.
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 //import Button from './MentorButton';
 import '../Mentor/PageLayout.css'
 import '../Coach/CoachProfile'
@@ -10,6 +10,14 @@ import Navbar from './../General/Navbar';
 import { useNavigate } from 'react-router-dom';
 import {loginChecker} from "../General/LoginCheck";
 import CoachProfile from '../Coach/CoachProfile';
+import { validateTeamID } from '../General/validateTeamID';
+import { formatTeamIDString } from '../General/formatTeamIDString';
+import { formatTeamIDNumber } from '../General/formatTeamIDNumber';
+import CreateQuiz from './CreateQuiz';
+
+/* 
+CoachHome is the coach's home page. It uses state variables to control which sub-component is being rendered.
+*/
 
 function CoachHome() {
 
@@ -18,13 +26,17 @@ function CoachHome() {
   const [enabledCreateQuiz, setEnabledCreateQuiz] = useState(false);
   const [enabledFindMentors, setEnabledFindMentors] = useState(false);
   const [enabledCoachProfile, setEnabledCoachProfile] = useState(false);
+  const [resetKey, setResetKey] = useState("key");
 
   let navigate = useNavigate();
 
+  //makes sure the current user is a Coach -> otherwise, kicks them off the page
   window.onload = (event) => {
     var toNavigateTo = loginChecker("Coach")
     if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
   };
+
+  //the 5 funtions below control which component is being rendered
 
   function teamsButton(){
     //navigate('/ViewTeams2', {replace: true}) 
@@ -71,8 +83,28 @@ function CoachHome() {
     navigate('/coachtable', {replace: true})
   }
 
-  
+  const resetCreateQuiz = () => {
+    setResetKey("reset");
+  }
+  useEffect(() => {
+    console.log(resetKey);
+    if(resetKey == "reset") {
+      setResetKey("key");
+    }
+  }, [resetKey])
 
+
+  useEffect(() => {
+    // console.log("validate 00-0000: ", validateTeamID("00-0000"))
+    // console.log("validate 1-1111: ", validateTeamID("1-1111"))
+    // console.log("validate aa-0000: ", validateTeamID("aa-0000"))
+    // console.log("validate 000000: ", validateTeamID("0000000"))
+    // console.log("validate 00-aaaa: ", validateTeamID("1-1111"))
+    //console.log("formatTeamIDString 000000", formatTeamIDString("000000"));
+    //console.log("formatTeamIDStrong 0", formatTeamIDString("0"));
+    //console.log("formatTeamIDNumber 00-0000", formatTeamIDNumber("00-0000"));
+    //console.log("formatTeamIDNumber 0")
+  }, [])
 
 return (
   <>
@@ -107,10 +139,7 @@ return (
           <ManageTeams enabled={enabledManageTeam}/>
           <StudentStats enabled={enabledStudentStats}/>
           <CoachProfile enabled={enabledCoachProfile}/>
-          
-          {enabledCreateQuiz 
-          ? <h1>This page's functionality hasn't been implemented yet.</h1>
-          : null}
+          <CreateQuiz key={resetKey} reset={resetCreateQuiz} enabled={enabledCreateQuiz}/>
 
           {enabledFindMentors 
           ? <h1>This page's functionality hasn't been implemented yet.</h1>

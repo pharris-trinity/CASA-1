@@ -1,30 +1,35 @@
 import React, { useState, useEffect } from "react";
 import './AddStudent.css'
+import { validateTeamID } from "../General/validateTeamID";
+import { formatTeamIDNumber } from "../General/formatTeamIDNumber";
 
 /* 
-The Question component has logic to render a quiz question, including the description 
-and making an answer component for each possible answer
+The add student component is a pop-up Modal that has the functionality for adding a new student
+to a coach's roster
 */
 
 function AddStudent(props) {
     const[studentEmail, setStudentEmail] = useState("");
-    const[team, setTeam] = useState(-1);
+    const[team, setTeam] = useState("");
     const[studentID, setStudentID] = useState();
-    const [errorMessages, setErrorMessages] = useState({});
 
-    const error = {
-        team: "ERROR: Team Not Found",
-        user: "ERROR: Invalid Student, Student Name Does Not Exist", 
-        user2: "ERROR: Student Is Already In A Team",
-        user3: "ERROR:Student Is Already In This Team",
-        addsuccess: "Student Successfully Added To Team",
-        removeteam: "ERROR: Team Not Found",
-        removeuser: "ERROR: Invalid Student, Student Name Does Not Exist", 
-        removeuser2: "ERROR: Student Is Not Registered To Any Team", 
-        removeuser3: "ERROR: Student Is Not Registered To This Team",     
-        removesuccess: "Student Successfully Removed From Team"
-    }  
+    const getTeam = async(requestedTeam) => {
+        try {
+            const requestOptions = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({'teamID': requestedTeam})
+            }
+            const response = await fetch('/api/team/get_team', requestOptions)
+            const jsonData = await response.json()
+            return jsonData;
 
+        } catch (error) {
+           // console.log(error)
+        }
+    }
+
+    //stores a coach's ID to a student's coachID field in the database
     const addCoachToStudent = async (coach_id, email) => {
         try {
             const requestOptions = {
@@ -36,10 +41,11 @@ function AddStudent(props) {
             const jsonData = await response.json()
             //return(jsonData);
         } catch (error) {
-            console.log(error)
+            //console.log(error)
         }
     }
 
+    //gets the student's ID from the DB
     const getStudentID = async (email) => {
         try {
             const requestOptions = {
@@ -51,10 +57,10 @@ function AddStudent(props) {
             const jsonData = await response.json()
             return(jsonData);
         } catch (error) {
-            console.log(error)
         }
     }
     
+    //adds a student to a team in DB and stores the teamID in the student's team field
     const addStudentToTeam = (inputTeamID, inputStudentID) => {
         var tmpData = {team_id: inputTeamID, student_id: inputStudentID}
         const requestOptions = {
@@ -64,40 +70,38 @@ function AddStudent(props) {
         };
         fetch('/api/team/add_student_to_team', requestOptions).then(
                 res => res.text()).then(text => {
-                if (text === "No team found that matches that ID"){
-                  setErrorMessages ({name: "team", message:error.team})
-                }
-                else if (text === "No user found that matches that ID"){
-                  setErrorMessages ({name: "user", message:error.user})
-                }
-                else if (text === "User already has a team registered to them"){
-                  setErrorMessages ({name: "user2", message:error.user2})
-                }
-                else if (text === "User is already registered to this team"){
-                  setErrorMessages ({name: "user3", message:error.user3})
-                }
-                else{
-                  setErrorMessages ({name: "addsuccess", message:error.addsuccess})
-                }
+
               }
         );
     };
-    
-    useEffect(() => {
-        // if(studentID !== undefined) {
-        //     addStudentToTeam(team,studentID);
-        // }
-    }, [studentID])
 
+    /* Submit functionality for the React form.
+    updates all necessary info based on form submission and closes the form */
     const handleSubmit = async (e) => {
+        console.log("handlesubmit inside of addstudent")
         e.preventDefault();
-        await addCoachToStudent(localStorage._id, studentEmail);
-        if(team != undefined && team != -1) {
+        if (validateTeamID(team) || team == "") {
+            const numberTeamID = formatTeamIDNumber(team);
+            console.log("converted teamID in AddStudent + typeof", numberTeamID, typeof numberTeamID);
             const tempStudentID = await getStudentID(studentEmail);
-            setStudentID(tempStudentID);
-            await addStudentToTeam(team, tempStudentID);
+            const checkTeam = await getTeam(formatTeamIDNumber(team));
+            console.log("checkTeam in AddStudent", checkTeam);
+            if(tempStudentID == undefined){
+                alert("Invalid Student Email. Student was not added.");
+            }
+            if(checkTeam) {
+                setStudentID(tempStudentID);
+                await addStudentToTeam(numberTeamID, tempStudentID);
+                await addCoachToStudent(localStorage._id, studentEmail);
+                props.closeForm();
+            } else if (team == "") {
+                setStudentID(tempStudentID);
+                await addCoachToStudent(localStorage._id, studentEmail);
+                props.closeForm();
+            } else alert("Invalid Team ID. Student was not added.");
+        } else {
+            alert("Invalid Team ID. Student was not added.");
         }
-        props.closeForm();
         
     }
 
@@ -120,14 +124,14 @@ function AddStudent(props) {
 
                             <label htmlFor='team'>Team National ID (Optional)</label>
                             <input
-                                type='number'
+                                type='text'
                                 id='team'
                                 name='team'
                                 value={team}
                                 onChange={(e) => setTeam(e.target.value)}
                             />
                             <button className="casa-button" type="submit">Add</button>
-                            <button className="casa-button" type="button" onClick={props.closeForm}>Close</button>
+                            <button className="casa-button" type="button" onClick={ props.closeForm}>Close</button>
                         </div>
                     </form>
                 </div>
