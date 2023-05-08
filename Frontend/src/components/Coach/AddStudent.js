@@ -25,7 +25,7 @@ function AddStudent(props) {
             return jsonData;
 
         } catch (error) {
-           // console.log(error)
+           console.log(error)
         }
     }
 
@@ -41,12 +41,13 @@ function AddStudent(props) {
             const jsonData = await response.json()
             //return(jsonData);
         } catch (error) {
-            //console.log(error)
+            console.log(error)
         }
     }
 
     //gets the student's ID from the DB
     const getStudentID = async (email) => {
+        console.log("email in getStudentID", email)
         try {
             const requestOptions = {
                 method: 'POST',
@@ -55,6 +56,7 @@ function AddStudent(props) {
             }
             const response = await fetch('/api/coach/get_studentid_by_email', requestOptions)
             const jsonData = await response.json()
+            console.log("jsonData in AddStudent:", jsonData);
             return(jsonData);
         } catch (error) {
         }
@@ -80,13 +82,18 @@ function AddStudent(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateTeamID(team) || team == "") {
+            console.log("studentEmail: ", studentEmail);
             const numberTeamID = formatTeamIDNumber(team);
             const tempStudentID = await getStudentID(studentEmail);
             const checkTeam = await getTeam(formatTeamIDNumber(team));
+            console.log("tempStudentID", tempStudentID)
+            console.log("checkTeam", checkTeam)
             if(tempStudentID == undefined){
                 alert("Invalid Student Email. Student was not added.");
+                return "function's broke"
             }
             if(checkTeam) {
+                console.log("tempStudentID in checkTeam if", tempStudentID)
                 setStudentID(tempStudentID);
                 await addStudentToTeam(numberTeamID, tempStudentID);
                 await addCoachToStudent(localStorage._id, studentEmail);
