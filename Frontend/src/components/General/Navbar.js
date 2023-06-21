@@ -13,7 +13,7 @@ export default function Navbar(props) {
   const buttonSetData = {
     landing: [
       { name: "CYBERTEXAS", link: "https://cybertexas.org/", target: "_blank", rel: "noopener noreferrer"},
-      { name: "CYBERPATRIOTS", link: "https://www.uscyberpatriot.org/", target: "_blank", rel: "noopener noreferrer"},
+      { name: "CYBERPATRIOT", link: "https://www.uscyberpatriot.org/", target: "_blank", rel: "noopener noreferrer"},
       { name: "CYBERPATRIOT RULEBOOK", link: "https://www.uscyberpatriot.org/competition/rules-book", target: "_blank", rel: "noopener noreferrer"},
       { name: "LOGIN", link: "/login" }
     ],
@@ -28,7 +28,13 @@ export default function Navbar(props) {
     ],
     coach: [ 
       { name: "CYBERTEXAS", link: "https://cybertexas.org/", target: "_blank", rel: "noopener noreferrer"},
-      { name: "CYBERPATRIOTS", link: "https://www.uscyberpatriot.org/", target: "_blank", rel: "noopener noreferrer"},
+      { name: "CYBERPATRIOT", link: "https://www.uscyberpatriot.org/", target: "_blank", rel: "noopener noreferrer"},
+      { name: "CYBERPATRIOT RULEBOOK", link: "https://www.uscyberpatriot.org/competition/rules-book", target: "_blank", rel: "noopener noreferrer"},
+      { name: "LOG OUT"}
+    ],
+    admin: [ 
+      { name: "CYBERTEXAS", link: "https://cybertexas.org/", target: "_blank", rel: "noopener noreferrer"},
+      { name: "CYBERPATRIOT", link: "https://www.uscyberpatriot.org/", target: "_blank", rel: "noopener noreferrer"},
       { name: "CYBERPATRIOT RULEBOOK", link: "https://www.uscyberpatriot.org/competition/rules-book", target: "_blank", rel: "noopener noreferrer"},
       { name: "LOG OUT"}
     ],
