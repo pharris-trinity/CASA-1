@@ -155,7 +155,9 @@ function Quiz(props) {
             {/* Displays the quiz content unless the quiz has been submitted */}
             {results == false 
             ? <div className='quiz-main-box'>
-                <div className='quiz-title'>{props.quizData[0].name}</div>
+                {console.log("Quiz Props: : ", props)}
+                {/* <div className='quiz-title'>{props.quizData[0].name}</div> */}
+                <div className='quiz-title'>{props.quizData.name}</div>
                     <div className='quiz-content-box'>
                     {/* Makes a Question component for each question in the quiz, and passes necessary information to the question components */}
                     {props.quizData.map(quiz => quiz.questions.map(

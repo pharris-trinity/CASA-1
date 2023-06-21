@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import "./Admin.css";
+import Navbar from './../General/Navbar';
 
 import {loginChecker} from "../General/LoginCheck";
 import { useNavigate } from 'react-router-dom';
@@ -52,6 +53,8 @@ function Admin() {
     }
 
     return (
+        <>
+        <Navbar buttonSet="admin"/>
         <div class="adminPage">
             <div class="header">To Generate a new code, click these buttons and copy them. Once created, they are added to the database to be used by someone logging in.</div>
             <div class="admin">
@@ -66,6 +69,7 @@ function Admin() {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 
