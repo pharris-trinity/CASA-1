@@ -26,7 +26,12 @@ const Mentor = User.discriminator('Mentor', new mongoose.Schema({
         remote: {type: Boolean, required: true},
         zipcode: {type: Number, required: false},
         speciality: {type: String, required: false},
-        teams: {type:[Number], required: false}
+        teams: {type:[Number], required: false},
+        windowsRating: {type: Number, required : false},
+        windowsServerRating: {type: Number, required : false},
+        linuxRating: {type: Number, required : false},
+        networkingRating: {type: Number, required : false},
+        securityConseptsRating: {type: Number, required : false}
     }),
 );
 
