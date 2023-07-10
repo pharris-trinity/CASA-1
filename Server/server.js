@@ -395,6 +395,24 @@ app.post('/api/coach/create_coach', async(req, res) => {
     
   }); 
 
+
+  app.post('/api/mentor/self_assessment_update', async(req, res) => {
+    const { ment_id, windowsRating, windowsServerRating, linuxRating, networkingRating, securityConceptsRating } = req.body;
+    console.log("ment_id: ", ment_id)
+    const user = await User.findOne({"_id": ment_id})
+    console.log(user);
+    
+      user.windowsRating = windowsRating
+      user.windowsServerRating = windowsServerRating
+      user.linuxRating = linuxRating
+      user.networkingRating = networkingRating
+      user.securityConceptsRating = securityConceptsRating
+
+    user.save()
+    return res.status(200).send("Successfully registered team")
+    
+  }); 
+
   app.post('/api/mentor/get_mentors_teams', async(req, res) => {
     const { userID } = req.body;
 
