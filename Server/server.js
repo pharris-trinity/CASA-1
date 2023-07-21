@@ -225,6 +225,23 @@ app.post('/api/coach/create_coach', async(req, res) => {
       }
   })
 
+  app.post('/api/coach/get_all_mentors', async(req, res) => {
+    const { usertypeInput } = req.body;
+
+    const mentors = await Mentor.find(
+      {"usertype": usertypeInput} 
+    )
+    console.log("mentors: ",  mentors, "End of mentors", mentors.typeof)
+    if(!mentors) {
+      console.log("Empty Mentors List")
+      return res.status(401).send("No mentors found");
+  }
+    else {
+      console.log(mentors);
+      return res.send(mentors).status(201);
+    }
+  })
+
 //=================
 
 //Dev Functionality
@@ -397,7 +414,7 @@ app.post('/api/coach/create_coach', async(req, res) => {
 
 
   app.post('/api/mentor/self_assessment_update', async(req, res) => {
-    const { ment_id, windowsRating, windowsServerRating, linuxRating, networkingRating, securityConceptsRating } = req.body;
+    const { ment_id, windowsRating, windowsServerRating, linuxRating, networkingRating, securityConseptsRating } = req.body;
     console.log("ment_id: ", ment_id)
     const user = await User.findOne({"_id": ment_id})
     console.log(user);
@@ -406,10 +423,10 @@ app.post('/api/coach/create_coach', async(req, res) => {
       user.windowsServerRating = windowsServerRating
       user.linuxRating = linuxRating
       user.networkingRating = networkingRating
-      user.securityConceptsRating = securityConceptsRating
+      user.securityConseptsRating = securityConseptsRating
 
     user.save()
-    return res.status(200).send("Successfully registered team")
+    return res.status(200).send("Successfully updated self assessment")
     
   }); 
 

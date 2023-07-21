@@ -29,8 +29,14 @@ function SelfAssessment(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await mentorSelfAssessment(pwindowsRating, pwindowsServerRating, plinuxRating, pnetworkingRating, psecurityConseptsRating)
-        props.closeForm();
+        if(pwindowsRating > 0 && pwindowsRating < 6 && pwindowsServerRating > 0 && pwindowsServerRating < 6  && plinuxRating > 0 && plinuxRating < 6 && pnetworkingRating > 0 && pnetworkingRating < 6 && psecurityConseptsRating > 0 && psecurityConseptsRating < 6){
+            console.log("psecurityConseptsRating: ", psecurityConseptsRating)
+            await mentorSelfAssessment(pwindowsRating, pwindowsServerRating, plinuxRating, pnetworkingRating, psecurityConseptsRating)
+            props.closeForm();
+        }
+        else {
+            alert('Invalid number chosen.');
+        }
     }
 
 

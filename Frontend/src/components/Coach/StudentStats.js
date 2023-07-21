@@ -41,7 +41,7 @@ function StudentStats(props) {
 
             setCoach(jsonData)
         } catch (error) {
-            console.log(error)
+            console.log()
         }
     }
 
@@ -77,7 +77,7 @@ function StudentStats(props) {
             const jsonData = await response.json()
             setStudents(jsonData);
         } catch (error) {
-            console.log(error)
+            console.log()
         }
     }
 
