@@ -14,6 +14,7 @@ import { validateTeamID } from '../General/validateTeamID';
 import { formatTeamIDString } from '../General/formatTeamIDString';
 import { formatTeamIDNumber } from '../General/formatTeamIDNumber';
 import CreateQuiz from './CreateQuiz';
+import FindMentors from './FindMentors';
 
 /* 
 CoachHome is the coach's home page. It uses state variables to control which sub-component is being rendered.
@@ -124,12 +125,13 @@ return (
           }
           <ManageTeams enabled={enabledManageTeam}/>
           <StudentStats enabled={enabledStudentStats}/>
+          <FindMentors enabled={enabledFindMentors}/>
           <CoachProfile enabled={enabledCoachProfile}/>
           <CreateQuiz key={resetKey} reset={resetCreateQuiz} enabled={enabledCreateQuiz}/>
 
-          {enabledFindMentors 
+          {/* {enabledFindMentors 
           ? <h1>This page is planned to be implemented in the future.</h1>
-          : null}
+          : null}*/}
         </div>
     </div> 
   </>
