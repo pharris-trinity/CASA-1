@@ -44,12 +44,12 @@ return (
                     <SelfAssessment enabled={enableSelfAssessment} closeForm={closeSelfAssessment}/>
                     <button className="casa-button" type="button" onClick={showCreateQuiz}>Create Quiz</button>
                     <CreateQuiz key={resetKey} reset={resetCreateQuiz} enabled={enabledCreateQuiz}/>
-                        {/* <li className="takeAssess">
+                        <li className="takeAssess">
                             <a href="/mentorTable">Table</a>
-                        </li> */}
-                        {/* <li className="viewAssess">
+                        </li>
+                        <li className="viewAssess">
                             <a href="/login">Logout</a>
-                        </li> */}
+                        </li>
                     </ul>
                 </div>
 
