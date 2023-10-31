@@ -174,7 +174,7 @@ function Quiz(props) {
             </div>
             : <div>
                 {/* Displays the result screen and exit button if the quiz has been submitted */}
-                <QuizResults score={grade}/>
+                <QuizResults score={grade} postData={postData} />
                 <QuizNavigation showList = {(e) => props.showList(e)} />
             </div>}
         </div>
