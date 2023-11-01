@@ -174,6 +174,8 @@ function Quiz(props) {
             : <div>
                 {/* Displays the result screen and exit button if the quiz has been submitted */}
                 <QuizResults
+                quizName = {props.quizData[0].name}
+                questions={props.quizData[0].questions}
                 studentAnswers = {answersArray}
                 correctAnswers = {correctAnswersArray}
                 quiz = {makeTakenQuiz.postData}
