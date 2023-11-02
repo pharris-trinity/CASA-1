@@ -10,7 +10,9 @@ function QuizResults(props) {
     const questionArray = props.questions.map((question, index) => (
         <div key={index}>
             <br/>
-            <p>{question.description}</p>
+            <p>Question {index + 1}: {question.description}</p>
+            <p>Your Answer:      {question.answers[props.studentAnswers[index]]}</p>
+            <p>Correct Answer:      {question.answers[props.correctAnswers[index]]}</p>
             <br />
       </div>
       ));
@@ -22,8 +24,6 @@ function QuizResults(props) {
             <p>You got {props.score}% of the test correct.</p>
             <p>displaying a question:</p>
             {questionArray}
-            <p>Your answers were: {props.studentAnswers}</p>
-            <p>The correct answers were: {props.correctAnswers}</p>
         </div>
     );
 }
