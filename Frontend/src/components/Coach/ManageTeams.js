@@ -187,6 +187,60 @@ function ManageTeams(props) {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+	// button to remove a student from their team 
+	const removeStudentFromTeam = async (studentID) => {
+	  if (studentID && currentStudentID) {
+	    try {
+	      // Send a request to the server to remove the student from the team
+	      const requestOptions = {
+	        method: 'POST',
+	        headers: { 'Content-Type': 'application/json' },
+	        body: JSON.stringify({ studentID: studentID, teamID: -1 }) // Set teamID to -1 to remove from the team
+	      };
+	
+	      const response = await fetch('/api/team/update_student_team', requestOptions);
+	      const jsonData = await response.json();
+	
+	      if (jsonData.success) {
+	        // Update the local state to reflect the removal from the team
+	        getStudents(coachUserID); // Reload the students from the server
+	        setUpdateTeamID("N/A"); // Set the selected student's team to "N/A"
+	      } else {
+	        console.error('Failed to remove student from the team.');
+	      }
+	    } catch (error) {
+	      console.error('Error removing student from the team:', error);
+	    }
+	  }
+	};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //gets coachID from local storage on page load
     useEffect(() => {
         setCoachUserID(localStorage.getItem("_id"));
