@@ -156,7 +156,6 @@ function Quiz(props) {
             {results == false 
             ? <div className='quiz-main-box'>
                 {console.log("Quiz Props: : ", props)}
-                {/* <div className='quiz-title'>{props.quizData[0].name}</div> */}
                 <div className='quiz-title'>{props.quizData.name}</div>
                     <div className='quiz-content-box'>
                     {/* Makes a Question component for each question in the quiz, and passes necessary information to the question components */}
@@ -174,7 +173,13 @@ function Quiz(props) {
             </div>
             : <div>
                 {/* Displays the result screen and exit button if the quiz has been submitted */}
-                <QuizResults score={grade}/>
+                <QuizResults
+                quizName = {props.quizData[0].name}
+                questions={props.quizData[0].questions}
+                studentAnswers = {answersArray}
+                correctAnswers = {correctAnswersArray}
+                quiz = {makeTakenQuiz.postData}
+                score={grade} />
                 <QuizNavigation showList = {(e) => props.showList(e)} />
             </div>}
         </div>

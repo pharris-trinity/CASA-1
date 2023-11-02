@@ -25,7 +25,7 @@ function CreateQuiz(props){
     const createQuiz = async () => {
         const testQuestion = {
             description: "description",
-            answers: ["0","1","2","3"],
+            answers: ["1","2","3","4"],
             correctAnswer: 0,
             value : 1
         }
