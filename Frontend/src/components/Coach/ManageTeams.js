@@ -376,6 +376,13 @@ function ManageTeams(props) {
                     <table className="right">
                             <thead>
                                 <tr>
+                                    <th className="th-manage-teams" >
+                                        Team Name
+                                    </th>
+                                    <th className="th-manage-teams" onClick = {sortByTeamID}>
+                                    <span style={{marginRight: 10}}>Team ID</span>
+                                        {sorted.sorted == "teamID" ? renderArrow() : renderConst()}
+                                    </th>
                                     <th className="th-manage-teams" onClick = {sortByName}>
                                     <span style={{marginRight: 10}}>Student Name</span>
                                         {sorted.sorted == "name" ? renderArrow() : renderConst()}
@@ -383,31 +390,24 @@ function ManageTeams(props) {
                                     <th className="th-manage-teams" onClick = {sortByEmail}>
                                     <span style={{marginRight: 10}}>Email</span>
                                         {sorted.sorted == "email" ? renderArrow() : renderConst()}
-
                                     </th>
                                     <th className="th-manage-teams" onClick={sortByGrade}>
                                         <span style={{marginRight: 10}}>Grade Level</span>
                                         {sorted.sorted == "grade" ? renderArrow() : renderConst()}
                                     </th>
-                                    <th className="th-manage-teams" >
-                                        Team Name
-                                    </th>
-                                    <th className="th-manage-teams" onClick = {sortByTeamID}>
-                                    <span style={{marginRight: 10}}>Team ID</span>
-                                        {sorted.sorted == "teamID" ? renderArrow() : renderConst()}
-
-                                    </th>
+                                    
                                 </tr>
                             </thead>
 
                             <tbody>
                                 {students && students.map((student, index) => (
                                 <tr key={student._id} onClick={() => (fillDisplayInfo(student))}>
+                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{(teams && student.team != -1) ? getTeamName(student.team) : "N/A"}</td>
+                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.team != -1 ? formatTeamIDString(student.team) : "N/A"}</td>
                                     <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.displayname}</td>
                                     <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.email}</td>
                                     <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
-                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{(teams && student.team != -1) ? getTeamName(student.team) : "N/A"}</td>
-                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.team != -1 ? formatTeamIDString(student.team) : "N/A"}</td>
+                                    
                                 </tr>
                                 ))}
                             </tbody>
