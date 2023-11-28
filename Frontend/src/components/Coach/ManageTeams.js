@@ -189,6 +189,57 @@ function ManageTeams(props) {
 
 
 
+    // Function to transfer a student from one team to another
+    const transferStudentToTeam = async (studentID, newTeamID) => {
+      if (studentID && currentStudentID) {
+        try {
+          // Send a request to the server to update the student's team ID
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ studentID: studentID, teamID: newTeamID })
+          };
+    
+          const response = await fetch('/api/team/update_student_team', requestOptions);
+          const jsonData = await response.json();
+    
+          if (jsonData.success) {
+            // Update the local state to reflect the transfer to the new team
+            getStudents(coachUserID);
+            setUpdateTeamID(newTeamID); // Set the selected student's new team ID
+          } else {
+            console.error('Failed to transfer student to the new team.');
+          }
+    
+        } catch (error) {
+          console.error('Error transferring student to the new team:', error);
+        }
+      }
+    };
+    
+    // Component to transfer a student to a new team
+    const TransferStudentForm = ({ studentID }) => {
+      const [newTeamID, setNewTeamID] = useState(""); // State for the new team ID
+    
+      const handleTransferClick = () => {
+        transferStudentToTeam(studentID, newTeamID);
+        setNewTeamID(""); // Clear the input after transfer
+      };
+    
+      return (
+        <div>
+          <input
+            type="text"
+            placeholder="Enter Team ID"
+            value={newTeamID}
+            onChange={(e) => setNewTeamID(e.target.value)}
+          />
+          <button className="casa-button" onClick={handleTransferClick}>
+            Transfer to Team
+          </button>
+        </div>
+      );
+    };
 
 
 
