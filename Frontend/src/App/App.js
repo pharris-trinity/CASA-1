@@ -1,6 +1,6 @@
 import './App.css';
 
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Switch } from "react-router-dom";
 import * as React from "react";
 import {useEffect} from 'react';
 
@@ -31,6 +31,9 @@ import CoachProfile from '../components/Coach/CoachProfile';
 
 import Admin from '../components/Admin/Admin';
 
+import Sidebar from '../Resources/SideBar1/Sidebar'
+import Sidebar_ from '../Resources/SideBar2/SideBar_'
+
 
 //import Profile from
 //Routes, Route, Link
@@ -58,6 +61,16 @@ function App() {
 
   return (
     <div className="App">
+        {/* <div className="app-container">
+          <Sidebar />
+          <Routes>
+            <Route path="coachhome" element={<CoachHome/>} />
+            <Route path="profile" element={<CoachProfile/>} />
+            <Route path="ViewTeams" element={<ViewTeams/>} />
+            <Route path="coachtable" element={<TableMentor/>} />
+          </Routes>
+        </div> */}
+
       <Routes>
         {/*General Site Routes*/}
           <Route path="*" element={<LandingMainPage/>} />
@@ -66,6 +79,8 @@ function App() {
           <Route path="about" element={<About/>} />
           <Route path="createuser" element={<CreateUser/>} />
           <Route path="createCoach" element={<CreateCoach/>}/>
+          <Route path="SideBar" element={<Sidebar/>}/>
+          <Route path="SideBar_" element={<Sidebar_/>}/>
 
         {/*Student Routes*/}
           <Route path="stud/main" element={<StudMainPage/>} />
