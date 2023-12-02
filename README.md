@@ -48,10 +48,10 @@
 ### Env File Setup
 An environment file (.env) is useful for setting up credientials and secrets without having to push them to the remote where they could be seen by others. This repository is configured to ignore .env files.
 1. Create file within the root directory named `.env`
-2. Inside this file, there are two required fields, the username and password. This information will be given to you by the Database administrator
-3. Firstly, create the `USER_NAME` field. (`USER_NAME=<username>`)
-4. Secondly, on a new line, create the `USER_PASSWORD` field. (`USER_PASSWORD=<password>`)
-5. Finally, add optional vars using the syntax `VAR_NAME=<var_value>`
+2. Inside this file, there are two required fields, the username and password. This information will be given to you by the Database administrator. (NOTE if you are not given a username and password, or you were given the MongoDB login, create an admin login in the data base and use the Username and Password from that in the .env file)
+4. Firstly, create the `USER_NAME` field. (`USER_NAME=<username>`)
+5. Secondly, on a new line, create the `USER_PASSWORD` field. (`USER_PASSWORD=<password>`)
+6. Finally, add optional vars using the syntax `VAR_NAME=<var_value>`
     1. `DATABASE`: The database the server will use. Default is `test`
     2. `PORT`: The port the server will run on. Default is `3001`
 
