@@ -8,7 +8,7 @@
   height: 100vh;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   /*background-color: var(--primary-blue);*/
-  background-color: white;
+  background-color: #8b8b8b;
 }
 
 input[type="text"],
@@ -41,4 +41,8 @@ input[type="password"] {
   background-color: var(--primary-dark-blue);
   color: #ffffff;
   transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.app-container {
+  display: flex;
 }
