@@ -1,3 +1,11 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    margin-left: 125px;
+    min-height: 100vh;
+}
+
 .unselected-tab {
     width: 18%;
     height: 6vh;
