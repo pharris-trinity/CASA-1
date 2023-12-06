@@ -15,7 +15,7 @@ function LogoutButton(props) {
   }
 
   return (
-    <button className="casa-button" onClick={logout}>Logout</button>
+    <button className="nav-button" onClick={logout}>Logout</button>
   );
 }
 

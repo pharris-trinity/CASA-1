@@ -60,7 +60,7 @@ export default function Navbar(props) {
           
           {buttons && buttons.map((button) => (
           <a href={button.link} key={button.name} target={button.target} rel={button.rel}>
-            {button.name === "LOG OUT" ? <LogoutButton/> : <button className="casa-button">{button.name}</button>}
+            {button.name === "LOG OUT" ? <LogoutButton/> : <button className="nav-button">{button.name}</button>}
           </a>
           ))}
           
