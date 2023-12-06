@@ -1,25 +1,36 @@
 .navbar {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: left;
-  height: 50px;
+  width: 125px;
   padding: 0 20px;
   background-color: rgb(189, 189, 189);
   position: fixed;
-  width: 100%;
+  left: 0;
+  height: 100%;
   z-index: 100;
 }
 
 .navbar__logo {
-  width: 200px;
-  height: 41px;
+  width: 100px;
+  height: 20px;
   margin-right: 5px;
+  margin-left: 0px;
 }
 
 .navbar__title {
-  font-size: 45px;
+  font-size: 20px;
   font-weight: bold;
   color: var(--primary-red);
   padding-left: 15px;
   margin-right: auto
+}
+
+.casa-button {
+  width: 100px;
+  height: 30px;
+  margin-left: -5px;
+  padding: 0;
+
 }

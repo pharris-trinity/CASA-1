@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import './SideBar_.css'; // Import the styles
-import logo from "./../../Resources/logo.png"
-import LogoutButton from "./LogoutButton";
+// import logo from "./../../Resources/logo.png"
+// import LogoutButton from "./LogoutButton";
 // import profileImg from "../../Resources/profileimg.png"
 import profile_img from '../pngs/download.jpeg'
 
