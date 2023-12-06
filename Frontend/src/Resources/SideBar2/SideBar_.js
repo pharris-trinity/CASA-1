@@ -6,49 +6,7 @@ import LogoutButton from "./LogoutButton";
 // import profileImg from "../../Resources/profileimg.png"
 import profile_img from '../pngs/download.jpeg'
 
-const Sidebar = (props) => {
-    
-    const buttonSetData = {
-        landing: [
-          { name: "CYBERTEXAS", link: "https://cybertexas.org/", target: "_blank", rel: "noopener noreferrer"},
-          { name: "CYBERPATRIOT", link: "https://www.uscyberpatriot.org/", target: "_blank", rel: "noopener noreferrer"},
-          { name: "CYBERPATRIOT RULEBOOK", link: "https://www.uscyberpatriot.org/competition/rules-book", target: "_blank", rel: "noopener noreferrer"},
-          { name: "LOGIN", link: "/login" }
-        ],
-        login: [
-          { name: "LOGIN", link: "/login" }
-        ],
-        logout: [
-          { name: "LOG OUT"}
-        ],
-        student: [ 
-          { name: "LOG OUT" }
-        ],
-        coach: [ 
-          { name: "CYBERTEXAS", link: "https://cybertexas.org/", target: "_blank", rel: "noopener noreferrer"},
-          { name: "CYBERPATRIOT", link: "https://www.uscyberpatriot.org/", target: "_blank", rel: "noopener noreferrer"},
-          { name: "CYBERPATRIOT RULEBOOK", link: "https://www.uscyberpatriot.org/competition/rules-book", target: "_blank", rel: "noopener noreferrer"},
-          { name: "LOG OUT"}
-        ],
-        mentor: [ 
-          { name: "CYBERTEXAS", link: "https://cybertexas.org/", target: "_blank", rel: "noopener noreferrer"},
-          { name: "CYBERPATRIOT", link: "https://www.uscyberpatriot.org/", target: "_blank", rel: "noopener noreferrer"},
-          { name: "CYBERPATRIOT RULEBOOK", link: "https://www.uscyberpatriot.org/competition/rules-book", target: "_blank", rel: "noopener noreferrer"},
-          { name: "LOG OUT"}
-        ],
-        admin: [ 
-          { name: "CYBERTEXAS", link: "https://cybertexas.org/", target: "_blank", rel: "noopener noreferrer"},
-          { name: "CYBERPATRIOT", link: "https://www.uscyberpatriot.org/", target: "_blank", rel: "noopener noreferrer"},
-          { name: "CYBERPATRIOT RULEBOOK", link: "https://www.uscyberpatriot.org/competition/rules-book", target: "_blank", rel: "noopener noreferrer"},
-          { name: "LOG OUT"}
-        ],
-        takeQuiz: [ 
-          { name: "STUDENT HOME PAGE", link: "./../stud/main"},
-          { name: "LOG OUT"}
-        ]
-      };
-
-      const buttons = buttonSetData[props.buttonSet];
+const Sidebar = () => {
 
     useEffect(() => {
         // Dynamically add the stylesheet link to the document head
