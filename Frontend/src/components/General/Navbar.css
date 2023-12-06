@@ -5,7 +5,7 @@
   align-items: left;
   width: 125px;
   padding: 0 20px;
-  background-color: rgb(189, 189, 189);
+  background-color: rgb(97, 97, 97);
   position: fixed;
   left: 0;
   height: 100%;
@@ -16,8 +16,7 @@
 .navbar__logo {
   width: 100px;
   height: 20px;
-  margin-right: 5px;
-  margin-left: 0px;
+  margin-left: -5px;
 }
 
 .navbar__title {
