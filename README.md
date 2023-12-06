@@ -74,6 +74,7 @@ An environment file (.env) is useful for setting up credientials and secrets wit
     * Key files: All Frontend files requiring a full refresh instead of an overlay. (Login.js is the beginning)
 3. Implement Semi-automatic pulling of data from National Database to enable Cybertexas to setup teams for new seasons easier
     * Key files: server.js, Admin.js
+4. Mentor Home Table should moved to the Admin Page. It should not be inside the Mentor Page
 
 <br>
 
