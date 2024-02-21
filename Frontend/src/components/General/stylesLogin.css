@@ -1,25 +1,82 @@
-/*This document helps create the stylistic display and images for the website*/
-  
-  /*Style of the password and usernames*/
-  input[type="text"],
-  input[type="password"] {
-    height: 25px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-  }
+/* General Styles */
 
-  /*The Alignment of Pictures and Inserts*/
-  .center{
-    text-align: center;
-    display: block;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    width: 100%;
-  }
-  
-  
-  #logo {
-    float: left;
-    width: 300px;
-    padding: 10px;
-  }
+/* Center alignment for elements */
+.center {
+  text-align: center;
+}
+
+/* Button Styles */
+
+/* Style for generic buttons */
+.casa-button {
+  background-color: red; /* Red background color for buttons */
+  border: none;
+  color: black; /* Changed text color to black for better contrast */
+  padding: 12px 24px; /* Increased padding for buttons */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 8px 0; /* Increased margin for buttons */
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s; /* Transition effect for background color */
+}
+
+/* Hover effect for buttons */
+.casa-button:hover {
+  background-color: #b30000; /* Darker red on hover */
+}
+
+/* Form Styles */
+
+/* Style for form container */
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0; /* Changed background color to gray */
+}
+
+/* Style for form inner container */
+.form-inner {
+  width: 400px; /* Adjusted width to make the form wider */
+  padding: 20px; /* Add padding for spacing */
+  background-color: #ffffff; /* White background color */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+/* Style for form input fields */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group input {
+  width: 100%; /* Take up entire width of parent container */
+  height: 45px; /* Increased height for input fields */
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ccc; /* Light border color */
+  font-size: 16px;
+  transition: border-color 0.3s; /* Transition effect for border color */
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #007bff; /* Change border color on focus */
+}
+
+/* Style for submit button */
+.form-submit-button {
+  width: 100%; /* Take up entire width of parent container */
+}
+
+/* Error message style */
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
