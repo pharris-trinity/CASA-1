@@ -171,6 +171,7 @@ function Login() {
                 <input type="submit" value="LOGIN"/>
                 <button className="casa-button" onClick={accountCreation}>Create Student Account</button>
                 <button className="casa-button" onClick={coachAccountCreation}>Create Coach Account</button>
+                <button className="casa-button" onClick={mentorAccountCreation}>Create Mentor Account</button>
             </div>
         </form>
     </div>

@@ -99,7 +99,7 @@ function SelfAssessment(props) {
                                 required                                
                             />
 
-                            <button className="casa-button" type="submit">Update Self Assessment Information</button>
+                            <button className="casa-button" type="submit" onClick={handleSubmit}>Update Self Assessment Information</button>
                             <button className="casa-button" type="button" onClick={props.closeForm}>Close</button>
                         </div>
                     </form>
