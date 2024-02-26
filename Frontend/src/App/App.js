@@ -11,6 +11,7 @@ import LandingMainPage from "../components/General/LandingMainPage";
 import CreateUser from "../components/General/CreateUser";
 import NotFound from "../components/General/NotFound";
 import CreateCoach from '../components/General/createCoach';
+import CreateMentor from '../components/General/createMentor';
 
 import StudMainPage from '../components/Student/StudMainPage';
 import StudProfilePage from '../components/Student/StudProfilePage';
@@ -79,6 +80,7 @@ function App() {
           <Route path="about" element={<About/>} />
           <Route path="createuser" element={<CreateUser/>} />
           <Route path="createCoach" element={<CreateCoach/>}/>
+          <Route path="createMentor" element={<CreateMentor/>}/>
           <Route path="SideBar" element={<Sidebar/>}/>
           <Route path="SideBar_" element={<Sidebar_/>}/>
 
