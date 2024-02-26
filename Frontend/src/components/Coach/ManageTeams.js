@@ -328,6 +328,60 @@ function ManageTeams(props) {
         const teamsWithoutStudents = teams.filter(team => !groupedStudents[team.national_id]);
     
         // Render tables for teams with students
+        function toggleRowColor(studentId) {
+            // Get all table rows
+            var rows = document.querySelectorAll('.right tr');
+            
+            // Loop through each row
+            rows.forEach(row => {
+                // Remove the 'selected' class from all rows
+                row.classList.remove('selected');
+                
+                // Add the 'selected' class to the row with the matching student ID
+                if (row.dataset.studentId === studentId) {
+                    row.classList.add('selected');
+                }
+            });
+        }
+    const tablesWithStudents = Object.entries(groupedStudents).map(([teamID, teamStudents]) => (
+        
+        <div key={teamID} className="right">
+            <h3>{getTeamName(teamID)} ({formatTeamIDString(teamID)})</h3>
+            <table>
+                {/* Table headers */}
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Email</th>
+                        <th>Grade Level</th>
+                        <th>Alternate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {teamStudents.map(student => (
+                    <tr 
+                        key={student._id} 
+                        onClick={() => fillDisplayInfo(student)} 
+                        style={{"backgroundColor": student._id === currentStudentID ? '#b33a3a' : 'white', "color": student._id === currentStudentID ? 'white' : 'black'}}
+                    >
+                            
+                            <td>{student.displayname}</td>
+                            <td>{student.email}</td>
+                            <td>{student.gradelevel !== undefined ? student.gradelevel : "N/A"}</td>
+                            <td>
+                                <input
+                                    type="checkbox"
+                                    onChange={(e) => handleAlternateChange(student._id, e.target.checked)}
+                                    checked={student.alternate}
+                                />
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    ));
+
         const tablesWithStudents = Object.entries(groupedStudents).map(([teamID, teamStudents]) => (
             <div key={teamID} className="right">
                 <h3>{getTeamName(teamStudents)} ({formatTeamIDString(teamID)})</h3>

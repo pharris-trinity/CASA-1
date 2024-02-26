@@ -77,8 +77,29 @@
     float:none;
 }
 
+.row-container {
+    margin-top: 20px; /* Adjust as needed */
+}
+
+.row {
+    padding: 10px;
+    background-color: white; /* Set default background color to white */
+    cursor: pointer;
+}
+
 .selected-row {
-    color: #b33a3a !important; /* Adjust the background color as needed */
+    background-color: #b33a3a; /* Adjust the background color for selected row */
+    color: white; /* Adjust the text color for selected row */
+}
+/* Set default background color to white */
+.right tr {
+    background-color: white;
+}
+
+/* Change background color to red when selected */
+.right tr.selected {
+    background-color: red;
+    color: #b33a3a; /* Adjust the background color as needed */
 }
 
 tr:hover {
