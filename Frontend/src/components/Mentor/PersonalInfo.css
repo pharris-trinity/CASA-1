@@ -1,0 +1,27 @@
+/* The popup form - hidden by default */
+.form-popup {
+    display: block;
+    position: fixed;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+    background-color: var(--primary-dark-blue);
+    color: white;
+  }
+  
+  /* Add styles to the form container */
+  .self-assessment-container {
+    padding: 10px;
+  }
+  
+    /* Full-width input fields */
+    .self-assessment-container input[type=Number], .make-team-container input[type=number] {
+      width: 100%;
+      padding: 15px;
+      margin: 5px 0 22px 0;
+      border: none;
+      background: #f1f1f1;
+    }
