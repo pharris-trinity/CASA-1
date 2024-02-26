@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./stylesMentor.css"
 import Navbar from './../General/Navbar';
 import SelfAssessment from './SelfAssessment.js';
+import PersonalInfo from "./PersonalInfo.js";
 import CreateQuiz from './../Coach/CreateQuiz.js';
 
 
 const MentorHome = () => {
     const[enableSelfAssessment, setEnableSelfAssessment] = useState(false);
+    const[enableInfoUpdate, setInfoUpdate] = useState(false);
     const [enabledCreateQuiz, setEnabledCreateQuiz] = useState(false);
     const [resetKey, setResetKey] = useState("key");
 
@@ -15,9 +17,17 @@ const MentorHome = () => {
         setEnableSelfAssessment(true);
     }
 
+    const InfoUpdateButton = () => {
+        setInfoUpdate(true);
+    }
+
     //closes MakeTeam component and updates coach info from DB
     const closeSelfAssessment = async () => {
         setEnableSelfAssessment(false);
+    }
+
+    const closeInfoUpdate = async () => {
+        setInfoUpdate(false);
     }
 
     function showCreateQuiz() {
@@ -42,7 +52,8 @@ return (
                     <ul>
                     <button className="casa-button" type="button" onClick={SelfAssessmentButton}>Mentor Self Assessment</button>
                     <SelfAssessment enabled={enableSelfAssessment} closeForm={closeSelfAssessment}/>
-                    
+                    <button className="casa-button" type="button" onClick={InfoUpdateButton}>Update Info</button>
+                    <PersonalInfo enabled={enableInfoUpdate} closeForm={closeInfoUpdate}/>
                     </ul>
                 </div>
 
