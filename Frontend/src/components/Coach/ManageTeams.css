@@ -99,4 +99,10 @@
 /* Change background color to red when selected */
 .right tr.selected {
     background-color: red;
+    color: #b33a3a; /* Adjust the background color as needed */
 }
+
+tr:hover {
+    cursor: pointer;
+}
+
