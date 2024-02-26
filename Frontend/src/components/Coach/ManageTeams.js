@@ -341,7 +341,7 @@ function ManageTeams(props) {
         // Render tables for teams with students
         const tablesWithStudents = Object.entries(groupedStudents).map(([teamID, teamStudents]) => (
             <div key={teamID} className="right">
-                <h3>{getTeamName(teamStudents)} ({formatTeamIDString(teamID)} )</h3>
+                <h3>{getTeamName(teamID)} ({formatTeamIDString(teamID)})</h3>
                 <table style={{ color: '#fff'}}>
                     {/* Table headers */}
                     <thead>
@@ -402,7 +402,7 @@ function ManageTeams(props) {
     if(props.enabled == true) {
         return (
             <div>
-                <div className="left">
+                <div className="left _form-group">
                 <form className="form-container" onSubmit={handleSubmit}>
                         {/* React Form Inputs */}
                         <div>
