@@ -1,82 +1,122 @@
-/* General Styles */
 
-/* Center alignment for elements */
-.center {
-  text-align: center;
+body {
+  background-color: #f0f0f0; /* Light gray background */
 }
 
-/* Button Styles */
-
-/* Style for generic buttons */
-.casa-button {
-  background-color: red; /* Red background color for buttons */
-  border: none;
-  color: black; /* Changed text color to black for better contrast */
-  padding: 12px 24px; /* Increased padding for buttons */
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 8px 0; /* Increased margin for buttons */
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s; /* Transition effect for background color */
-}
-
-/* Hover effect for buttons */
-.casa-button:hover {
-  background-color: #b30000; /* Darker red on hover */
-}
-
-/* Form Styles */
-
-/* Style for form container */
+/* Container for the login form */
 .form {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #f0f0f0; /* Changed background color to gray */
+  min-height: 100vh; /* Ensure the form container covers the entire viewport height */
+
 }
 
-/* Style for form inner container */
+/* Inner container for the form */
 .form-inner {
-  width: 400px; /* Adjusted width to make the form wider */
-  padding: 20px; /* Add padding for spacing */
-  background-color: #ffffff; /* White background color */
+  width: 400px;
+  padding: 20px;
+  background-color: #ffffff; /* White background */
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Style for form input fields */
-.form-group {
+
+/* Header for the login section */
+.form-header {
+  text-align: center;
   margin-bottom: 20px;
 }
 
+/* Form group for each input field */
+.form-group {
+  margin-bottom: 20px;
+  display: flex; /* Use flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  width: 100%; /* Set width to match buttons */
+}
+
+
+/* Input fields */
 .form-group input {
-  width: 100%; /* Take up entire width of parent container */
-  height: 45px; /* Increased height for input fields */
+  width: 100%;
+  height: 45px;
   padding: 10px;
   box-sizing: border-box;
   border-radius: 5px;
-  border: 1px solid #ccc; /* Light border color */
+  border: 1px solid #ccc;
   font-size: 16px;
-  transition: border-color 0.3s; /* Transition effect for border color */
+  transition: border-color 0.3s;
 }
 
-.form-group input:focus {
-  outline: none;
-  border-color: #007bff; /* Change border color on focus */
-}
 
-/* Style for submit button */
-.form-submit-button {
-  width: 100%; /* Take up entire width of parent container */
-}
 
-/* Error message style */
+/* Error messages */
 .error {
   color: red;
   font-size: 14px;
   margin-top: 5px;
+}
+
+/* Login button */
+.login-button {
+  width: 100%;
+  background-color: #007bff; /* Blue background */
+  border: none;
+  color: white;
+  padding: 12px 0; /* Adjusted padding */
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 0 auto;
+}
+
+.submit-button {
+  display: block; /* Ensures it takes up full width */
+  margin: 0 auto; /* Centers horizontally */
+  padding: 12px 0; /* Adjusted padding */
+  border: none;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+
+.login-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+
+.button-container {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+}
+
+.casa-button,
+.casa-button2 {
+  background-color: red; /* Red background */
+  border: none;
+  color: white;
+  padding: 6px 10px; /* Adjusted padding to make them smaller */
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 14px;
+}
+
+
+.create-account-button:hover {
+  background-color: #b30000; /* Darker red on hover */
 }

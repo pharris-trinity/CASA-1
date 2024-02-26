@@ -132,14 +132,21 @@ function Login() {
                     <input type="password" placeholder="Password" name="password" id="password" onChange={e => setDetails({...details, password: e.target.value})} value={details.password}/>
                     {renderErrorMessage("pass")}
                 </div>
-                <input type="submit" value="LOGIN"/>
-                <div className="button-container">
-                  <button className="casa-button" onClick={accountCreation}>Create Student Account</button>
-                  <button className="casa-button" onClick={coachAccountCreation}>Create Coach Account</button>
+                <div className="submit-button">
+                    <input type="submit" value="LOGIN"/>
                 </div>
-            </div>
+                <div className="button-container">
+                <button className="casa-button" onClick={accountCreation}>Create Student Account</button>
+                <div>
+                    <button className="casa-button" onClick={coachAccountCreation}>CREATE COACH ACCOUNT          </button>
+                    </div>
+                </div> 
+    
+                
+            </div> 
         </form>
     </div>
+
     </>
 
   );
