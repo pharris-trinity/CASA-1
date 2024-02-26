@@ -42,14 +42,7 @@ return (
                     <ul>
                     <button className="casa-button" type="button" onClick={SelfAssessmentButton}>Mentor Self Assessment</button>
                     <SelfAssessment enabled={enableSelfAssessment} closeForm={closeSelfAssessment}/>
-                    <button className="casa-button" type="button" onClick={showCreateQuiz}>Create Quiz</button>
-                    <CreateQuiz key={resetKey} reset={resetCreateQuiz} enabled={enabledCreateQuiz}/>
-                        <li className="takeAssess">
-                            <a href="/mentorTable">Table</a>
-                        </li>
-                        <li className="viewAssess">
-                            <a href="/login">Logout</a>
-                        </li>
+                    
                     </ul>
                 </div>
 
@@ -62,3 +55,14 @@ return (
     );
 };
 export default MentorHome;
+
+/*
+<button className="casa-button" type="button" onClick={showCreateQuiz}>Create Quiz</button>
+                    <CreateQuiz key={resetKey} reset={resetCreateQuiz} enabled={enabledCreateQuiz}/>
+                        <li className="takeAssess">
+                            <a href="/mentorTable">Table</a>
+                        </li>
+                        <li className="viewAssess">
+                            <a href="/login">Logout</a>
+                        </li>
+                        */
