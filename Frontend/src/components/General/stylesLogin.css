@@ -99,7 +99,6 @@ body {
   flex-direction: column; /* Stack buttons vertically */
 }
 
-.casa-button,
 .casa-button2 {
   background-color: red; /* Red background */
   border: none;

@@ -37,6 +37,22 @@ input[type="password"] {
   margin-left: 10px;
 }
 
+.casa-button2 {
+  background-color: red; /* Red background */
+  border: none;
+  color: white;
+  padding: 6px 10px; /* Adjusted padding to make them smaller */
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 14px;
+}
+
 .casa-button:hover {
   background-color: var(--primary-dark-blue);
   color: #ffffff;

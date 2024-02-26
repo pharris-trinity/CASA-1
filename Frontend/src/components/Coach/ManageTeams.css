@@ -17,6 +17,14 @@
     padding: 1%;
 }
 
+.form-group {
+    margin-bottom: 20px;
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    width: 100%; /* Set width to match buttons */
+  }
+
 .form-container {
     padding: 10px;
     background-color: white;
