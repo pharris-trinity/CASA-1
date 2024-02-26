@@ -95,7 +95,7 @@ function ManageTeams(props) {
     const getTeamName = (teamID) => {
         var teamName = "";
         teams.map(team => {
-            if(team.national_id === teamID) {
+            if(team.national_id == teamID) {
                 teamName = team.name;
             }
         })
@@ -150,7 +150,7 @@ function ManageTeams(props) {
         setUpdateDisplayName(student.displayname);
         setDisplayEmail(student.email);
         student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("N/A");
-        (student.team !== -1) ? setUpdateTeamID(formatTeamIDString(student.team)): setUpdateTeamID("N/A");
+        (student.team != -1) ? setUpdateTeamID(formatTeamIDString(student.team)): setUpdateTeamID("N/A");
     }
 
     //opens AddStudents component
@@ -177,9 +177,9 @@ function ManageTeams(props) {
 
     //button to remove the current selected student from the coach's roster
     const deleteStudentButton = async () => {
-        if(currentStudentID !== undefined) {
+        if(currentStudentID != undefined) {
             const confirmText = "Are you sure you want to delete the current selected student? \n(This does not delete their account, but removes them from your roster)";
-            if(window.confirm(confirmText) === true) {
+            if(window.confirm(confirmText) == true) {
                 await removeStudent(currentStudentID);
                 getStudents(coachUserID);
             } else {
@@ -303,7 +303,7 @@ function ManageTeams(props) {
         const matchedUsers = students.filter((user) => {
             return user.displayname.toLowerCase().includes(e.target.value.toLowerCase());
         });
-        if (e.target.value.length === 0) {
+        if (e.target.value.length == 0) {
             setStudents(allUsersCopy);
             setSearchPhrase(e.target.value);
         }
@@ -319,6 +319,17 @@ function ManageTeams(props) {
             // Set the data being dragged (in this case, the student's ID)
             e.dataTransfer.setData("studentId", student._id);
         };
+
+        const getTeamName = (teamID) => {
+            var teamName = "";
+            teams.map(team => {
+                if(team.national_id == teamID) {
+                    teamName = team.name;
+                }
+            })
+            return teamName;
+        }
+
         const teamsWithStudents = Object.entries(groupedStudents).map(([teamID, teamStudents]) => ({
             teamID,
             teamName: getTeamName(teamID),
@@ -330,7 +341,7 @@ function ManageTeams(props) {
         // Render tables for teams with students
         const tablesWithStudents = Object.entries(groupedStudents).map(([teamID, teamStudents]) => (
             <div key={teamID} className="right">
-                <h3>{getTeamName(teamStudents)} ({formatTeamIDString(teamID)})</h3>
+                <h3>{getTeamName(teamID)} ({formatTeamIDString(teamID)} )</h3>
                 <table style={{ color: '#fff'}}>
                     {/* Table headers */}
                     <thead>
@@ -348,12 +359,12 @@ function ManageTeams(props) {
                                 draggable="true"
                                 onDragStart={(e) => handleDragStart(e, student)}
                                 onClick={() => fillDisplayInfo(student)}
-                                className={student._id === currentStudentID ? "selected-row" : ""}
+                                className={student._id == currentStudentID ? "selected-row" : ""}
                             >
-                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.displayname}</td>
-                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.email}</td>
-                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.gradelevel !== undefined ? student.gradelevel : "N/A"}</td>
-                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>
+                                <td className={student._id == currentStudentID ? "td-selected-student" : 'td-student'}>{student.displayname}</td>
+                                <td className={student._id == currentStudentID ? "td-selected-student" : 'td-student'}>{student.email}</td>
+                                <td className={student._id == currentStudentID ? "td-selected-student" : 'td-student'}>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
+                                <td className={student._id == currentStudentID ? "td-selected-student" : 'td-student'}>
                                     <input
                                         type="checkbox"
                                         onChange={(e) => handleAlternateChange(student._id, e.target.checked)}
@@ -388,7 +399,7 @@ function ManageTeams(props) {
     
     
 
-    if(props.enabled === true) {
+    if(props.enabled == true) {
         return (
             <div>
                 <div className="left form-group">
@@ -481,7 +492,7 @@ function ManageTeams(props) {
     const moveStudentToTeam = (studentId, teamId) => {
         // Find the student in the students array
         const updatedStudents = students.map(student => {
-            if (student._id === studentId) {
+            if (student._id == studentId) {
                 // Update the team of the student
                 return {
                     ...student,
