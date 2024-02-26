@@ -78,5 +78,10 @@
 }
 
 .selected-row {
-    background-color: #b33a3a; /* Adjust the background color as needed */
+    color: #b33a3a !important; /* Adjust the background color as needed */
 }
+
+tr:hover {
+    cursor: pointer;
+}
+

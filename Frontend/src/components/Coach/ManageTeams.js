@@ -95,7 +95,7 @@ function ManageTeams(props) {
     const getTeamName = (teamID) => {
         var teamName = "";
         teams.map(team => {
-            if(team.national_id == teamID) {
+            if(team.national_id === teamID) {
                 teamName = team.name;
             }
         })
@@ -150,7 +150,7 @@ function ManageTeams(props) {
         setUpdateDisplayName(student.displayname);
         setDisplayEmail(student.email);
         student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("N/A");
-        (student.team != -1) ? setUpdateTeamID(formatTeamIDString(student.team)): setUpdateTeamID("N/A");
+        (student.team !== -1) ? setUpdateTeamID(formatTeamIDString(student.team)): setUpdateTeamID("N/A");
     }
 
     //opens AddStudents component
@@ -177,9 +177,9 @@ function ManageTeams(props) {
 
     //button to remove the current selected student from the coach's roster
     const deleteStudentButton = async () => {
-        if(currentStudentID != undefined) {
+        if(currentStudentID !== undefined) {
             const confirmText = "Are you sure you want to delete the current selected student? \n(This does not delete their account, but removes them from your roster)";
-            if(window.confirm(confirmText) == true) {
+            if(window.confirm(confirmText) === true) {
                 await removeStudent(currentStudentID);
                 getStudents(coachUserID);
             } else {
@@ -303,7 +303,7 @@ function ManageTeams(props) {
         const matchedUsers = students.filter((user) => {
             return user.displayname.toLowerCase().includes(e.target.value.toLowerCase());
         });
-        if (e.target.value.length == 0) {
+        if (e.target.value.length === 0) {
             setStudents(allUsersCopy);
             setSearchPhrase(e.target.value);
         }
@@ -314,7 +314,11 @@ function ManageTeams(props) {
     }
 
     const renderTeamTables = () => {
-        // Filter out teams with students and teams without students
+
+        const handleDragStart = (e, student) => {
+            // Set the data being dragged (in this case, the student's ID)
+            e.dataTransfer.setData("studentId", student._id);
+        };
         const teamsWithStudents = Object.entries(groupedStudents).map(([teamID, teamStudents]) => ({
             teamID,
             teamName: getTeamName(teamID),
@@ -326,8 +330,8 @@ function ManageTeams(props) {
         // Render tables for teams with students
         const tablesWithStudents = Object.entries(groupedStudents).map(([teamID, teamStudents]) => (
             <div key={teamID} className="right">
-                <h3>{getTeamName(teamID)} ({formatTeamIDString(teamID)})</h3>
-                <table>
+                <h3>{getTeamName(teamStudents)} ({formatTeamIDString(teamID)})</h3>
+                <table style={{ color: '#fff'}}>
                     {/* Table headers */}
                     <thead>
                         <tr>
@@ -337,22 +341,28 @@ function ManageTeams(props) {
                             <th>Alternate</th>
                         </tr>
                     </thead>
-                    <tbody>
-                            {teamStudents.map(student => (
-                                <tr key={student._id} onClick={() => fillDisplayInfo(student)} className={student._id === currentStudentID ? "selected-row" : ""}>
-                                    <td>{student.displayname}</td>
-                                    <td>{student.email}</td>
-                                    <td>{student.gradelevel !== undefined ? student.gradelevel : "N/A"}</td>
-                                    <td>
-                                        <input
-                                            type="checkbox"
-                                            onChange={(e) => handleAlternateChange(student._id, e.target.checked)}
-                                            checked={student.alternate}
-                                        />
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
+                    <tbody style={{ color: '#fff'}}>
+                        {teamStudents.map((student,index) => (
+                            <tr
+                                key={student._id}
+                                draggable="true"
+                                onDragStart={(e) => handleDragStart(e, student)}
+                                onClick={() => fillDisplayInfo(student)}
+                                className={student._id === currentStudentID ? "selected-row" : ""}
+                            >
+                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.displayname}</td>
+                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.email}</td>
+                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.gradelevel !== undefined ? student.gradelevel : "N/A"}</td>
+                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>
+                                    <input
+                                        type="checkbox"
+                                        onChange={(e) => handleAlternateChange(student._id, e.target.checked)}
+                                        checked={student.alternate}
+                                    />
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
                 </table>
             </div>
         ));
@@ -360,24 +370,25 @@ function ManageTeams(props) {
         // Render tables for teams without students
         const tablesWithoutStudents = teamsWithoutStudents.map(team => (
             <div key={team.national_id} className="right">
-                <h3>{team.name} ({team.national_id})</h3>
+                <h3>{team.name} ({formatTeamIDString(team.national_id)})</h3>
                 <table>
                     <tbody>
                         <tr>
-                            <td>No students assigned to this team.</td>
+                            <td className={'td-even'}>No students assigned to this team.</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         ));
-
+    
         return [...tablesWithStudents, ...tablesWithoutStudents];
-        }
+    }
+    
     
     
     
 
-    if(props.enabled == true) {
+    if(props.enabled === true) {
         return (
             <div>
                 <div className="left form-group">
@@ -452,6 +463,35 @@ function ManageTeams(props) {
     const handleAlternateChange = (studentID, isChecked) => {
         // Update the state to reflect the change in "Alternate" status for the student
         // You need to implement the logic to update the students array with the new status
+    };
+    
+    const handleDragOver = (e) => {
+        // Prevent default behavior to allow drop
+        e.preventDefault();
+    };
+    
+    const handleDrop = (e, teamId) => {
+        // Prevent default behavior to allow drop
+        e.preventDefault();
+        // Get the student ID from the data transfer
+        const studentId = e.dataTransfer.getData("studentId");
+        // Move the student to the new team
+        moveStudentToTeam(studentId, teamId);
+    };
+    const moveStudentToTeam = (studentId, teamId) => {
+        // Find the student in the students array
+        const updatedStudents = students.map(student => {
+            if (student._id === studentId) {
+                // Update the team of the student
+                return {
+                    ...student,
+                    team: teamId
+                };
+            }
+            return student;
+        });
+        // Update the state with the new student array
+        setStudents(updatedStudents);
     };
 }
 
