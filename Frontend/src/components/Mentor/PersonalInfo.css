@@ -13,12 +13,20 @@
   }
   
   /* Add styles to the form container */
-  .self-assessment-container {
+  .personal-information-container {
     padding: 10px;
   }
   
     /* Full-width input fields */
-    .self-assessment-container input[type=Number], .make-team-container input[type=number] {
+    .personal-information-container input[type=Number], .make-team-container input[type=number] {
+      width: 100%;
+      padding: 15px;
+      margin: 5px 0 22px 0;
+      border: none;
+      background: #f1f1f1;
+    }
+
+    .personal-information-container input[type=String], .make-team-container input[type=Strign] {
       width: 100%;
       padding: 15px;
       margin: 5px 0 22px 0;

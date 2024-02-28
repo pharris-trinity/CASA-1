@@ -45,7 +45,7 @@ function PersonalInfo(props) {
                 <div>
                     <form className="personal-information-container" onSubmit={handleSubmit}>
                         <div>
-                            <label htmlFor='zipcode'>ZIP CODE: </label>
+                            <label htmlFor='zipcode'>Zip Code: </label>
                             <input
                                 type='Number'
                                 id='zipcode'
