@@ -501,8 +501,8 @@ function ManageTeams(props) {
                             />
                             <div className="button-alignment">
                                 <button className="casa-button" type="submit">Save Changes</button>
-                                <button className="casa-button" type="button" onClick={addStudentButton}>Add Student</button>
-                                <button className="casa-button" type="button" onClick={makeTeamButton}>Create Team</button>
+                                <button className="casa-button delete-button" type="button" onClick={deleteStudentButton}>Delete Student</button>
+
                             </div>
                         </div>
                     </form>
@@ -511,25 +511,27 @@ function ManageTeams(props) {
                     <div>
                         <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
                         <MakeTeam enabled={enableMakeTeam} closeForm={closeMakeTeam}/>
-                        <button className="casa-button delete-button" type="button" onClick={deleteStudentButton}>Delete Student</button>
                     </div>
                 </div>
 
                 {/* Student Table */}
                 <div>
                     <div>
-                        <input 
-                            type = "text" 
-                            placeholder="Search Table"
-                            value={searchPhrase}
-                            onChange={search}
-                        />
+                        
+                    <input className="input"
+                    type="text" 
+                    placeholder="Search Table"
+                    value={searchPhrase}
+                    onChange={search}
+                />
                         <button  className = 'casa-button' onClick={search}>
                             
                             Search
                         </button>
                         <table className="right"></table>
                         {renderTeamTables()}
+                        <button className="casa-button" type="button" onClick={addStudentButton}>Add Student</button>
+                            <button className="casa-button" type="button" onClick={makeTeamButton}>Create Team</button>
                     </div>
                 </div>
             </div>
