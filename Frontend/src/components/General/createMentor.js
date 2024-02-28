@@ -13,6 +13,7 @@ function CreateMentor() {
     const [display, setDisplay] = useState("");
     const [password, setPassword] = useState("");
     const [passwordVerify, setPasswordVerify] = useState("");
+    const [validationCode, setValidationCode] = useState("");
 
     const [errorMessages, setErrorMessages] = useState({});
 
@@ -31,7 +32,7 @@ function CreateMentor() {
             return;
         }
 
-        var postData = {username: user, displayname: display, email: email, password: password}
+        var postData = {username: user, displayname: display, email: email, password: password, validationCode: validationCode}
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -39,7 +40,7 @@ function CreateMentor() {
         };
 
         try {
-            fetch('/api/Mentor/create_mentor', requestOptions).then(
+            fetch('/api/mentor/create_mentor', requestOptions).then(
                 res => res.text()).then(text => {
                     if(text.toLowerCase() === "found previously existing user"){
                         alert("Username or email already exists in the database, please login")
