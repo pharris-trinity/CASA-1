@@ -399,6 +399,12 @@ function ManageTeams(props) {
         
             console.log(`Dropped student ${studentId} into team ${currentStudentTeamID}`);
         };
+
+        const handleAlternateChange = (e, isChecked) => {
+            // Update the state to reflect the change in "Alternate" status for the student
+            // You need to implement the logic to update the students array with the new status
+            e.preventDefault();
+        };
     
         
         // Render tables for teams with students
@@ -430,8 +436,8 @@ function ManageTeams(props) {
                                 <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>
                                     <input
                                         type="checkbox"
-                                        onChange={(e) => handleAlternateChange(student._id, e.target.checked)}
                                         checked={student.alternate}
+                                        onChange={(e) => handleAlternateChange(e, e.target.checked)}
                                     />
                                 </td>
                             </tr>
@@ -535,11 +541,6 @@ function ManageTeams(props) {
             </div>
         );
     }
-    const handleAlternateChange = (studentID, isChecked) => {
-        // Update the state to reflect the change in "Alternate" status for the student
-        // You need to implement the logic to update the students array with the new status
-        studentID.preventDefault();
-    };
 }
 
 export default ManageTeams;
