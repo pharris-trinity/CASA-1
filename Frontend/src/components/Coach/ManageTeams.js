@@ -25,7 +25,12 @@ function ManageTeams(props) {
     const [updateDisplayName, setUpdateDisplayName] = useState("");
     const [displayEmail, setDisplayEmail] = useState("");
     const [updateGradLevel, setUpdateGradLevel] = useState("");
+    const [gradeLevel, setGradeLevel] = useState("")
+    const [displayName, setDisplayName] = useState("")
+    const [studentId, setStudentId] = useState("")
     const [updateTeamID, setUpdateTeamID] = useState("");
+    //const currentStudentTeamID = currentStudentID ? formatTeamIDString(updateTeamID) : ""; // Add this line
+    const [currentStudentTeamID, setCurrentStudentTeamID] = useState("");
     const [currentStudentID, setCurrentStudentID] = useState();
 
     const[enabledAddToTeam, setEnabledAddToTeam] = useState(false);
@@ -121,7 +126,7 @@ function ManageTeams(props) {
             getStudents(coachUserID);
 
             } catch (error) {
-                //console.log(error);
+                console.log("error error");
             }
         }
     }
@@ -318,6 +323,8 @@ function ManageTeams(props) {
         const handleDragStart = (e, student) => {
             // Set the data being dragged (in this case, the student's ID)
             e.dataTransfer.setData("studentId", student._id);
+            e.dataTransfer.setData("displayName", student.displayname);
+            e.dataTransfer.setData("gradeLevel", student.gradelevel);
         };
 
         const getTeamName = (teamID) => {
@@ -337,12 +344,68 @@ function ManageTeams(props) {
         }));
     
         const teamsWithoutStudents = teams.filter(team => !groupedStudents[team.national_id]);
+        
     
+        const handleDragOver = (e) => {
+            e.preventDefault();
+        };
+        
+        const handleDragEnter = (e) => {
+            e.preventDefault();
+        };
+        
+        const handleDrop = async (e, currentStudentTeamID) => {
+            e.preventDefault();
+            setCurrentStudentTeamID(currentStudentTeamID);
+            const studentId = e.dataTransfer.getData("studentId");
+            const displayName = e.dataTransfer.getData("displayName");
+            const gradeLevel = e.dataTransfer.getData("gradeLevel");
+            setStudentId(studentId);
+            setDisplayName(displayName);
+            setGradeLevel(gradeLevel);
+            console.log("drop time")
+            console.log(studentId)
+            console.log(displayName)
+            console.log(gradeLevel)
+        
+            // Find the student object
+            const updatedStudents = students.map(student => {
+                if (student._id === studentId) {
+                    setCurrentStudentID(student._id);
+                    setUpdateDisplayName(student.displayname);
+                    setDisplayEmail(student.email);
+                    student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("N/A");
+                    (student.team != -1) ? setUpdateTeamID(currentStudentTeamID): setUpdateTeamID("N/A");
+                    return { ...student, team: currentStudentTeamID };
+                }
+        
+                return student;
+            });
+        
+            // Update the state with the modified students array
+            setStudents(updatedStudents);
+        
+            // Update the student's team in the database
+            const convertedIDNumber1 = formatTeamIDString(currentStudentTeamID);
+            if (validateTeamID(convertedIDNumber1)) {
+                console.log("Team is valid here");
+                const convertedIDNumber = currentStudentTeamID;
+                console.log(convertedIDNumber);
+                await updateStudentAccount(studentId, displayName, gradeLevel, convertedIDNumber);
+            }
+        
+            // Set the updateTeamID state
+            setUpdateTeamID(currentStudentTeamID);
+        
+            console.log(`Dropped student ${studentId} into team ${currentStudentTeamID}`);
+        };
+    
+        
         // Render tables for teams with students
         const tablesWithStudents = Object.entries(groupedStudents).map(([teamID, teamStudents]) => (
-            <div key={teamID} className="right">
+            <div key={teamID} className="right" onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDrop={(e) => handleDrop(e, teamID)}>
                 <h3>{getTeamName(teamID)} ({formatTeamIDString(teamID)})</h3>
-                <table style={{ color: '#fff'}}>
+                <table style={{ color: '#fff' }}>
                     {/* Table headers */}
                     <thead>
                         <tr>
@@ -352,19 +415,19 @@ function ManageTeams(props) {
                             <th>Alternate</th>
                         </tr>
                     </thead>
-                    <tbody style={{ color: '#fff'}}>
-                        {teamStudents.map((student,index) => (
+                    <tbody style={{ color: '#fff' }}>
+                        {teamStudents.map((student, index) => (
                             <tr
                                 key={student._id}
                                 draggable="true"
                                 onDragStart={(e) => handleDragStart(e, student)}
                                 onClick={() => fillDisplayInfo(student)}
-                                className={student._id == currentStudentID ? "selected-row" : ""}
+                                className={student._id === currentStudentID ? "selected-row" : ""}
                             >
-                                <td className={student._id == currentStudentID ? "td-selected-student" : 'td-student'}>{student.displayname}</td>
-                                <td className={student._id == currentStudentID ? "td-selected-student" : 'td-student'}>{student.email}</td>
-                                <td className={student._id == currentStudentID ? "td-selected-student" : 'td-student'}>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
-                                <td className={student._id == currentStudentID ? "td-selected-student" : 'td-student'}>
+                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.displayname}</td>
+                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.email}</td>
+                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.gradelevel !== undefined ? student.gradelevel : "N/A"}</td>
+                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>
                                     <input
                                         type="checkbox"
                                         onChange={(e) => handleAlternateChange(student._id, e.target.checked)}
@@ -380,7 +443,8 @@ function ManageTeams(props) {
     
         // Render tables for teams without students
         const tablesWithoutStudents = teamsWithoutStudents.map(team => (
-            <div key={team.national_id} className="right">
+            //<div key={team.national_id} className="right">
+            <div key={team.national_id} className="right" onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDrop={(e) => handleDrop(e, team.national_id)}>
                 <h3>{team.name} ({formatTeamIDString(team.national_id)})</h3>
                 <table>
                     <tbody>
@@ -474,35 +538,7 @@ function ManageTeams(props) {
     const handleAlternateChange = (studentID, isChecked) => {
         // Update the state to reflect the change in "Alternate" status for the student
         // You need to implement the logic to update the students array with the new status
-    };
-    
-    const handleDragOver = (e) => {
-        // Prevent default behavior to allow drop
-        e.preventDefault();
-    };
-    
-    const handleDrop = (e, teamId) => {
-        // Prevent default behavior to allow drop
-        e.preventDefault();
-        // Get the student ID from the data transfer
-        const studentId = e.dataTransfer.getData("studentId");
-        // Move the student to the new team
-        moveStudentToTeam(studentId, teamId);
-    };
-    const moveStudentToTeam = (studentId, teamId) => {
-        // Find the student in the students array
-        const updatedStudents = students.map(student => {
-            if (student._id == studentId) {
-                // Update the team of the student
-                return {
-                    ...student,
-                    team: teamId
-                };
-            }
-            return student;
-        });
-        // Update the state with the new student array
-        setStudents(updatedStudents);
+        studentID.preventDefault();
     };
 }
 

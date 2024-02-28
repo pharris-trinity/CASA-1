@@ -8,5 +8,7 @@ export const formatTeamIDNumber = (id) => {
             tempString = tempString + id[i];
         }
     }
+    // console.log("formatted number")
+    // console.log(tempString)
     return tempString;
 }

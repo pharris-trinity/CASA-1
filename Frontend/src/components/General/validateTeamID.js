@@ -6,6 +6,8 @@ export const validateTeamID = (id) => {
 
     if(!(id.length == 7)){
         console.log("Given national ID is either not long enough or too long")
+        console.log(id)
+        console.log(id.length)
         return false
     }
 

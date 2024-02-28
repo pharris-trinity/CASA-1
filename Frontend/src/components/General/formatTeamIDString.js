@@ -11,6 +11,7 @@ export const formatTeamIDString = (id) => {
                 tempString = tempString + stringID[i];
             }
         }
-        return tempString;
+        // console.log(tempString)
+             return tempString;
     } else console.log("unsuccessfully calling formatTeamIDString")
 }
