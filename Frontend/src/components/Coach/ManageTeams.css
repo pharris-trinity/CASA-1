@@ -137,6 +137,7 @@ tr:hover {
     cursor: pointer;
 }
 
+//<<<<<<< ashley
 .input{
     padding: 18px;
     border: 1px solid #ccc;
@@ -145,3 +146,13 @@ tr:hover {
     font-size: 16px;
     margin-bottom: 10px; /* Adjust spacing as needed */
 }
+//=======
+.checkbox-container {
+    font-size: 20px; /* Adjust the font size as needed */
+  }
+  
+  .checkbox-container input[type="checkbox"] {
+    transform: scale(1.5); /* Adjust the scale factor to make the checkbox bigger */
+  }
+
+//>>>>>>> manageTeamTables

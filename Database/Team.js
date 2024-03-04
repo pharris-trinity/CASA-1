@@ -30,6 +30,10 @@ const TeamSchema = new Schema({
         type: [Schema.Types.ObjectId], ref: 'Members',
         require: false
     },
+    alternates: {
+        type: [Schema.Types.ObjectId], ref: 'Users',
+        require: false
+    },
     coach: {
         type: Schema.Types.ObjectId, ref: 'Coach',
         required: true
