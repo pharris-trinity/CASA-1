@@ -400,11 +400,52 @@ function ManageTeams(props) {
             console.log(`Dropped student ${studentId} into team ${currentStudentTeamID}`);
         };
 
-        const handleAlternateChange = (e, isChecked) => {
-            // Update the state to reflect the change in "Alternate" status for the student
-            // You need to implement the logic to update the students array with the new status
+        const handleAlternateChange = async (e, studentID, teamID, isChecked) => {
             e.preventDefault();
+
+            if(isChecked){
+            // Prepare the data to send to the API endpoint
+            const requestData = {
+                team_id: teamID,
+                student_id: studentID
+            };
+        
+            try {
+                // Make a POST request to the add_alternate endpoint
+                const response = await fetch('/api/team/add_alternate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+        
+                // Handle the response as needed
+                const data = await response.json();
+                // You can handle the response data here
+            } catch (error) {
+                console.error('Error occurred:', error);
+            }
+        } else {
+            const requestData = {
+                team_id: teamID,
+                student_id: studentID
+            };
+        
+            const requestOptions = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(requestData)
+            };
+            fetch('/api/team/remove_alternate', requestOptions).then(
+                    res => res.text()).then(text => {
+    
+                  }
+            );
+        }
+
         };
+    
     
         
         // Render tables for teams with students
@@ -434,11 +475,17 @@ function ManageTeams(props) {
                                 <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.email}</td>
                                 <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.gradelevel !== undefined ? student.gradelevel : "N/A"}</td>
                                 <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>
+                                    <div className="checkbox-container">
                                     <input
                                         type="checkbox"
+                                        onChange={(e) => {
+                                            handleAlternateChange(e, student._id, teamID, e.target.checked);
+                                            //e.stopPropagation(); // Prevent click event propagation
+                                            student.alternate=!student.alternate
+                                        }}
                                         checked={student.alternate}
-                                        onChange={(e) => handleAlternateChange(e, e.target.checked)}
                                     />
+                                    </div>
                                 </td>
                             </tr>
                         ))}
