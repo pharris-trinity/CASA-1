@@ -53,9 +53,9 @@ return (
                 <div className="assessmentsSection">
                     <h2>Mentor Homepage</h2>
                     <ul>
-                    <button className="casa-button" type="button" onClick={SelfAssessmentButton}>Mentor Self Assessment</button> 
+                    <button className="casa-button" type="button" onClick={SelfAssessmentButton}>Mentor Self Assessment - WIP</button> 
                     <SelfAssessment enabled={enableSelfAssessment} closeForm={closeSelfAssessment}/>
-                    <button className="casa-button" type="button" onClick={InfoUpdateButton}>Update Info</button>
+                    <button className="casa-button" type="button" onClick={InfoUpdateButton}>Add/Change Personal Info</button>
                     <PersonalInfo enabled={enableInfoUpdate} closeForm={closeInfoUpdate}/>
                     </ul>
                 </div>

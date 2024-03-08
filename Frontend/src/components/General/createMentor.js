@@ -13,7 +13,7 @@ function CreateMentor() {
     const [display, setDisplay] = useState("");
     const [password, setPassword] = useState("");
     const [passwordVerify, setPasswordVerify] = useState("");
-    const [validationCode, setValidationCode] = useState("");
+    //const [validationCode, setValidationCode] = useState("");
 
     const [errorMessages, setErrorMessages] = useState({});
 
@@ -32,7 +32,7 @@ function CreateMentor() {
             return;
         }
 
-        var postData = {username: user, displayname: display, email: email, password: password, validationCode: validationCode}
+        var postData = {username: user, displayname: display, email: email, password: password}
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},

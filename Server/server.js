@@ -914,7 +914,7 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
 //Mentor
   app.post('/api/mentor/create_mentor', async(req, res) => {
-    const {username, displayname, remote, zipcode, password, email, madeQuizzes, teams, speciality, validationCode} = req.body;
+    const {username, displayname, remote, zipcode, password, email, madeQuizzes, teams, speciality} = req.body;
 
     var potentialUsers = await Mentor.find({$or:[{username:username}, {email:email}]}).exec();
 
@@ -923,16 +923,16 @@ app.post('/api/get-MentorData', function(req, res, next) {
       res.status(301).send("Found previously existing user");
     } else {
 
-      const code = await Validation.findOne({"value": validationCode});
-      if(!code){
-        return res.status(401).send("Validation Code provided does not exist")
-      } else {
-        if(code.validationType) {
-          return res.send("Validation Code provided does not authorize a coach's registration").status(401)
-        } else {
-          await Validation.deleteOne({"value": validationCode})
-        }
-      }
+      // const code = await Validation.findOne({"value": validationCode});
+      // if(!code){
+      //   return res.status(401).send("Validation Code provided does not exist")
+      // } else {
+      //   if(code.validationType) {
+      //     return res.send("Validation Code provided does not authorize a coach's registration").status(401)
+      //   } else {
+      //     await Validation.deleteOne({"value": validationCode})
+      //   }
+      // }
 
       bcrypt.hash(password, saltRounds, (err, hash) => {
         
@@ -943,9 +943,9 @@ app.post('/api/get-MentorData', function(req, res, next) {
           remote: remote,
           zipcode: zipcode,
           password : hash,
-          madeQuizzes: madeQuizzes,
-          speciality: speciality,
-          teams: teams
+          //madeQuizzes: madeQuizzes,
+          speciality: speciality, 
+          //teams: teams
         });
   
         mentor.save(function (err, user){

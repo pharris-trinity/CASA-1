@@ -46,6 +46,9 @@ function PersonalInfo(props) {
                     <form className="personal-information-container" onSubmit={handleSubmit}>
                         <div>
                             <label htmlFor='zipcode'>Zip Code: </label>
+                            <div class="zip-help">?
+                              <span class="zip-help-text">You have the option to input your home or work zip code. Please choose the one that works for you.</span>
+                            </div>
                             <input
                                 type='Number'
                                 id='zipcode'
@@ -75,8 +78,8 @@ function PersonalInfo(props) {
                                 required                            
                             />
 
-                            <button className="casa-button" type="submit" onClick={handleSubmit}>Update Personal Information</button>
-                            <button className="casa-button" type="button" onClick={props.closeForm}>Close</button>
+                            <button className="casa-button" type="submit" onClick={handleSubmit}>Save</button>
+                            <button className="casa-button" type="button" onClick={props.closeForm}>Cancel</button>
                         </div>
                     </form>
                 </div>
