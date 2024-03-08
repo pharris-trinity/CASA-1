@@ -412,6 +412,19 @@ app.post('/api/coach/create_coach', async(req, res) => {
     
   }); 
 
+  app.post('/api/mentor/personal_info_update', async(req, res) => {
+    const { ment_id, zipcode, phoneNumber, email} = req.body;
+    //console.log("ment_id: ", ment_id)
+    const user = await User.findOne({"_id": ment_id})
+    //console.log(user);
+    user.zipcode = zipcode
+    user.phoneNumber = phoneNumber
+    user.email =email
+
+    user.save()
+    return res.status(200).send("Successfully updated personal info")
+    
+  });
 
   app.post('/api/mentor/self_assessment_update', async(req, res) => {
     const { ment_id, windowsRating, windowsServerRating, linuxRating, networkingRating, securityConseptsRating } = req.body;
