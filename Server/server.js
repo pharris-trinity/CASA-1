@@ -174,7 +174,9 @@ app.post('/api/coach/create_coach', async(req, res) => {
     }
 
     bcrypt.hash(password, saltRounds, (err, hash) => {
-      
+      if (err) {
+        return res.status(500).end(); // Handle saving error
+    }
       var coach = new Coach({
         username: username,
         displayname: displayname,
@@ -299,23 +301,23 @@ app.post('/api/coach/create_coach', async(req, res) => {
     res.status(201).send(code)
   })
 
-  app.get('/api/admin/generate_mentor_validation_code', async(req, res) => {
-    var ret = generateValidationCode();
+  //app.get('/api/admin/generate_mentor_validation_code', async(req, res) => {
+    //var ret = generateValidationCode();
 
-    var code = new Validation({
-      value: ret,
-      validationType: false
-    })
+    //var code = new Validation({
+     // value: ret,
+     // validationType: false
+   // })
 
-    code.save(function (err, user){
-      if (err) {
-        res.status(401).end();
-        return console.error(err)
-      }
-    });
+    //code.save(function (err, user){
+     // if (err) {
+      //  res.status(401).end();
+    //    return console.error(err)
+  //    }
+   // });
 
-    res.status(201).send(code)
-  })
+   // res.status(201).send(code)
+  //})
 
   app.post('/api/admin/check_code_existence', async(req, res) => {
     const { validationCode } = req.body
@@ -413,6 +415,19 @@ app.post('/api/coach/create_coach', async(req, res) => {
     
   }); 
 
+  app.post('/api/mentor/personal_info_update', async(req, res) => {
+    const { ment_id, zipcode, phoneNumber, email} = req.body;
+    //console.log("ment_id: ", ment_id)
+    const user = await User.findOne({"_id": ment_id})
+    //console.log(user);
+    user.zipcode = zipcode
+    user.phoneNumber = phoneNumber
+    user.email =email
+
+    user.save()
+    return res.status(200).send("Successfully updated personal info")
+    
+  });
 
   app.post('/api/mentor/self_assessment_update', async(req, res) => {
     const { ment_id, windowsRating, windowsServerRating, linuxRating, networkingRating, securityConseptsRating } = req.body;
@@ -998,8 +1013,8 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
 //Mentor
   app.post('/api/mentor/create_mentor', async(req, res) => {
-    const {username, displayname, remote, zipcode, password, email, madeQuizzes, teams, speciality, validationCode} = req.body;
-
+    const {username, displayname, password, email} = req.body;
+    console.log("API hit")
     var potentialUsers = await Mentor.find({$or:[{username:username}, {email:email}]}).exec();
 
     if(potentialUsers.length != 0){
@@ -1007,30 +1022,34 @@ app.post('/api/get-MentorData', function(req, res, next) {
       res.status(301).send("Found previously existing user");
     } else {
 
-      const code = await Validation.findOne({"value": validationCode});
-      if(!code){
-        return res.status(401).send("Validation Code provided does not exist")
-      } else {
-        if(code.validationType) {
-          return res.send("Validation Code provided does not authorize a coach's registration").status(401)
-        } else {
-          await Validation.deleteOne({"value": validationCode})
-        }
-      }
+      // const code = await Validation.findOne({"value": validationCode});
+      // if(!code){
+      //   return res.status(401).send("Validation Code provided does not exist")
+      // } else {
+      //   if(code.validationType) {
+      //     return res.send("Validation Code provided does not authorize a coach's registration").status(401)
+      //   } else {
+      //     await Validation.deleteOne({"value": validationCode})
+      //   }
+      // }
 
       bcrypt.hash(password, saltRounds, (err, hash) => {
         
+        if (err) {
+          return res.status(500).end(); // Handle saving error
+      }
+
         var mentor = new Mentor({
           username: username,
           displayname: displayname,
           email: email,
-          remote: remote,
-          zipcode: zipcode,
-          password : hash,
-          madeQuizzes: madeQuizzes,
-          speciality: speciality,
-          teams: teams
-        });
+          //remote: remote,
+          //zipcode: zipcode,
+          password : hash
+          //madeQuizzes: madeQuizzes,
+          //speciality: speciality, 
+          //teams: teams
+        })
   
         mentor.save(function (err, user){
           if (err) {
