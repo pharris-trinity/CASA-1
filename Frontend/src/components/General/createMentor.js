@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from './useLocalStorage';
 import './accCreate.css'
 import logo from "../../Resources/cyberTexasLogo.png";
-import Navbar from './../General/Navbar';
+import Navbar from './Navbar';
 import { Nav } from 'react-bootstrap';
 
 function CreateMentor() {
@@ -13,7 +13,7 @@ function CreateMentor() {
     const [display, setDisplay] = useState("");
     const [password, setPassword] = useState("");
     const [passwordVerify, setPasswordVerify] = useState("");
-    const [validationCode, setValidationCode] = useState("");
+//    const [validationCode, setValidationCode] = useState("");
 
     const [errorMessages, setErrorMessages] = useState({});
 
@@ -32,7 +32,7 @@ function CreateMentor() {
             return;
         }
 
-        var postData = {username: user, displayname: display, email: email, password: password, validationCode: validationCode}
+        var postData = {username: user, displayname: display, email: email, password: password}
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -40,7 +40,7 @@ function CreateMentor() {
         };
 
         try {
-            fetch('/api/Mentor/create_mentor', requestOptions).then(
+            fetch('/api/mentor/create_mentor', requestOptions).then(
                 res => res.text()).then(text => {
                     if(text.toLowerCase() === "found previously existing user"){
                         alert("Username or email already exists in the database, please login")
@@ -87,7 +87,7 @@ function CreateMentor() {
 
     return (                  
         <>Mentor Creation
-        {/*<Navbar/>*/}
+        <Navbar/>
         <img src={logo} id="logo" centerImage="center" align="left" alt=""/>
         <div className='form'>
             <form onSubmit={submitHandler}>
@@ -107,9 +107,6 @@ function CreateMentor() {
                     </div>
                     <div className='form-group'>
                         <input type="password" placeholder='Verify Password' name='password2' id='password2' value={passwordVerify} onChange={evt => {setPasswordVerify(evt.target.value)}}/>
-                    </div>
-                    <div className='form-group'>
-                        <input type="validationCode" placeholder='Validation Code' name='validationCode' id='validationCode' value={validationCode} onChange={evt => {setValidationCode(evt.target.value)}}/>
                     </div>
                     <input type="submit" value="CREATE ACCOUNT"/>
                     <button id='login' onClick={loginRedirect} className="login_button">Login</button>
