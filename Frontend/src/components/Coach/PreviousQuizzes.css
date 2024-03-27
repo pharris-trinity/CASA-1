@@ -1,0 +1,196 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+/* main page css below*/
+.maincontainer {
+    margin-top: 5rem;
+    position: fixed;
+    top: 5rem;
+    width: 80%;
+    height: 50%;
+}
+
+.mainrow {
+    margin-top: 1rem;
+    display: flex;
+    width: auto;
+    list-style:none;
+}
+.maincol1 {
+    flex: 80%;
+    padding: 50px;
+    background-color: white;
+    width: auto;
+}
+
+.maincol1 li {
+    margin-bottom: 10px;
+}
+
+.assessmentsSection ul {
+    list-style: none;
+}
+
+.assessmentsSection li {
+    color: black;
+    float: none;
+}
+.assessmentsSection a {
+    color: black;
+    display: inline-block;
+    text-decoration: underline;
+    font-size: larger;
+}
+
+/*profile page css below*/
+.profilecontainer {
+    margin-top: 5rem;
+    position: fixed;
+    top: 5rem;
+    width: 80%;
+    height: 50%;
+}
+
+.studentAttributes {
+    margin-top: 1rem;
+    display: flex;
+    background-color: white;
+    font-size: x-large;
+}
+.studentAttributes ul {
+    list-style: none;
+    margin-left: 1rem;
+    display: grid;
+}
+
+.studentAttributes li { 
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+/*take assessment page css below*/
+.takeassesscontainer {
+    margin-top: 5rem;
+    position: fixed;
+    top: 5rem;
+    width: 80%;
+    height: 50%;
+    padding: 0;
+}
+
+.studquizlist {
+    margin-top: 1rem;
+    display: flex;
+    background-color: white;
+    overflow: auto;
+    
+}
+
+.studquizlist ul {
+    list-style: none;
+    margin-left: 1rem;
+    padding: 0;
+    overflow: auto;
+    margin: 1rem;
+}
+
+.studquizlist li { 
+    margin-top: 1rem;
+    margin-bottom: 20px;
+    display: inline;
+    float: none;
+    font-size: larger;
+}
+
+.studquizlist a {
+    color: black;
+    text-decoration: underline;
+}
+
+/*take assessment page css below*/
+.viewassesscontainer {
+    margin-top: 5rem;
+    position: fixed;
+    top: 5rem;
+    width: 80%;
+    height: 50%;
+}
+
+.takenquizlist {
+    width:80%;
+    height:auto;
+    margin-top: 1rem;
+    display: flex;
+    background-color: white;
+}
+
+.takenquizlist ul {
+    list-style: none;
+    margin-left: 1rem;
+}
+
+.takenquizlist li { 
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+/*test quiz 1 css page below*/
+.quizcontainer {
+    margin-top: 5rem;
+    position: fixed;
+    top: 5rem;
+    width: 80%;
+    height: 50%;
+}
+.quizheader {
+    margin: auto;
+    text-align: center;
+}
+.questionbox {
+    margin: 0 auto;
+    width: 80%; 
+    height: auto;
+    background-color: lightgray;
+    padding: 16px;
+    border-radius: 16px;
+    color: black;
+  }
+  
+  .questionbox ul {
+    list-style: none;
+  }
+  
+  .questionbox li {
+    margin-top: 8px;
+    background-color: white;
+    padding: 16px;
+    border: 3px solid white;
+    border-radius: 20px;
+    font-size: 20px;
+    float: inherit;
+  }
+
+  .finalScore {
+    /* Center the div  */
+    margin: 0 auto;
+  
+    /* Dimensions  */
+    width: 80%; /* Can be in percentage also. */
+    height: 70%;
+    margin-top: 64px;
+  
+    /* Visual  */
+    background-color: white;
+    padding: 16px;
+    border-radius: 16px;
+    color: black;
+  }
+
+  .printscore {
+    font-size: x-large;
+  }

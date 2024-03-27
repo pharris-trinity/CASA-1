@@ -13,6 +13,7 @@ import CoachProfile from '../Coach/CoachProfile';
 import { validateTeamID } from '../General/validateTeamID';
 import { formatTeamIDString } from '../General/formatTeamIDString';
 import { formatTeamIDNumber } from '../General/formatTeamIDNumber';
+import PreviousQuizzes from './PreviousQuizzes';
 import CreateQuiz from './CreateQuiz';
 import FindMentors from './FindMentors';
 
@@ -27,6 +28,7 @@ function CoachHome() {
   const [enabledCreateQuiz, setEnabledCreateQuiz] = useState(false);
   const [enabledFindMentors, setEnabledFindMentors] = useState(false);
   const [enabledCoachProfile, setEnabledCoachProfile] = useState(false);
+  const [enabledPreviousQuizzes, setEnabledPreviousQuizzes] = useState(false);
   const [resetKey, setResetKey] = useState("key");
 
   let navigate = useNavigate();
@@ -39,6 +41,15 @@ function CoachHome() {
 
   //the 5 funtions below control which component is being rendered
 
+  function showPreviousQuizzes() {
+    setEnabledPreviousQuizzes(!enabledPreviousQuizzes);
+    setEnabledManageTeam(false);
+    setEnabledStudentStats(false);
+    setEnabledCreateQuiz(false);
+    setEnabledFindMentors(false);
+    setEnabledCoachProfile(false);
+  }
+
   function teamsButton(){
     //navigate('/ViewTeams2', {replace: true}) 
     setEnabledManageTeam(!enabledManageTeam); 
@@ -46,6 +57,7 @@ function CoachHome() {
     setEnabledCreateQuiz(false);
     setEnabledFindMentors(false); 
     setEnabledCoachProfile(false);
+    setEnabledPreviousQuizzes(false);
   }
 
   function showStudentStats() {
@@ -54,6 +66,7 @@ function CoachHome() {
     setEnabledCreateQuiz(false);
     setEnabledFindMentors(false);
     setEnabledCoachProfile(false);
+    setEnabledPreviousQuizzes(false);
   }
 
   function showCreateQuiz() {
@@ -61,6 +74,7 @@ function CoachHome() {
     setEnabledManageTeam(false);
     setEnabledStudentStats(false);
     setEnabledFindMentors(false);
+    setEnabledPreviousQuizzes(false);
     setEnabledCoachProfile(false);
   }
 
@@ -69,6 +83,7 @@ function CoachHome() {
     setEnabledCreateQuiz(false);
     setEnabledManageTeam(false);
     setEnabledStudentStats(false);
+    setEnabledPreviousQuizzes(false);
     setEnabledCoachProfile(false);
   }
 
@@ -77,6 +92,7 @@ function CoachHome() {
     setEnabledFindMentors(false);
     setEnabledCreateQuiz(false);
     setEnabledManageTeam(false);
+    setEnabledPreviousQuizzes(false);
     setEnabledStudentStats(false);
   }
 
@@ -106,6 +122,10 @@ return (
         Student Stats
         </button>
 
+        <button className={enabledPreviousQuizzes ? "selected-tab" : "unselected-tab"} onClick={showPreviousQuizzes}>
+        Previous Quizzes
+        </button>
+
         <button className={enabledCreateQuiz ? "selected-tab" : "unselected-tab"} onClick={showCreateQuiz}>
         Create Quizzes
         </button>
@@ -119,7 +139,7 @@ return (
         </button>
 
         <div className="content-area">
-          {!enabledManageTeam && !enabledStudentStats && !enabledCreateQuiz && !enabledFindMentors && !enabledCoachProfile
+          {!enabledManageTeam && !enabledStudentStats && !enabledCreateQuiz && !enabledFindMentors && !enabledCoachProfile && !enabledPreviousQuizzes
             ? <h1 className="descriptor-text">Click on a tab to view its contents</h1> 
             : null
           }
@@ -128,6 +148,7 @@ return (
           <FindMentors enabled={enabledFindMentors}/>
           <CoachProfile enabled={enabledCoachProfile}/>
           <CreateQuiz key={resetKey} reset={resetCreateQuiz} enabled={enabledCreateQuiz}/>
+          <PreviousQuizzes enabled={enabledPreviousQuizzes}/>
 
           {/* {enabledFindMentors 
           ? <h1>This page is planned to be implemented in the future.</h1>

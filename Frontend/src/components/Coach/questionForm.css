@@ -35,3 +35,8 @@
     background: #f1f1f1;
   }
     
+
+  .option-label {
+    font-size: larger; /* Make the letter larger */
+    margin-right: 10px; /* Add space between the letter and the answer choice */
+}
