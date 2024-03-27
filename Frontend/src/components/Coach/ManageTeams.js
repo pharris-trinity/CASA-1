@@ -25,7 +25,12 @@ function ManageTeams(props) {
     const [updateDisplayName, setUpdateDisplayName] = useState("");
     const [displayEmail, setDisplayEmail] = useState("");
     const [updateGradLevel, setUpdateGradLevel] = useState("");
+    const [gradeLevel, setGradeLevel] = useState("")
+    const [displayName, setDisplayName] = useState("")
+    const [studentId, setStudentId] = useState("")
     const [updateTeamID, setUpdateTeamID] = useState("");
+    //const currentStudentTeamID = currentStudentID ? formatTeamIDString(updateTeamID) : ""; // Add this line
+    const [currentStudentTeamID, setCurrentStudentTeamID] = useState("");
     const [currentStudentID, setCurrentStudentID] = useState();
 
     const[enabledAddToTeam, setEnabledAddToTeam] = useState(false);
@@ -121,7 +126,7 @@ function ManageTeams(props) {
             getStudents(coachUserID);
 
             } catch (error) {
-                //console.log(error);
+                console.log("error error");
             }
         }
     }
@@ -277,6 +282,13 @@ function ManageTeams(props) {
         setStudents(usersCopy); 
     }
 
+    const groupedStudents = {};
+        students.forEach(student => {
+        if (!groupedStudents[student.team]) {
+            groupedStudents[student.team] = [];
+        }
+        groupedStudents[student.team].push(student);
+    });
 
     //shows the arrow direction of sort
     const renderArrow = () => {
@@ -306,11 +318,208 @@ function ManageTeams(props) {
         }
     }
 
+    const renderTeamTables = () => {
+
+        const handleDragStart = (e, student) => {
+            // Set the data being dragged (in this case, the student's ID)
+            e.dataTransfer.setData("studentId", student._id);
+            e.dataTransfer.setData("displayName", student.displayname);
+            e.dataTransfer.setData("gradeLevel", student.gradelevel);
+        };
+
+        const getTeamName = (teamID) => {
+            var teamName = "";
+            teams.map(team => {
+                if(team.national_id == teamID) {
+                    teamName = team.name;
+                }
+            })
+            return teamName;
+        }
+
+        const teamsWithStudents = Object.entries(groupedStudents).map(([teamID, teamStudents]) => ({
+            teamID,
+            teamName: getTeamName(teamID),
+            students: teamStudents
+        }));
+    
+        const teamsWithoutStudents = teams.filter(team => !groupedStudents[team.national_id]);
+        
+    
+        const handleDragOver = (e) => {
+            e.preventDefault();
+        };
+        
+        const handleDragEnter = (e) => {
+            e.preventDefault();
+        };
+        
+        const handleDrop = async (e, currentStudentTeamID) => {
+            e.preventDefault();
+            setCurrentStudentTeamID(currentStudentTeamID);
+            const studentId = e.dataTransfer.getData("studentId");
+            const displayName = e.dataTransfer.getData("displayName");
+            const gradeLevel = e.dataTransfer.getData("gradeLevel");
+            setStudentId(studentId);
+            setDisplayName(displayName);
+            setGradeLevel(gradeLevel);
+            console.log("drop time")
+            console.log(studentId)
+            console.log(displayName)
+            console.log(gradeLevel)
+        
+            // Find the student object
+            const updatedStudents = students.map(student => {
+                if (student._id === studentId) {
+                    setCurrentStudentID(student._id);
+                    setUpdateDisplayName(student.displayname);
+                    setDisplayEmail(student.email);
+                    student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("N/A");
+                    (student.team != -1) ? setUpdateTeamID(currentStudentTeamID): setUpdateTeamID("N/A");
+                    return { ...student, team: currentStudentTeamID };
+                }
+        
+                return student;
+            });
+        
+            // Update the state with the modified students array
+            setStudents(updatedStudents);
+        
+            // Update the student's team in the database
+            const convertedIDNumber1 = formatTeamIDString(currentStudentTeamID);
+            if (validateTeamID(convertedIDNumber1)) {
+                console.log("Team is valid here");
+                const convertedIDNumber = currentStudentTeamID;
+                console.log(convertedIDNumber);
+                await updateStudentAccount(studentId, displayName, gradeLevel, convertedIDNumber);
+            }
+        
+            // Set the updateTeamID state
+            setUpdateTeamID(currentStudentTeamID);
+        
+            console.log(`Dropped student ${studentId} into team ${currentStudentTeamID}`);
+        };
+
+        const handleAlternateChange = async (e, studentID, teamID, isChecked) => {
+            e.preventDefault();
+
+            if(isChecked){
+            // Prepare the data to send to the API endpoint
+            const requestData = {
+                team_id: teamID,
+                student_id: studentID
+            };
+        
+            try {
+                // Make a POST request to the add_alternate endpoint
+                const response = await fetch('/api/team/add_alternate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+        
+                // Handle the response as needed
+                const data = await response.json();
+                // You can handle the response data here
+            } catch (error) {
+                console.error('Error occurred:', error);
+            }
+        } else {
+            const requestData = {
+                team_id: teamID,
+                student_id: studentID
+            };
+        
+            const requestOptions = {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(requestData)
+            };
+            fetch('/api/team/remove_alternate', requestOptions).then(
+                    res => res.text()).then(text => {
+    
+                  }
+            );
+        }
+
+        };
+    
+    
+        
+        // Render tables for teams with students
+        const tablesWithStudents = Object.entries(groupedStudents).map(([teamID, teamStudents]) => (
+            <div key={teamID} className="right" onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDrop={(e) => handleDrop(e, teamID)}>
+                <h3>{getTeamName(teamID)} ({formatTeamIDString(teamID)})</h3>
+                <table style={{ color: '#fff' }}>
+                    {/* Table headers */}
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Email</th>
+                            <th>Grade Level</th>
+                            <th>Alternate</th>
+                        </tr>
+                    </thead>
+                    <tbody style={{ color: '#fff' }}>
+                        {teamStudents.map((student, index) => (
+                            <tr
+                                key={student._id}
+                                draggable="true"
+                                onDragStart={(e) => handleDragStart(e, student)}
+                                onClick={() => fillDisplayInfo(student)}
+                                className={student._id === currentStudentID ? "selected-row" : ""}
+                            >
+                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.displayname}</td>
+                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.email}</td>
+                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.gradelevel !== undefined ? student.gradelevel : "N/A"}</td>
+                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>
+                                    <div className="checkbox-container">
+                                    <input
+                                        type="checkbox"
+                                        onChange={(e) => {
+                                            handleAlternateChange(e, student._id, teamID, e.target.checked);
+                                            //e.stopPropagation(); // Prevent click event propagation
+                                            student.alternate=!student.alternate
+                                        }}
+                                        checked={student.alternate}
+                                    />
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        ));
+    
+        // Render tables for teams without students
+        const tablesWithoutStudents = teamsWithoutStudents.map(team => (
+            //<div key={team.national_id} className="right">
+            <div key={team.national_id} className="right" onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDrop={(e) => handleDrop(e, team.national_id)}>
+                <h3>{team.name} ({formatTeamIDString(team.national_id)})</h3>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td className={'td-even'}>No students assigned to this team.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        ));
+    
+        return [...tablesWithStudents, ...tablesWithoutStudents];
+    }
+    
+    
+    
+    
 
     if(props.enabled == true) {
         return (
             <div>
-                <div className="left form-group">
+                <div className="left _form-group">
                 <form className="form-container" onSubmit={handleSubmit}>
                         {/* React Form Inputs */}
                         <div>
@@ -345,8 +554,8 @@ function ManageTeams(props) {
                             />
                             <div className="button-alignment">
                                 <button className="casa-button" type="submit">Save Changes</button>
-                                <button className="casa-button" type="button" onClick={addStudentButton}>Add Student</button>
-                                <button className="casa-button" type="button" onClick={makeTeamButton}>Create Team</button>
+                                <button className="casa-button delete-button" type="button" onClick={deleteStudentButton}>Delete Student</button>
+
                             </div>
                         </div>
                     </form>
@@ -355,63 +564,28 @@ function ManageTeams(props) {
                     <div>
                         <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
                         <MakeTeam enabled={enableMakeTeam} closeForm={closeMakeTeam}/>
-                        <button className="casa-button delete-button" type="button" onClick={deleteStudentButton}>Delete Student</button>
                     </div>
                 </div>
 
                 {/* Student Table */}
                 <div>
                     <div>
-                        <input 
-                            type = "text" 
-                            placeholder="Search Table"
-                            value={searchPhrase}
-                            onChange={search}
-                        />
+                        
+                    <input className="input"
+                    type="text" 
+                    placeholder="Search Table"
+                    value={searchPhrase}
+                    onChange={search}
+                />
                         <button  className = 'casa-button' onClick={search}>
                             
                             Search
                         </button>
+                        <table className="right"></table>
+                        {renderTeamTables()}
+                        <button className="casa-button" type="button" onClick={addStudentButton}>Add Student</button>
+                            <button className="casa-button" type="button" onClick={makeTeamButton}>Create Team</button>
                     </div>
-                    <table className="right">
-                            <thead>
-                                <tr>
-                                    <th className="th-manage-teams" >
-                                        Team Name
-                                    </th>
-                                    <th className="th-manage-teams" onClick = {sortByTeamID}>
-                                    <span style={{marginRight: 10}}>Team ID</span>
-                                        {sorted.sorted == "teamID" ? renderArrow() : renderConst()}
-                                    </th>
-                                    <th className="th-manage-teams" onClick = {sortByName}>
-                                    <span style={{marginRight: 10}}>Student Name</span>
-                                        {sorted.sorted == "name" ? renderArrow() : renderConst()}
-                                    </th>
-                                    <th className="th-manage-teams" onClick = {sortByEmail}>
-                                    <span style={{marginRight: 10}}>Email</span>
-                                        {sorted.sorted == "email" ? renderArrow() : renderConst()}
-                                    </th>
-                                    <th className="th-manage-teams" onClick={sortByGrade}>
-                                        <span style={{marginRight: 10}}>Grade Level</span>
-                                        {sorted.sorted == "grade" ? renderArrow() : renderConst()}
-                                    </th>
-                                    
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {students && students.map((student, index) => (
-                                <tr key={student._id} onClick={() => (fillDisplayInfo(student))}>
-                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{(teams && student.team != -1) ? getTeamName(student.team) : "N/A"}</td>
-                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.team != -1 ? formatTeamIDString(student.team) : "N/A"}</td>
-                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.displayname}</td>
-                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.email}</td>
-                                    <td className={student._id == currentStudentID ? "td-selected" : index % 2 === 0 ? 'td-even' : 'td-odd'}>{student.gradelevel != undefined ? student.gradelevel : "N/A"}</td>
-                                    
-                                </tr>
-                                ))}
-                            </tbody>
-                    </table>
                 </div>
             </div>
         );

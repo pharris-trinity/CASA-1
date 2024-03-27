@@ -381,7 +381,8 @@ app.post('/api/coach/create_coach', async(req, res) => {
       school: school,
       district: district,
       rotc: rotc,
-      coach: coach
+      coach: coach,
+      //alternates: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
     })
 
     //See if coach exists
@@ -596,6 +597,89 @@ app.post('/api/team/add_student_to_team', async(req, res) => {
 
   return res.status(200).send("Updated user and team successfully")
 })
+
+
+app.post('/api/team/add_alternate', async(req, res) => {
+  //Takes in a team ID and a student ID and updates the team and the student
+  const {team_id, student_id} = req.body
+
+  const team = await Team.findOne({"national_id": team_id})
+  const user = await User.findOne({"_id": student_id})
+
+  //console.log(user.alternate)
+  if(!team){
+    return res.status(501).json({ message: "No team found that matches that ID"})
+  }
+
+  if(!user){
+    return res.status(502).json({ message: "No user found that matches that ID"})
+  }
+
+  if (team.alternates && team.alternates.includes(student_id)) {
+    return res.status(400).json({ message: "Student is already an alternate of the team"});
+  }
+
+  var alternates = team.alternates
+  if(alternates != undefined){
+    alternates.push(student_id)
+  }
+  team.alternates = alternates
+  team.save()
+
+  user.alternate = true
+  user.save()
+  //console.log(user.alternate)
+
+  //Save the updated alternate to team
+
+  return res.status(200).json({ message: "Updated the team (alternates) successfully" });
+})
+
+app.post('/api/team/remove_alternate', async (req, res) => {
+  // Takes in a team ID and a student ID and removes the student from the alternates list of the team
+  const { team_id, student_id } = req.body;
+  console.log("try to remove")
+  try {
+      const team = await Team.findOne({ "national_id": team_id });
+      const user = await User.findOne({ "_id": student_id });
+
+      if (!team) {
+          return res.status(404).json({ message: "No team found that matches the provided ID"});
+      }
+
+      if (!user) {
+        return res.status(403).json({ message: "No user found that matches the provided ID"});
+    }
+
+      // Check if the alternates array exists and if the student is in the array
+      if (!team.alternates || !team.alternates.includes(student_id)) {
+          return res.status(400).json({ message: "Student is not an alternate of the team"});
+      }
+
+      // Remove the student from the alternates array
+      // team.alternates = team.alternates.filter(id => id !== student_id);
+      // team.save();
+
+    var alternates = team.alternates
+    if (alternates != undefined) {
+      alternates.remove(student_id)
+    }
+    team.alternates = alternates
+    team.save()
+
+    user.alternate = false
+    user.save()
+
+
+      console.log("alternate removed")
+      return res.status(200).json({ message: "Removed the student from the alternates list of the team"});
+  } catch (error) {
+      console.error("Error occurred:", error);
+      return res.status(500).json({ message: "Internal server error"});
+  }
+});
+
+
 
 app.post('/api/team/remove_student_from_team', async(req, res) => {
   //Takes in a team ID and a student ID and if the student is in the team then it removes the student from the team

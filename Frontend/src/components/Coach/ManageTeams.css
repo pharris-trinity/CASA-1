@@ -17,6 +17,37 @@
     padding: 1%;
 }
 
+.form .form-inner ._form-group {
+    display: block;
+    width: 300px;
+    margin-bottom: 15px;
+  }
+  
+  .form-inner ._form-group label {
+    display: block;
+    color: #efffeb;
+    font-size: 12px;
+    margin-bottom: 5px;
+    transition: 0.4s;
+  }
+  
+  .form-inner ._form-group:focus-within label {
+    color: #dfffe4;
+  }
+  
+  .form .form-inner ._form-group input {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    transition: 0.4s;
+  }
+  
+  .form .form-inner ._form-group input:focus {
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  }
+
 .form-container {
     padding: 10px;
     background-color: white;
@@ -76,3 +107,52 @@
     align-items: center;
     float:none;
 }
+
+.row-container {
+    margin-top: 20px; /* Adjust as needed */
+}
+
+.row {
+    padding: 10px;
+    background-color: white; /* Set default background color to white */
+    cursor: pointer;
+}
+
+.selected-row {
+    background-color: #b33a3a; /* Adjust the background color for selected row */
+    color: white; /* Adjust the text color for selected row */
+}
+/* Set default background color to white */
+.right tr {
+    background-color: white;
+}
+
+/* Change background color to red when selected */
+.right tr.selected {
+    background-color: red;
+    color: #b33a3a; /* Adjust the background color as needed */
+}
+
+tr:hover {
+    cursor: pointer;
+}
+
+//<<<<<<< ashley
+.input{
+    padding: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+    font-size: 16px;
+    margin-bottom: 10px; /* Adjust spacing as needed */
+}
+//=======
+.checkbox-container {
+    font-size: 20px; /* Adjust the font size as needed */
+  }
+  
+  .checkbox-container input[type="checkbox"] {
+    transform: scale(1.5); /* Adjust the scale factor to make the checkbox bigger */
+  }
+
+//>>>>>>> manageTeamTables
