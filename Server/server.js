@@ -174,7 +174,9 @@ app.post('/api/coach/create_coach', async(req, res) => {
     }
 
     bcrypt.hash(password, saltRounds, (err, hash) => {
-      
+      if (err) {
+        return res.status(500).end(); // Handle saving error
+    }
       var coach = new Coach({
         username: username,
         displayname: displayname,
@@ -299,23 +301,23 @@ app.post('/api/coach/create_coach', async(req, res) => {
     res.status(201).send(code)
   })
 
-  app.get('/api/admin/generate_mentor_validation_code', async(req, res) => {
-    var ret = generateValidationCode();
+  //app.get('/api/admin/generate_mentor_validation_code', async(req, res) => {
+    //var ret = generateValidationCode();
 
-    var code = new Validation({
-      value: ret,
-      validationType: false
-    })
+    //var code = new Validation({
+     // value: ret,
+     // validationType: false
+   // })
 
-    code.save(function (err, user){
-      if (err) {
-        res.status(401).end();
-        return console.error(err)
-      }
-    });
+    //code.save(function (err, user){
+     // if (err) {
+      //  res.status(401).end();
+    //    return console.error(err)
+  //    }
+   // });
 
-    res.status(201).send(code)
-  })
+   // res.status(201).send(code)
+  //})
 
   app.post('/api/admin/check_code_existence', async(req, res) => {
     const { validationCode } = req.body
@@ -927,8 +929,8 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
 //Mentor
   app.post('/api/mentor/create_mentor', async(req, res) => {
-    const {username, displayname, remote, zipcode, password, email, madeQuizzes, teams, speciality} = req.body;
-
+    const {username, displayname, password, email} = req.body;
+    console.log("API hit")
     var potentialUsers = await Mentor.find({$or:[{username:username}, {email:email}]}).exec();
 
     if(potentialUsers.length != 0){
@@ -949,17 +951,21 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
       bcrypt.hash(password, saltRounds, (err, hash) => {
         
+        if (err) {
+          return res.status(500).end(); // Handle saving error
+      }
+
         var mentor = new Mentor({
           username: username,
           displayname: displayname,
           email: email,
-          remote: remote,
-          zipcode: zipcode,
-          password : hash,
+          //remote: remote,
+          //zipcode: zipcode,
+          password : hash
           //madeQuizzes: madeQuizzes,
-          speciality: speciality, 
+          //speciality: speciality, 
           //teams: teams
-        });
+        })
   
         mentor.save(function (err, user){
           if (err) {
