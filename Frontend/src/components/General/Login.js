@@ -114,42 +114,6 @@ function Login() {
         <div className="error">{errorMessages.message}</div>
   );
   
-  // JSX code for login form
-  // const renderForm = (
-  //     <div className="form"> 
-      
-  //     <form onSubmit={handleSubmit}>
-      
-  //         <div className="input-container">
-          
-  //         <label>Username </label>
-  //         <input type="text" name="uname" required />
-  //         {renderErrorMessage("uname")}
-  //         </div>
-  //         <div className="input-container">
-  //         <label>Password </label>
-  //         <input type="password" name="pass" required />
-  //         {renderErrorMessage("pass")}
-  //         </div>
-  //         <div className="button-container">
-  //         <input type="submit" />
-  //         </div>
-          
-  //     </form>
-  //     </div>
-  // );
-
-  // return (
-  //       <div className="app">
-  //           <div className="login-form">
-  //               <img src={logo} className="photo" centerImage="center" alt="This the main logo"/>
-  //                   <div className="title">Sign In</div> 
-  //                   {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
-                
-  //           </div>
-  //       </div>
-  //   </>
-
   return(
     <>
     <Navbar/>
@@ -168,12 +132,21 @@ function Login() {
                     <input type="password" placeholder="Password" name="password" id="password" onChange={e => setDetails({...details, password: e.target.value})} value={details.password}/>
                     {renderErrorMessage("pass")}
                 </div>
-                <input type="submit" value="LOGIN"/>
-                <button className="casa-button" onClick={accountCreation}>Create Student Account</button>
-                <button className="casa-button" onClick={coachAccountCreation}>Create Coach Account</button>
-            </div>
+                <div className="submit-button">
+                    <input type="submit" value="LOGIN"/>
+                </div>
+                <div className="button-container">
+                <button className="casa-button2" onClick={accountCreation}>CREATE STUDENT ACCOUNT</button>
+                <div>
+                    <button className="casa-button2" onClick={coachAccountCreation}>CREATE COACH ACCOUNT          </button>
+                    </div>
+                </div> 
+    
+                
+            </div> 
         </form>
     </div>
+
     </>
 
   );

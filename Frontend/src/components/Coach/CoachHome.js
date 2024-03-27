@@ -22,7 +22,7 @@ CoachHome is the coach's home page. It uses state variables to control which sub
 
 function CoachHome() {
 
-  const [enabledManageTeam, setEnabledManageTeam] = useState(false);
+  const [enabledManageTeam, setEnabledManageTeam] = useState(true);
   const [enabledStudentStats, setEnabledStudentStats] = useState(false);
   const [enabledCreateQuiz, setEnabledCreateQuiz] = useState(false);
   const [enabledFindMentors, setEnabledFindMentors] = useState(false);
