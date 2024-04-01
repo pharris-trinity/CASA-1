@@ -565,10 +565,12 @@ app.post('/api/team/add_student_to_team', async(req, res) => {
   //Takes in a team ID and a student ID and updates the team and the student
   const {team_id, student_id} = req.body
 
+  console.log(team_id)
+
   const team = await Team.findOne({"national_id": team_id})
   const user = await User.findOne({"_id": student_id})
 
-  if(!team){
+  if(!team && team_id!==-1){
     return res.status(501).send("No team found that matches that ID")
   }
 
@@ -582,6 +584,10 @@ app.post('/api/team/add_student_to_team', async(req, res) => {
 
   if(user.team == team_id){
     return res.status(201).send("User is already registered to this team")
+  }
+
+  if(team.members.length > 10){
+    return res.status(202).send("Team is full")
   }
 
   var members = team.members
@@ -619,6 +625,13 @@ app.post('/api/team/add_alternate', async(req, res) => {
     return res.status(400).json({ message: "Student is already an alternate of the team"});
   }
 
+  console.log("memebers not alternate")
+  console.log(team.members.length - team.alternates.length)
+
+  if(team.members.length - team.alternates.length < 4){
+    return res.status(401).json({ message: "Need minimum of 2 non-alternates"});
+  }
+
   var alternates = team.alternates
   if(alternates != undefined){
     alternates.push(student_id)
@@ -631,8 +644,9 @@ app.post('/api/team/add_alternate', async(req, res) => {
   //console.log(user.alternate)
 
   //Save the updated alternate to team
+  const success = true;
 
-  return res.status(200).json({ message: "Updated the team (alternates) successfully" });
+  return res.status(200).json({ success: success, message: "Updated the team (alternates) successfully" });
 })
 
 app.post('/api/team/remove_alternate', async (req, res) => {
@@ -670,9 +684,10 @@ app.post('/api/team/remove_alternate', async (req, res) => {
     user.alternate = false
     user.save()
 
+    const success = true;
 
       console.log("alternate removed")
-      return res.status(200).json({ message: "Removed the student from the alternates list of the team"});
+      return res.status(200).json({ success: success, message: "Removed the student from the alternates list of the team"});
   } catch (error) {
       console.error("Error occurred:", error);
       return res.status(500).json({ message: "Internal server error"});
@@ -712,6 +727,7 @@ app.post('/api/team/remove_student_from_team', async(req, res) => {
   team.save()
 
   user.team = -1
+  user.alternate = false;
   user.save()
 
   return res.status(200).send("Removed user from team")
@@ -888,11 +904,19 @@ app.post('/api/get-MentorData', function(req, res, next) {
       return res.status(502).send("No coach was found that matches this ID")
     }
 
-    if(studentTeamID != -1 && studentTeamID != "") {
+    if(studentTeamID != "" && studentTeamID != "N/A") {
       const newTeam = await Team.findOne({"national_id": studentTeamID})
       const oldTeam = await Team.findOne({"national_id": user.team})
       if(!newTeam) {
-        return res.status(503).send("No team matches this National Team Number")
+        if(studentTeamID === -1){
+            user.team = -1;
+            var oldMembers = oldTeam.members
+            if(oldMembers != undefined){
+              oldMembers.remove(studentID)
+            }
+            oldTeam.members = oldMembers
+            oldTeam.save()
+        } else { return res.status(503).send("No team matches this National Team Number")}
       } else {
         if(oldTeam) {
           if(newTeam.national_id != user.team) {
