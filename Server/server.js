@@ -951,6 +951,21 @@ app.post('/api/get-MentorData', function(req, res, next) {
     }
   })
 
+  app.get('/api/quizEdit',async(req,res)=>{
+    const {updatedQuiz} = req.body
+    const quiz = await Quiz.findById(quizInfo.id)
+    console.log("this quiz bout to be changed")
+    console.log(quiz.name)
+    if(!quiz){
+      console.log("no quiz was found")
+      return res.sendStatus(404)
+    } else {
+      return res.status(200).send(quiz);
+    }
+  })
+
+
+
   app.get('/api/quizsearch',async(req,res)=>{
     const quizzes = await Quiz.find({});
     //console.log(quizzes)
