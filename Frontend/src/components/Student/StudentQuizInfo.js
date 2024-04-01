@@ -5,7 +5,7 @@ import { loginChecker } from "../General/LoginCheck";
 import { DropdownBar } from "./DropdownBar.js";
 import Quiz from "../Quiz/quiz.js";
 import './stylesStud.css';
-import { TeamInfo as StudentTeamInfo } from "./TeamInfo.js"; // Rename import
+import TeamInfo from "./TeamInfo.js";
 import StudentInfo from "./StudentInfo.js";
 import StudentQuizInfo from "./StudentQuizInfo.js";
 
@@ -51,6 +51,7 @@ function StudentMainPage() {
   }
 
 
+ 
 
 
   useEffect(() => {
@@ -149,21 +150,21 @@ function StudentMainPage() {
 
       <div className="coach-page-main">
         <button className={enabledTeamInfo ? "selected-tab" : "unselected-tab"} onClick={TeamInfo}>
-        Team Information
+        Manage Teams
         </button>
 
         <button className={enabledStudentInfo? "selected-tab" : "unselected-tab"} onClick={StudentInfo}>
-        Profile
+        Student Stats
         </button>
 
         <button className={enabledStudentQuizInfo ? "selected-tab" : "unselected-tab"} onClick={StudentQuizInfo}>
-        Quiz
+        Create Quizzes
         </button>
 
         <div className="content-area">
           {showList ? (
             <div>
-              <h1>TTEST Thanks for trying out the beta! <br />Click the assessments tab to take a quiz.</h1>
+              <h1>This is the student page. Thanks for trying out the beta! <br />Click the assessments tab to take a quiz.</h1>
               <input
                 type="text"
                 placeholder="Search Table"

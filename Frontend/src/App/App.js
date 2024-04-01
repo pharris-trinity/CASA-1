@@ -18,6 +18,10 @@ import StudentTakeAssessPage from '../components/Student/StudTakeAssessPage';
 import StudentViewAssessPage from '../components/Student/StudViewAssessPage';
 import Quiz1Test from '../components/Student/Quiz1Test';
 import QuizContent from '../components/Student/QuizContent';
+import StudentQuizInfo from '../components/Student/StudentQuizInfo';
+import TeamInfo from '../components/Student/TeamInfo';
+import StudentInfo from '../components/Student/StudentInfo';
+
 
 import MentorTable from "../components/Mentor/MentorTable";
 import TableMentor from "../components/Mentor/TableMentor";
@@ -90,6 +94,17 @@ function App() {
           {/*the 2 pages below likely need to be deleted, but will keep around till sure*/}
           <Route path="stud/takeassess/quiz1" element={<Quiz1Test/>} />
           <Route path="stud/takeassess/quizcontent" element={<QuizContent/>} />
+          <Route path="stud/takeassess/quizcontent" element={<QuizContent/>} />
+          <Route path="stud/TeamInfo" element={<TeamInfo/>} />
+          <Route path="stud/StudentQuizInfo" element={<StudentQuizInfo/>} />
+          <Route path="stud/StudentInfo" element={<StudentInfo/>} />
+
+
+
+
+
+
+
         
         {/*Coach Routes*/}
           <Route path="coachhome" element={<CoachHome/>} />
