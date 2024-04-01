@@ -571,6 +571,10 @@ app.post('/api/team/add_student_to_team', async(req, res) => {
     return res.status(201).send("User is already registered to this team")
   }
 
+  if(team.members.length > 10){
+    return res.status(202).send("Team is full")
+  }
+
   var members = team.members
   if(members != undefined){
     members.push(student_id)
@@ -604,6 +608,13 @@ app.post('/api/team/add_alternate', async(req, res) => {
 
   if (team.alternates && team.alternates.includes(student_id)) {
     return res.status(400).json({ message: "Student is already an alternate of the team"});
+  }
+
+  console.log("memebers not alternate")
+  console.log(team.members.length - team.alternates.length)
+
+  if(team.members.length - team.alternates.length < 4){
+    return res.status(401).json({ message: "Need minimum of 2 non-alternates"});
   }
 
   var alternates = team.alternates
