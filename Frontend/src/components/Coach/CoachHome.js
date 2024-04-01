@@ -27,6 +27,7 @@ function CoachHome() {
   const [enabledCreateQuiz, setEnabledCreateQuiz] = useState(false);
   const [enabledFindMentors, setEnabledFindMentors] = useState(false);
   const [enabledCoachProfile, setEnabledCoachProfile] = useState(false);
+  const [enabledTeamOversight, setEnabledTeamOversight] = useState(false);
   const [resetKey, setResetKey] = useState("key");
 
   let navigate = useNavigate();
@@ -46,6 +47,7 @@ function CoachHome() {
     setEnabledCreateQuiz(false);
     setEnabledFindMentors(false); 
     setEnabledCoachProfile(false);
+    setEnabledTeamOversight(false);
   }
 
   function showStudentStats() {
@@ -54,6 +56,7 @@ function CoachHome() {
     setEnabledCreateQuiz(false);
     setEnabledFindMentors(false);
     setEnabledCoachProfile(false);
+    setEnabledTeamOversight(false);
   }
 
   function showCreateQuiz() {
@@ -62,6 +65,7 @@ function CoachHome() {
     setEnabledStudentStats(false);
     setEnabledFindMentors(false);
     setEnabledCoachProfile(false);
+    setEnabledTeamOversight(false);
   }
 
   function showFindMentors() {
@@ -70,6 +74,7 @@ function CoachHome() {
     setEnabledManageTeam(false);
     setEnabledStudentStats(false);
     setEnabledCoachProfile(false);
+    setEnabledTeamOversight(false);
   }
 
   function showCoachProfile(){
@@ -78,6 +83,17 @@ function CoachHome() {
     setEnabledCreateQuiz(false);
     setEnabledManageTeam(false);
     setEnabledStudentStats(false);
+    setEnabledTeamOversight(false);
+  }
+
+  
+  function showTeamOversight() {
+    setEnabledTeamOversight(!enabledTeamOversight)
+    setEnabledFindMentors(false);
+    setEnabledCreateQuiz(false);
+    setEnabledManageTeam(false);
+    setEnabledStudentStats(false);
+    setEnabledCoachProfile(false);
   }
 
   function coachTableButton(){
@@ -102,6 +118,10 @@ return (
         Manage Teams
         </button>
 
+        <button className={enabledTeamOversight ? "selected-tab" : "unselected-tab"} onClick={showTeamOversight}>
+          Team Oversight - WIP
+        </button>
+
         <button className={enabledStudentStats ? "selected-tab" : "unselected-tab"} onClick={showStudentStats}>
         Student Stats
         </button>
@@ -124,6 +144,7 @@ return (
             : null
           }
           <ManageTeams enabled={enabledManageTeam}/>
+        {/*  <TeamOversight enabled={enabledTeamOversight}/> */}
           <StudentStats enabled={enabledStudentStats}/>
           <FindMentors enabled={enabledFindMentors}/>
           <CoachProfile enabled={enabledCoachProfile}/>
