@@ -951,18 +951,50 @@ app.post('/api/get-MentorData', function(req, res, next) {
     }
   })
 
-  app.get('/api/quizEdit',async(req,res)=>{
-    const {updatedQuiz} = req.body
-    const quiz = await Quiz.findById(quizInfo.id)
-    console.log("this quiz bout to be changed")
-    console.log(quiz.name)
+  app.post('/api/editQuiz', async(req, res) => {
+    const updatedQuiz = req.body
+    console.log(updatedQuiz._id)
+    const quiz = await Quiz.findById(updatedQuiz._id)
+    var final_questions = []
+
     if(!quiz){
       console.log("no quiz was found")
-      return res.sendStatus(404)
+      return res.sendStatus(404).message
     } else {
+      if(quiz.category !== updatedQuiz.category){
+        console.log("CHANGE CATEGORY HERE")
+        quiz.category = updatedQuiz.category
+        quiz.save()
+      }
+      // console.log(updatedQuiz.questions)
+      // console.log(quiz.questions)
+      // for(question in updatedQuiz.questions){
+
+      //   const {value, description, answers, correctAnswer} = questions[question]  
+      
+        
+      //   var new_question = new Question({
+      //     value: value,
+      //     description: description,
+      //     answers: answers,
+      //     correctAnswer: correctAnswer
+      //   })
+  
+      //   new_question.save(function (err, user){
+      //     if (err) {
+      //       res.status(401).end();
+      //       return console.error(err)
+      //     }
+      //   });
+      //   final_questions.push(new_question)
+      // }
+
+      quiz.questions = updatedQuiz.questions
+      quiz.save()
+
       return res.status(200).send(quiz);
     }
-  })
+});
 
 
 

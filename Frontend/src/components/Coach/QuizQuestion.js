@@ -3,43 +3,55 @@ import './questionForm.css'; // Import CSS file for styling
 import './quizInfo.css';
 import './createQuiz.css'; // Import CSS file for styling
 
-function QuizQuestion({ quiz, submitRef, setInfo}) {
+function QuizQuestion({ quiz, setInfo }) {
     const [category, setCategory] = useState(quiz.category); // Initialize category with the quiz's category
     const [questions, setQuestions] = useState(quiz.questions); // Initialize questions with the quiz's questions
     const [correctAnswers, setCorrectAnswers] = useState(() => quiz.questions.map(question => question.correctAnswer)); // Initialize correctAnswers with the quiz's correct answers
-    const [questionIndex, setQuestionIndex] = useState(0);
-    const [questionForms, setQuestionForms] = useState([]);
-    const [quizName, setQuizName] = useState();
+    const [quizName, setQuizName] = useState(quiz.name); // Initialize quizName with the quiz's name
+    const choices = ["A", "B", "C", "D"];
     const refs = useRef([]);
-    const quizInfoRef = useRef();
-
-    const choices = ["A", "B", "C", "D"]; 
 
     // Compiles info and makes a question object
-    const Question = function(desc, ans, correctAns){
+    const Question = function (desc, ans, correctAns) {
         const description = desc;
         const answers = ans;
         const correctAnswer = correctAns;
         const value = 1;
         return { description, answers, correctAnswer, value };
     };
-    
+
     // Submit functionality for React Form
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const updatedQuiz = {
             ...quiz,
+            name: quizName, // Update quiz name
             category: category,
             questions: questions.map((question, index) => ({
                 ...question,
                 correctAnswer: correctAnswers[index]
             }))
         };
-        // Handle submitting the updated quiz to the backend
-        console.log("Updated quiz:", updatedQuiz);
-        setInfo([updatedQuiz.quiz, updatedQuiz.category]);
-        console.log("propped")
-        console.log(updatedQuiz.category)
+
+        try {
+            console.log(updatedQuiz.name)
+            const response = await fetch(`/api/editQuiz`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedQuiz),
+            });
+
+            if (response.ok) {
+                console.log('Quiz updated successfully!');
+                // Optionally, you can update local state or perform other actions upon successful update
+            } else {
+                console.error('Failed to update quiz:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error updating quiz:', error);
+        }
     };
 
     const handleChange = (index, key, value) => {
@@ -56,7 +68,7 @@ function QuizQuestion({ quiz, submitRef, setInfo}) {
 
     const addQuestions = (quests) => {
         var tempArray = [];
-        for(var i = 0; i < quests.current.length; i++) {
+        for (var i = 0; i < quests.current.length; i++) {
             tempArray.push(quests.current[i]);
         }
         setQuestions(tempArray);
@@ -79,7 +91,7 @@ function QuizQuestion({ quiz, submitRef, setInfo}) {
             <form onSubmit={handleSubmit}>
                 <div className="quiz-boxes">
                     <div className="quizinfo-content-box">
-                        <h3 className="quizinfo-text-container">{quiz.name}</h3>
+                        <h3 className="quizinfo-text-container">Quiz: {quiz.name}</h3>
                         <h3 className="quizinfo-text-container">Category</h3>
                         <select value={category} onChange={e => setCategory(e.target.value)}>
                             <option value="windows">Windows</option>
@@ -131,16 +143,7 @@ function QuizQuestion({ quiz, submitRef, setInfo}) {
                     ))}
                     <div className="button-spacer">
                         <button className="casa-button button-left" onClick={() => setQuestions(prevQuestions => [...prevQuestions, { description: "", answers: ["", "", "", ""], correctAnswer: 0 }])}>Add Question</button>
-                        <button className="casa-button button-right" onClick={() => {
-
-                            refs.current.map(ref => { ref.click() })
-                            addQuestions(refs);
-
-                            quizInfoRef.current.click();
-                            setQuizName(quizInfoRef.current[0]);
-                            setCategory(quizInfoRef.current[1]);
-
-                        }}>Submit Changes</button>
+                        <button className="casa-button button-right" type="submit">Submit Changes</button>
                     </div>
                 </div>
             </form>
