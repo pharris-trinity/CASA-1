@@ -40,6 +40,7 @@ export default function StudentProfilePage() {
     return(
     <>
     {<StudProfileContent data={(currStud)}/>}
+    <h3>Student Profile Page</h3>
     </>
     ); 
     

@@ -3,7 +3,7 @@ import React from 'react';
 function StudentTeamInfo() {
     return (
         <div> 
-            <h1>HELLO</h1>
+            <h1>Student Team Info Page</h1>
         </div>
     );
 }

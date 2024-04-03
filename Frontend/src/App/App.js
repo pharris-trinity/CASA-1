@@ -86,8 +86,8 @@ function App() {
           <Route path="SideBar" element={<Sidebar/>}/>
           <Route path="SideBar_" element={<Sidebar_/>}/>
 
-        {/*Student Routes*/}
-          <Route path="stud/main" element={<StudMainPage/>} />
+        {/*Student Routes*/} 
+          <Route path="studenthome" element={<StudMainPage/>} />
           <Route path="stud/profile" element={<StudProfilePage/>} />
           <Route path="stud/takeassess" element={<StudentTakeAssessPage/>} />
           <Route path="stud/viewassess" element={<StudentViewAssessPage/>} />
@@ -95,9 +95,9 @@ function App() {
           <Route path="stud/takeassess/quiz1" element={<Quiz1Test/>} />
           <Route path="stud/takeassess/quizcontent" element={<QuizContent/>} />
           <Route path="stud/takeassess/quizcontent" element={<QuizContent/>} />
-          <Route path="stud/TeamInfo" element={<TeamInfo/>} />
-          <Route path="stud/StudentQuizInfo" element={<StudentQuizInfo/>} />
-          <Route path="stud/StudentInfo" element={<StudentInfo/>} />
+          {/* <Route path="TeamInfo" element={<TeamInfo/>} />
+          <Route path="StudentQuizInfo" element={<StudentQuizInfo/>} />
+          <Route path="StudentInfo" element={<StudentInfo/>} /> */}
 
 
 

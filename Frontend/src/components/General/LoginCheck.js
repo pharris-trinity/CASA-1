@@ -12,7 +12,7 @@ export const loginChecker = (expectedUserType) => {
     if(localStorage.usertype !== expectedUserType){
       if(localStorage.usertype === "Student"){
         //navigate('/stud/main', {replace: true})
-        return('/stud/main')
+        return('/studenthome')
       }
       else if(localStorage.usertype === "Mentor"){
         return('/mentorHome')

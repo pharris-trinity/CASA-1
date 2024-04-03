@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { loginChecker } from "../General/LoginCheck";
 import { DropdownBar } from "./DropdownBar.js";
 import Quiz from "../Quiz/quiz.js";
-import './stylesStud.css';
-import TeamInfo from "./TeamInfo.js";
+import './stylesStud.css'; 
+import { TeamInfo as StudentTeamInfo } from "./TeamInfo.js"; // Rename import
 import StudentInfo from "./StudentInfo.js";
-import StudentQuizInfo from "./StudentQuizInfo.js";
+//import StudentQuizInfo from "./StudentQuizInfo.js";
 
-function StudentMainPage() {
+function StudentQuizInfo() {
   const [studentID, setStudentID] = useState();
   const [takenQuizzes, setTakenQuizzes] = useState([]);
   const [quizlist, setQuizlist] = useState([]);
@@ -30,29 +30,6 @@ function StudentMainPage() {
   };
 
   //the 5 funtions below control which component is being rendered
-
-  function TeamInfo(){
-    //navigate('/ViewTeams2', {replace: true}) 
-    setTeamInfo(!enabledTeamInfo); 
-    setStudentQuizInfo(false);
-    setStudentInfo(false);
-  }
-
-  function StudentQuizInfo() {
-    setStudentQuizInfo(!enabledStudentQuizInfo);
-    setTeamInfo(false); 
-    setStudentInfo(false);
-  }
-
-  function StudentInfo() {
-    setStudentInfo(!enabledStudentInfo);
-    setTeamInfo(false);
-    setStudentQuizInfo(false);
-  }
-
-
- 
-
 
   useEffect(() => {
     const toNavigateTo = loginChecker("Student");
@@ -132,39 +109,12 @@ function StudentMainPage() {
     }
   };
 
-  const handleStudentInfoClick = () => {
-    navigate("/StudentInfo");
-  };
-
-  const handleTeamInfoClick = () => {
-    navigate("/TeamInfo");
-  };
-
-  const handleQuizClick = () => {
-    navigate("/StudentQuizInfo");
-  };
-
+  
   return (
     <>
-      <Navbar buttonSet="student" />
-
-      <div className="coach-page-main">
-        <button className={enabledTeamInfo ? "selected-tab" : "unselected-tab"} onClick={TeamInfo}>
-        Manage Teams
-        </button>
-
-        <button className={enabledStudentInfo? "selected-tab" : "unselected-tab"} onClick={StudentInfo}>
-        Student Stats
-        </button>
-
-        <button className={enabledStudentQuizInfo ? "selected-tab" : "unselected-tab"} onClick={StudentQuizInfo}>
-        Create Quizzes
-        </button>
-
         <div className="content-area">
           {showList ? (
             <div>
-              <h1>This is the student page. Thanks for trying out the beta! <br />Click the assessments tab to take a quiz.</h1>
               <input
                 type="text"
                 placeholder="Search Table"
@@ -198,9 +148,8 @@ function StudentMainPage() {
               quiz && <Quiz quizData={quiz} showList={(e) => setShowList(e)} />
             )}
         </div>
-      </div>
     </>
   );
 }
 
-export default StudentMainPage;
+export default StudentQuizInfo;
