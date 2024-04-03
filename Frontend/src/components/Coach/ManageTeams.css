@@ -137,6 +137,7 @@ tr:hover {
     cursor: pointer;
 }
 
+
 .input{
     padding: 18px;
     border: 1px solid #ccc;
@@ -145,6 +146,7 @@ tr:hover {
     font-size: 16px;
     margin-bottom: 10px; /* Adjust spacing as needed */
 }
+
 .checkbox-container {
     font-size: 20px; /* Adjust the font size as needed */
   }

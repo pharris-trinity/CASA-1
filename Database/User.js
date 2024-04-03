@@ -22,16 +22,17 @@ const User = mongoose.model('User', mongoose.Schema({
 exports.User = mongoose.model('User');
 
 const Mentor = User.discriminator('Mentor', new mongoose.Schema({
-        madeQuizzes: {type:[Quiz.schema], required: false},
-        remote: {type: Boolean, required: true},
+       // madeQuizzes: {type:[Quiz.schema], required: false},
+       // remote: {type: Boolean, required: true},
         zipcode: {type: Number, required: false},
+        phoneNumber:{type: Number, required: false},
         speciality: {type: String, required: false},
         windowsRating: {type: Number, required : false},
         windowsServerRating: {type: Number, required : false},
         linuxRating: {type: Number, required : false},
         networkingRating: {type: Number, required : false},
         securityConseptsRating: {type: Number, required : false},
-        teams: {type:[Number], required: false}
+        //teams: {type:[Number], required: false}
     }),
 );
 

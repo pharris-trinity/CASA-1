@@ -1,0 +1,58 @@
+/* The popup form - hidden by default */
+.form-popup {
+    display: block;
+    position: fixed;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+    background-color: var(--primary-dark-blue);
+    color: white;
+  }
+  
+  /* Add styles to the form container */
+  .personal-information-container {
+    padding: 10px;
+  }
+  
+    /* Full-width input fields */
+    .personal-information-container input[type=Number], .make-team-container input[type=number] {
+      width: 100%;
+      padding: 15px;
+      margin: 5px 0 22px 0;
+      border: none;
+      background: #f1f1f1;
+      font-size: large;
+    }
+
+    .personal-information-container input[type=String], .make-team-container input[type=String] {
+      width: 100%;
+      padding: 15px;
+      margin: 5px 0 22px 0;
+      border: none;
+      background: #f1f1f1;
+    }
+
+    .zip-help {
+      position: relative;
+      display: inline-block;
+    }
+
+    .zip-help .zip-help-text {
+      visibility: hidden;
+      width: 325px;
+      background-color: red;
+      color: #fff;
+      text-align: center;
+      padding: 5px 0;
+      border-radius: 6px;
+      font-size: 14px;
+      position: absolute;
+      z-index: 1;
+    }    
+
+    .zip-help:hover .zip-help-text {
+      visibility: visible;
+    }
