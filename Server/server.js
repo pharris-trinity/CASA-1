@@ -628,7 +628,7 @@ app.post('/api/team/add_alternate', async(req, res) => {
   console.log("memebers not alternate")
   console.log(team.members.length - team.alternates.length)
 
-  if(team.members.length - team.alternates.length < 4){
+  if(team.members.length - team.alternates.length < 3){
     return res.status(401).json({ message: "Need minimum of 2 non-alternates"});
   }
 
@@ -1003,7 +1003,7 @@ app.post('/api/get-MentorData', function(req, res, next) {
       if(quiz.category !== updatedQuiz.category){
         console.log("CHANGE CATEGORY HERE")
         quiz.category = updatedQuiz.category
-        quiz.save()
+        //quiz.save()
       }
       // console.log(updatedQuiz.questions)
       // console.log(quiz.questions)
