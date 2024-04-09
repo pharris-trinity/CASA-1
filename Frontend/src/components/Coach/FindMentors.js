@@ -146,19 +146,25 @@ function FindMentors(props) {
     //const allUsersCopy = [...students];
 
     const search = async (e) => {
-
-        const matchedUsers = mentors.filter((user) => {
-            return user.zipcode.toString().includes(e.target.value.toString());
-        });
-        if (e.target.value.length == 0) {
-            setMentors(allUsersCopy);
-            setSearchPhrase(e.target.value);
+        const searchValue = e.target.value.trim(); // Trim search phrase to remove leading/trailing spaces
+        try {
+            if (searchValue === "") {
+                setMentors(allUsersCopy);
+                setSearchPhrase(searchValue);
+                return;
+            }
+    
+            const matchedUsers = allUsersCopy.filter((user) => {
+                return user && user.zipcode && user.zipcode.toString().includes(searchValue);
+            });
+    
+            setMentors(matchedUsers); // Update mentors with matched users
+            setSearchPhrase(searchValue); // Update searchPhrase state
+        } catch (error) {
+            console.error("Error occurred during search:", error);
         }
-        else {
-            setMentors(matchedUsers);
-            setSearchPhrase(e.target.value);
-        }
-    }
+    };
+    
 
     //parses the mentors info into a table to be used
     if(props.enabled == true) {
