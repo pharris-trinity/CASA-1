@@ -61,19 +61,28 @@ const getCoach = async(coachID) => {
         return teamName;
     }
 
-    const renderTeamTables = () => {
-        // const getTeamName = (teamID) => {
-        //     var teamName = "";
-        //     teams.map(team => {
-        //         if(team.national_id == teamID) {
-        //             teamName = team.name;
-        //         }
-        //     })
-        //     return teamName;
-        // }
+    // const search = async (e) => {
 
-        //const teamTable = Object.entries(groupedStudents)
+    //     const matchedUsers = teams.filter((team) => {
+    //         return team.name.toLowerCase().includes(e.target.value.toLowerCase());
+    //     });
+    //     if (e.target.value.length == 0) {
+    //         setTeams(allUsersCopy);
+    //         setSearchPhrase(e.target.value);
+    //     }
+    //     else {
+    //         setStudents(matchedUsers);
+    //         setSearchPhrase(e.target.value);
+    //     }
+    // }
+
+    if (props.enabled == true) {
+        return (
+            <div>
+            </div>
+        );
     }
+
 
 }
 

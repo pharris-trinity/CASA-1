@@ -44,7 +44,7 @@ const TeamSchema = new Schema({
         default: true
     },
     performance: {
-        type: [Number],
+        type: [[Number]],
         required: false
     }
 })
