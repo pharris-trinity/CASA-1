@@ -75,10 +75,24 @@ const getCoach = async(coachID) => {
     //         setSearchPhrase(e.target.value);
     //     }
     // }
-
+    
     if (props.enabled == true) {
         return (
             <div>
+                <table style={{ color: '#fff' }}>
+                   <thead>
+                        <tr>
+                            <th>Team Name</th>
+                        </tr>
+                   </thead>
+                   <tbody>
+                   {teams && teams.map((item, index) => (
+                            <tr>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.displayname}</td>
+                            </tr>
+                        ))}
+                   </tbody>
+                </table>
             </div>
         );
     }
