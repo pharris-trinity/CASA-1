@@ -8,8 +8,7 @@ import QuizQuestion from './QuizQuestion';
 function PreviousQuizzes({ enabled }) {
   const [quizzes, setQuizzes] = useState([]);
   const [selectedQuiz, setSelectedQuiz] = useState(null); // Track selected quiz for editing
-  const refs = useRef([]);
-  const quizInfoRef = useRef();
+  const quizQuestionRef = useRef();
 
   useEffect(() => {
     // Fetch quizzes from the database
@@ -43,7 +42,7 @@ function PreviousQuizzes({ enabled }) {
         <div>
           {/* Render the QuizQuestion for editing the selected quiz */}
           <button className="casa-button" onClick={handleBackClick}>Back</button>
-          <QuizQuestion quiz={selectedQuiz} submitRef={quizInfoRef} setInfo={(e) => quizInfoRef.current = e}/>
+          <QuizQuestion quiz={selectedQuiz} submitRef={quizQuestionRef}/>
         </div>
       ) : (
         <div className="stats-container">

@@ -7,7 +7,9 @@ function QuizInfo(props){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        props.setInfo([quizName, category]);
+        console.log("Categort is:")
+        console.lof(category)
+        props.setInfo({ quizName, category });
     };
 
     return(

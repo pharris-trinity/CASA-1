@@ -3,13 +3,12 @@ import './questionForm.css'; // Import CSS file for styling
 import './quizInfo.css';
 import './createQuiz.css'; // Import CSS file for styling
 
-function QuizQuestion({ quiz, setInfo }) {
+function QuizQuestion({ quiz }) { 
     const [category, setCategory] = useState(quiz.category); // Initialize category with the quiz's category
     const [questions, setQuestions] = useState(quiz.questions); // Initialize questions with the quiz's questions
     const [correctAnswers, setCorrectAnswers] = useState(() => quiz.questions.map(question => question.correctAnswer)); // Initialize correctAnswers with the quiz's correct answers
     const [quizName, setQuizName] = useState(quiz.name); // Initialize quizName with the quiz's name
     const choices = ["A", "B", "C", "D"];
-    const refs = useRef([]);
 
     // Compiles info and makes a question object
     const Question = function (desc, ans, correctAns) {

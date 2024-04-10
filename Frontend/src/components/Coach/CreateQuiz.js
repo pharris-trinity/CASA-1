@@ -162,17 +162,17 @@ function CreateQuiz(props){
                     {/* Submit button for all of the QuestionForms and QuizInfo component */}
                     <button className="casa-button button-right" onClick={() => {
 
-                    refs.current.map(ref => {ref.click()})
-                    addQuestions(refs);
+                        refs.current.map(ref => { ref.click() })
+                        addQuestions(refs);
 
-                    quizInfoRef.current.click();
-                    setQuizName(quizInfoRef.current[0]);
-                    setCategory(quizInfoRef.current[1]);
+                        quizInfoRef.current.click();
+                        setQuizName(quizInfoRef.current.quizName);
+                        setCategory(quizInfoRef.current.category);
 
                     }}>Create Quiz</button>
                 </div>
-            </div> 
-            
+            </div>
+
         )
     }
 }
