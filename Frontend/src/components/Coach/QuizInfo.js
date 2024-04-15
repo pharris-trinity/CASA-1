@@ -1,3 +1,4 @@
+// QuizInfo.js
 import React, { useState } from 'react';
 import './quizInfo.css';
 
@@ -5,36 +6,49 @@ function QuizInfo(props){
     const [quizName, setQuizName] = useState("");
     const [category, setCategory] = useState("windows");
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Categort is:")
-        console.lof(category)
         props.setInfo({ quizName, category });
+
+        // Reset quiz name and category after submission
+        setQuizName("");
+        setCategory("windows");
+    };
+
+    
+    // Update parent component's state when quiz name changes
+    const handleQuizNameChange = (e) => {
+        setQuizName(e.target.value);
+        props.onChange({ quizName: e.target.value, category });
+    };
+
+    // Update parent component's state when category changes
+    const handleCategoryChange = (e) => {
+        setCategory(e.target.value);
+        props.onChange({ quizName, category: e.target.value });
     };
 
     return(
-        <form onSubmit={handleSubmit}>
-            <div className="quizinfo-content-box">
-                <h3 className="quizinfo-text-container">Quiz Name</h3>
-                <input 
-                    type="text" 
-                    placeholder="Name..." 
-                    name="quizName" 
-                    value={quizName} 
-                    onChange={e => setQuizName(e.target.value)}
-                />
+        <div className="quizinfo-content-box">
+            <h3 className="quizinfo-text-container">Quiz Name</h3>
+            <input 
+                type="text" 
+                placeholder="Name..." 
+                name="quizName" 
+                value={quizName} 
+                onChange={handleQuizNameChange}
+            />
 
-                <h3 className="quizinfo-text-container">Category</h3>
-                <select value={category} onChange={e => setCategory(e.target.value)}>
-                    <option value="windows">Windows</option>
-                    <option value="win_server">Win Server</option>
-                    <option value="linux">Linux</option>
-                    <option value="networking">Networking</option>
-                    <option value="security_concepts">Security Concepts</option>
-                </select>
-            </div>
-            <button type="submit" style={{ display: 'none' }} />
-        </form>
+            <h3 className="quizinfo-text-container">Category</h3>
+            <select value={category} onChange={handleCategoryChange}>
+                <option value="windows">Windows</option>
+                <option value="win_server">Win Server</option>
+                <option value="linux">Linux</option>
+                <option value="networking">Networking</option>
+                <option value="security_concepts">Security Concepts</option>
+            </select>
+        </div>
     );
 }
 

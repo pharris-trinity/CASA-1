@@ -34,6 +34,10 @@ border-radius: 10px; /* Border radius to create rounded edges */
   margin-left: 25%;
 
 }
+.button-rightest {
+  margin-left: 60%;
+
+}
 .button-left {
   margin-left: 0px;
   margin-right: 25%;

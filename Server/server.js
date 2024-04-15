@@ -1138,21 +1138,17 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
 
 app.post('/api/assessment/add_assessment', async (req, res) => {
-    const {questions, author_id, name, cat} = req.body;
+    //const {questions, author_id, name, cat, lvl} = req.body;
+    const {questions, author_id, name, cat, lvl} = req.body;
     var final_questions = []
 
     var author = await User.findOne({"_id": author_id})
     if(!author){
-      //console.log(author_id)
       return res.status(404).send("Author not found")
-    }
-    if(author.usertype == "Student"){
-      return res.status(500).send("Students cannot make quizzes")
     }
 
     for(question in questions){
       const {value, description, answers, correctAnswer} = questions[question]  
-    
       
       var new_question = new Question({
         value: value,
@@ -1174,7 +1170,8 @@ app.post('/api/assessment/add_assessment', async (req, res) => {
       questions: final_questions,
       authorID: author_id,
       name: name,
-      category: cat
+      category: cat,
+      level: lvl,
     });
     let tmp = await new_quiz.save()
     author.madeQuizzes.push(tmp)
@@ -1238,6 +1235,7 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
   var takenQuiz = new TakenQuiz({
     name: name,
     category: category,
+    level: level,
     score: score,
     questions: questions,
     answers: answers,

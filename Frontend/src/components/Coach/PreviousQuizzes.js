@@ -52,17 +52,19 @@ function PreviousQuizzes({ enabled }) {
             <tr>
               <th>Name</th>
               <th>Category</th>
+              <th>Level</th>
             </tr>
-          </thead>
-          <tbody>
-            {quizzes.map((quiz, index) => (
-              <tr key={index} onClick={() => handleQuizClick(quiz)}>
-                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{quiz.name}</td>
+              </thead>
+              <tbody>
+                {quizzes.map((quiz, index) => (
+                  <tr key={index} onClick={() => handleQuizClick(quiz)}>
+                    <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{quiz.name}</td>
                     <td className={index % 2 === 0 ? 'td-even' : 'td-odd'} >{quiz.category}</td>
-                </tr>
-            ))}
-                    </tbody>
-                </table>
+                    <td className={index % 2 === 0 ? 'td-even' : 'td-odd'} >{quiz.level}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
                 </div>
             )}
         </div>

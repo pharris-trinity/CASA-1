@@ -5,6 +5,7 @@ import './createQuiz.css'; // Import CSS file for styling
 
 function QuizQuestion({ quiz }) { 
     const [category, setCategory] = useState(quiz.category); // Initialize category with the quiz's category
+    const [level, setLevel] = useState(quiz.level); // Initialize category with the quiz's level
     const [questions, setQuestions] = useState(quiz.questions); // Initialize questions with the quiz's questions
     const [correctAnswers, setCorrectAnswers] = useState(() => quiz.questions.map(question => question.correctAnswer)); // Initialize correctAnswers with the quiz's correct answers
     const [quizName, setQuizName] = useState(quiz.name); // Initialize quizName with the quiz's name
@@ -26,6 +27,7 @@ function QuizQuestion({ quiz }) {
             ...quiz,
             name: quizName, // Update quiz name
             category: category,
+            level: level,
             questions: questions.map((question, index) => ({
                 ...question,
                 correctAnswer: correctAnswers[index]
@@ -33,7 +35,6 @@ function QuizQuestion({ quiz }) {
         };
 
         try {
-            console.log(updatedQuiz.name)
             const response = await fetch(`/api/editQuiz`, {
                 method: 'POST',
                 headers: {
@@ -43,7 +44,7 @@ function QuizQuestion({ quiz }) {
             });
 
             if (response.ok) {
-                console.log('Quiz updated successfully!');
+                alert('Quiz updated successfully!');
                 // Optionally, you can update local state or perform other actions upon successful update
             } else {
                 console.error('Failed to update quiz:', response.statusText);
@@ -98,6 +99,12 @@ function QuizQuestion({ quiz }) {
                             <option value="linux">Linux</option>
                             <option value="networking">Networking</option>
                             <option value="security_concepts">Security Concepts</option>
+                        </select>
+                        <h3 className="quizinfo-text-container">Category</h3>
+                        <select value={level} onChange={e => setLevel(e.target.value)}>
+                            <option value="silver">Silver</option>
+                            <option value="gold">Gold</option>
+                            <option value="platinum">Platinum</option>
                         </select>
                     </div>
                     {/* Render a box for each question */}

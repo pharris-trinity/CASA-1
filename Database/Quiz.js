@@ -36,6 +36,10 @@ const QuizSchema = new Schema({
     category: {
         type: String,
         required: true
+    },
+    level: {
+        type: String,
+        required: false
     }
 })
 
@@ -47,6 +51,10 @@ const TakenQuizSchema = new Schema({
     category: {
         type: String,
         required: true
+    },
+    level: {
+        type: String,
+        required: false
     },
     score: {
         type: Number,
