@@ -14,22 +14,19 @@ export default function StudentProfilePage() {
   }, [navigate]);
 
   const [currStud, setStud] = useState([]);
+
   
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fieldData = ['username', 'school', 'tier', 'gradelevel', 'team'];
-        const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(fieldData)
-        };
-        const response = await fetch(finishedurl, requestOptions);
+        const response = await fetch('api/studentInfoSearch');
+        const data = await response.json();
         if (!response.ok) {
           throw new Error('Failed to fetch student data');
         }
-        const data = await response.json();
-        setStud(data.collection);
+        setStud(data);
+        console.log("Current Stundent sisplay name")
+    console.log(data.displayname)
       } catch (error) {
         console.error(error);
       }
@@ -52,16 +49,8 @@ export default function StudentProfilePage() {
             <td>{currStud.displayname}</td>
           </tr>
           <tr>
-            <td><strong>School:</strong></td>
-            <td>{currStud.school}</td>
-          </tr>
-          <tr>
             <td><strong>Grade:</strong></td>
             <td>{currStud.gradelevel}</td>
-          </tr>
-          <tr>
-            <td><strong>Tier:</strong></td>
-            <td>{currStud.tier}</td>
           </tr>
           <tr>
             <td><strong>TeamID:</strong></td>
