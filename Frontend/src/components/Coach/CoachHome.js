@@ -42,7 +42,7 @@ function CoachHome() {
   //the 5 funtions below control which component is being rendered
 
   function showPreviousQuizzes() {
-    setEnabledPreviousQuizzes(!enabledPreviousQuizzes);
+    setEnabledPreviousQuizzes(true);
     setEnabledManageTeam(false);
     setEnabledStudentStats(false);
     setEnabledCreateQuiz(false);
@@ -52,7 +52,7 @@ function CoachHome() {
 
   function teamsButton(){
     //navigate('/ViewTeams2', {replace: true}) 
-    setEnabledManageTeam(!enabledManageTeam); 
+    setEnabledManageTeam(true); 
     setEnabledStudentStats(false);
     setEnabledCreateQuiz(false);
     setEnabledFindMentors(false); 
@@ -61,7 +61,7 @@ function CoachHome() {
   }
 
   function showStudentStats() {
-    setEnabledStudentStats(!enabledStudentStats);
+    setEnabledStudentStats(true);
     setEnabledManageTeam(false); 
     setEnabledCreateQuiz(false);
     setEnabledFindMentors(false);
@@ -70,7 +70,7 @@ function CoachHome() {
   }
 
   function showCreateQuiz() {
-    setEnabledCreateQuiz(!enabledCreateQuiz);
+    setEnabledCreateQuiz(true);
     setEnabledManageTeam(false);
     setEnabledStudentStats(false);
     setEnabledFindMentors(false);
@@ -79,7 +79,7 @@ function CoachHome() {
   }
 
   function showFindMentors() {
-    setEnabledFindMentors(!enabledFindMentors);
+    setEnabledFindMentors(true);
     setEnabledCreateQuiz(false);
     setEnabledManageTeam(false);
     setEnabledStudentStats(false);
@@ -88,7 +88,7 @@ function CoachHome() {
   }
 
   function showCoachProfile(){
-    setEnabledCoachProfile(!enabledCoachProfile);
+    setEnabledCoachProfile(true);
     setEnabledFindMentors(false);
     setEnabledCreateQuiz(false);
     setEnabledManageTeam(false);

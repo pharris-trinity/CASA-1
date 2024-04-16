@@ -1189,6 +1189,32 @@ app.post('/api/assessment/find_assessment', async(req, res) => {
   return res.status(200).send(quiz)
 });
 
+app.post('/api/assessment/remove_assessment', async (req, res) => {
+  //const {questions, author_id, name, cat, lvl} = req.body;
+  const {author_id, quiz_info} = req.body;
+
+  var author = await User.findOne({"_id": author_id})
+  if(!author){
+    return res.status(404).send("Author not found")
+  }
+
+  var quiz = await Quiz.findOne({"_id": quiz_info._id})
+  if(!quiz){
+    return res.status(404).send("No quiz found matching that ID")
+  }
+
+  await quiz.remove();
+
+        // Optionally, remove the reference to the quiz from the author's madeQuizzes array
+        const index = author.madeQuizzes.findIndex(id => id.equals(quiz_info._id));
+        if (index !== -1) {
+            author.madeQuizzes.splice(index, 1);
+            await author.save();
+        }
+
+  return res.status(200).send("Remove assessment server end");
+});
+
 app.post('/api/assessment/find_assessments_by_author', async(req, res) => {
   const { author_id } = req.body;
   var author = await User.findOne({"_id": author_id})

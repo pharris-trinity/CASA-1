@@ -11,6 +11,7 @@ function CreateQuiz(props) {
     const [error, setError] = useState('');
 
     const addQuestion = () => {
+        if(questions.length < 30)
         setQuestions([...questions, {
             description: '',
             answers: ['', '', '', ''],
