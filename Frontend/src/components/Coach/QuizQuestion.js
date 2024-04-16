@@ -79,6 +79,12 @@ function QuizQuestion({ quiz }) {
         setTeamCoachID(localStorage.getItem("_id"));
     }, []) 
 
+    useEffect(() => {
+        if (quizName === '' && category === '' && level === '' && questions.length === 0) {
+            alert('Quiz removed successfully');
+        }
+    }, [quizName, category, level, questions]);
+
     const removeQuiz = async () => {
         var tmpData = { author_id: teamCoachID, quiz_info: quiz}
         console.log("Remove quiz")
@@ -95,6 +101,11 @@ function QuizQuestion({ quiz }) {
 
             const response = await fetch('/api/assessment/remove_assessment', requestOptions)
             const jsonData = await response.json()
+
+            setQuizName('');
+            setCategory('');
+            setLevel('');
+            setQuestions([]);
 
         } catch (error) {
             //console.log(error);
@@ -113,6 +124,10 @@ function QuizQuestion({ quiz }) {
     }, [questions]);
 
     return (
+        <div>
+        <div className="button-spacer">
+                    <button className="casa-button button-rightest" onClick={() => removeQuiz()}>Delete Quiz</button>
+                </div>
         <div className="main-box">
             <h1 className="page-title">Edit Quiz</h1>
             <div className="quiz-boxes">
@@ -175,14 +190,10 @@ function QuizQuestion({ quiz }) {
                 ))}
                 <div className="button-spacer">
                     <button className="casa-button button-left" onClick={() => setQuestions(prevQuestions => [...prevQuestions, { description: "", answers: ["", "", "", ""], correctAnswer: 0 }])}>Add Question</button>
-                    <button className="casa-button" onClick={() => removeQuiz()}>Delete Quiz</button>
+                    <button className="casa-button button-right" type="submit" onClick={handleSubmit}>Submit Changes</button>
                 </div>
-            </div>
-            <form onSubmit={handleSubmit}>
-                <div className="button-spacer">
-                    <button className="casa-button button-right" type="submit">Submit Changes</button>
-                </div>
-            </form>
+        </div>
+        </div>
         </div>
     );
     
