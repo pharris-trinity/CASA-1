@@ -79,33 +79,40 @@ function QuizQuestion({ quiz }) {
         setTeamCoachID(localStorage.getItem("_id"));
     }, []) 
 
-    useEffect(() => {
-        if (quizName === '' && category === '' && level === '' && questions.length === 0) {
-            alert('Quiz removed successfully');
-        }
-    }, [quizName, category, level, questions]);
-
     const removeQuiz = async () => {
         var tmpData = { author_id: teamCoachID, quiz_info: quiz}
         console.log("Remove quiz")
         console.log(JSON.stringify(quiz))
         console.log(teamCoachID)
         try {
-            const requestOptions = {
+            const response = await fetch(`/api/assessment/remove_assessment`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(tmpData)
-            };
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(tmpData),
+            });
 
-            console.log(JSON.stringify(tmpData))
+            // const requestOptions = {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(tmpData)
+            // };
 
-            const response = await fetch('/api/assessment/remove_assessment', requestOptions)
-            const jsonData = await response.json()
+            // console.log(JSON.stringify(tmpData))
+
+            // const response = await fetch('/api/assessment/remove_assessment', requestOptions)
+            //const jsonData = await response.json()
+
+            if(response.ok){
+                console.log("altert altwres")
+            alert('Quiz removed successfully');
 
             setQuizName('');
             setCategory('');
             setLevel('');
             setQuestions([]);
+            }
 
         } catch (error) {
             //console.log(error);
