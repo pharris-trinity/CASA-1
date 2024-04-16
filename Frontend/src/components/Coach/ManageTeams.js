@@ -217,7 +217,6 @@ function ManageTeams(props) {
     useEffect(() => {
         if (students) {
             setStudentsWithoutTeam(students.filter(student => student.team === -1));
-            //console.log('Students without a team:', studentsWithoutTeam);
             // Do whatever you need to do with studentsWithoutTeam here
         }
     }, [students]);
@@ -226,6 +225,7 @@ function ManageTeams(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(updateTeamID == "N/A") {
+          
             updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,updateTeamID);
         } else if(validateTeamID(updateTeamID)) {
             const convertedIDNumber = formatTeamIDNumber(updateTeamID);
@@ -383,13 +383,6 @@ function ManageTeams(props) {
                 setDisplayName(displayName);
                 setGradeLevel(gradeLevel);
 
-                // console.log(currentTeamID)
-                // console.log(studentId)
-                // console.log(displayName)
-                // console.log(gradeLevel)
-                // console.log(alternateStatus)
-                // console.log(typeof alternateStatus);
-
                 if (alternateStatus == "true") {
                     const requestData = {
                         team_id: currentTeamID,
@@ -450,6 +443,7 @@ function ManageTeams(props) {
                 const convertedIDNumber1 = formatTeamIDString(newTeamID);
                 if (validateTeamID(convertedIDNumber1)) {
                     const convertedIDNumber = newTeamID;
+
                     await updateStudentAccount(studentId, displayName, gradeLevel, convertedIDNumber);
                 }
 
@@ -489,7 +483,7 @@ function ManageTeams(props) {
                     if (data.success) {
                         // Update student.alternate to true
                         // You may need to update this logic based on the response from your API
-                        
+
                         setStudents([...students]);
                         student.alternate = true;
                         console.log('Alternate added successfully:', data);

@@ -629,6 +629,7 @@ app.post('/api/team/add_alternate', async(req, res) => {
   console.log(team.members.length - team.alternates.length)
 
   if(team.members.length - team.alternates.length < 3){
+
     return res.status(401).json({ message: "Need minimum of 2 non-alternates"});
   }
 
