@@ -859,9 +859,23 @@ app.post('/api/get-MentorData', function(req, res, next) {
     //const studentobjid = Number(req.params.studid) //convert string from url to a number
     mongoose.connection.db.collection('users').find({username: req.params.studusername}).toArray().then(collection => {  
       //console.log("check student: " + collection);
-      res.status(200).json({ collection})
+      console.log(JSON.stringify(collection))
+      return res.status(200).json({ collection})
     });
   });
+
+  app.get('/api/studentInfoSearch',async(req,res)=>{
+    const student = await User.findOne()
+
+    if(!student){
+      console.log("no ")
+      return res.sendStatus(404)
+    }
+    else{
+      //return res.status(200).send([student.username, student.takenQuizzes])
+      return res.status(200).send(student)
+    }
+  })
 
   app.post('/api/studentTakenQuizzes', async(req, res) => {
     const {id} = req.body

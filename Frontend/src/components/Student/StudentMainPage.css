@@ -137,6 +137,7 @@ tr:hover {
     cursor: pointer;
 }
 
+
 .input{
     padding: 18px;
     border: 1px solid #ccc;
@@ -152,5 +153,4 @@ tr:hover {
   
   .checkbox-container input[type="checkbox"] {
     transform: scale(1.5); /* Adjust the scale factor to make the checkbox bigger */
-
   }
