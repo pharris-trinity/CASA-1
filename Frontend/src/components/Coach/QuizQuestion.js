@@ -93,19 +93,7 @@ function QuizQuestion({ quiz }) {
                 body: JSON.stringify(tmpData),
             });
 
-            // const requestOptions = {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(tmpData)
-            // };
-
-            // console.log(JSON.stringify(tmpData))
-
-            // const response = await fetch('/api/assessment/remove_assessment', requestOptions)
-            //const jsonData = await response.json()
-
             if(response.ok){
-                console.log("altert altwres")
             alert('Quiz removed successfully');
 
             setQuizName('');

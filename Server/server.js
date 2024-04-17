@@ -1249,7 +1249,7 @@ app.post('/api/assessment/find_taken_quizzes', async(req, res) => {
 })
 
 app.post('/api/assessment/take_quiz', async(req, res) => {
-  const {name, category, score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished, originalQuizID } = req.body;
+  const {name, category, score, questions, answers, correctQuestions, incorrectQuestions, testTakerID, timeStarted, timeFinished, originalQuizID, level } = req.body;
 
   var user = await User.findOne({"_id": testTakerID})
   if(!user){
