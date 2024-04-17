@@ -94,20 +94,18 @@ function Quiz(props) {
             const quizQuestions = props.quizData.map(quiz => quiz.questions);
             const quizName = props.quizData[0].name;
             const quizCategory = props.quizData[0].category;
+            const quizLevel = props.quizData[0].level;
 
-            var postData = {name: quizName, category: quizCategory, score: grade, questions: quizQuestions[0], answers: answersArray, correctQuestions: correctGradedAnswers, incorrectQuestions: incorrectGradedAnswers, 
+            var postData = {name: quizName, category: quizCategory, level: quizLevel, score: grade, questions: quizQuestions[0], answers: answersArray, correctQuestions: correctGradedAnswers, incorrectQuestions: incorrectGradedAnswers, 
                 testTakerID: userID, timeStarted: startTime, timeFinished: endTime, originalQuizID: originalQuizID}
 
-            const requestOptions = {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(postData)
-            };
-            fetch('/api/assessment/take_quiz', requestOptions).then(res => res.json()).then(
-                data => {
-                    return;
-                })
-
+                const response = await fetch(`/api/assessment/take_quiz`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(postData),
+                });
         } catch (error) {
             
         }

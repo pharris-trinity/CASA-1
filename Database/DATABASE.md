@@ -38,6 +38,7 @@
 2. author id
 3. name
 4. category
+5. level
 
 ### Taken Quizzes
 1. score

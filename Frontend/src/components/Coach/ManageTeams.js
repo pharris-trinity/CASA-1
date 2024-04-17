@@ -29,9 +29,11 @@ function ManageTeams(props) {
     const [displayName, setDisplayName] = useState("")
     const [studentId, setStudentId] = useState("")
     const [updateTeamID, setUpdateTeamID] = useState("");
-    //const currentStudentTeamID = currentStudentID ? formatTeamIDString(updateTeamID) : ""; // Add this line
-    const [currentStudentTeamID, setCurrentStudentTeamID] = useState("");
-    const [currentStudentID, setCurrentStudentID] = useState();
+    //const newTeamID = currentStudentID ? formatTeamIDString(updateTeamID) : ""; // Add this line
+    const [newTeamID, setNewTeamID] = useState("");
+    const [currentTeamID, setCurrentTeamID] = useState("");
+    const [currentStudentID, setCurrentStudentID] = useState("");
+    const [studentsWithoutTeam, setStudentsWithoutTeam] = useState([]);
 
     const[enabledAddToTeam, setEnabledAddToTeam] = useState(false);
 
@@ -154,9 +156,9 @@ function ManageTeams(props) {
         setCurrentStudentID(student._id);
         setUpdateDisplayName(student.displayname);
         setDisplayEmail(student.email);
-        student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("N/A");
-        (student.team != -1) ? setUpdateTeamID(formatTeamIDString(student.team)): setUpdateTeamID("N/A");
-    }
+        setUpdateGradLevel(student.gradelevel !== undefined ? student.gradelevel : "");
+        setUpdateTeamID(student.team !==-1 ? formatTeamIDString(student.team) : "N/A"); // Update team ID if it's not -1
+    };
 
     //opens AddStudents component
     const addStudentButton = () => {
@@ -212,11 +214,22 @@ function ManageTeams(props) {
         }
     }, [coach])
 
+    useEffect(() => {
+        if (students) {
+            setStudentsWithoutTeam(students.filter(student => student.team === -1));
+            // Do whatever you need to do with studentsWithoutTeam here
+        }
+    }, [students]);
+
     //submit functionality for React form. Updates student based on information from the form.
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(validateTeamID(updateTeamID)) {
+        if(updateTeamID == "N/A") {
+          
+            updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,updateTeamID);
+        } else if(validateTeamID(updateTeamID)) {
             const convertedIDNumber = formatTeamIDNumber(updateTeamID);
+            //console.log(convertedIDNumber)
             updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,convertedIDNumber);
         }
     }
@@ -318,14 +331,16 @@ function ManageTeams(props) {
         }
     }
 
-    const renderTeamTables = () => {
+    const handleDragStart = (e, student) => {
+        // Set the data being dragged (in this case, the student's ID)
+        e.dataTransfer.setData("studentId", student._id);
+        e.dataTransfer.setData("displayName", student.displayname);
+        e.dataTransfer.setData("gradeLevel", student.gradelevel);
+        e.dataTransfer.setData("alternateStatus", student.alternate);
+        e.dataTransfer.setData("currentTeam", student.team);
+    };
 
-        const handleDragStart = (e, student) => {
-            // Set the data being dragged (in this case, the student's ID)
-            e.dataTransfer.setData("studentId", student._id);
-            e.dataTransfer.setData("displayName", student.displayname);
-            e.dataTransfer.setData("gradeLevel", student.gradelevel);
-        };
+    const renderTeamTables = () => {
 
         const getTeamName = (teamID) => {
             var teamName = "";
@@ -354,146 +369,224 @@ function ManageTeams(props) {
             e.preventDefault();
         };
         
-        const handleDrop = async (e, currentStudentTeamID) => {
+        const handleDrop = async (e, newTeamID) => {
             e.preventDefault();
-            setCurrentStudentTeamID(currentStudentTeamID);
+            setNewTeamID(newTeamID);
             const studentId = e.dataTransfer.getData("studentId");
             const displayName = e.dataTransfer.getData("displayName");
             const gradeLevel = e.dataTransfer.getData("gradeLevel");
-            setStudentId(studentId);
-            setDisplayName(displayName);
-            setGradeLevel(gradeLevel);
-            console.log("drop time")
-            console.log(studentId)
-            console.log(displayName)
-            console.log(gradeLevel)
-        
-            // Find the student object
-            const updatedStudents = students.map(student => {
-                if (student._id === studentId) {
-                    setCurrentStudentID(student._id);
-                    setUpdateDisplayName(student.displayname);
-                    setDisplayEmail(student.email);
-                    student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("N/A");
-                    (student.team != -1) ? setUpdateTeamID(currentStudentTeamID): setUpdateTeamID("N/A");
-                    return { ...student, team: currentStudentTeamID };
+            const alternateStatus = e.dataTransfer.getData("alternateStatus");
+            const currentTeamID = e.dataTransfer.getData("currentTeam")
+
+            if (currentTeamID !== newTeamID) {
+                setStudentId(studentId);
+                setDisplayName(displayName);
+                setGradeLevel(gradeLevel);
+
+                if (alternateStatus == "true") {
+                    const requestData = {
+                        team_id: currentTeamID,
+                        student_id: studentId
+                    };
+
+                    const removeAlternateResponse = await fetch('/api/team/remove_alternate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestData)
+                    });
+
+                    if (!removeAlternateResponse.ok) {
+                        if (removeAlternateResponse.status === 401) {
+                            throw new Error('Unauthorized: You are not authorized to perform this action.');
+                        } else if (removeAlternateResponse.status === 403) {
+                            throw new Error('Forbidden: You do not have permission to remove this student as alternate.');
+                        } else if (removeAlternateResponse.status === 404) {
+                            throw new Error('Not Found: The student or team was not found.');
+                        } else {
+                            throw new Error('Failed to remove student as alternate from current team.');
+                        }
+                    }
                 }
-        
-                return student;
-            });
-        
-            // Update the state with the modified students array
-            setStudents(updatedStudents);
-        
-            // Update the student's team in the database
-            const convertedIDNumber1 = formatTeamIDString(currentStudentTeamID);
-            if (validateTeamID(convertedIDNumber1)) {
-                console.log("Team is valid here");
-                const convertedIDNumber = currentStudentTeamID;
-                console.log(convertedIDNumber);
-                await updateStudentAccount(studentId, displayName, gradeLevel, convertedIDNumber);
+
+
+                // Find the student object
+                const updatedStudents = students.map(student => {
+
+                    if (student._id === studentId) {
+
+                        if (alternateStatus) {
+                            student.alternate = false;
+                        }
+
+                        setCurrentStudentID(student._id);
+                        setUpdateDisplayName(student.displayname);
+                        setDisplayEmail(student.email);
+
+
+
+
+                        student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("");
+                        (student.team != -1) ? setUpdateTeamID(newTeamID) : setUpdateTeamID(-1);
+
+                        return { ...student, team: newTeamID };
+                    }
+
+                    return student;
+                });
+
+                // Update the state with the modified students array
+                setStudents(updatedStudents);
+
+                // Update the student's team in the database
+                const convertedIDNumber1 = formatTeamIDString(newTeamID);
+                if (validateTeamID(convertedIDNumber1)) {
+                    const convertedIDNumber = newTeamID;
+
+                    await updateStudentAccount(studentId, displayName, gradeLevel, convertedIDNumber);
+                }
+
+                // Set the updateTeamID state
+                setUpdateTeamID(newTeamID);
+
+                console.log(`Dropped student ${studentId} into team ${newTeamID}`);
             }
-        
-            // Set the updateTeamID state
-            setUpdateTeamID(currentStudentTeamID);
-        
-            console.log(`Dropped student ${studentId} into team ${currentStudentTeamID}`);
         };
 
-        const handleAlternateChange = async (e, studentID, teamID, isChecked) => {
+        const handleAlternateChange = async (e, studentID, teamID, isChecked, student) => {
             e.preventDefault();
 
-            if(isChecked){
-            // Prepare the data to send to the API endpoint
-            const requestData = {
-                team_id: teamID,
-                student_id: studentID
-            };
+            //student.alternate = isChecked
         
-            try {
-                // Make a POST request to the add_alternate endpoint
-                const response = await fetch('/api/team/add_alternate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                });
+            if (isChecked) {
+                // Prepare the data to send to the API endpoint
+                const requestData = {
+                    team_id: teamID,
+                    student_id: studentID
+                };
         
-                // Handle the response as needed
-                const data = await response.json();
-                // You can handle the response data here
-            } catch (error) {
-                console.error('Error occurred:', error);
-            }
-        } else {
-            const requestData = {
-                team_id: teamID,
-                student_id: studentID
-            };
+                try {
+                    // Make a POST request to the add_alternate endpoint
+                    const response = await fetch('/api/team/add_alternate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestData)
+                    });
         
-            const requestOptions = {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(requestData)
-            };
-            fetch('/api/team/remove_alternate', requestOptions).then(
-                    res => res.text()).then(text => {
-    
-                  }
-            );
-        }
+                    // Handle the response as needed
+                    const data = await response.json();
+                    // Update student.alternate value
+                    // Assuming data.success is true if the alternate is successfully added
+                    if (data.success) {
+                        // Update student.alternate to true
+                        // You may need to update this logic based on the response from your API
 
-        };
-    
-    
+                        setStudents([...students]);
+                        student.alternate = true;
+                        console.log('Alternate added successfully:', data);
+
+                    } else {
+                        student.alternate = false
+                    }
+                } catch (error) {
+                    console.error('Error occurred:', error);
+                }
+            } else {
+                // Prepare the data to send to the API endpoint for removing alternate
+                const requestData = {
+                    team_id: teamID,
+                    student_id: studentID
+                };
         
-        // Render tables for teams with students
-        const tablesWithStudents = Object.entries(groupedStudents).map(([teamID, teamStudents]) => (
-            <div key={teamID} className="right" onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDrop={(e) => handleDrop(e, teamID)}>
-                <h3>{getTeamName(teamID)} ({formatTeamIDString(teamID)})</h3>
-                <table style={{ color: '#fff' }}>
-                    {/* Table headers */}
-                    <thead>
-                        <tr>
-                            <th>Student Name</th>
-                            <th>Email</th>
-                            <th>Grade Level</th>
-                            <th>Alternate</th>
-                        </tr>
-                    </thead>
-                    <tbody style={{ color: '#fff' }}>
-                        {teamStudents.map((student, index) => (
-                            <tr
-                                key={student._id}
-                                draggable="true"
-                                onDragStart={(e) => handleDragStart(e, student)}
-                                onClick={() => fillDisplayInfo(student)}
-                                className={student._id === currentStudentID ? "selected-row" : ""}
-                            >
-                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.displayname}</td>
-                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.email}</td>
-                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.gradelevel !== undefined ? student.gradelevel : "N/A"}</td>
-                                <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>
-                                    <div className="checkbox-container">
-                                    <input
-                                        type="checkbox"
-                                        onChange={(e) => {
-                                            handleAlternateChange(e, student._id, teamID, e.target.checked);
-                                            //e.stopPropagation(); // Prevent click event propagation
-                                            student.alternate=!student.alternate
-                                        }}
-                                        checked={student.alternate}
-                                    />
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        ));
+                try {
+                    // Make a POST request to the remove_alternate endpoint
+                    const response = await fetch('/api/team/remove_alternate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestData)
+                    });
+        
+                    // Handle the response as needed
+                    const data = await response.json();
+                    // Update student.alternate value
+                    // Assuming data.success is true if the alternate is successfully removed
+                    if (data.success) {
+                        // Update student.alternate to false
+                        // You may need to update this logic based on the response from your API
+                        student.alternate = false;
+                        setStudents([...students]);
+                    }
+                    // You can handle the response data here
+                    console.log('Alternate removed successfully:', data);
+                } catch (error) {
+                    console.error('Error occurred:', error);
+                }
+
+                //this.setState({ [e.target.id]: e.target.checked });
+            }
+        };
+        
+        
     
+
+
+        // Render tables for teams with students
+        const tablesWithStudents = Object.entries(groupedStudents)
+            .filter(([teamID, _]) => getTeamName(teamID).trim() !== "") // Filter out teams with empty names
+            .map(([teamID, teamStudents]) => (
+                <div key={teamID} className="right" onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDrop={(e) => handleDrop(e, teamID)}>
+                    <h3>{getTeamName(teamID)} ({formatTeamIDString(teamID)})</h3>
+                    <table style={{ color: '#fff' }}>
+                        {/* Table headers */}
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Email</th>
+                                <th>Grade Level</th>
+                                <th>Alternate</th>
+                            </tr>
+                        </thead>
+                        <tbody style={{ color: '#fff' }}>
+                            {teamStudents.map((student, index) => (
+                                <tr
+                                    key={student._id}
+                                    draggable="true"
+                                    onDragStart={(e) => handleDragStart(e, student)}
+                                    onClick={() => fillDisplayInfo(student)}
+                                    className={student._id === currentStudentID ? "selected-row" : ""}
+                                >
+                                    <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.displayname}</td>
+                                    <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.email}</td>
+                                    <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.gradelevel !== undefined ? student.gradelevel : "N/A"}</td>
+                                    <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>
+                                        <div className="checkbox-container">
+                                            <input
+                                                type="checkbox"
+                                                onChange={(e) => {
+                                                    const isChecked = e.target.checked; // Capture the current checked state
+                                                    //student.alternate = !student.alternate
+
+                                                    handleAlternateChange(e, student._id, teamID, isChecked, student); // Call the API function
+                                                    // Do not manually toggle the student.alternate state here
+                                                    //student.alternate = !student.alternate
+                                                }}
+                                                checked={student.alternate} // Ensure that the checkbox is controlled by student.alternate
+                                            />
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            ));
+
+
         // Render tables for teams without students
         const tablesWithoutStudents = teamsWithoutStudents.map(team => (
             //<div key={team.national_id} className="right">
@@ -508,15 +601,125 @@ function ManageTeams(props) {
                 </table>
             </div>
         ));
-    
+
         return [...tablesWithStudents, ...tablesWithoutStudents];
     }
-    
-    
-    
-    
 
-    if(props.enabled == true) {
+
+    // Render table for students without a team
+    // Render table for students without a team
+const renderStudentsWithoutTeam = () => {
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    };
+
+    const handleDragEnter = (e) => {
+        e.preventDefault();
+    };
+
+    const handleDrop = async (e) => {
+        e.preventDefault();
+        // Retrieve student information from the data transferred during drag
+        const studentId = e.dataTransfer.getData("studentId");
+        const displayName = e.dataTransfer.getData("displayName");
+        const gradeLevel = e.dataTransfer.getData("gradeLevel");
+        const alternateStatus = e.dataTransfer.getData("alternateStatus");
+        const currentTeamID = e.dataTransfer.getData("currentTeam");
+        setNewTeamID(-1)
+
+        if (currentTeamID !== newTeamID) {
+            setStudentId(studentId);
+            setDisplayName(displayName);
+            setGradeLevel(gradeLevel);
+
+            if (alternateStatus == "true") {
+                const requestData = {
+                    team_id: currentTeamID,
+                    student_id: studentId
+                };
+
+                const removeAlternateResponse = await fetch('/api/team/remove_alternate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                if (!removeAlternateResponse.ok) {
+                    // Handle errors if needed
+                }
+            }
+
+            const updatedStudents = students.map(student => {
+                if (student._id === studentId) {
+                    if (alternateStatus) {
+                        student.alternate = false;
+                    }
+                    setCurrentStudentID(student._id);
+                    setUpdateDisplayName(student.displayname);
+                    setDisplayEmail(student.email);
+                    student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("");
+                    (student.team != -1) ? setUpdateTeamID(newTeamID) : setUpdateTeamID(-1);
+                    return { ...student, team: newTeamID };
+                }
+                return student;
+            });
+
+            setStudents(updatedStudents);
+
+            updateStudentAccount(studentId, displayName, gradeLevel, -1);
+            setUpdateTeamID(newTeamID);
+        }
+    };
+
+    // Render the table for students without a team
+    return (
+        <div key="students-without-team" onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDrop={handleDrop}>
+            <h3>Students Without a Team</h3>
+            <table style={{ color: '#fff' }}>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Email</th>
+                        <th>Grade Level</th>
+                    </tr>
+                </thead>
+                <tbody style={{ color: '#fff' }}>
+                    {studentsWithoutTeam.map((student, index) => (
+                        <tr
+                            key={student._id}
+                            draggable="true"
+                            onDragStart={(e) => handleDragStart(e, student)}
+                            onClick={() => fillDisplayInfo(student)} // Call fillDisplayInfo when a student without a team is clicked
+                            className={student._id === currentStudentID ? "selected-row" : ""}
+                        >
+                            <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.displayname}</td>
+                            <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.email}</td>
+                            <td className={student._id === currentStudentID ? "td-selected-student" : 'td-student'}>{student.gradelevel !== undefined ? student.gradelevel : "N/A"}</td>
+                            
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+}
+
+    
+    // Function to handle student click event
+    const handleStudentClick = (student) => {
+        setCurrentStudentID(student._id);
+        setUpdateDisplayName(student.displayname);
+        setDisplayEmail(student.email);
+        setUpdateGradLevel(student.gradelevel !== undefined ? student.gradelevel : "N/A");
+        setUpdateTeamID(student.team !== -1 ? formatTeamIDString(student.team) : "N/A");
+    };
+
+
+
+    if (props.enabled == true) {
         return (
             <div>
                 <div className="left _form-group">
@@ -560,10 +763,12 @@ function ManageTeams(props) {
                         </div>
                     </form>
 
+                    {renderStudentsWithoutTeam()}
+
                     {/* Delete Button and Misc Components */}
                     <div>
-                        <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent}/>
-                        <MakeTeam enabled={enableMakeTeam} closeForm={closeMakeTeam}/>
+                        <AddStudent enabled={enabledAddToTeam} closeForm={closeAddStudent} />
+                        <MakeTeam enabled={enableMakeTeam} closeForm={closeMakeTeam} />
                     </div>
                 </div>
 
