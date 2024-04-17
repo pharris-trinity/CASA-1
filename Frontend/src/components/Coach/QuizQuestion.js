@@ -72,7 +72,9 @@ function QuizQuestion({ quiz }) {
         for (var i = 0; i < quests.current.length; i++) {
             tempArray.push(quests.current[i]);
         }
+        if(questions.length < 30){
         setQuestions(tempArray);
+        }
     }
 
     useEffect(() => {
