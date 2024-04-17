@@ -109,12 +109,17 @@ function StudentQuizInfo() {
     }
   };
 
+  const computeQuizScore = (quizId) => {
+    const takenQuiz = takenQuizzes.find((quiz) => quiz.quizId === quizId);
+    return takenQuiz ? takenQuiz.score : "-";
+  };
   
   return (
     <>
         <div className="content-area">
           {showList ? (
             <div>
+              <h2>Quizzes </h2>
               <input
                 type="text"
                 placeholder="Search Table"
@@ -122,13 +127,14 @@ function StudentQuizInfo() {
                 onChange={search}
               />
               <div className="mainrow">
-                <DropdownBar headerText="Assessments">
-                  <h3>Quizzes </h3>
                   <table>
                     <thead>
                       <tr>
                         <th className="th-manage-teams">Quiz Name</th>
                         <th className="th-manage-teams">Category</th>
+                        <th className='th-manage-teams'>Level</th>
+                        <th className='th-manage-teams'>Score</th>
+
                       </tr>
                     </thead>
                     <tbody>
@@ -137,11 +143,15 @@ function StudentQuizInfo() {
                           <tr key={item._id} onClick={() => pullOneQuiz(item._id)}>
                             <td className={index % 2 === 0 ? "td-even" : "td-odd"}>{item.name}</td>
                             <td className={index % 2 === 0 ? "td-even" : "td-odd"}>{item.category}</td>
+                            <td className={index % 2 === 0 ? "td-even" : "td-odd"}>{item.level}</td>
+                            <td className={index % 2 === 0 ? "td-even" : "td-odd"}>{computeQuizScore(item._id)}</td>
+
                           </tr>
+                          
                         ))}
                     </tbody>
                   </table>
-                </DropdownBar>
+                
               </div>
             </div>
           ) : (

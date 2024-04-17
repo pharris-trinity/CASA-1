@@ -38,6 +38,7 @@ export default function StudentProfilePage() {
   if (!currStud || Object.keys(currStud).length === 0) {
     return <div>No student data available</div>;
   }
+  
 
   return (
     <div className="studentInfoContainer">
