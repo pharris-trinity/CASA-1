@@ -34,4 +34,17 @@
     border: none;
     background: #f1f1f1;
   }
-    
+
+  .option-label {
+    display: inline-block;
+    width: 20px; 
+    margin-bottom: 6px;
+    font-size: 16px;
+  }
+
+  .quiz-boxes {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }

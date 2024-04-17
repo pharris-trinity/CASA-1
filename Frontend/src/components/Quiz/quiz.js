@@ -94,8 +94,9 @@ function Quiz(props) {
             const quizQuestions = props.quizData.map(quiz => quiz.questions);
             const quizName = props.quizData[0].name;
             const quizCategory = props.quizData[0].category;
+            const quizLevel = props.quizData[0].level;
 
-            var postData = {name: quizName, category: quizCategory, score: grade, questions: quizQuestions[0], answers: answersArray, correctQuestions: correctGradedAnswers, incorrectQuestions: incorrectGradedAnswers, 
+            var postData = {name: quizName, category: quizCategory, level: quizLevel, score: grade, questions: quizQuestions[0], answers: answersArray, correctQuestions: correctGradedAnswers, incorrectQuestions: incorrectGradedAnswers, 
                 testTakerID: userID, timeStarted: startTime, timeFinished: endTime, originalQuizID: originalQuizID}
 
             const requestOptions = {

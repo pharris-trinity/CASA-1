@@ -628,7 +628,8 @@ app.post('/api/team/add_alternate', async(req, res) => {
   console.log("memebers not alternate")
   console.log(team.members.length - team.alternates.length)
 
-  if(team.members.length - team.alternates.length < 4){
+  if(team.members.length - team.alternates.length < 3){
+
     return res.status(401).json({ message: "Need minimum of 2 non-alternates"});
   }
 
@@ -990,6 +991,53 @@ app.post('/api/get-MentorData', function(req, res, next) {
     }
   })
 
+  app.post('/api/editQuiz', async(req, res) => {
+    const updatedQuiz = req.body
+    console.log(updatedQuiz._id)
+    const quiz = await Quiz.findById(updatedQuiz._id)
+    var final_questions = []
+
+    if(!quiz){
+      console.log("no quiz was found")
+      return res.sendStatus(404).message
+    } else {
+      if(quiz.category !== updatedQuiz.category){
+        console.log("CHANGE CATEGORY HERE")
+        quiz.category = updatedQuiz.category
+        //quiz.save()
+      }
+      // console.log(updatedQuiz.questions)
+      // console.log(quiz.questions)
+      // for(question in updatedQuiz.questions){
+
+      //   const {value, description, answers, correctAnswer} = questions[question]  
+      
+        
+      //   var new_question = new Question({
+      //     value: value,
+      //     description: description,
+      //     answers: answers,
+      //     correctAnswer: correctAnswer
+      //   })
+  
+      //   new_question.save(function (err, user){
+      //     if (err) {
+      //       res.status(401).end();
+      //       return console.error(err)
+      //     }
+      //   });
+      //   final_questions.push(new_question)
+      // }
+
+      quiz.questions = updatedQuiz.questions
+      quiz.save()
+
+      return res.status(200).send(quiz);
+    }
+});
+
+
+
   app.get('/api/quizsearch',async(req,res)=>{
     const quizzes = await Quiz.find({});
     //console.log(quizzes)
@@ -1091,21 +1139,17 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
 
 app.post('/api/assessment/add_assessment', async (req, res) => {
-    const {questions, author_id, name, cat} = req.body;
+    //const {questions, author_id, name, cat, lvl} = req.body;
+    const {questions, author_id, name, cat, lvl} = req.body;
     var final_questions = []
 
     var author = await User.findOne({"_id": author_id})
     if(!author){
-      //console.log(author_id)
       return res.status(404).send("Author not found")
-    }
-    if(author.usertype == "Student"){
-      return res.status(500).send("Students cannot make quizzes")
     }
 
     for(question in questions){
       const {value, description, answers, correctAnswer} = questions[question]  
-    
       
       var new_question = new Question({
         value: value,
@@ -1127,7 +1171,8 @@ app.post('/api/assessment/add_assessment', async (req, res) => {
       questions: final_questions,
       authorID: author_id,
       name: name,
-      category: cat
+      category: cat,
+      level: lvl,
     });
     let tmp = await new_quiz.save()
     author.madeQuizzes.push(tmp)
@@ -1143,6 +1188,32 @@ app.post('/api/assessment/find_assessment', async(req, res) => {
   }
 
   return res.status(200).send(quiz)
+});
+
+app.post('/api/assessment/remove_assessment', async (req, res) => {
+  //const {questions, author_id, name, cat, lvl} = req.body;
+  const {author_id, quiz_info} = req.body;
+
+  var author = await User.findOne({"_id": author_id})
+  if(!author){
+    return res.status(404).send("Author not found")
+  }
+
+  var quiz = await Quiz.findOne({"_id": quiz_info._id})
+  if(!quiz){
+    return res.status(404).send("No quiz found matching that ID")
+  }
+
+  await quiz.remove();
+
+        // Optionally, remove the reference to the quiz from the author's madeQuizzes array
+        const index = author.madeQuizzes.findIndex(id => id.equals(quiz_info._id));
+        if (index !== -1) {
+            author.madeQuizzes.splice(index, 1);
+            await author.save();
+        }
+
+  return res.status(200).send("Remove assessment server end");
 });
 
 app.post('/api/assessment/find_assessments_by_author', async(req, res) => {
@@ -1191,6 +1262,7 @@ app.post('/api/assessment/take_quiz', async(req, res) => {
   var takenQuiz = new TakenQuiz({
     name: name,
     category: category,
+    level: level,
     score: score,
     questions: questions,
     answers: answers,

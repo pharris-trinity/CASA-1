@@ -1,179 +1,186 @@
-import React, { useState, useEffect, useRef } from 'react';
-import QuestionForm from './QuestionForm';
+import React, { useState, useEffect } from 'react';
 import QuizInfo from './QuizInfo';
-import './createQuiz.css'
+import './createQuiz.css';
 
-/*
-The CreateQuiz component is the main component for coaches to be able to create quizzes.
-It contains functionality for compilation and submission of user-input info that becomes a quiz
-*/
-
-function CreateQuiz(props){
-
-
-    const [teamCoachID, setTeamCoachID] = useState();
+function CreateQuiz(props) {
+    const [teamCoachID, setTeamCoachID] = useState('');
     const [questions, setQuestions] = useState([]);
-    const [questionIndex, setQuestionIndex] = useState(0);
-    const [questionForms, setQuestionForms] = useState([]);
-    const [quizName, setQuizName] = useState();
-    const [category, setCategory] = useState();
-    //const [toDelete, setToDelete] = useState();
-    const refs = useRef([]);
-    const quizInfoRef = useRef();
+    const [quizName, setQuizName] = useState('');
+    const [category, setCategory] = useState('windows');
+    const [level, setLevel] = useState('silver');
+    const [error, setError] = useState('');
 
-    /* Final function call of the component that compiles all info and creates the quiz */
-    const createQuiz = async () => {
-        const testQuestion = {
-            description: "description",
-            answers: ["1","2","3","4"],
+    const addQuestion = () => {
+        if(questions.length < 30)
+        setQuestions([...questions, {
+            description: '',
+            answers: ['', '', '', ''],
             correctAnswer: 0,
-            value : 1
+            value: 1
+        }]);
+    };
+
+    const removeQuestion = (index) => {
+        const updatedQuestions = [...questions];
+        updatedQuestions.splice(index, 1);
+        setQuestions(updatedQuestions);
+    };
+
+    const handleSubmitQuizInfo = (data) => {
+        setQuizName(data.quizName);
+        setCategory(data.category);
+    };
+
+    const handleSubmitQuestion = (index, question) => {
+        const updatedQuestions = [...questions];
+        updatedQuestions[index] = question;
+        setQuestions(updatedQuestions);
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if (name === 'quizName') {
+            setQuizName(value);
+        } else if (name === 'category') {
+            setCategory(value);
+        } else if (name === 'level') {
+            setLevel(value)
         }
-        var tmpData = {questions: questions, author_id: teamCoachID, name: quizName, cat: category }
-        const requestOptions = {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(tmpData)
-        };
+    };
 
-        const response = await fetch('/api/assessment/add_assessment', requestOptions)
-        const jsonData = await response.json()
-        alert("Quiz has been created!");
+    const createQuiz = async () => {
+        try {
+            // Validate quizName and category before submitting
 
-        //interacts with CoachHome in order to reset the CreateQuiz component
-        props.reset();
-    }
-
-    //Given an array of Question objects, puts them into the state object "questions"
-    const addQuestions = (quests) => {
-        var tempArray = [];
-        for(var i = 0; i < quests.current.length; i++) {
-            tempArray.push(quests.current[i]);
-        }
-        setQuestions(tempArray);
-    }
-
-    //creates a blank QuestionForm component
-    const createEmptyQuestion = () => {
-        var tempArray = [];
-        //var tempRefs = [];
-        if(questionForms.length == 0) {
-            tempArray.push(0);
-            setQuestionForms(tempArray);
-            setQuestionIndex(1);
-        } else {
-            for(var i = 0; i < questionForms.length; i++) {
-                tempArray.push(questionForms[i]);
+            if (!quizName.trim()) {
+                throw new Error('Quiz name is required.');
             }
-            tempArray.push(questionIndex);
-            setQuestionIndex(questionIndex + 1);
-            setQuestionForms(tempArray);
-        }
-    }
 
-    /* Failed logic for the removeQuestion function. I spent 5 hours trying to get this to work but couldn't.
-    Essentially, you need to find a way to remove the correct index from questionForms while not causing 
-    all the QuestionForm components to re-render and lose their data.
-    Best of luck whoever ends up with this next - Josh Rea (5/8/23, at 4am)
-    */
-    const removeQuestion = (num) => {
-        // var filterArray = [];
-        //console.log("empty?? filterArray + length", filterArray, filterArray.length)
-        //console.log("removeQuestion: num", num);
-        //console.log("removeQuestion: pre-filter questionForms", questionForms);
-        // for(var i = 0; i < questionForms.length; i++) {
-        //     console.log("logging i: ", i, "logging num: ", num);
-        //     if(i != num) {
-        //         filterArray.push(questionForms[i]);
-        //         //console.log("filterArray after something pushed: ", filterArray);
-        //     }
-        // }
-        var filterArray = questionForms.filter((item) => {
-            console.log("item: ", item, " and number in lambda function", num);
-            return item != num ? item : null})
-        console.log("removeQuestion: post-filter filterArray", filterArray);
-        // for(var i = 0; i < filterArray.length; i++) {
-        //     filterArray[i] = i;
-        // }
-        // console.log("removeQuestion: post-sort questionForms", filterArray);
-        setQuestionForms(filterArray);
-        //setToDelete();
-    }
+            // Ensure there are questions added
+            if (questions.length === 0) {
+                throw new Error('At least one question is required to create a quiz.');
+            }
 
-    //Gets the coachID from local storage
+            const testQuestion = {
+                description: "description",
+                answers: ["1","2","3","4"],
+                correctAnswer: 0,
+                value : 1
+            }
+            var tmpData = {questions: questions, author_id: teamCoachID, name: quizName, cat: category, lvl: level}
+
+            // Send quiz data to server
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(tmpData)
+            };
+
+            const response = await fetch('/api/assessment/add_assessment', requestOptions);
+            const jsonData = await response.json();
+
+            // Reset form and state after successful quiz creation
+            setQuizName('');
+            setCategory('');
+            setLevel('');
+            setQuestions([]);
+            setError('');
+
+            alert('Quiz has been created successfully!');
+        } catch (error) {
+            setError(error.message);
+        } 
+    };
+
     useEffect(() => {
         setTeamCoachID(localStorage.getItem("_id"));
     }, []) 
 
-    //calls createQuiz after category has been updated in state
-    useEffect(() => {
-        if(category) {
-            createQuiz();
-        }
-    }, [category]) 
+    if(props.enabled)
+    return (
+        <div className="main-box">
+            <h1 className="page-title">Create Quiz</h1>
 
-    {/* Below is a collection of useEffects for testing purposes + removeQuestion functionality */}
+            <div className="quizinfo-content-box">
+                <h3 className="quizinfo-text-container">Quiz Name</h3>
+                <input 
+                    type="text" 
+                    placeholder="Name..." 
+                    name="quizName" 
+                    value={quizName} 
+                    onChange={handleChange}
+                />
 
-    // useEffect(() => {
-    //     if(questions){
-    //         console.log(questions)
-    //     }
-    // }, [questions])
+                <h3 className="quizinfo-text-container">Category</h3>
+                <select name="category" value={category} onChange={handleChange}>
+                    <option value="windows">Windows</option>
+                    <option value="win_server">Win Server</option>
+                    <option value="linux">Linux</option>
+                    <option value="networking">Networking</option>
+                    <option value="security_concepts">Security Concepts</option>
+                </select>
 
-    // useEffect(() => {
-    //     if(questionIndex){
-    //         console.log("QuestionIndex in use effect: ", questionIndex)
-    //     }
-    // }, [questionIndex])
+                <h3 className="quizinfo-text-container">Level</h3>
+                <select name="level" value={level} onChange={handleChange}>
+                    <option value="silver">Silver</option>
+                    <option value="gold">Gold</option>
+                    <option value="platinum">Platinum</option>
+                </select>
+            </div>
 
-    // useEffect(() => {
-    //     if(questionForms) {
-    //         console.log("Question Forms: ", questionForms)
-    //     }
-    // }, [questionForms])
+            {error && <p className="error">{error}</p>}
 
-    // useEffect(() => {
-    //     console.log("toDelete in useEffect", toDelete);
-    //     if(toDelete || toDelete == 0) {
-    //         removeQuestion(toDelete);
-    //     }
-    // }, [toDelete]) 
+            {/* Display questions */}
+            {questions.map((question, index) => (
+                <form key={index} onSubmit={(e) => e.preventDefault()}>
+                    <div className="cq-content-box">
+                        <label className="cq-text-container">Question {index + 1}</label>
+                        <input 
+                            type="text" 
+                            placeholder="Question..." 
+                            value={question.description} 
+                            onChange={(e) => handleSubmitQuestion(index, {...question, description: e.target.value})} 
+                        />
 
-    if(props.enabled){
-        return(
-            <div className="main-box">
-                <h1 className="page-title">Create Quiz</h1>
-
-                {/* Renders the QuizInfo component */}
-                <QuizInfo submitRef={quizInfoRef} setInfo={(e) => quizInfoRef.current = e}/>
-
-                {/* Dynamically renders QuestionForm components based on the indexes in questionForms
-                    I will admit, this is semi janky logic that may need to be reworked for removeQuestion */}
-                {questionForms && questionForms.map((index) =>
-                    <div>
-                        <QuestionForm num={index} submitRef={ref => {refs.current[index] = ref}} setQuestion={(e) => refs.current[index] = e}/>
+                        <h3 className="cq-text-container-left">Answers Choices:</h3>
+                        {question.answers.map((answer, answerIndex) => (
+                            <div key={answerIndex} className="form-group">
+                                <label className="option-label">{String.fromCharCode(65 + answerIndex)}</label>
+                                <input 
+                                    type="text" 
+                                    placeholder={`Option ${String.fromCharCode(65 + answerIndex)}`}
+                                    value={answer}
+                                    onChange={(e) => {
+                                        const newAnswers = [...question.answers];
+                                        newAnswers[answerIndex] = e.target.value;
+                                        handleSubmitQuestion(index, {...question, answers: newAnswers});
+                                    }}  
+                                />
+                            </div>
+                        ))}
+                        <h3 className="cq-text-container-left">Correct Answer:</h3>
+                        <select
+                            value={question.correctAnswer}
+                            onChange={(e) => handleSubmitQuestion(index, {...question, correctAnswer: parseInt(e.target.value)})}
+                        >
+                            
+                            {question.answers.map((_, answerIndex) => (
+                                <option key={answerIndex} value={answerIndex}>
+                                    {String.fromCharCode(65 + answerIndex)}
+                                </option>
+                            ))}
+                        </select>
+                        <button className="casa-button button-rightest" onClick={() => removeQuestion(index)}>Remove Question</button>
                     </div>
-                )}
-                
-                <div className="button-spacer">
-                    <button className="casa-button button-left" onClick={createEmptyQuestion}>Add Question</button>
+                </form>
+            ))}
 
-                    {/* Submit button for all of the QuestionForms and QuizInfo component */}
-                    <button className="casa-button button-right" onClick={() => {
-
-                    refs.current.map(ref => {ref.click()})
-                    addQuestions(refs);
-
-                    quizInfoRef.current.click();
-                    setQuizName(quizInfoRef.current[0]);
-                    setCategory(quizInfoRef.current[1]);
-
-                    }}>Create Quiz</button>
-                </div>
-            </div> 
-            
-        )
-    }
+            <div className="button-spacer">
+                <button className="casa-button button-left" onClick={addQuestion}>Add Question</button>
+                <button className="casa-button button-right" onClick={createQuiz}>Create Quiz</button>
+            </div>
+        </div>
+    );
 }
 
 export default CreateQuiz;
