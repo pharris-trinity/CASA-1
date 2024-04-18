@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { loginChecker } from "../General/LoginCheck";
 import { useNavigate } from 'react-router-dom';
+import "./StudentProfilePage.css"; // Import CSS file for styling
 
 export default function StudentProfilePage() {
   const studentusername = localStorage.username;
@@ -15,7 +16,6 @@ export default function StudentProfilePage() {
 
   const [currStud, setStud] = useState([]);
 
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,8 +25,8 @@ export default function StudentProfilePage() {
           throw new Error('Failed to fetch student data');
         }
         setStud(data);
-        console.log("Current Stundent sisplay name")
-    console.log(data.displayname)
+        console.log("Current Student display name")
+        console.log(data.displayname)
       } catch (error) {
         console.error(error);
       }
@@ -36,9 +36,8 @@ export default function StudentProfilePage() {
   }, [finishedurl]);
 
   if (!currStud || Object.keys(currStud).length === 0) {
-    return <div>No student data available</div>;
+    return <div className="noDataMessage">No student data available</div>;
   }
-  
 
   return (
     <div className="studentInfoContainer">
