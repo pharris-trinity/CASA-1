@@ -12,10 +12,9 @@ import { validateTeamID } from "../General/validateTeamID";
 
 function TeamOversight(props) {
 const [enabledShowTeamPerformance, setEnabledShowTeamPerformance] = useState("")
+const [teams, setTeams] = useState([]);
 const [coachUserID, setCoachUserID] = useState();
 const [coach, setCoach] = useState();
-const [teams, setTeams] = useState([]);
-}
 
 const getCoach = async(coachID) => {
     try {
@@ -31,8 +30,9 @@ const getCoach = async(coachID) => {
     } catch (error) {
         //console.log(error)
     }
-
+}
     const getTeams = async (inputTeams) => {
+        console.log("typeof inputTeams", inputTeams);
         var tempTeams = [];
         for(let i = 0; i < inputTeams.length; i++){
             try {
@@ -75,30 +75,52 @@ const getCoach = async(coachID) => {
     //         setSearchPhrase(e.target.value);
     //     }
     // }
-    
-    if (props.enabled == true) {
-        return (
-            <div>
-                <table style={{ color: '#fff' }}>
-                   <thead>
-                        <tr>
-                            <th>Team Name</th>
-                        </tr>
-                   </thead>
-                   <tbody>
-                   {teams && teams.map((item, index) => (
+    useEffect(() => {
+        setCoachUserID(localStorage.getItem("_id"));
+    }, []) 
+
+    useEffect(() => {
+        if(coachUserID) {
+            getCoach(coachUserID);
+        }
+    }, [coachUserID]) 
+
+    useEffect(() => {
+        if(coach) {
+            getTeams(coach.teams);
+        }
+    }, [coach])
+    if (props.enabled === true) {
+        // Render the table only if teams data is available
+        if (coach && coach.teams.length > 0) {
+            return (
+                <div>
+                    <table style={{ color: "#000" }}>
+                        <thead>
                             <tr>
-                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.displayname}</td>
+                                <th>Team Name</th>
                             </tr>
-                        ))}
-                   </tbody>
-                </table>
-            </div>
-        );
+                        </thead>
+                        <tbody>
+                            {coach.teams.map((teamID, index) => (
+                                <tr key={index}>
+                                    <td>{getTeamName(teamID)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            );
+        } else {
+            // Render a loading message or fallback UI if data is not available yet
+            return <div>Loading...</div>;
+        }
     }
 
-
+    // Return null if the component should not be rendered
+    return null;
 }
+
 
 
 export default TeamOversight;

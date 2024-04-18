@@ -15,7 +15,7 @@ import { formatTeamIDString } from '../General/formatTeamIDString';
 import { formatTeamIDNumber } from '../General/formatTeamIDNumber';
 import CreateQuiz from './CreateQuiz';
 import FindMentors from './FindMentors';
-//import TeamOversight from './TeamOversight';
+import TeamOversight from './TeamOversight';
 /* 
 CoachHome is the coach's home page. It uses state variables to control which sub-component is being rendered.
 */
@@ -139,12 +139,12 @@ return (
         </button>
 
         <div className="content-area">
-          {!enabledManageTeam && !enabledStudentStats && !enabledCreateQuiz && !enabledFindMentors && !enabledCoachProfile
+          {!enabledManageTeam && !enabledStudentStats && !enabledCreateQuiz && !enabledFindMentors && !enabledCoachProfile && !enabledTeamOversight
             ? <h1 className="descriptor-text">Click on a tab to view its contents</h1> 
             : null
           }
           <ManageTeams enabled={enabledManageTeam}/>
-        {/*  <TeamOversight enabled={enabledTeamOversight}/> */}
+        {<TeamOversight enabled={enabledTeamOversight}/>}
           <StudentStats enabled={enabledStudentStats}/>
           <FindMentors enabled={enabledFindMentors}/>
           <CoachProfile enabled={enabledCoachProfile}/>
