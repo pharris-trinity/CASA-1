@@ -993,7 +993,7 @@ app.post('/api/get-MentorData', function(req, res, next) {
   })
 
   app.post('/api/coachSearch', async(req, res) => {
-    const id = req.body
+    const {id} = req.body
     const coach = await Coach.findById(id)
 
     if(!coach){
@@ -1055,6 +1055,7 @@ app.post('/api/get-MentorData', function(req, res, next) {
   app.get('/api/quizsearch',async(req,res)=>{
     const quizzes = await Quiz.find({});
     //console.log(quizzes)
+    console.log("In the general quiz serch")
     if(!quizzes){
       console.log("no quiz was found")
       return res.sendStatus(404)
@@ -1064,9 +1065,10 @@ app.post('/api/get-MentorData', function(req, res, next) {
   })
 
   //get all quizzes by authorid (will work once createquiz api is made?)
-  app.get('/api/quizsearch/:aoid',async(req,res)=>{
+  app.get('/api/coachquizsearch/:aoid',async(req,res)=>{
     const quizzes = await Quiz.find({authorID: req.params.aoid}); //findById(id)
-    //console.log(quizzes)
+    console.log("In the coach quiz serch")
+    console.log(req.params.aoid)
     if(!quizzes){
       console.log("no quiz was found")
       return res.sendStatus(404)
