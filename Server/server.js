@@ -993,7 +993,7 @@ app.post('/api/get-MentorData', function(req, res, next) {
   })
 
   app.post('/api/coachSearch', async(req, res) => {
-    const {id} = req.body
+    const id = req.body
     const coach = await Coach.findById(id)
 
     if(!coach){

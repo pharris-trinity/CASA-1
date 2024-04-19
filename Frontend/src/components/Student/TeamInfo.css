@@ -1,0 +1,56 @@
+/* TeamInfo.css */
+
+.team-info-container {
+    margin: 20px;
+  }
+  
+  h2.team-name {
+    font-size: 28px; /* Adjust font size of team name */
+    margin-bottom: 10px;
+  }
+  
+  .coach-label,
+  .mentor-label {
+    font-size: 20px; /* Adjust font size of coach and mentor label */
+  }
+  
+  .coach-name,
+  .mentor-name {
+    font-size: 20px; /* Adjust font size of coach and mentor name */
+  }
+  
+  .team-info {
+    margin-top: 20px;
+  }
+  
+  .students {
+    margin-top: 10px;
+  }
+  
+  .students table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .students th,
+  .students td {
+    padding: 8px;
+  }
+  
+  .students th {
+    /* background-color: #003366; */ /* Remove background color from th */
+  }
+  
+  .students td {
+    text-align: left;
+  }
+  
+  .students th:first-child,
+  .students td:first-child {
+    font-weight: bold;
+  }
+  
+  .students .header-row th {
+    background-color: #003366; /* Add background color to header row */
+  }
+  

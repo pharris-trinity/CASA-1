@@ -1,0 +1,37 @@
+/* StudentProfilePage.css */
+
+.studentInfoContainer {
+    margin: 20px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  td:first-child {
+    color: 003366; /* White text color */
+  }
+  
+  strong {
+    font-weight: bold;
+  }
+  
+  .noDataMessage {
+    padding: 10px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    margin: 20px;
+  }
+  

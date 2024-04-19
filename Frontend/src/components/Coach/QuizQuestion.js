@@ -72,7 +72,9 @@ function QuizQuestion({ quiz }) {
         for (var i = 0; i < quests.current.length; i++) {
             tempArray.push(quests.current[i]);
         }
+        if(questions.length < 30){
         setQuestions(tempArray);
+        }
     }
 
     useEffect(() => {
@@ -136,7 +138,7 @@ function QuizQuestion({ quiz }) {
                         <option value="networking">Networking</option>
                         <option value="security_concepts">Security Concepts</option>
                     </select>
-                    <h3 className="quizinfo-text-container">Category</h3>
+                    <h3 className="quizinfo-text-container">Level</h3>
                     <select value={level} onChange={e => setLevel(e.target.value)}>
                         <option value="silver">Silver</option>
                         <option value="gold">Gold</option>
