@@ -28,7 +28,9 @@ import StudentInfo from '../components/Student/StudentInfo';
 import MentorTable from "../components/Mentor/MentorTable";
 import TableMentor from "../components/Mentor/TableMentor";
 import MentorHome from "../components/Mentor/MentorHomePage";
-import MentorProfile from "../components/Mentor/MentorProfile"
+import MentorProfile from "../components/Mentor/MentorProfile";
+import CreateMentorQuiz from '../components/Mentor/createMentorQuiz';
+import MentorPreviousQuizzes from '../components/Mentor/mentorPreviousQuizzes';
 // eslint-disable-next-line
 import ViewTeams from '../components/Coach/ViewTeams';
 
@@ -120,6 +122,8 @@ function App() {
           <Route path="mentorHome" element={<MentorHome/>} />
           <Route path="mentorprofile" element={<MentorProfile/>} />
           <Route path="mentortable" element={<MentorTable/>} />
+          <Route path="creatementorquiz" element={<CreateMentorQuiz/>}/>
+          <Route path="previousmentorquiz" element={<MentorPreviousQuizzes/>}/>
 
         {/*Admin Routes*/}
           <Route path="admin/homepage" element={<Admin/>} />
