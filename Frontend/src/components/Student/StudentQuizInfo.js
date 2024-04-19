@@ -11,6 +11,8 @@ import StudentInfo from "./StudentInfo.js";
 
 function StudentQuizInfo() {
   const [studentID, setStudentID] = useState();
+  const [student, setStudent] = useState();
+  const [teamCoachID, setTeamCoachID] = useState("")
   const [takenQuizzes, setTakenQuizzes] = useState([]);
   const [quizlist, setQuizlist] = useState([]);
   const [quiz, setQuiz] = useState([]);
@@ -37,9 +39,34 @@ function StudentQuizInfo() {
   }, []);
 
   useEffect(() => {
-    pullQuiz();
+    if (studentID) {
+        // Fetch quizzes from the database
+        getStudentInfo();
+    }
+  }, [studentID]);
+
+  const getStudentInfo = async () => {
+    try {
+      // Fetch quizzes from the database
+      const requestOptions = {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+    }
+      const response = await fetch('/api/studentInfoSearch/');
+      const jsonData = await response.json();
+      setStudent(jsonData)
+    } catch (error) {
+      console.error('Error fetching quizzes:', error);
+    }
+  }
+
+
+  useEffect(() => {
     setStudentID(localStorage.getItem("_id"));
-  }, []);
+    if(student){
+    pullQuiz();
+    }
+  }, [student]);
 
   useEffect(() => {
     if (studentID) {
@@ -49,20 +76,24 @@ function StudentQuizInfo() {
 
   const pullQuiz = async () => {
     try {
+      // Fetch quizzes from the database
       const requestOptions = {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      };
-      const response = await fetch("/api/quizsearch", requestOptions);
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+    }
+      const apiCall = '/api/coachquizsearch/'
+      const finalApiCall = apiCall + student.coachID
+      console.log("Team COach ID")
+      console.log(student.coachID)
+      const response = await fetch(finalApiCall);
       const jsonData = await response.json();
-
       setQuizlist(jsonData);
       setAllQuizzesCopy(jsonData);
       console.log("QuizList: ", jsonData);
     } catch (error) {
-      console.error("Error pulling quiz:", error);
+      console.error('Error fetching quizzes:', error);
     }
-  };
+  }
 
   const pullOneQuiz = async (target) => {
     try {

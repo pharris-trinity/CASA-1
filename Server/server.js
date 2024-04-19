@@ -877,6 +877,19 @@ app.post('/api/get-MentorData', function(req, res, next) {
     }
   })
 
+  app.get('/api/studentInfoSearch/:soid',async(req,res)=>{
+    const student = await User.findOne({_id: req.params.soid})
+
+    if(!student){
+      console.log("no ")
+      return res.sendStatus(404)
+    }
+    else{
+      //return res.status(200).send([student.username, student.takenQuizzes])
+      return res.status(200).send(student)
+    }
+  })
+
   app.post('/api/studentTakenQuizzes', async(req, res) => {
     const {id} = req.body
     const student = await Student.findOne({_id: id})
