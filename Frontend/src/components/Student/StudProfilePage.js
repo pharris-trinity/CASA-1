@@ -30,7 +30,9 @@ export default function StudentProfilePage() {
           throw new Error('Failed to fetch student data');
         }
         const data = await response.json();
+        console.log("Current Student Data")
         setStud(data.collection);
+        console.log(currStud)
       } catch (error) {
         console.error(error);
       }

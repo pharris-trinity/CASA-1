@@ -6,7 +6,16 @@ import './TeamInfo.css'; // Import coachHome.css for styling
 
 function TeamInfo() {
   const [team, setTeam] = useState(null);
+  const [currStud, setStud] = useState([]);
   const navigate = useNavigate();
+  const studentusername = localStorage.username;
+  const studentsearchurl = '/api/studentsearch/';
+  const finishedurl = studentsearchurl + studentusername;
+  const coachsearchurl= '/api/coachsearch';
+  const [ CoachID, setCoachID] = useState();
+  const [ finishedurlCoach, setFinishedUrlCoach] = useState();
+
+    const [currCoach, setCoach] = useState([])
 
   useEffect(() => {
     const toNavigateTo = loginChecker("Student");
@@ -29,13 +38,59 @@ function TeamInfo() {
     setTeam(dummyTeam);
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('api/studentInfoSearch');
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error('Failed to fetch student data');
+        }
+        setStud(data);
+        console.log("Current Student display name")
+        console.log(data.displayname)
+        setCoachID(currStud.coachID)
+        setFinishedUrlCoach(coachsearchurl+CoachID);
+        console.log(data.coachID)
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [finishedurl]);
+
+  // useEffect(() => {
+  //   console.log("Get coach from coachid")
+  //   console.log(CoachID)
+  //   if (CoachID) { // Check if CoachID exists
+  //     const requestOptions ={
+  //       method: 'POST',
+  //       headers: {'Content-Type': 'application/json'},
+  //       body: JSON.stringify({ id: CoachID }) // Pass CoachID directly
+  //     };
+  //     fetch(coachsearchurl, requestOptions)
+  //       .then(res => res.json())
+  //       .then(data => {
+  //         setCoach(data.collection)
+  //         if(data.collection == null) {console.log(Error)}
+  //       })
+  //       .catch(error => {
+  //         console.error("Error fetching coach:", error);
+  //       });
+  //   }
+  // }, [CoachID]); // Depend directly on CoachID
+
+
   if (!team) {
     return <div className="team-info-container">Loading...</div>;
   }
 
+  
+
   return (
     <div className="team-info-container">
-      <h2 className="team-name">{team.name}</h2>
+      <h2 className="team-name">Team {currStud.team}</h2>
       <div className="team-info">
         <div>
           <strong className="coach-label">Coach:</strong> <span className="coach-name">{team.coachName}</span>
