@@ -3,13 +3,17 @@ import "./stylesMentor.css"
 import Navbar from './../General/Navbar';
 import SelfAssessment from './SelfAssessment.js';
 import PersonalInfo from "./PersonalInfo.js";
+import CreateMentorQuiz from "./createMentorQuiz.js";
+import MentorPreviousQuizzes from "./mentorPreviousQuizzes.js";
 //import CreateQuiz from './../Coach/CreateQuiz.js'; superfluos 
 
 
 const MentorHome = () => { //Home page for mentor
     const[enableSelfAssessment, setEnableSelfAssessment] = useState(false); //creates function for toggling self assesment window
     const[enableInfoUpdate, setInfoUpdate] = useState(false);               //creates function for toggling info update window
-    //const [enabledCreateQuiz, setEnabledCreateQuiz] = useState(false); no longer needed
+    const [enabledCreateQuiz, setEnabledCreateQuiz] = useState(false);
+    const [enabledPreviousQuizzes, setEnabledPreviousQuizzes] = useState(false);
+
     //const [resetKey, setResetKey] = useState("key"); // creates funtion  for reset quiz key not needed
 
     //opens self assesment window
@@ -20,6 +24,16 @@ const MentorHome = () => { //Home page for mentor
     //opens update info window
     const InfoUpdateButton = () => {
         setInfoUpdate(true);
+    }    
+    
+    const createQuizButton = async () =>
+    {
+        setEnabledCreateQuiz(true);
+    }
+
+    const previousQuizzesButton = async () =>
+    {
+        setEnabledPreviousQuizzes(true);
     }
 
     //closes self assesment window
@@ -30,6 +44,14 @@ const MentorHome = () => { //Home page for mentor
     //closes update info window
     const closeInfoUpdate = async () => {
         setInfoUpdate(false);
+    }
+
+    const closeCreateQuiz = async () => {
+        setEnabledCreateQuiz(false);
+    }
+
+    const closePreviousQuizzes = async () => {
+        setEnabledPreviousQuizzes(false);
     }
 
     // function showCreateQuiz() {
@@ -53,10 +75,14 @@ return (
                 <div className="assessmentsSection">
                     <h2>Mentor Homepage</h2>
                     <ul>
-                    <button className="casa-button" type="button" onClick={SelfAssessmentButton}>Mentor Self Assessment - WIP</button> 
+                    <button className="casa-button" type="button" onClick={SelfAssessmentButton}>Mentor Self Assessment</button> 
                     <SelfAssessment enabled={enableSelfAssessment} closeForm={closeSelfAssessment}/>
                     <button className="casa-button" type="button" onClick={InfoUpdateButton}>Add/Change Personal Info</button>
                     <PersonalInfo enabled={enableInfoUpdate} closeForm={closeInfoUpdate}/>
+                    <button className="casa-button" type="button" onClick={createQuizButton}>Create Quiz</button>
+                    <CreateMentorQuiz enabled={enabledCreateQuiz} closeForm={closeCreateQuiz}/>
+                    <button className="casa-button" type="button" onClick={previousQuizzesButton}>Previous Quizzes</button>
+                    <MentorPreviousQuizzes enabled={enabledPreviousQuizzes} closeForm={closePreviousQuizzes}/>
                     </ul>
                 </div>
 

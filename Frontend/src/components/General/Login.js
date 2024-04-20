@@ -142,7 +142,7 @@ function Login() {
                 <div>
                     <button className="casa-button2" onClick={coachAccountCreation}>CREATE COACH ACCOUNT          </button>
                 <div>
-                      <button className="casa-button" onClick={mentorAccountCreation}>Create Mentor Account</button>
+                      <button className="casa-button2" onClick={mentorAccountCreation}>CREATE MENTOR ACCOUNT</button>
                         </div>
                     </div>
                 </div> 

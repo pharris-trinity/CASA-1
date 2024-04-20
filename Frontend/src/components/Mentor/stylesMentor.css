@@ -48,7 +48,10 @@ body {
     position: fixed;
     top: 5rem;
     width: 80%;
-    height: 50%;
+    height: 80%;
+    text-align: center;
+    max-height: calc(100vh - 5rem); /* Adjust the height as needed */
+    overflow-y: auto; /* Add scrollbar for vertical overflow */
 }
 
 .mainrow {
@@ -80,6 +83,8 @@ body {
     top: 5rem;
     width: 80%;
     height: 50%;
+    max-height: calc(100vh - 5rem); /* Set max height to viewport height minus top navigation height */
+    overflow-y: auto; /* Add scrollbar for vertical overflow */
 }
 
 .mentorAttributes {
