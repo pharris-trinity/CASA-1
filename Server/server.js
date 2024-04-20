@@ -1079,6 +1079,24 @@ app.post('/api/get-MentorData', function(req, res, next) {
     }); */
   })
 
+    //get all quizzes by authorid (will work once createquiz api is made?)
+    app.get('/api/mentorquizsearch/:aoid',async(req,res)=>{
+      const quizzes = await Quiz.find({authorID: req.params.aoid}); //findById(id)
+      console.log("In the mentor quiz serch")
+      console.log(req.params.aoid)
+      if(!quizzes){
+        console.log("no quiz was found")
+        return res.sendStatus(404)
+      } else {
+        return res.status(200).send(quizzes);
+      }
+      /*mongoose.connection.db.collection('quizzes').find({authorID: req.params.aoid}).toArray().then(collection => {  
+        //console.log("check quiz: " + collection);
+        res.status(200).json({collection})
+      }); */
+    })
+  
+
   //get the one quiz by object id and send it
   app.get('/api/quizsearch/oneq/:oid', async(req,res)=>{
     const quiz = await Quiz.find({_id: req.params.oid}); //findById(id)

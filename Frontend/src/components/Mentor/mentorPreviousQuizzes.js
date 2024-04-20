@@ -6,20 +6,37 @@ import './../Coach/StudentStats.css';
 import './createMentorQuiz.css'
 import MentorQuizQuestion from './mentorQuizQuestion';
 
-function MentorPreviousQuizzes({ enabled }) {
+function MentorPreviousQuizzes({ enabled, props }) {
+  const [mentorID, setMentorID] = useState("")
   const [quizzes, setQuizzes] = useState([]);
   const [selectedQuiz, setSelectedQuiz] = useState(null); // Track selected quiz for editing
   const quizQuestionRef = useRef();
 
   useEffect(() => {
-    // Fetch quizzes from the database
-    pullQuizzes();
-  }, []);
+    setMentorID(localStorage.getItem("_id"));
+    console.log("Attempt to set mentor id")
+    console.log(mentorID)
+}, []) 
+
+useEffect(() => {
+  if (mentorID) {
+      // Fetch quizzes from the database
+      pullQuizzes();
+  }
+}, [mentorID]);
 
   const pullQuizzes = async () => {
     try {
       // Fetch quizzes from the database
-      const response = await fetch('/api/quizsearch');
+      const requestOptions = {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+    }
+      const apiCall = '/api/mentorquizsearch/'
+      const finalApiCall = apiCall + mentorID
+      console.log("Mentor ID")
+      console.log(mentorID)
+      const response = await fetch(finalApiCall);
       const jsonData = await response.json();
       setQuizzes(jsonData);
     } catch (error) {
