@@ -68,7 +68,6 @@ return (
 <>    
 <Navbar buttonSet="mentor"/>
     <div className="maincontainer">
-        <h1>Mentor Homepage</h1>
         <div className="mainrow">
             <div className="maincol1">
                 

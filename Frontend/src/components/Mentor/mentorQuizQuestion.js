@@ -186,8 +186,8 @@ function MentorQuizQuestion({ quiz }) {
                     </div>
                 ))}
                 <div className="button-spacer">
-                    <button className="casa-button button-left" onClick={() => setQuestions(prevQuestions => [...prevQuestions, { description: "", answers: ["", "", "", ""], correctAnswer: 0 }])}>Add Question</button>
-                    <button className="casa-button button-right" type="submit" onClick={handleSubmit}>Submit Changes</button>
+                    <button className="casa-button button-left-mentor" onClick={() => setQuestions(prevQuestions => [...prevQuestions, { description: "", answers: ["", "", "", ""], correctAnswer: 0 }])}>Add Question</button>
+                    <button className="casa-button button-right-mentor" type="submit" onClick={handleSubmit}>Submit Changes</button>
                 </div>
         </div>
         </div>

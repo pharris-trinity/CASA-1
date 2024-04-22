@@ -55,12 +55,12 @@
     justify-content: space-between;
   }
   
-  .button-left, .button-right {
+  .button-left-mentor, .button-right-mentor {
     flex: 1;
     margin: 0 5px;
   }
   
-  .button-right {
+  .button-right-mentor {
     margin-left: 5px;
   }
   
