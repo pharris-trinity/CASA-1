@@ -17,6 +17,8 @@ function TeamInfo() {
 
     const [currCoach, setCoach] = useState([])
 
+  var coachName = "";
+
   useEffect(() => {
     const toNavigateTo = loginChecker("Student");
     if (toNavigateTo !== "") navigate(toNavigateTo, { replace: true });
@@ -26,18 +28,21 @@ function TeamInfo() {
     // Simulated data for a single team
     const dummyTeam = {
       id: 1,
-      name: "Team A",
+      name: "Team AAAAAAAA",
       coachName: "John Doe",
       mentor: "Jane Smith",
       students: [
-        { id: 1, name: "Student 1", alternate: "Alternate 1" },
-        { id: 2, name: "Student 2", alternate: "Alternate 2" },
-        { id: 3, name: "Student 3", alternate: "Alternate 3" }
+        { id: 1, name: "Example Student 1", alternate: "Alternate Student 1" },
+        { id: 2, name: "Example Student 2", alternate: "n/a" },
+        { id: 3, name: "Example Student 3", alternate: "n/a" },
+        { id: 4, name: "Example Student 4", alternate: "n/a" },
+        { id: 5, name: "Example Student 5", alternate: "n/a" }
       ]
     };
     setTeam(dummyTeam);
   }, []);
 
+  /*
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,28 +64,80 @@ function TeamInfo() {
 
     fetchData();
   }, [finishedurl]);
+  */
 
-  // useEffect(() => {
-  //   console.log("Get coach from coachid")
-  //   console.log(CoachID)
-  //   if (CoachID) { // Check if CoachID exists
-  //     const requestOptions ={
-  //       method: 'POST',
-  //       headers: {'Content-Type': 'application/json'},
-  //       body: JSON.stringify({ id: CoachID }) // Pass CoachID directly
-  //     };
-  //     fetch(coachsearchurl, requestOptions)
-  //       .then(res => res.json())
-  //       .then(data => {
-  //         setCoach(data.collection)
-  //         if(data.collection == null) {console.log(Error)}
-  //       })
-  //       .catch(error => {
-  //         console.error("Error fetching coach:", error);
-  //       });
-  //   }
-  // }, [CoachID]); // Depend directly on CoachID
+  const fetchCoachAccount = (incText) => {
+    const postData = { displayID: incText }
+    const requestOptions = {
+        method: 'Post',
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify(postData)
+    };
+    fetch('/api/team/get_coach_by_id', requestOptions).then(
+        res => res.text()).then(text => {
+            try {
+              const data2 = JSON.parse(text)[0].displayname;
+              console.log('Fetched Coach Data:', data2);
+              coachName = data2;
+              console.log(coachName)
+            } catch (error) {
+                console.log("Unable to fetch -", error)
+            }
+        }
+        );
+    }; 
 
+  useEffect(() => {
+    var fieldData = ['username', 'gradelevel', 'team'] //payload
+    const requestOptions ={
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(fieldData)
+    };
+    fetch(finishedurl, requestOptions).then(res => res.json()).then(
+        data => {
+          console.log(`/api/coach/displayName/${data.collection[0].coachID}`)
+          // const response = fetch(`/api/team/get_coach_by_id/${data.collection[0].coachID}`);       
+
+          const response = fetchCoachAccount(data.collection[0].coachID);
+            console.log(data.collection[0].coachID)
+            console.log(response)
+            console.log(fieldData)
+            console.log(data.collection[0])
+            setStud(data.collection[0])
+            console.log(data.collection[0].team)
+            console.log(data.collection[0].username)
+            console.log(currStud.team)
+            console.log(currStud.username)
+            if(data.collection == null) {console.log(Error)}
+        })
+    },[]);
+
+/*
+  useEffect(() => {
+    console.log("Get coach from coachid")
+    console.log(coachID)
+    console.log(`/api/coach/displayName/${coachID}`)
+    if (coachID) { // Check if CoachID exists
+      const requestOptions ={
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ id: CoachID }) // Pass CoachID directly
+      };
+      fetch(coachsearchurl, requestOptions)
+        .then(res => res.json())
+        .then(data => {
+          setCoach(data.collection)
+          if(data.collection == null) {console.log(Error)}
+        })
+        .catch(error => {
+          console.error("Error fetching coach:", error);
+        });
+    }
+    console.log(coachsearchurl+CoachID)
+    setFinishedUrlCoach(coachsearchurl+CoachID);
+  }, [CoachID]); // Depend directly on CoachID
+*/
 
   if (!team) {
     return <div className="team-info-container">Loading...</div>;
@@ -93,7 +150,7 @@ function TeamInfo() {
       <h2 className="team-name">Team {currStud.team}</h2>
       <div className="team-info">
         <div>
-          <strong className="coach-label">Coach:</strong> <span className="coach-name">{team.coachName}</span>
+          <strong className="coach-label">Coach:</strong> <span className="coach-name">{coachName}</span>
         </div>
         <div>
           <strong className="mentor-label">Mentor:</strong> <span className="mentor-name">{team.mentor}</span>

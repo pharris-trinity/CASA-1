@@ -126,9 +126,6 @@ function Login() {
                     {renderErrorMessage("user")}
                 </div>
                 <div className="form-group">
-                    <input type="email" placeholder="Email" name="email" id="email" onChange={e => setDetails({...details, email: e.target.value})} value={details.email}/>
-                </div>
-                <div className="form-group">
                     <input type="password" placeholder="Password" name="password" id="password" onChange={e => setDetails({...details, password: e.target.value})} value={details.password}/>
                     {renderErrorMessage("pass")}
                 </div>

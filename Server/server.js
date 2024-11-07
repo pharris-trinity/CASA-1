@@ -23,7 +23,7 @@ let username = environment.USER_NAME
 let password = environment.USER_PASSWORD
 
 // Database Setup and Verification Steps
-    const uri = "mongodb+srv://" + username + ":" + password + "@casa-primary.mfffrek.mongodb.net/" + database + "?retryWrites=true&w=majority"
+    const uri = "mongodb+srv://admin:admin@cluster0.yxfme.mongodb.net/"
     try {
       mongoose.connect(uri);
     } catch (error) {
@@ -430,7 +430,7 @@ app.post('/api/coach/create_coach', async(req, res) => {
   });
 
   app.post('/api/mentor/self_assessment_update', async(req, res) => {
-    const { ment_id, windowsRating, windowsServerRating, linuxRating, networkingRating, securityConseptsRating } = req.body;
+    const { ment_id, windowsRating, windowsServerRating, linuxRating, networkingRating, securityConceptsRating } = req.body;
     console.log("ment_id: ", ment_id)
     const user = await User.findOne({"_id": ment_id})
     console.log(user);
@@ -439,7 +439,7 @@ app.post('/api/coach/create_coach', async(req, res) => {
       user.windowsServerRating = windowsServerRating
       user.linuxRating = linuxRating
       user.networkingRating = networkingRating
-      user.securityConseptsRating = securityConseptsRating
+      user.securityConceptsRating = securityConceptsRating
 
     user.save()
     return res.status(200).send("Successfully updated self assessment")
@@ -524,6 +524,16 @@ app.get('/api/filter_mentors', async(req, res) => {
 })
 
 app.post('/api/coach/get_student_by_id', async(req, res) => {
+  const { displayID } = req.body;
+  const user = await User.find({"_id": displayID})     
+  if(!user){
+    return res.sendStatus(404)
+  } else {
+    return res.status(200).send(user); 
+  }      
+}) 
+
+app.post('/api/team/get_coach_by_id', async(req, res) => {
   const { displayID } = req.body;
   const user = await User.find({"_id": displayID})     
   if(!user){
@@ -865,8 +875,10 @@ app.post('/api/get-MentorData', function(req, res, next) {
   });
 
   app.get('/api/studentInfoSearch',async(req,res)=>{
-    const student = await User.findOne()
-
+    // const student = await User.findOne(req.displayname, req.username, req.gradelevel, req.teamid)
+    const {id} = req.body
+    const student = await User.findOne(req._id)
+    // const {coachID, studentID, studentDispName, studentGradLevel, studentTeamID} = req.body
     if(!student){
       console.log("no ")
       return res.sendStatus(404)

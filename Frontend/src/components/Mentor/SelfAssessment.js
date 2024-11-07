@@ -8,14 +8,14 @@ function SelfAssessment(props) {
     const[pwindowsServerRating, setWindowsServerRating] = useState();
     const[plinuxRating, setLinuxRating] = useState();
     const[pnetworkingRating, setNetworkingRating] = useState();
-    const[psecurityConseptsRating, setSecurityConseptsRating] = useState();
+    const[psecurityConceptsRating, setSecurityConceptsRating] = useState();
 
 
 
 
     //updates the mentors own self assesment info
     const mentorSelfAssessment = async ( windowsRat, windowsServRat, linuxRat, netwrokingRat, securityConsRat) => {
-        var tmpData = { ment_id : localStorage.getItem("_id"), windowsRating : windowsRat, windowsServerRating : windowsServRat, linuxRating:  linuxRat, networkingRating : netwrokingRat, securityConseptsRating: securityConsRat}
+        var tmpData = { ment_id : localStorage.getItem("_id"), windowsRating : windowsRat, windowsServerRating : windowsServRat, linuxRating:  linuxRat, networkingRating : netwrokingRat, securityConceptsRating: securityConsRat}
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -29,9 +29,9 @@ function SelfAssessment(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(pwindowsRating > 0 && pwindowsRating < 6 && pwindowsServerRating > 0 && pwindowsServerRating < 6  && plinuxRating > 0 && plinuxRating < 6 && pnetworkingRating > 0 && pnetworkingRating < 6 && psecurityConseptsRating > 0 && psecurityConseptsRating < 6){
-            console.log("psecurityConseptsRating: ", psecurityConseptsRating, "test")
-            await mentorSelfAssessment(pwindowsRating, pwindowsServerRating, plinuxRating, pnetworkingRating, psecurityConseptsRating)
+        if(pwindowsRating > 0 && pwindowsRating < 6 && pwindowsServerRating > 0 && pwindowsServerRating < 6  && plinuxRating > 0 && plinuxRating < 6 && pnetworkingRating > 0 && pnetworkingRating < 6 && psecurityConceptsRating > 0 && psecurityConceptsRating < 6){
+            console.log("psecurityConceptsRating: ", psecurityConceptsRating, "test")
+            await mentorSelfAssessment(pwindowsRating, pwindowsServerRating, plinuxRating, pnetworkingRating, psecurityConceptsRating)
             props.closeForm();
         }
         else {
@@ -45,7 +45,7 @@ function SelfAssessment(props) {
         return (
             <div className="form-popup">
                 <h2>Mentor Self Assessment</h2>
-                <h3>Please give each subject a rating of 1-5 based on how well you now the subject. 1 being very little, to 5 being an expert</h3>
+                <h3>Please give each subject a rating of 1-5 based on how well you know the subject (1 being very little, to 5 being an expert).</h3>
                 <div>
                     <form className="self-assessment-container" onSubmit={handleSubmit}>
                         <div>
@@ -53,6 +53,8 @@ function SelfAssessment(props) {
                             <input
                                 type='Number'
                                 id='windowsRating'
+                                min={(1)}
+                                max={(5)}
                                 name='windowsRating'
                                 value={pwindowsRating}
                                 onChange={(e) => setWindowsRating(e.target.value)}
@@ -63,6 +65,8 @@ function SelfAssessment(props) {
                             <input
                                 type='Number'
                                 id='windowsSererRating'
+                                min={(1)}
+                                max={(5)}
                                 name='windowsSererRating'
                                 value={pwindowsServerRating}
                                 onChange={(e) => setWindowsServerRating(e.target.value)}
@@ -73,6 +77,8 @@ function SelfAssessment(props) {
                             <input
                                 type='Number'
                                 id='linuxRating'
+                                min={(1)}
+                                max={(5)}
                                 name='linuxRating'
                                 value={plinuxRating}
                                 onChange={(e) => setLinuxRating(e.target.value)}
@@ -83,19 +89,23 @@ function SelfAssessment(props) {
                             <input
                                 type='Number'
                                 id='networkingRating'
+                                min={(1)}
+                                max={(5)}
                                 name='networkingRating'
                                 value={pnetworkingRating}
                                 onChange={(e) => setNetworkingRating(e.target.value)}
                                 required                                
                             />
 
-                            <label htmlFor='securityConseptsRating'>Security Concepts Rating: </label>
+                            <label htmlFor='securityConceptsRating'>Security Concepts Rating: </label>
                             <input
                                 type='Number'
-                                id='securityConseptsRating'
-                                name='securityConseptsRating'
-                                value={psecurityConseptsRating}
-                                onChange={(e) => setSecurityConseptsRating(e.target.value)}
+                                id='securityConceptsRating'
+                                min={(1)}
+                                max={(5)}
+                                name='securityConceptsRating'
+                                value={psecurityConceptsRating}
+                                onChange={(e) => setSecurityConceptsRating(e.target.value)}
                                 required                                
                             />
 

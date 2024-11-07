@@ -46,11 +46,6 @@ function FindMentors(props) {
         }
     }
 
-
-
-
-
-
     //retrieves the coach's ID from local storage when the component is loaded
     useEffect(() => {
         setcoachID(localStorage.getItem("_id"))
@@ -119,7 +114,7 @@ function FindMentors(props) {
     }
 
     const sortBySecConRating = () => {
-        setSorted({sorted: "securityConseptsRating", reversed: !sorted.reversed});
+        setSorted({sorted: "securityConceptsRating", reversed: !sorted.reversed});
         const usersCopy = [...mentors];
         usersCopy.sort((userA, userB) => {
             const nameA = String(userA.team);
@@ -176,7 +171,7 @@ function FindMentors(props) {
                             Search
                         </button>
                     </div>
-                <h3>Student Stats (Based on Quiz Categories)</h3>
+                <h3>Find Mentors (Based on Quiz Categories)</h3>
                 <table>
                         <thead>
                             <tr>
@@ -199,9 +194,10 @@ function FindMentors(props) {
                                 </th>
                                 <th className="th-manage-teams" onClick = {sortBySecConRating}>
                                     <span style={{marginRight: 10}}>Security Concepts Rating</span>
-                                        {sorted.sorted == "securityConseptsRating" ? renderArrow() : renderConst()}
+                                        {sorted.sorted == "securityConceptsRating" ? renderArrow() : renderConst()}
                                 </th>
                                 <th className="th-manage-teams">Zipcode</th>
+                                <th className="th-manage-teams">Email</th>
                             </tr>
                         </thead>
 
@@ -213,8 +209,9 @@ function FindMentors(props) {
                                 <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.windowsServerRating}</td>
                                 <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.linuxRating}</td>
                                 <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.networkingRating}</td>
-                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.securityConseptsRating}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.securityConceptsRating}</td>
                                 <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.zipcode}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.email}</td>
                             </tr>
                         ))}
                         </tbody>

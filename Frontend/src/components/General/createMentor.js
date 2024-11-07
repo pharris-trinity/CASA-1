@@ -94,19 +94,19 @@ function CreateMentor() {
                 <div className="form-inner">
                     <h2> Create Account </h2>
                     <div className="form-group">
-                        <input type="text" placeholder="Username" name="name" id="name"  value={user} onChange={evt => {setUser(evt.target.value)}}/>
+                        <input type="text" placeholder="Username" name="name" id="name"  value={user} onChange={evt => {setUser(evt.target.value)}} required/>
                     </div>
                     <div className="form-group">
-                        <input type="email" placeholder="Email" name="email" id="email" value={email} onChange={evt => {setEmail(evt.target.value)}}/>
+                        <input type="email" placeholder="Email" name="email" id="email" value={email} onChange={evt => {setEmail(evt.target.value)}} required/>
                     </div>
                     <div className="form-group">
-                        <input type="text" placeholder="Display Name" name="displayname" id="displayname"  value={display} onChange={evt => {setDisplay(evt.target.value)}}/>
+                        <input type="text" placeholder="Display Name" name="displayname" id="displayname"  value={display} onChange={evt => {setDisplay(evt.target.value)}} required/>
                     </div>
                     <div className="form-group">
-                        <input type="password" placeholder="Password" name="password" id="password" value={password} onChange={evt => {setPassword(evt.target.value)}}/>
+                        <input type="password" placeholder="Password" name="password" id="password" value={password} onChange={evt => {setPassword(evt.target.value)}} required/>
                     </div>
                     <div className='form-group'>
-                        <input type="password" placeholder='Verify Password' name='password2' id='password2' value={passwordVerify} onChange={evt => {setPasswordVerify(evt.target.value)}}/>
+                        <input type="password" placeholder='Verify Password' name='password2' id='password2' value={passwordVerify} onChange={evt => {setPasswordVerify(evt.target.value)}} required/>
                     </div>
                     <input type="submit" value="CREATE ACCOUNT"/>
                     <button id='login' onClick={loginRedirect} className="login_button">Login</button>

@@ -3,7 +3,6 @@ import './../Coach/questionForm.css'; // Import CSS file for styling
 import './createMentorQuiz.css'; // Import CSS file for styling
 import './../Coach/quizInfo.css';
 import './../Coach/StudentStats.css';
-import './createMentorQuiz.css'
 import MentorQuizQuestion from './mentorQuizQuestion';
 
 function MentorPreviousQuizzes({ enabled, props }) {
@@ -16,14 +15,16 @@ function MentorPreviousQuizzes({ enabled, props }) {
     setMentorID(localStorage.getItem("_id"));
     console.log("Attempt to set mentor id")
     console.log(mentorID)
-}, []) 
 
-useEffect(() => {
-  if (mentorID) {
-      // Fetch quizzes from the database
-      pullQuizzes();
-  }
-}, [mentorID]);
+  
+  }, []) 
+
+  useEffect(() => {
+    if (mentorID) {
+        // Fetch quizzes from the database
+        pullQuizzes();
+    }
+  }, [mentorID]);
 
   const pullQuizzes = async () => {
     try {
@@ -64,29 +65,29 @@ useEffect(() => {
         </div>
       ) : (
         <div className="form-popup">
-        <h3>Quizzes</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Level</th>
-            </tr>
-              </thead>
-              <tbody>
-                {quizzes.map((quiz, index) => (
-                  <tr key={index} onClick={() => handleQuizClick(quiz)}>
-                    <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{quiz.name}</td>
-                    <td className={index % 2 === 0 ? 'td-even' : 'td-odd'} >{quiz.category}</td>
-                    <td className={index % 2 === 0 ? 'td-even' : 'td-odd'} >{quiz.level}</td>
-                  </tr>
-                ))}
+          <h3>Quizzes</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Level</th>
+              </tr>
+                </thead>
+                <tbody>
+                  {quizzes.map((quiz, index) => (
+                    <tr key={index} onClick={() => handleQuizClick(quiz)}>
+                      <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{quiz.name}</td>
+                      <td className={index % 2 === 0 ? 'td-even' : 'td-odd'} >{quiz.category}</td>
+                      <td className={index % 2 === 0 ? 'td-even' : 'td-odd'} >{quiz.level}</td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
-                </div>
-            )}
-        </div>
-    );
+          </div>
+        )}
+      </div>
+  );
 }
 
 export default MentorPreviousQuizzes;

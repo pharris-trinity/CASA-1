@@ -8,14 +8,14 @@ export default function StudentProfilePage() {
   const studentsearchurl = '/api/studentsearch/';
   const finishedurl = studentsearchurl + studentusername;
   let navigate = useNavigate();
-
   useEffect(() => {
     const toNavigateTo = loginChecker("Student");
     if (toNavigateTo !== "") navigate(toNavigateTo, { replace: true });
   }, [navigate]);
 
-  const [currStud, setStud] = useState([]);
+  const [currStud, setStud] = useState([""]);
 
+  /*
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,6 +34,23 @@ export default function StudentProfilePage() {
 
     fetchData();
   }, [finishedurl]);
+  */
+
+  useEffect(() => {
+    var fieldData = ['username', 'gradelevel', 'team'] //payload
+    const requestOptions ={
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(fieldData)
+    };
+    fetch(finishedurl, requestOptions).then(res => res.json()).then(
+        data => {
+            console.log(data.collection)
+            setStud(data.collection[0])
+            console.log(currStud.username)
+            if(data.collection == null) {console.log(Error)}
+        })
+    },[]);
 
   if (!currStud || Object.keys(currStud).length === 0) {
     return <div className="noDataMessage">No student data available</div>;
@@ -45,8 +62,8 @@ export default function StudentProfilePage() {
       <table>
         <tbody>
           <tr>
-            <td><strong>Name:</strong></td>
-            <td>{currStud.displayname}</td>
+            <td><strong>Username:</strong></td>
+            <td>{currStud.username}</td>
           </tr>
           <tr>
             <td><strong>Grade:</strong></td>
