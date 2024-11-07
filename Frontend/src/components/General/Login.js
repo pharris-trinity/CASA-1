@@ -19,8 +19,8 @@ function Login() {
       event.preventDefault();
 
       const error = {
-        user: "Username not found",
-        pass: "Invalid password"
+        user: "Incorrect Login",
+        pass: "Incorrect Login"
       }
   
       var postData = { username: details.name, password: details.password, email: details.email}
@@ -33,7 +33,7 @@ function Login() {
       fetch('/api/user/login', requestOptions).then(
         res => res.text()).then(text => {
             if(text === "Username not found"){
-                setErrorMessages({name: "user", message:error.user})
+                setErrorMessages({name: "pass", message:error.user})
             } else if(text === "Password mismatch") {
                 setErrorMessages({name: "pass", message:error.pass})
             } else {
@@ -124,9 +124,6 @@ function Login() {
                 <div className="form-group">
                     <input type="text" placeholder="Username" name="name" id="name"  onChange={e => setDetails({...details, name: e.target.value})} value={details.name}/>
                     {renderErrorMessage("user")}
-                </div>
-                <div className="form-group">
-                    <input type="email" placeholder="Email" name="email" id="email" onChange={e => setDetails({...details, email: e.target.value})} value={details.email}/>
                 </div>
                 <div className="form-group">
                     <input type="password" placeholder="Password" name="password" id="password" onChange={e => setDetails({...details, password: e.target.value})} value={details.password}/>

@@ -16,6 +16,8 @@
     "npm": "^8.19.2",
     "react-bootstrap": "^2.6.0",
     "react-icons": "^4.8.0",
+    "react-router-dom": "^6.26.2",
+    "react-scripts": "^5.0.1",
     "react-table": "^7.8.0",
     "styled-components": "^5.3.6"
   },
@@ -46,10 +48,5 @@
     "url": "https://github.com/TheNameIsGav/CASA/issues"
   },
   "homepage": "https://github.com/TheNameIsGav/CASA#readme",
-  "description": "",
-  "devDependencies": {
-    "chai": "^4.3.6",
-    "mocha": "^10.0.0",
-    "supertest": "^6.3.0"
-  }
+  "description": ""
 }

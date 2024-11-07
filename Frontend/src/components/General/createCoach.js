@@ -87,7 +87,7 @@ function CreateCoach() {
 
     return (                  
         <>Coach Creation
-        {/*<Navbar/>*/}
+        <Navbar/>
         <img src={logo} id="logo" centerImage="center" align="left" alt=""/>
         <div className='form'>
             <form onSubmit={submitHandler}>
