@@ -3,6 +3,7 @@ import './App.css';
 import { Routes, Route, Link, Switch } from "react-router-dom";
 import * as React from "react";
 import {useEffect} from 'react';
+import ReactDOM from 'react-dom'
 
 import Navbar from "../components/General/Navbar";
 import Login from "../components/General/Login";

@@ -128,7 +128,8 @@ function ManageTeams(props) {
             getStudents(coachUserID);
 
             } catch (error) {
-                console.log("error error");
+                alert("Team is at maximum capacity");
+                console.log("Error adding student to team");   
             }
         }
     }
@@ -235,18 +236,45 @@ function ManageTeams(props) {
     }
     
     //sorts by student display name
-    const sortByName = () => {
-        setSorted({sorted: "name", reversed: !sorted.reversed});
-        const usersCopy = [...students];
-        usersCopy.sort((userA, userB) => {
-            const nameA = userA.displayname;
-            const nameB = userB.displayname;
-            if (sorted.reversed) {
-                return nameB.localeCompare(nameA);
+    function sortByName(teamID) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById(document.getElementById(teamID));
+        switching = true;
+        dir = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[0];
+                y = rows[i + 1].getElementsByTagName("TD")[0];
+
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                }
             }
-            return nameA.localeCompare(nameB);
-        });
-        setStudents(usersCopy); 
+
+            if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount ++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }   
     }
     
     //sorts by student email
@@ -541,7 +569,7 @@ function ManageTeams(props) {
             .map(([teamID, teamStudents]) => (
                 <div key={teamID} className="right" onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDrop={(e) => handleDrop(e, teamID)}>
                     <h3>{getTeamName(teamID)} ({formatTeamIDString(teamID)})</h3>
-                    <table style={{ color: '#fff' }}>
+                    <table style={{ color: '#fff' }} id={teamID}>
                         {/* Table headers */}
                         <thead>
                             <tr>
