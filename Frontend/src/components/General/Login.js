@@ -19,8 +19,8 @@ function Login() {
       event.preventDefault();
 
       const error = {
-        user: "Username not found",
-        pass: "Invalid password"
+        user: "Incorrect Login",
+        pass: "Incorrect Login"
       }
   
       var postData = { username: details.name, password: details.password, email: details.email}
@@ -33,7 +33,7 @@ function Login() {
       fetch('/api/user/login', requestOptions).then(
         res => res.text()).then(text => {
             if(text === "Username not found"){
-                setErrorMessages({name: "user", message:error.user})
+                setErrorMessages({name: "pass", message:error.user})
             } else if(text === "Password mismatch") {
                 setErrorMessages({name: "pass", message:error.pass})
             } else {

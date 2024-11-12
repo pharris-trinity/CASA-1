@@ -92,7 +92,7 @@ saltRounds = 12
   });
 
   app.post("/api/user/login", async (req, res) => {
-
+    console.log("Logging in");
       const {username, password} = req.body;
 
       await User.findOne(
@@ -558,15 +558,20 @@ app.post('/api/team/student_display_to_id', async(req, res) => {
 app.post('/api/coach/get_studentid_by_email', async(req, res) => {
   const { student_email } = req.body;  
   console.log(student_email)
-  const user = await User.find({"email": student_email})  
-  console.log("THE USER IS ____________________________________________________________________________________", user[0]._id, typeof user)
-  if(!user || user[0]._id == undefined){
-    console.log("INSIDE THE IF STATEMENT------------------------------------")
-    return res.sendStatus(404)
-  } else {
-    //console.log("USER SENT BACK", user)
-    return res.status(200).send(user[0]._id); 
-  }      
+  const user = await User.find({"email": student_email})
+  try {
+    console.log("THE USER IS ____________________________________________________________________________________", user[0]._id, typeof user)
+      if(!user || user[0]._id == undefined){
+      console.log("INSIDE THE IF STATEMENT------------------------------------")
+      return res.sendStatus(404)
+    } else {
+      //console.log("USER SENT BACK", user)
+      return res.status(200).send(user[0]._id); 
+    }      
+  }  
+  catch{
+    return res.status(502).send("No User with that Email exists")
+  }
 }) 
 
 
@@ -596,7 +601,7 @@ app.post('/api/team/add_student_to_team', async(req, res) => {
     return res.status(201).send("User is already registered to this team")
   }
 
-  if(team.members.length > 10){
+  if(team.members.length > 6){
     return res.status(202).send("Team is full")
   }
 
@@ -875,16 +880,14 @@ app.post('/api/get-MentorData', function(req, res, next) {
   });
 
   app.get('/api/studentInfoSearch',async(req,res)=>{
-    // const student = await User.findOne(req.displayname, req.username, req.gradelevel, req.teamid)
     const {id} = req.body
-    const student = await User.findOne(req._id)
-    // const {coachID, studentID, studentDispName, studentGradLevel, studentTeamID} = req.body
-    if(!student){
-      console.log("no ")
+    const student = await Student.findById(id)
+
+    if(!Student){
+      console.log("no student found")
       return res.sendStatus(404)
     }
     else{
-      //return res.status(200).send([student.username, student.takenQuizzes])
       return res.status(200).send(student)
     }
   })
@@ -958,6 +961,11 @@ app.post('/api/get-MentorData', function(req, res, next) {
             oldTeam.save()
         } else { return res.status(503).send("No team matches this National Team Number")}
       } else {
+        console.log(newTeam.members.length)
+        if(newTeam.members.length >= 6) {
+          // alert("Team is at maximum capacity")
+          return res.status(502).send("Team is at maximum capacity")
+        }
         if(oldTeam) {
           if(newTeam.national_id != user.team) {
             if(newTeam.coach.equals(coach._id)) {
@@ -994,7 +1002,7 @@ app.post('/api/get-MentorData', function(req, res, next) {
 
     if(studentDispName != '' && studentDispName != 'N/A' && studentDispName != null)user.displayname = studentDispName
 
-    if(studentGradLevel != '' && studentGradLevel != 'N/A' && studentGradLevel != null)user.gradelevel = studentGradLevel 
+    if(studentGradLevel != '' && studentGradLevel != 'N/A' && studentGradLevel != null && studentGradLevel != 'undefined')user.gradelevel = studentGradLevel 
 
     user.save();
   

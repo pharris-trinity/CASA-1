@@ -55,8 +55,12 @@ function MentorPreviousQuizzes({ enabled, props }) {
     setSelectedQuiz(null);
   }
 
+  const handleCloseClick = () => {
+    document.getElementById("prevQuizPopup").style.display = 'none';
+  }
+
   return (
-    <div style={{ display: enabled ? 'block' : 'none' }}>
+    <div id="prevQuizPopup" style={{ display: enabled ? 'block' : 'none' }}>
       {selectedQuiz ? (
         <div>
           {/* Render the QuizQuestion for editing the selected quiz */}
@@ -73,21 +77,24 @@ function MentorPreviousQuizzes({ enabled, props }) {
                 <th>Category</th>
                 <th>Level</th>
               </tr>
-                </thead>
-                <tbody>
-                  {quizzes.map((quiz, index) => (
-                    <tr key={index} onClick={() => handleQuizClick(quiz)}>
-                      <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{quiz.name}</td>
-                      <td className={index % 2 === 0 ? 'td-even' : 'td-odd'} >{quiz.category}</td>
-                      <td className={index % 2 === 0 ? 'td-even' : 'td-odd'} >{quiz.level}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-  );
+            </thead>
+            <tbody>
+              {quizzes.map((quiz, index) => (
+                <tr key={index} onClick={() => handleQuizClick(quiz)}>
+                  <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}>{quiz.name}</td>
+                  <td className={index % 2 === 0 ? 'td-even' : 'td-odd'} >{quiz.category}</td>
+                  <td className={index % 2 === 0 ? 'td-even' : 'td-odd'} >{quiz.level}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button className="casa-button" type="button" onClick={()=>handleCloseClick()}>Cancel</button>
+        </div>
+                
+            )}
+        </div>
+        
+    );
 }
 
 export default MentorPreviousQuizzes;

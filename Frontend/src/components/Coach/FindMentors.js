@@ -57,74 +57,306 @@ function FindMentors(props) {
     }, []);
 
       //sorts by team id
-      const sortByWindowsRating = () => {
-        setSorted({sorted: "windowsRating", reversed: !sorted.reversed});
-        const usersCopy = [...mentors];
-        usersCopy.sort((userA, userB) => {
-            const nameA = String(userA.team);
-            const nameB = String(userB.team);
-            if (sorted.reversed) {
-                return nameB.localeCompare(nameA);
+
+      const sortByName = () => {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("mentorTable");
+        switching = true;
+        dir = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[0];
+                y = rows[i + 1].getElementsByTagName("TD")[0];
+
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                }
             }
-            return nameA.localeCompare(nameB);
-        });
-        setMentors(usersCopy); 
+
+            if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount ++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }  
     }
 
-    const sortByLinuxRating = () => {
-        setSorted({sorted: "linuxRating", reversed: !sorted.reversed});
-        const usersCopy = [...mentors];
-        usersCopy.sort((userA, userB) => {
-            const nameA = String(userA.team);
-            const nameB = String(userB.team);
-            if (sorted.reversed) {
-                return nameB.localeCompare(nameA);
+      const sortByWindowsRating = () => {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("mentorTable");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until
+        no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /* Loop through all table rows (except the
+            first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+            // Start by saying there should be no switching:
+            shouldSwitch = false;
+            /* Get the two elements you want to compare,
+            one from current row and one from the next: */
+            x = rows[i].getElementsByTagName("TD")[1];
+            y = rows[i + 1].getElementsByTagName("TD")[1];
+            /* Check if the two rows should switch place,
+            based on the direction, asc or desc: */
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                // If so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                // If so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+                }
             }
-            return nameA.localeCompare(nameB);
-        });
-        setMentors(usersCopy); 
+            }
+            if (shouldSwitch) {
+            /* If a switch has been marked, make the switch
+            and mark that a switch has been done: */
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            // Each time a switch is done, increase this count by 1:
+            switchcount ++;
+            } else {
+            /* If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again. */
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+            }
+        }
     }
 
     const sortByWindowServerRating = () => {
-        setSorted({sorted: "windowsServerRating", reversed: !sorted.reversed});
-        const usersCopy = [...mentors];
-        usersCopy.sort((userA, userB) => {
-            const nameA = String(userA.team);
-            const nameB = String(userB.team);
-            if (sorted.reversed) {
-                return nameB.localeCompare(nameA);
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("mentorTable");
+        switching = true;
+        dir = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[2];
+                y = rows[i + 1].getElementsByTagName("TD")[2];
+
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                }
             }
-            return nameA.localeCompare(nameB);
-        });
-        setMentors(usersCopy); 
+
+            if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount ++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }  
+    }
+
+    const sortByLinuxRating = () => {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("mentorTable");
+        switching = true;
+        dir = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[3];
+                y = rows[i + 1].getElementsByTagName("TD")[3];
+
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                }
+            }
+
+            if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount ++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        } 
     }
 
     const sortByNetworkRating = () => {
-        setSorted({sorted: "networkingRating", reversed: !sorted.reversed});
-        const usersCopy = [...mentors];
-        usersCopy.sort((userA, userB) => {
-            const nameA = String(userA.team);
-            const nameB = String(userB.team);
-            if (sorted.reversed) {
-                return nameB.localeCompare(nameA);
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("mentorTable");
+        switching = true;
+        dir = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[4];
+                y = rows[i + 1].getElementsByTagName("TD")[4];
+
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                }
             }
-            return nameA.localeCompare(nameB);
-        });
-        setMentors(usersCopy); 
+
+            if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount ++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        } 
     }
 
     const sortBySecConRating = () => {
-        setSorted({sorted: "securityConceptsRating", reversed: !sorted.reversed});
-        const usersCopy = [...mentors];
-        usersCopy.sort((userA, userB) => {
-            const nameA = String(userA.team);
-            const nameB = String(userB.team);
-            if (sorted.reversed) {
-                return nameB.localeCompare(nameA);
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("mentorTable");
+        switching = true;
+        dir = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[5];
+                y = rows[i + 1].getElementsByTagName("TD")[5];
+
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                }
             }
-            return nameA.localeCompare(nameB);
-        });
-        setMentors(usersCopy); 
+
+            if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount ++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }  
+    }
+
+    const sortByZip = () => {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("mentorTable");
+        switching = true;
+        dir = "asc";
+
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[5];
+                y = rows[i + 1].getElementsByTagName("TD")[5];
+
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                    }
+                }
+            }
+
+            if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount ++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }  
     }
 
     //shows the arrow direction of sort
@@ -143,7 +375,7 @@ function FindMentors(props) {
     const search = async (e) => {
 
         const matchedUsers = mentors.filter((user) => {
-            return user.zipcode.toString().includes(e.target.value.toString());
+            if(user.zipcode !== undefined) return user.zipcode.toString().startsWith(e.target.value.toString());
         });
         if (e.target.value.length == 0) {
             setMentors(allUsersCopy);
@@ -175,29 +407,33 @@ function FindMentors(props) {
                 <table>
                         <thead>
                             <tr>
-                                <th className="th-manage-teams">Name</th>
+                                <th className="th-manage-teams" onClick={sortByName}>Name</th>
                                 <th className="th-manage-teams" onClick = {sortByWindowsRating}>
                                     <span style={{marginRight: 10}}>Windows Rating</span>
-                                        {sorted.sorted == "windowsRating" ? renderArrow() : renderConst()}
+                                    <div></div>
+                                        {/* {sorted.sorted == "windowsRating" ? renderArrow() : renderConst()} */}
                                 </th>
                                 <th className="th-manage-teams" onClick = {sortByWindowServerRating}>
-                                    <span style={{marginRight: 10}}>Windows Sever Rating</span>
-                                        {sorted.sorted == "windowsServerRating" ? renderArrow() : renderConst()}
+                                    <span style={{marginRight: 10}}>Windows Server Rating</span>
+                                    <div></div>
+                                        {/* {sorted.sorted == "windowsServerRating" ? renderArrow() : renderConst()} */}
                                 </th>
                                 <th className="th-manage-teams" onClick = {sortByLinuxRating}>
                                     <span style={{marginRight: 10}}>Linux Rating </span>
-                                        {sorted.sorted == "linuxRating" ? renderArrow() : renderConst()}
+                                    <div></div>
+                                        {/* {sorted.sorted == "linuxRating" ? renderArrow() : renderConst()} */}
                                 </th>
                                 <th className="th-manage-teams" onClick = {sortByNetworkRating}>
                                     <span style={{marginRight: 10}}>Networking Rating</span>
-                                        {sorted.sorted == "networkingRating" ? renderArrow() : renderConst()}
+                                    <div></div>
+                                        {/* {sorted.sorted == "networkingRating" ? renderArrow() : renderConst()} */}
                                 </th>
                                 <th className="th-manage-teams" onClick = {sortBySecConRating}>
                                     <span style={{marginRight: 10}}>Security Concepts Rating</span>
-                                        {sorted.sorted == "securityConceptsRating" ? renderArrow() : renderConst()}
+                                    <div></div>
+                                        {/* {sorted.sorted == "securityConseptsRating" ? renderArrow() : renderConst()} */}
                                 </th>
-                                <th className="th-manage-teams">Zipcode</th>
-                                <th className="th-manage-teams">Email</th>
+                                <th className="th-manage-teams" onClick={sortByZip}>Zipcode</th>
                             </tr>
                         </thead>
 

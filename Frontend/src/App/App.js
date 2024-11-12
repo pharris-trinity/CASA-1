@@ -3,6 +3,7 @@ import './App.css';
 import { Routes, Route, Link, Switch } from "react-router-dom";
 import * as React from "react";
 import {useEffect} from 'react';
+import ReactDOM from 'react-dom'
 
 import Navbar from "../components/General/Navbar";
 import Login from "../components/General/Login";
@@ -11,7 +12,7 @@ import LandingMainPage from "../components/General/LandingMainPage";
 import CreateUser from "../components/General/CreateUser";
 import NotFound from "../components/General/NotFound";
 import CreateCoach from '../components/General/createCoach';
-import CreateMentor from '../components/General/createMentor';
+import CreateMentor from '../components/General/CreateMentor';
 
 
 import StudMainPage from '../components/Student/StudMainPage';

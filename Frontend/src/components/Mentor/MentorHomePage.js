@@ -34,6 +34,7 @@ const MentorHome = () => { //Home page for mentor
     const previousQuizzesButton = async () =>
     {
         setEnabledPreviousQuizzes(true);
+        document.getElementById("prevQuizPopup").style.display = 'block';
     }
 
     //closes self assesment window

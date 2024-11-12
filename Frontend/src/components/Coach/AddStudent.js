@@ -96,7 +96,7 @@ function AddStudent(props) {
             const checkTeam = await getTeam(formatTeamIDNumber(team));
             console.log("tempStudentID", tempStudentID)
             console.log("checkTeam", checkTeam)
-            if(tempStudentID == undefined){
+            if(tempStudentID === undefined){
                 alert("Invalid Student Email. Student was not added.");
                 return "function's broke"
             }
