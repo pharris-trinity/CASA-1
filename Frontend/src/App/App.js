@@ -12,7 +12,7 @@ import LandingMainPage from "../components/General/LandingMainPage";
 import CreateUser from "../components/General/CreateUser";
 import NotFound from "../components/General/NotFound";
 import CreateCoach from '../components/General/createCoach';
-import CreateMentor from '../components/General/createMentor';
+import CreateMentor from '../components/General/CreateMentor';
 
 
 import StudMainPage from '../components/Student/StudMainPage';
