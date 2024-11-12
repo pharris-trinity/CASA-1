@@ -98,6 +98,7 @@ function CreateMentor() {
                     <div className="form-group">
                     </div>
                     <div className='form-group'>
+                        <input type="password" placeholder='Verify Password' name='password2' id='password2' value={passwordVerify} onChange={evt => {setPasswordVerify(evt.target.value)}} required/>
                     </div>
                     <input type="submit" value="CREATE ACCOUNT"/>
                     <button id='login' onClick={loginRedirect} className="login_button">Login</button>
