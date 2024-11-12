@@ -15,7 +15,9 @@ function MakeTeam(props) {
     const[teamSchool, setTeamSchool] = useState();
     const[teamDistrict, setTeamDistrict] = useState();
     const[teamIsROTC, setTeamIsROTC] = useState(false);
+    // const[teamIsAllFem, setTeamIsAllFem] = useState(false);
     const[teamCoachID, setTeamCoachID] = useState();
+
 
 
 
@@ -86,6 +88,30 @@ app.post('/api/admin/register_team', async(req, res) => {
                                 onChange={(e) => setTeamName(e.target.value)}
                                 required                            
                             />
+
+                            <label htmlFor='teamAttributes'>Team Attribute(s): </label><br/>
+                            <label for='teamIsROTC'> ROTC</label>
+                            <input 
+                                type='checkbox' 
+                                id='teamIsROTC' 
+                                name='teamIsROTC' 
+                                value={teamIsROTC} 
+                                //onClick={() => setTeamIsROTC(true)} 
+                                onSelect={() => setTeamIsROTC(true)}
+                            />
+                             
+                            &nbsp; &nbsp;
+                            <input 
+                                type="checkbox" 
+                                id="allFem" 
+                                name="allFem" 
+                                // value={teamIsAllFem}
+                                // onChange={setTeamIsAllFem(true)}
+                            />
+                            <label for="allFem"> All Female</label>
+
+                            <br/><br/>
+
 
                             <label htmlFor='teamSchool'>School Name: </label>
                             <input

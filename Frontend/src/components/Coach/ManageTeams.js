@@ -772,6 +772,8 @@ const renderStudentsWithoutTeam = () => {
                                 id='grade'
                                 name='grade'
                                 value={updateGradLevel}
+                                min={1}
+                                max={12}
                                 onChange={(e) => setUpdateGradLevel(e.target.value)}
                             />
 

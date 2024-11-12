@@ -50,9 +50,12 @@ function PersonalInfo(props) {
                               <span class="zip-help-text">You have the option to input your home or work zip code. Please choose the one that works for you.</span>
                             </div>
                             <input
-                                type='Number'
+                                type='String'
                                 id='zipcode'
                                 name='zipcode'
+                                pattern="[0-9]{5}"
+                                title="Five-digit ZIP code"
+                                placeholder="00000"
                                 value={pzipcode}
                                 onChange={(e) => setZipCode(e.target.value)}
                                 required                            
@@ -60,9 +63,11 @@ function PersonalInfo(props) {
 
                             <label htmlFor='phonenumber'>Phone Number: </label>
                             <input
-                                type='Number'
+                                type='String'
                                 id='phonenumber'
                                 name='phonenumber'
+                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                placeholder="000-000-000"
                                 value={pphonenumber}
                                 onChange={(e) => setPhoneNumber(e.target.value)}
                                 required                            
