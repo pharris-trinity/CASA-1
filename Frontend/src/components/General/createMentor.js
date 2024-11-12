@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from './useLocalStorage';
 import './accCreate.css'
 import logo from "../../Resources/cyberTexasLogo.png";
-import Navbar from './Navbar';
+import Navbar from './../General/Navbar';
 import { Nav } from 'react-bootstrap';
 
 function CreateMentor() {
