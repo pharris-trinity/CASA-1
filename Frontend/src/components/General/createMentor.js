@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from './useLocalStorage';
 import './accCreate.css'
 import logo from "../../Resources/cyberTexasLogo.png";
-import Navbar from './../General/Navbar';
+import Navbar from './Navbar';
 import { Nav } from 'react-bootstrap';
 
 function CreateMentor() {
@@ -87,7 +87,7 @@ function CreateMentor() {
 
     return (                  
         <>Mentor Creation
-        {/*<Navbar/>*/}
+        <Navbar/>
         <img src={logo} id="logo" centerImage="center" align="left" alt=""/>
         <div className='form'>
             <form onSubmit={submitHandler}>
