@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useLocalStorage } from './useLocalStorage';
 import './accCreate.css'
 import logo from "../../Resources/cyberTexasLogo.png";
-import Navbar from './Navbar';
 import { Nav } from 'react-bootstrap';
 
 function CreateMentor() {
@@ -13,7 +12,6 @@ function CreateMentor() {
     const [display, setDisplay] = useState("");
     const [password, setPassword] = useState("");
     const [passwordVerify, setPasswordVerify] = useState("");
-//    const [validationCode, setValidationCode] = useState("");
 
     const [errorMessages, setErrorMessages] = useState({});
 
@@ -32,7 +30,6 @@ function CreateMentor() {
             return;
         }
 
-        var postData = {username: user, displayname: display, email: email, password: password}
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -87,23 +84,18 @@ function CreateMentor() {
 
     return (                  
         <>Mentor Creation
-        <Navbar/>
         <img src={logo} id="logo" centerImage="center" align="left" alt=""/>
         <div className='form'>
             <form onSubmit={submitHandler}>
                 <div className="form-inner">
                     <h2> Create Account </h2>
                     <div className="form-group">
-                        <input type="text" placeholder="Username" name="name" id="name"  value={user} onChange={evt => {setUser(evt.target.value)}} required/>
                     </div>
                     <div className="form-group">
-                        <input type="email" placeholder="Email" name="email" id="email" value={email} onChange={evt => {setEmail(evt.target.value)}} required/>
                     </div>
                     <div className="form-group">
-                        <input type="text" placeholder="Display Name" name="displayname" id="displayname"  value={display} onChange={evt => {setDisplay(evt.target.value)}} required/>
                     </div>
                     <div className="form-group">
-                        <input type="password" placeholder="Password" name="password" id="password" value={password} onChange={evt => {setPassword(evt.target.value)}} required/>
                     </div>
                     <div className='form-group'>
                         <input type="password" placeholder='Verify Password' name='password2' id='password2' value={passwordVerify} onChange={evt => {setPasswordVerify(evt.target.value)}} required/>
