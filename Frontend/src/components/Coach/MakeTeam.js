@@ -40,7 +40,7 @@ app.post('/api/admin/register_team', async(req, res) => {
             body: JSON.stringify(tmpData)
         };
         fetch('/api/admin/register_team', requestOptions).then((response) => {
-             if(response.status == 201) alert('TeamID is already in use. Team was not created.');
+             if(response.status === 201) alert('TeamID is already in use. Team was not created.');
         });
     }
 

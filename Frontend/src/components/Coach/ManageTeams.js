@@ -102,7 +102,7 @@ function ManageTeams(props) {
     const getTeamName = (teamID) => {
         var teamName = "";
         teams.map(team => {
-            if(team.national_id == teamID) {
+            if(team.national_id === teamID) {
                 teamName = team.name;
             }
         })
@@ -185,9 +185,9 @@ function ManageTeams(props) {
 
     //button to remove the current selected student from the coach's roster
     const deleteStudentButton = async () => {
-        if(currentStudentID != undefined) {
+        if(currentStudentID !== undefined) {
             const confirmText = "Are you sure you want to delete the current selected student? \n(This does not delete their account, but removes them from your roster)";
-            if(window.confirm(confirmText) == true) {
+            if(window.confirm(confirmText) === true) {
                 await removeStudent(currentStudentID);
                 getStudents(coachUserID);
             } else {
@@ -225,7 +225,7 @@ function ManageTeams(props) {
     //submit functionality for React form. Updates student based on information from the form.
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(updateTeamID == "N/A") {
+        if(updateTeamID === "N/A") {
           
             updateStudentAccount(currentStudentID, updateDisplayName,updateGradLevel,updateTeamID);
         } else if(validateTeamID(updateTeamID)) {
@@ -251,12 +251,12 @@ function ManageTeams(props) {
                 x = rows[i].getElementsByTagName("TD")[0];
                 y = rows[i + 1].getElementsByTagName("TD")[0];
 
-                if (dir == "asc") {
+                if (dir === "asc") {
                     if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
                     shouldSwitch = true;
                     break;
                     }
-                } else if (dir == "desc") {
+                } else if (dir === "desc") {
                     if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
                     shouldSwitch = true;
                     break;
@@ -269,7 +269,7 @@ function ManageTeams(props) {
             switching = true;
             switchcount ++;
             } else {
-                if (switchcount == 0 && dir == "asc") {
+                if (switchcount === 0 && dir === "asc") {
                     dir = "desc";
                     switching = true;
                 }
@@ -349,7 +349,7 @@ function ManageTeams(props) {
         const matchedUsers = students.filter((user) => {
             return user.displayname.toLowerCase().includes(e.target.value.toLowerCase());
         });
-        if (e.target.value.length == 0) {
+        if (e.target.value.length === 0) {
             setStudents(allUsersCopy);
             setSearchPhrase(e.target.value);
         }
@@ -373,7 +373,7 @@ function ManageTeams(props) {
         const getTeamName = (teamID) => {
             var teamName = "";
             teams.map(team => {
-                if(team.national_id == teamID) {
+                if(team.national_id === teamID) {
                     teamName = team.name;
                 }
             })
@@ -411,7 +411,7 @@ function ManageTeams(props) {
                 setDisplayName(displayName);
                 setGradeLevel(gradeLevel);
 
-                if (alternateStatus == "true") {
+                if (alternateStatus === "true") {
                     const requestData = {
                         team_id: currentTeamID,
                         student_id: studentId
@@ -456,7 +456,7 @@ function ManageTeams(props) {
 
 
                         student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("");
-                        (student.team != -1) ? setUpdateTeamID(newTeamID) : setUpdateTeamID(-1);
+                        (student.team !== -1) ? setUpdateTeamID(newTeamID) : setUpdateTeamID(-1);
 
                         return { ...student, team: newTeamID };
                     }
@@ -661,7 +661,7 @@ const renderStudentsWithoutTeam = () => {
             setDisplayName(displayName);
             setGradeLevel(gradeLevel);
 
-            if (alternateStatus == "true") {
+            if (alternateStatus === "true") {
                 const requestData = {
                     team_id: currentTeamID,
                     student_id: studentId
@@ -689,7 +689,7 @@ const renderStudentsWithoutTeam = () => {
                     setUpdateDisplayName(student.displayname);
                     setDisplayEmail(student.email);
                     student.gradelevel ? setUpdateGradLevel(student.gradelevel) : setUpdateGradLevel("");
-                    (student.team != -1) ? setUpdateTeamID(newTeamID) : setUpdateTeamID(-1);
+                    (student.team !== -1) ? setUpdateTeamID(newTeamID) : setUpdateTeamID(-1);
                     return { ...student, team: newTeamID };
                 }
                 return student;
@@ -747,7 +747,7 @@ const renderStudentsWithoutTeam = () => {
 
 
 
-    if (props.enabled == true) {
+    if (props.enabled === true) {
         return (
             <div>
                 <div className="left _form-group">
