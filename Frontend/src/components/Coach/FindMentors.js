@@ -46,11 +46,6 @@ function FindMentors(props) {
         }
     }
 
-
-
-
-
-
     //retrieves the coach's ID from local storage when the component is loaded
     useEffect(() => {
         setcoachID(localStorage.getItem("_id"))
@@ -408,8 +403,8 @@ function FindMentors(props) {
                             Search
                         </button>
                     </div>
-                <h3>Mentors</h3>
-                <table id="mentorTable">
+                <h3>Find Mentors (Based on Quiz Categories)</h3>
+                <table>
                         <thead>
                             <tr>
                                 <th className="th-manage-teams" onClick={sortByName}>Name</th>
@@ -450,8 +445,9 @@ function FindMentors(props) {
                                 <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.windowsServerRating}</td>
                                 <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.linuxRating}</td>
                                 <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.networkingRating}</td>
-                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.securityConseptsRating}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.securityConceptsRating}</td>
                                 <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.zipcode}</td>
+                                <td className={index % 2 === 0 ? 'td-even' : 'td-odd'}> {item.email}</td>
                             </tr>
                         ))}
                         </tbody>

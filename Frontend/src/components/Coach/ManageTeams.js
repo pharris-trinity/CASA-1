@@ -705,7 +705,9 @@ const renderStudentsWithoutTeam = () => {
     // Render the table for students without a team
     return (
         <div key="students-without-team" onDragOver={handleDragOver} onDragEnter={handleDragEnter} onDrop={handleDrop}>
-            <h3>Students Without a Team</h3>
+            <br></br>
+            <h3>Your Unassigned Students</h3>
+            <h3>(drag & drop, or click to reassign)</h3>
             <table style={{ color: '#fff' }}>
                 <thead>
                     <tr>
@@ -754,7 +756,9 @@ const renderStudentsWithoutTeam = () => {
                 <form className="form-container" onSubmit={handleSubmit}>
                         {/* React Form Inputs */}
                         <div>
-                            <label htmlFor='name'>Name </label>
+                            <h2>Edit Student Info</h2>
+
+                            <label htmlFor='name'>Name</label>
                             <input
                                 type='text'
                                 id='name'
@@ -806,18 +810,16 @@ const renderStudentsWithoutTeam = () => {
                         
                     <input className="input"
                     type="text" 
-                    placeholder="Search Table"
+                    placeholder="Search Students by Name"
                     value={searchPhrase}
                     onChange={search}
                 />
-                        <button  className = 'casa-button' onClick={search}>
-                            
-                            Search
-                        </button>
-                        <table className="right"></table>
-                        {renderTeamTables()}
+                        <button className = 'casa-button' onClick={search}>Search</button>
                         <button className="casa-button" type="button" onClick={addStudentButton}>Add Student</button>
-                            <button className="casa-button" type="button" onClick={makeTeamButton}>Create Team</button>
+                        <button className="casa-button" type="button" onClick={makeTeamButton}>Create Team</button>
+                        <table className="right"></table>
+                        <h3>List of Your Teams</h3>
+                        {renderTeamTables()}
                     </div>
                 </div>
             </div>

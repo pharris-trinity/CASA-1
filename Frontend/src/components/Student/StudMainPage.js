@@ -17,6 +17,13 @@ function StudentMainPage() {
     if (toNavigateTo !== "") navigate(toNavigateTo, { replace: true });
   }, []);
 
+/*
+  window.onload = (event) => {
+    var toNavigateTo = loginChecker("Coach")
+    if(toNavigateTo != "")navigate(toNavigateTo, {replace: true})
+  };
+*/
+
   // Function to handle tab click
   const handleTabClick = (tabName) => {
     setSelectedTab(tabName);

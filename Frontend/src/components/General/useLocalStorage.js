@@ -25,13 +25,16 @@ export const useLocalStorage = (key, defaultValue) => {
         if(value && !value.length == 0){
             //localStorage.setItem(key, JSON.stringify(value));
             const items = value.replaceAll('\"', '').split(',')
+            console.log(items)
             for(let i = 0; i < items.length; i++){
                 const param = items[i].split(':')
-                if(param[0] == "_id" || param[0] == "school" || param[0] == "username" || param[0] == "displayname" || param[0] == "usertype"){
+                if(param[0] == "_id" || param[0] == "school" || param[0] == "username" || param[0] == "displayname" || param[0] == "usertype" || param[0] == "studentGradLevel" || param[0] == "studentTeamID"){
                     localStorage.setItem(param[0], param[1])
                 }
-                
+                localStorage.setItem("studentGradLevel", param[1])
+                localStorage.setItem("studentTeamID", param[1])
             }
+            console.log(items)
         }
         
     }, [key, value]);

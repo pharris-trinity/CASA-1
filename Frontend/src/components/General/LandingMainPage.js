@@ -18,7 +18,7 @@ export default function LandingMainPage() {
                 
                 <div className="assessmentsSection">
                     <h2>Welcome to CASA</h2>
-                    <h3>Casa is a tool for students, coaches, and mentors to aid in CyberPatriot competitions. </h3>
+                    <h3>CASA is a tool for students, coaches, and mentors to aid in CyberPatriot competitions. </h3>
 
                     <ul>
                     </ul>

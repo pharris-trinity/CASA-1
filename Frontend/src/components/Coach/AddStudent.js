@@ -55,10 +55,18 @@ function AddStudent(props) {
                 body: JSON.stringify({'student_email': email})
             }
             const response = await fetch('/api/coach/get_studentid_by_email', requestOptions)
+            if (response.status === 404) {
+                console.log('Student not found');
+                return { error: 'Student not found' };
+              } else if (!response.ok) {
+                console.log('Error fetching student info:', response.statusText);
+                return { error: 'Server error' };
+              }
             const jsonData = await response.json()
             console.log("jsonData in AddStudent:", jsonData);
             return(jsonData);
         } catch (error) {
+            console.log(error)
         }
     }
     
@@ -135,7 +143,7 @@ function AddStudent(props) {
                                 onChange={(e) => setTeam(e.target.value)}
                             />
                             <button className="casa-button" type="submit">Add</button>
-                            <button className="casa-button" type="button" onClick={ props.closeForm}>Close</button>
+                            <button className="casa-button" type="button" onClick={props.closeForm}>Close</button>
                         </div>
                     </form>
                 </div>

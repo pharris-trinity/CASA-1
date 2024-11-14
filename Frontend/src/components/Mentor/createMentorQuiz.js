@@ -177,6 +177,7 @@ function CreateMentorQuiz(props) {
             <div className="button-spacer">
                 <button className="casa-button button-left-mentor" onClick={addQuestion}>Add Question</button>
                 <button className="casa-button button-right-mentor" onClick={createMentorQuiz}>Create Quiz</button>
+                <button className="casa-button" type="button" onClick={props.closeForm}>Cancel</button>
             </div>
         </div>
     );

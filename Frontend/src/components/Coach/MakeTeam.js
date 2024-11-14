@@ -67,7 +67,7 @@ app.post('/api/admin/register_team', async(req, res) => {
                 <div>
                     <form className="make-team-container" onSubmit={handleSubmit}>
                         <div>
-                            <label htmlFor='national_id'>Team's National ID: </label>
+                            <label htmlFor='national_id'>Team's National ID (##-####): </label>
                             <input
                                 type='text'
                                 id='national_id'

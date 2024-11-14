@@ -3,7 +3,6 @@ import './../Coach/questionForm.css'; // Import CSS file for styling
 import './createMentorQuiz.css'; // Import CSS file for styling
 import './../Coach/quizInfo.css';
 import './../Coach/StudentStats.css';
-import './createMentorQuiz.css'
 import MentorQuizQuestion from './mentorQuizQuestion';
 
 function MentorPreviousQuizzes({ enabled, props }) {
@@ -16,14 +15,16 @@ function MentorPreviousQuizzes({ enabled, props }) {
     setMentorID(localStorage.getItem("_id"));
     console.log("Attempt to set mentor id")
     console.log(mentorID)
-}, []) 
 
-useEffect(() => {
-  if (mentorID) {
-      // Fetch quizzes from the database
-      pullQuizzes();
-  }
-}, [mentorID]);
+  
+  }, []) 
+
+  useEffect(() => {
+    if (mentorID) {
+        // Fetch quizzes from the database
+        pullQuizzes();
+    }
+  }, [mentorID]);
 
   const pullQuizzes = async () => {
     try {
