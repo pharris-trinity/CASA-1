@@ -94,10 +94,13 @@ function AddStudent(props) {
             const numberTeamID = formatTeamIDNumber(team);
             const tempStudentID = await getStudentID(studentEmail);
             const checkTeam = await getTeam(formatTeamIDNumber(team));
+            // getUserType
             console.log("tempStudentID", tempStudentID)
             console.log("checkTeam", checkTeam)
-            if(tempStudentID === undefined){
-                alert("Invalid Student Email. Student was not added.");
+            console.log(typeof tempStudentID)
+            if(tempStudentID === undefined || typeof tempStudentID !== "string"){
+            // if(tempStudentID === undefined){
+                alert("Invalid student email. No student was added.");
                 return "function's broke"
             }
             if(checkTeam) {
@@ -110,9 +113,9 @@ function AddStudent(props) {
                 setStudentID(tempStudentID);
                 await addCoachToStudent(localStorage._id, studentEmail);
                 props.closeForm();
-            } else alert("Invalid Team ID. Student was not added.");
+            } else alert("Invalid team ID. No student was added.");
         } else {
-            alert("Invalid Team ID. Student was not added.");
+            alert("Invalid team ID. No student was added.");
         }
         
     }
