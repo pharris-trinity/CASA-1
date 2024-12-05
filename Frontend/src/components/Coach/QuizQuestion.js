@@ -122,11 +122,10 @@ function QuizQuestion({ quiz }) {
 
     return (
         <div>
-        <div className="button-spacer">
-                    <button className="casa-button button-rightest" onClick={() => removeQuiz()}>Delete Quiz</button>
-                </div>
+
         <div className="main-box">
             <h1 className="page-title">Edit Quiz</h1>
+            <button className="casa-button button-righ" onClick={() => removeQuiz()}>Delete Quiz</button>
             <div className="quiz-boxes">
                 <div className="quizinfo-content-box">
                     <h3 className="quizinfo-text-container">Quiz: {quiz.name}</h3>
