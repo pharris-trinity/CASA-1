@@ -5,6 +5,7 @@
 # Initial Installation
 1. Download and install the latest version of Node from [here](https://nodejs.org/en/download/).
     - This project was compiled on npm version 8.19.2, make sure you are using this version.
+    - (NOTE FROM FALL 2024 TEAM): We also got this project working on (npm version 10.2.4 + node version 20.11.0) or (npm version 10.2.3 + node version 20.10.0)
 2. After cloning the repo into a location of your choice, navigate to the root directory of the folder in terminal "./CASA"
 3. Run `npm install npm@8.19.2` to install all the required dependencies
 4. Setup a `.env` file as described in the other [information](#information)
@@ -67,7 +68,7 @@ An environment file (.env) is useful for setting up credientials and secrets wit
 
 <br>
 
-### To Dos
+### To Dos (left over from Spring 2024 team):
 1. Implement Quiz Names
     * Key files: Quiz.js, server.js, StudentTakeAssessmentContent.js
 2. Implement Login Persistence
